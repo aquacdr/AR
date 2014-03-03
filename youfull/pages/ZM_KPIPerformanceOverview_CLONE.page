@@ -1,0 +1,387 @@
+<apex:page StandardController="Sales_Org_Summary__c" extensions="ZM_KPIPerformanceController" id="page" tabStyle="KPI_at_a_glance__tab">
+    <apex:stylesheet value="{!URLFOR($Resource.ZM_Resources, 'css/style.css')}"/>
+    <script src="/resource/ZM_Resources/js/jquery-1.8.2.js"></script>
+    <apex:includeScript value="{!URLFOR($Resource.ZM_Resources, 'js/jquery-1.8.2.js')}"/>
+  
+  <style>
+  .txtCntr{text-align:center;}
+  </style>
+  
+  <body style="margin:0px;font-size:62.5%;">
+   <div id="full_page_overlay" class="white_trans" style="display:none; background: url({!URLFOR($Resource.ALMYouAssets,'images/white_trans_bg.png')}); position: fixed; left: 0; top: 0;width: 100%;height: 100%; z-index: 20;"></div>
+   
+  <!--  Omniture method invocation starts -->
+    <script type="text/javascript">
+    
+     
+        jQuery = jQuery.noConflict();  
+        var isTransLdr = '{!isTL}';
+        //alert(' isTL '+isTransLdr);
+        jQuery(document).ready(function() { 
+        
+            if(isTransLdr == 'true'){
+               // alert(' isTL 1 '+isTransLdr);
+                jQuery("#tlAddition1").show();
+                jQuery("#tlAddition2").show();
+            }else{
+                //alert(' isTL 2 '+isTransLdr);
+                jQuery("#tlAddition1").hide();
+                jQuery("#tlAddition2").hide();
+            }
+        });
+        // EoC
+        
+        ALM_PAGE_NAME="{!OmniturePageName}";    
+    </script>
+  <!--  Omniture method invocation e -->
+    
+        <c:ZM_Help rendered="{!showPageHelp}" />
+        <apex:outputPanel id="thePanelTop" layout="block">
+            <apex:actionStatus startText="" id="myStatus">
+                <apex:facet name="stop">&nbsp;</apex:facet>
+            </apex:actionStatus>
+            <div class="floatLt planperformanceIcon"><span class="logoText">{!$Label.ZM_KPI_Performance_KPI_at_a_Glance}</span></div>
+            <!-- p_ZoneName="{!strZoneName}" p_CampaignId="{!strCurrCampNumber}"  p_MarketId="{!objutilityclass.strMRKTID}"-->
+            <apex:form id="form0">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<c:NRT_Overlay_Summary_CLONE p_ZoneName="{!strZoneName}" 
+                                                                           p_CampaignId="{!strCurrCampNumber}"  
+                                                                           p_MarketId="{!objutilityclass.strMRKTID}" 
+                                                                           rendered="{! AND(currMarket.NRT_Enabled__c, OR(!showZoneDropDown, strZoneName != 'All'))}"/>
+            
+            </apex:form>
+            
+            
+            <div class="clear"></div>
+            <div class="tablecontainer" >
+            <apex:form id="Form1">
+                <apex:outputPanel rendered="{!showZoneDropDown}">
+                    <div style="margin: 30px;">
+                    <apex:outputLabel value="{!$Label.ZM_KPI_Performance_Select_Zone} :" rendered="{!IF(AND(NOT(ISNULL(zoneList)),zoneList.size>0), TRUE, FALSE)}" />   &nbsp;&nbsp;&nbsp; 
+                    <apex:selectList value="{!strZoneName}" size="1" rendered="{!IF(AND(NOT(ISNULL(zoneList)),zoneList.size>0), TRUE, FALSE)}" >
+                        <apex:selectOptions value="{!ZoneList}"/>
+                            <apex:actionSupport event="onchange"  action="{!changeData}" />
+                    </apex:selectList> &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;  
+                     
+                    <!--apex:commandButton action="{!changeData}" value="Go" id="theButton" rendered="{!IF(AND(NOT(ISNULL(zoneList)),zoneList.size>0), TRUE, FALSE)}" /-->
+                    </div>
+                </apex:outputPanel>
+                 
+            </apex:form>
+            <apex:pagemessages ></apex:pagemessages>
+             <apex:outputPanel id="thePanelCenter" layout="block" rendered="{!boolHasData}" >
+            <div class="container">
+                <table cellspacing="0" cellpadding="0" border="0" id="" class="planperformance">
+                    <colgroup>
+                        <col class="borderRt txtAlgnLt"/>
+                        <col/>
+                        <col/>
+                        <col/>
+                        <col class="borderRt"/>
+                        <col/>
+                        <col/>
+                        <col/>
+                        <col class="borderRt"/>
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th  class="columnheader"></th>   
+                            <th class="columnheader" colspan="4"><apex:outputText escape="false">{!strLastCampNumber}</apex:outputText></th>   
+                            <th class="columnheader" colspan="4"><apex:outputText escape="false">{!strCurrCampNumber}</apex:outputText></th>
+                               
+                            <apex:outputPanel rendered="{!NOT(hideNextCampaign)}">
+                            <th class="columnheader" colspan="4"><apex:outputText escape="false">{!strNextCampNumber}</apex:outputText></th>
+                            </apex:outputPanel> 
+                        </tr>
+                        <tr>
+                             <th class="txtCntr width16"><apex:outputText escape="false">{!$Label.ZM_KPI_Performance_KPI} </apex:outputText></th>
+                             <th class="txtCntr width7"><apex:outputText escape="false">{!$Label.ZM_KPI_Performance_PY}</apex:outputText></th>
+                             <th class="txtCntr width7"><apex:outputText escape="false">{!$Label.ZM_KPI_Performance_Plan}</apex:outputText></th>
+                             <th class="txtCntr width7"><apex:outputText escape="false">{!$Label.ZM_KPI_Performance_Actual}</apex:outputText></th>
+                             <th class="txtCntr width7"><apex:outputText escape="false">{!$Label.ZM_KPI_Performance_Variance}</apex:outputText></th>
+                             <th class="txtCntr width7"><apex:outputText escape="false">{!$Label.ZM_KPI_Performance_PY}</apex:outputText></th>
+                             <th class="txtCntr width7"><apex:outputText escape="false">{!$Label.ZM_KPI_Performance_Plan}</apex:outputText></th>
+                             <th class="txtCntr width7"><apex:outputText escape="false">{!$Label.ZM_KPI_Performance_Actual}</apex:outputText></th>
+                             <th class="txtCntr width7"><apex:outputText escape="false">{!$Label.ZM_KPI_Performance_Variance}</apex:outputText></th>
+                             
+                             <apex:outputPanel rendered="{!NOT(hideNextCampaign)}">
+                             <th class="txtCntr width7"><apex:outputText escape="false">{!$Label.ZM_KPI_Performance_PY}</apex:outputText></th>
+                             <th class="txtCntr width7"><apex:outputText escape="false">{!$Label.ZM_KPI_Performance_Plan}</apex:outputText></th>
+                             <th class="txtCntr width7"><apex:outputText escape="false">{!$Label.ZM_KPI_Performance_Actual}</apex:outputText></th>
+                             <th class="txtCntr width7"><apex:outputText escape="false">{!$Label.ZM_KPI_Performance_Variance}</apex:outputText></th>
+                             </apex:outputPanel>
+                        </tr>
+                    </thead>
+                    <apex:repeat value="{!lstWrapperZoneKPIDetail}" var="salesOrg" id="theRepeat" >
+<!-- Net Sales-->       <tr>
+                            <td class="{!salesOrg.strCSSClass}">{!$Label[salesOrg.strCustomLabel]}</td>
+                            <apex:repeat value="{!salesOrg.lstWZoneKPIElement}" var="sales" id="theRepeat" >
+                            <td>{!(sales.dbSPPYField)}</td>
+                            <td>{!(sales.dbPlanField)}</td>
+                            <td>{!(sales.dbActualField)}</td>
+                            <td>{!sales.dbVarianceField}%</td>                            
+                            </apex:repeat>
+                        </tr>
+                    </apex:repeat>
+                </table>
+                <apex:outputPanel id="thePanel" rendered="{!if(lstWrapperSalesLeadership.size>0, true,false)}">
+                <table cellspacing="0" cellpadding="0" border="0" id="" class="planperformance">
+                    <colgroup>
+                        <col class="borderRt txtAlgnLt"/>
+                        <col/>
+                        <col/>
+                        <col/>
+                        <col class="borderRt"/>
+                    </colgroup>
+                    <thead>   
+                      <tr>
+                        <th class="columnheader2 txtAlgnLt" colspan="6">{!strCurrCampNumber} {!$Label.ZM_KPI_Performance_Sales_Leadership_Title_Status}</th>   
+                      </tr>
+                      <tr>
+                         <!-- Changed by Raktim, as per mail from Cristina on May 16, 2013 START -->
+                         <!--<th class="txtCntr width44">{!$Label.ZM_KPI_Performance_Title} </th>-->
+                         <th class="txtCntr width44"><apex:outputText escape="false" value="{!$Label.ZM_KPI_Performance_Latest_Grce_Title}"> </apex:outputText></th>
+                         <!-- Changed by Raktim, as per mail from Cristina on May 16, 2013 END -->
+                         
+                         <th class="txtCntr width7"><apex:outputText escape="false" value="{!$Label.ZM_KPI_Performance_Count}"></apex:outputText></th>
+                         <th class="txtCntr width7"><apex:outputText escape="false" value="{!$Label.ZM_KPI_Performance_Rising_Star}"></apex:outputText></th>
+                         <th class="txtCntr width7"><apex:outputText escape="false" value="{!$Label.ZM_KPI_Performance_At_Risk}"></apex:outputText></th>
+                         <th class="txtCntr width7"><apex:outputText escape="false" value="{!$Label.ZM_KPI_Performance_At_Risk2}"></apex:outputText></th>
+                         
+                         <!--  <div id="tlAddition">-->
+                            <th class="txtCntr width7" id="tlAddition1"><apex:outputText escape="false" value="{!$Label.Base_At_Risk}"></apex:outputText></th>
+                            <th class="txtCntr width7" id="tlAddition2"><apex:outputText escape="false" value="{!$Label.Base_At_Risk2}"></apex:outputText></th>
+                         <!--</div>-->
+                         
+                      </tr>
+                    </thead>
+                    <tbody>
+                        <apex:variable var="cnt" value="{!0}"/>
+                        <apex:variable var="total" value="{!zoneKPIConfigTLSize}"/> 
+                        <apex:repeat value="{!lstWrapperSalesLeadership}" var="SalesLeadership" id="theRepeatSalesLeadership" >
+                        
+                        <tr>
+                            <td class="txtAlgnLt">{!$Label[SalesLeadership.strCustomLabel]}</td>                        
+                            <td>{!(SalesLeadership.dbCount)}</td> 
+                            <td>{!(SalesLeadership.dbCountOfRisingStarsField)}</td>
+                            <td>{!(SalesLeadership.dbCountAtRiskField)}</td>
+                            <td>{!(SalesLeadership.dbCountAtRisk2)}</td>
+                            
+                            <apex:outputPanel rendered="{!isTL}">
+                                <td>{!(SalesLeadership.dbCountBaseAtRiskField)}</td>
+                                <td>{!(SalesLeadership.dbCountBaseAtRisk2)}</td>
+                            </apex:outputPanel>     
+                        </tr>
+                         
+                         
+                        <apex:outputPanel rendered="{!cnt < total}">
+                        <apex:outputPanel rendered="{!(lstWrapperSalesLeadership_TL[cnt].dbCount !='0' || lstWrapperSalesLeadership_TL[cnt].dbCountOfRisingStarsField !='0' || lstWrapperSalesLeadership_TL[cnt].dbCountAtRiskField !='0' || lstWrapperSalesLeadership_TL[cnt].dbCountAtRisk2 !='0')}">
+                        <tr>
+                        <td class="txtAlgnLt">{!lstWrapperSalesLeadership_PM[cnt].strCustomLabel}</td>
+                            <td>{!(lstWrapperSalesLeadership_PM[cnt].dbCount)}</td> 
+                            <td>{!(lstWrapperSalesLeadership_PM[cnt].dbCountOfRisingStarsField)}</td>
+                            <td>{!(lstWrapperSalesLeadership_PM[cnt].dbCountAtRiskField)}</td>
+                            <td>{!(lstWrapperSalesLeadership_PM[cnt].dbCountAtRisk2)}</td>
+                            
+                            <apex:outputPanel rendered="{!isTL}">
+                                <td>{!(lstWrapperSalesLeadership_PM[cnt].dbCountBaseAtRiskField)}</td>
+                                <td>{!(lstWrapperSalesLeadership_PM[cnt].dbCountBaseAtRisk2)}</td>
+                            </apex:outputPanel>
+                        
+                        </tr>
+                        </apex:outputPanel>
+                        <!-- <apex:outputPanel rendered="{!($Label[SalesLeadership.strCustomLabel]!='TL')||(SalesLeadership.dbCount!='0'||SalesLeadership.dbCountOfRisingStarsField!='0'||SalesLeadership.dbCountAtRiskField!='0'||SalesLeadership.dbCountAtRisk2!='0')}">-->
+                        <apex:outputPanel rendered="{!(lstWrapperSalesLeadership_TL[cnt].dbCount !='0' || lstWrapperSalesLeadership_TL[cnt].dbCountOfRisingStarsField !='0' || lstWrapperSalesLeadership_TL[cnt].dbCountAtRiskField !='0' || lstWrapperSalesLeadership_TL[cnt].dbCountAtRisk2 !='0')}">
+                        <tr>
+                        <td class="txtAlgnLt">{!lstWrapperSalesLeadership_TL[cnt].strCustomLabel}</td>
+                            <td>{!(lstWrapperSalesLeadership_TL[cnt].dbCount)}</td> 
+                            <td>{!(lstWrapperSalesLeadership_TL[cnt].dbCountOfRisingStarsField)}</td>
+                            <td>{!(lstWrapperSalesLeadership_TL[cnt].dbCountAtRiskField)}</td>
+                            <td>{!(lstWrapperSalesLeadership_TL[cnt].dbCountAtRisk2)}</td>
+                            
+                            <apex:outputPanel rendered="{!isTL}">
+                                <td>{!(lstWrapperSalesLeadership_TL[cnt].dbCountBaseAtRiskField)}</td>
+                                <td>{!(lstWrapperSalesLeadership_TL[cnt].dbCountBaseAtRisk2)}</td>
+                            </apex:outputPanel>
+                        </tr>
+                        </apex:outputPanel>
+                        </apex:outputPanel>
+                        
+                        <apex:variable var="cnt" value="{!cnt+1}" rendered="{!cnt < total}"/>
+                        </apex:repeat>
+                     </tbody>
+                </table>
+                </apex:outputPanel>
+                <apex:outputPanel id="theTable3" rendered="{!showKPISummary3}">
+                <table cellspacing="0" cellpadding="0" border="0" id="" class="planperformance">
+                    <colgroup>
+                        <col class="borderRt txtAlgnLt"/>
+                        <col/>
+                        <col/>
+                        <col/>
+                        <col class="borderRt"/>
+                    </colgroup>
+                    <thead>   
+                      <tr>
+                        <th class="columnheader2 txtAlgnLt" colspan="6">{!strLastCampNumber} {!$Label.ZM_KPI_Performance_Representative_Seller_Title_Status}</th>   
+                      </tr>
+                      <tr>
+                         
+                         <!-- Changed by Raktim, as per mail from Cristina on May 16, 2013 START -->
+                         <!--<th class="txtCntr width44">{!$Label.ZM_KPI_Performance_Title} </th>-->
+                         <th class="txtCntr width44"><apex:outputText escape="false" value="{!$Label.ZM_KPI_Performance_Latest_Grce_Title}"> </apex:outputText></th>
+                         <!-- Changed by Raktim, as per mail from Cristina on May 16, 2013 END -->
+                         
+                         <th class="txtCntr width7"><apex:outputText escape="false" value="{!$Label.ZM_KPI_Performance_Count}"></apex:outputText></th>
+                         <th class="txtCntr width7"><apex:outputText escape="false" value="{!$Label.ZM_KPI_Performance_Rising_Star}"></apex:outputText></th>
+                         <th class="txtCntr width7"><apex:outputText escape="false" value="{!$Label.ZM_KPI_Performance_At_Risk}"></apex:outputText></th>
+                         <th class="txtCntr width7"></th>
+                         <th class="txtCntr width28"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="txtAlgnLt">{!$Label.ZM_KPI_Performance_New}</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr class="odd">
+                            <td class="txtAlgnLt">{!$Label.ZM_KPI_Performance_Customer}</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td class="txtAlgnLt">{!$Label.ZM_KPI_Performance_Established}</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr class="odd">
+                            <td class="txtAlgnLt">{!$Label.ZM_KPI_Performance_Top_Seller}</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                     </tbody>
+                </table>  
+                </apex:outputPanel>
+                <!-- <div class="whiteblock"></div>  -->            
+                </div>
+              <!-- Commented code for lead
+              <apex:outputPanel rendered="{!isALMPlusEnabled && isZM}">
+                    <div class="container">
+                        <table cellspacing="0" cellpadding="0" border="0" id="" class="planperformance">
+                            <colgroup>
+                                <col class="borderRt txtAlgnLt"/>
+                                <col/>
+                                <col/>
+                                <col/>
+                                <col class="borderRt"/>
+                                <col/>
+                                <col/>
+                                <col/>
+                                <col class="borderRt"/>
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th class="columnheader2 txtAlgnLt" colspan="9">My Zone</th>   
+                                </tr>
+                                <tr>
+                                    <th  class="columnheader"></th>   
+                                    <th class="columnheader" colspan="4">{!strLastCampNumber}</th>   
+                                    <th class="columnheader" colspan="4">{!strCurrCampNumber}</th>
+                                  </tr>
+                                  <tr>  
+                                    <th class="txtCntr width16">{!$Label.ZM_KPI_Performance_KPI}</th>   
+                                    <th class="txtCntr width7"></th>   
+                                    <th class="txtCntr width7"></th>
+                                    <th class="txtCntr width7"></th>
+                                    <th class="txtCntr width7"></th>
+                                    <th class="txtCntr width7"></th>
+                                    <th class="txtCntr width7"></th>
+                                    <th class="txtCntr width7"></th>
+                                    <th class="txtCntr width7"></th>
+                                  </tr>
+                            </thead>
+                            <tbody>
+                                <apex:repeat value="{!lstLeadKPI}" var="lkpi" id="theZoneLeadRepeat" >
+                                    <tr>
+                                        <td class="borderRt txtAlgnLt">{!$Label[lkpi.label]}</td>
+                                        <td class="borderRt" colspan="4">{!lkpi.pcValue}</td>
+                                        <td colspan="4">{!lkpi.ccValue}</td>  
+                                    </tr>
+                                </apex:repeat>
+                            </tbody>
+                        </table>
+                    </div>
+              </apex:outputPanel>
+              
+              <apex:outputPanel rendered="{!isALMPlusEnabled && isDM}">
+                    
+                    <div class="container">
+                        <table cellspacing="0" cellpadding="0" border="0" id="" class="planperformance">
+                            <colgroup>
+                                <col class="borderRt txtAlgnLt"/>
+                                <col/>
+                                <col/>
+                                <col/>
+                                <col class="borderRt"/>
+                                <col/>
+                                <col/>
+                                <col/>
+                                <col class="borderRt"/>
+                            </colgroup>
+                             <thead>   
+                              <tr>
+                                <th class="columnheader2 txtAlgnLt" colspan="9">My Division</th>   
+                              </tr>
+                              <tr>
+                                <th  class="columnheader"></th>   
+                                <th class="columnheader" colspan="4">{!strLastCampNumber}</th>   
+                                <th class="columnheader" colspan="4">{!strCurrCampNumber}</th>
+                              </tr>
+                              <tr>  
+                                <th class="borderRt width16">{!$Label.ZM_KPI_Performance_KPI}</th>   
+                                <th class="txtCntr width7"></th>   
+                                <th class="txtCntr width7"></th>
+                                <th class="txtCntr width7"></th>
+                                <th class="txtCntr width7"></th>
+                                <th class="txtCntr width7"></th>
+                                <th class="txtCntr width7"></th>
+                                <th class="txtCntr width7"></th>
+                                <th class="txtCntr width7"></th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                                <apex:repeat value="{!lstLeadKPI}" var="lkpi" id="theDivLeadRepeat" >
+                                    <tr>
+                                        <td class="borderRt txtAlgnLt">{!$Label[lkpi.label]}</td>
+                                        <td class="borderRt" colspan="4">{!lkpi.pcValue}</td>
+                                        <td colspan="4">{!lkpi.ccValue}</td>  
+                                    </tr>
+                                </apex:repeat>
+                            </tbody>
+                        </table>
+                    </div>
+              </apex:outputPanel>lead commented code ended -->
+              </apex:outputPanel>
+            </div>
+        </apex:outputPanel>
+        
+        
+        <!-- Omniture Integration Starts -->
+        <apex:include pageName="ZMDMOmnitureTrack"/>
+        <!-- Omniture Integration Ends -->
+        
+        </body>
+        
+</apex:page>

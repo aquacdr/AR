@@ -1,0 +1,342 @@
+<apex:page controller="Controller_SLContactBusinessPlan">
+<apex:sectionHeader title="{!$Label.Business_Plan_Coach}" />   
+<apex:pageBlock >
+<apex:form >
+<div id="myBusinessPlanTab" class="cntr" style="display:block">
+                           
+                            <apex:outputPanel styleclass="shdow_wrpr mar_btm_15" id="BPlanSec">
+                                <div class="pop_gry_conbox">
+                                    <div class="cntr mar_tp_10">
+                                        <h3 class="coaching_pnk_hdr">&nbsp;{!$Label.Followup_Meeting}</h3>
+                                        <table  width="100%" border="0" cellspacing="0" cellpadding="0">
+                                            <tr>                                                
+                                                <td>
+                                                    <ul class="item">
+                                                        <li>{!$Label.Day_30}&nbsp;<font class="list_font"><apex:outputText value="{!
+
+followup30}"/></font></li>
+                                                    </ul>
+                                                </td> 
+                                                <td>
+                                                    <ul class="item">
+                                                        <li>{!$Label.Day_60}&nbsp;<font class="list_font"><apex:outputText value="{!
+
+followup60}"/></font></li>
+                                                    </ul>
+                                                </td> 
+                                                <td>
+                                                    <ul class="item">
+                                                        <li>{!$Label.Day_90}&nbsp;<font class="list_font"><apex:outputText value="{!
+
+followup90}"/></font></li>
+                                                    </ul>
+                                                </td> 
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="cntr mar_tp_10">
+                                        <h3 class="coaching_pnk_hdr">&nbsp;{!$Label.Dreams_and_Goals}</h3>
+                                        <table  width="100%" border="0" cellspacing="0" cellpadding="0">
+                                            <tr>
+                                                <td>
+                                                    <ul class="itemlong">
+                                                        <li>
+                                                            <table>
+                                                                <tr>
+                                                                    <td>{!$Label.Short} {!$Label.Term}:&nbsp;</td>
+                                                                    <td><div style="word-wrap: break-word;width: 670px;overflow: Visible; display: 
+
+block;"><font class="list_font"><apex:outputText value="{!shortTermGoals}"/></font></div></td>
+                                                                </tr>
+                                                            </table>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <ul class="itemlong">
+                                                        <li>
+                                                            <table>
+                                                                <tr>
+                                                                    <td>{!$Label.Long} {!$Label.Term}:&nbsp;</td>
+                                                                    <td><div style=" word-wrap: break-word;width: 670px;overflow: hidden; display: 
+
+block;"><font class="list_font"><apex:outputText value="{!longTermGoals}"/></font></div></td>
+                                                                </tr>
+                                                            </table>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="cntr mar_tp_10">
+                                        <h3 class="coaching_pnk_hdr">&nbsp;{!$Label.Prior_Quarter} {!$Label.Achievements}</h3>
+                                        <table  width="100%" border="0" cellspacing="0" cellpadding="0">
+                                            <tr>
+                                                <td width="20">
+                                                    <ul class="itemlong">
+                                                        <li>
+                                                            <table>
+                                                                <tr>
+                                                                    <td>{!$Label.Personal}:&nbsp;</td>
+                                                                    <td><div style=" word-wrap: break-word;width: 670px;overflow: hidden; display: 
+
+block;"><font class="list_font"><apex:outputText value="{!personalAcheivementPY}"/></font></div></td>
+                                                                </tr>
+                                                            </table>
+                                                        </li>
+                                                    </ul>
+                                                </td> 
+                                            </tr>
+                                            <tr>
+                                                <td width="20">
+                                                    <ul class="itemlong">
+                                                        <li>
+                                                            <table>
+                                                                <tr>
+                                                                    <td>{!$Label.Unit}:&nbsp;</td>
+                                                                    <td><div style=" word-wrap: break-word;width: 670px;overflow: hidden; display: 
+
+block;"><font class="list_font"><apex:outputText value="{!unitAcheivementPY}"/></font></div></td>
+                                                                </tr>
+                                                            </table>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="cntr mar_tp_10 horz-sprtr pad_btm_20">
+                                        <h3 class="coaching_pnk_hdr">&nbsp;{!$Label.Prior_Quarter} {!$Label.Key_Learnings}</h3>
+                                        <table  width="100%" border="0" cellspacing="0" cellpadding="0">
+                                            <tr>
+                                                <td width="20">
+                                                    <ul class="itemlong">
+                                                        <li>
+                                                            <table>
+                                                                <tr>
+                                                                    <td><apex:outputlabel value="{!$Label.Key_Learnings}" 
+
+escape="false">:</apex:outputlabel></td>
+                                                                    <td><div style=" word-wrap: break-word;width: 670px;overflow: hidden; display: 
+
+block;"><font class="list_font"><apex:outputText value="{!keyLearnings}"/></font></div></td>
+                                                                </tr>
+                                                            </table>
+                                                         </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    
+                                    <div class="cntr mar_tp_10 horz-sprtr pad_btm_20">
+<!--                                        <c:BusinessPlan bpController="{!ControllerRef}"/> -->
+                                    </div>
+                                    
+                                    <div class="cntr mar_tp_20">
+                                        <h3 class="popup_hdrs">&nbsp;{!$Label.Action} {!$Label.Plan}</h3>
+                                        <div class="gry_nfo_bx">
+                                            <div class="cntr mar_tp_10">
+                                                <h3 class="coaching_pnk_hdr brdr_btm" style="padding-bottom:1px;">&nbsp;{!$Label.Recuit}</h3>
+                                                <table  width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                    <tr>
+                                                        <td>
+                                                            <ul class="items">
+                                                                <li style="{!IF(AND(recruiting_ActStr1 == null, recruiting_ActStr2 == null, 
+
+recruiting_ActStr3 == null),'display:yes','display:none')}"><div style=" word-wrap: break-word;width: 670px;overflow: hidden; display: 
+
+block;"><apex:outputText value="{!$Label.No_data_entered}"/></div></li>
+                                                                <li style="{!IF(recruiting_ActStr1 !=null,'display:yes','display:none')}"><div style=" word-
+
+wrap: break-word;width: 670px;overflow: hidden; display: block;"><apex:outputText value="{!recruiting_ActStr1}"/></div></li>
+                                                                <li style="{!IF(recruiting_ActStr2 !=null,'display:yes','display:none')}"><div style=" word-
+
+wrap: break-word;width: 670px;overflow: hidden; display: block;"><apex:outputText value="{!recruiting_ActStr2}"/></div></li>
+                                                                <li style="{!IF(recruiting_ActStr3 !=null,'display:yes','display:none')}"><div style=" word-
+
+wrap: break-word;width: 670px;overflow: hidden; display: block;"><apex:outputText value="{!recruiting_ActStr3}"/></div></li>
+                                                            </ul>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="cntr mar_tp_10">
+                                                <h3 class="coaching_pnk_hdr brdr_btm" style="padding-bottom:1px;">&nbsp;{!$Label.ActivityYOU}</h3>
+                                                <table  width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                    <tr>
+                                                        <td>
+                                                            <ul class="items">
+                                                                <li style="{!IF(AND(activity_ActStr1 == null, activity_ActStr2 == null,activity_ActStr3 == 
+
+null),'display:yes','display:none')}"><div style=" word-wrap: break-word;width: 670px;overflow: hidden; display: block;"><apex:outputText value="{!
+
+$Label.No_data_entered}"/></div></li>
+                                                                <li style="{!IF(activity_ActStr1 !=null,'display:yes','display:none')}"><div style=" word-
+
+wrap: break-word;width: 670px;overflow: hidden; display: block;"><apex:outputText value="{!activity_ActStr1}"/></div></li>
+                                                                <li style="{!IF(activity_ActStr2 !=null,'display:yes','display:none')}"><div style=" word-
+
+wrap: break-word;width: 670px;overflow: hidden; display: block;"><apex:outputText value="{!activity_ActStr2}"/></div></li>
+                                                                <li style="{!IF(activity_ActStr3 !=null,'display:yes','display:none')}"><div style=" word-
+
+wrap: break-word;width: 670px;overflow: hidden; display: block;"><apex:outputText value="{!activity_ActStr3}"/></div></li>
+                                                            </ul>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="cntr mar_tp_10">
+                                                <h3 class="coaching_pnk_hdr brdr_btm" style="padding-bottom:1px;">&nbsp;{!$Label.Top_Seller_Title_Achie}</h3>
+                                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                    <tr>
+                                                        <td>
+                                                            <ul class="items">
+                                                                <li style="{!IF(AND(topSeller_ActStr1 == null, topSeller_ActStr2 == null,topSeller_ActStr3 == 
+
+null),'display:yes','display:none')}"><div style=" word-wrap: break-word;width: 670px;overflow: hidden; display: block;"><apex:outputText value="{!
+
+$Label.No_data_entered}"/></div></li>
+                                                                <li style="{!IF(topSeller_ActStr1 !=null,'display:block','display:none')}"><div style="word-
+
+wrap: break-word;width: 320px;overflow: hidden; display: block;"><apex:outputText value="{!topSeller_ActStr1}"/></div></li>
+                                                                <li style="{!IF(topSeller_ActStr2 !=null,'display:block','display:none')}"><div style="word-
+
+wrap: break-word;width: 320px;overflow: hidden; display: block;"><apex:outputText value="{!topSeller_ActStr2}"/></div></li>
+                                                                <li style="{!IF(topSeller_ActStr3 !=null,'display:block','display:none')}"><div style="word-
+
+wrap: break-word;width: 320px;overflow: hidden; display: block;"><apex:outputText value="{!topSeller_ActStr3}"/></div></li>
+                                                            </ul>
+                                                        </td>
+                                                        <td>
+                                                            <ul class="items">
+                                                                <li><div style="word-wrap: break-word;width: 320px;overflow: hidden; display: 
+
+block;"><apex:outputText value="{!IF(topSeller_Candidates !=null,topSeller_Candidates,$Label.No_data_entered)}"/></div></li>                                  
+
+                       
+                                                            </ul>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="cntr mar_tp_10">
+                                                <h3 class="coaching_pnk_hdr brdr_btm" style="padding-bottom:1px;">&nbsp;{!$Label.Ldrship_Title_Achie}</h3>
+                                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                    <tr>
+                                                        <td>
+                                                            <ul class="items">
+                                                                <li style="{!IF(AND(leadership_ActStr1 == null, leadership_ActStr2 == null,leadership_ActStr3 
+
+== null),'display:yes','display:none')}"><div style=" word-wrap: break-word;width: 670px;overflow: hidden; display: block;"><apex:outputText value="{!
+
+$Label.No_data_entered}"/></div></li>
+                                                                <li style="{!IF(leadership_ActStr1 !=null,'display:block','display:none')}"><div 
+
+style="word-wrap: break-word;width: 320px;overflow: hidden; display: block;"><apex:outputText value="{!leadership_ActStr1}"/></div></li>
+                                                                <li style="{!IF(leadership_ActStr2 !=null,'display:block','display:none')}"><div 
+
+style="word-wrap: break-word;width: 320px;overflow: hidden; display: block;"><apex:outputText value="{!leadership_ActStr2}"/></div></li>
+                                                                <li style="{!IF(leadership_ActStr3 !=null,'display:block','display:none')}"><div 
+
+style="word-wrap: break-word;width: 320px;overflow: hidden; display: block;"><apex:outputText value="{!leadership_ActStr3}"/></div></li>
+                                                            </ul>
+                                                        </td>
+                                                        <td>
+                                                            <ul class="items">
+                                                                <li><div style="word-wrap: break-word;width: 320px;overflow: hidden; display: 
+
+block;"><apex:outputText value="{!IF(leadership_Candidates !=null,leadership_Candidates,$Label.No_data_entered)}"/></div></li>
+                                                            </ul>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="cntr mar_tp_10">
+                                                <h3 class="coaching_pnk_hdr brdr_btm" style="padding-bottom:1px;">&nbsp;{!$Label.Persl_Devel_Plan}</h3>
+                                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                    <tr>
+                                                        <td>
+                                                            <ul class="items">
+                                                                <li style="{!IF(AND(perDev_ActStr1 == null, perDev_ActStr2 == null,perDev_ActStr3 == 
+
+null),'display:yes','display:none')}"><div style=" word-wrap: break-word;width: 670px;overflow: hidden; display: block;"><apex:outputText value="{!
+
+$Label.No_data_entered}"/></div></li>
+                                                                <li style="{!IF(perDev_ActStr1 !=null,'display:block','display:none')}"><div style="word-
+
+wrap: break-word;width: 320px;overflow: hidden; display: block;"><apex:outputText value="{!perDev_ActStr1}"/></div></li>
+                                                                <li style="{!IF(perDev_ActStr2 !=null,'display:block','display:none')}"><div style="word-
+
+wrap: break-word;width: 320px;overflow: hidden; display: block;"><apex:outputText value="{!perDev_ActStr2}"/></div></li>
+                                                                <li style="{!IF(perDev_ActStr3 !=null,'display:block','display:none')}"><div style="word-
+
+wrap: break-word;width: 320px;overflow: hidden; display: block;"><apex:outputText value="{!perDev_ActStr3}"/></div></li>
+                                                            </ul>
+                                                        </td>
+                                                        <td>
+                                                            <ul class="items">
+                                                                <li style="{!IF(AND(perDev_ActStr4 == null, perDev_ActStr5 == null,perDev_ActStr6 == 
+
+null),'display:yes','display:none')}"><div style=" word-wrap: break-word;width: 670px;overflow: hidden; display: block;"><apex:outputText value="{!
+
+$Label.No_data_entered}"/></div></li>
+                                                                <li style="{!IF(perDev_ActStr4 !=null,'display:block','display:none')}"><div style="word-
+
+wrap: break-word;width: 320px;overflow: hidden; display: block;"><apex:outputText value="{!perDev_ActStr4}"/></div></li>
+                                                                <li style="{!IF(perDev_ActStr5 !=null,'display:block','display:none')}"><div style="word-
+
+wrap: break-word;width: 320px;overflow: hidden; display: block;"><apex:outputText value="{!perDev_ActStr5}"/></div></li>
+                                                                <li style="{!IF(perDev_ActStr6 !=null,'display:block','display:none')}"><div style="word-
+
+wrap: break-word;width: 320px;overflow: hidden; display: block;"><apex:outputText value="{!perDev_ActStr6}"/></div></li>
+                                                            </ul>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <apex:outputPanel styleclass="cntr mar_tp_10" rendered="{!isRisingStarSec}">
+                                                <h3 class="coaching_pnk_hdr brdr_btm">&nbsp;{!$Label.Rising_Stars_Devel}</h3>
+                                                <table  width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                    <tr>
+                                                        <td>
+                                                            <ul class="items">
+                                                                <li style="{!IF(AND(rising_ActStr1 == null, rising_ActStr2 == null, rising_ActStr3 == 
+
+null),'display:yes','display:none')}"><div style=" word-wrap: break-word;width: 670px;overflow: hidden; display: block;"><apex:outputText value="{!
+
+$Label.No_data_entered}"/></div></li>
+                                                                <li style="{!IF(rising_ActStr1 !=null,'display:block','display:none')}"><div style="word-
+
+wrap: break-word;width: 320px;overflow: hidden; display: block;"><apex:outputText value="{!rising_ActStr1}"/></div></li>
+                                                                <li style="{!IF(rising_ActStr2 !=null,'display:block','display:none')}"><div style="word-
+
+wrap: break-word;width: 320px;overflow: hidden; display: block;"><apex:outputText value="{!rising_ActStr2}"/></div></li>
+                                                                <li style="{!IF(rising_ActStr3 !=null,'display:block','display:none')}"><div style="word-
+
+wrap: break-word;width: 320px;overflow: hidden; display: block;"><apex:outputText value="{!rising_ActStr3}"/></div></li>
+                                                            </ul>
+                                                        </td>
+                                                        <td>
+                                                            <ul class="items">
+                                                                <li><div style="word-wrap: break-word;width: 320px;overflow: hidden; display: 
+
+block;"><apex:outputText value="{!IF(rising_Candidates !=null,rising_Candidates,$Label.No_data_entered)}"/></div></li>
+                                                            </ul>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </apex:outputPanel>
+                                        </div>
+                                    </div>
+                                </div>
+                            </apex:outputPanel>
+                        </div>
+                   
+</apex:form>
+
+</apex:pageBlock>
+</apex:page>

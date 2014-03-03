@@ -1,0 +1,82 @@
+<apex:page >
+    <apex:stylesheet value="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/overcast/jquery-ui.css"/>  
+    <apex:stylesheet value="{!URLFOR($Resource.JQGridLatest, 'css/ui.jqgrid.css')}" />  
+    <apex:stylesheet value="{!URLFOR($Resource.JQGridLatest, 'plugins/ui.multiselect.css')}" />    
+     
+    <apex:includeScript value="{!URLFOR($Resource.JQGridLatest, 'js/jquery.min.js')}"/> 
+    <apex:includeScript value="{!URLFOR($Resource.JQGridLatest, 'js/jquery.jqGrid.min.js')}"/>
+         
+    <script type="text/javascript" src="{!URLFOR($Resource.JQGridLatest, 'js/jquery-ui-1.8.2.custom.min.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.JQGridLatest, 'src/grid.jqueryui.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.JQGridLatest, 'plugins/jquery.searchFilter.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.JQGridLatest, 'plugins/ui.multiselect.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.JQGridLatest, 'plugins/grid.setcolumns.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.JQGridLatest, 'src/i18n/grid.locale-en.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.JQGridLatest, 'js/jquery.jqGrid.min.js')}"></script>
+ 
+
+    <div id="containerDiv">
+    <table id="list47"></table>
+    <div id="plist47"></div>
+    </div>
+    
+    <script>
+    var mydata = [
+            {id:"1",invdate:"2010-05-24",name:"N/A",note:"note",tax:"10.00",total:"2111.00",
+            level:"0", parent:"", isLeaf:false, expanded:false, loaded:true} ,
+            {id:"2",invdate:"2010-05-25",name:"n/a",note:"note2",tax:"20.00",total:"320.00",
+            level:"0", parent:"", isLeaf:false, expanded:false, loaded:true},
+            {id:"3",invdate:"2007-09-01",name:"abtest3",note:"note3",tax:"30.00",total:"430.00",
+            level:"0", parent:"", isLeaf:false, expanded:false, loaded:true},
+            
+            {id:"4",invdate:"2007-10-04",name:"ABtest11",note:"note",tax:"10.00",total:"210.00",
+            level:"1", parent:"1", isLeaf:false, expanded:false, loaded:true},
+            {id:"5",invdate:"2007-10-05",name:"1test21",note:"note2",tax:"20.00",total:"320.00",
+            level:"1", parent:"2", isLeaf:false, expanded:false, loaded:true},
+            {id:"6",invdate:"2007-09-06",name:"2test31",note:"note3",tax:"30.00",total:"430.00",
+            level:"1", parent:"3", isLeaf:false, expanded:false, loaded:true},  
+                    
+            {id:"7",invdate:"2007-10-04",name:"!test12",note:"note",amount:"300.00",tax:"10.00",total:"210.00",
+            level:"1", parent:"1", isLeaf:true, expanded:false, loaded:true},
+            {id:"8",invdate:"2007-10-03",name:"@test22",note:"note2",amount:"300.00",tax:"21.00",total:"320.00",
+            level:"1", parent:"2", isLeaf:true, expanded:false, loaded:true},
+            {id:"9",invdate:"2007-09-01",name:"test32",note:"note3",amount:"400.00",tax:"30.00",total:"430.00",
+            level:"1", parent:"3", isLeaf:true, expanded:false, loaded:true},           
+            
+        ];
+    jQuery("#list47").jqGrid({
+        data: mydata,
+        datatype: "local",
+        height: 'auto',
+        rowNum: 5,
+        rowList: [5,20,30],
+        colNames:['Inv No','Date', 'Client', 'Amount','Tax','Total','Notes'],
+        colModel:[
+            {name:'id',index:'id', width:60, sorttype:"int", summaryType:'count', summaryTpl : '({0}) total'},
+            {name:'invdate',index:'invdate', width:90, sorttype:"date", formatter:"date"},
+            {name:'name',index:'name', width:100, editable:true},
+            {name:'amount',index:'amount', width:80, align:"right",sorttype:"float", formatter:"number", editable:true, summaryType:'sum'},
+            {name:'tax',index:'tax', width:80, align:"right",sorttype:"float", editable:true, formatter:"number", summaryType:'sum'},       
+            {name:'total',index:'total', width:80,align:"right",sorttype:"float", formatter:"number", summaryType:'sum'},       
+            {name:'note',index:'note', width:150, sortable:false}       
+        ],
+        pager: "#plist47",
+        viewrecords: true,
+        sortname: 'name',
+        treeGrid: false,
+        ExpandColumn : 'name',
+        grouping:false,
+        groupingView : {
+            groupField : ['name'],
+            groupColumnShow : [true],
+            groupText : ['<b>{0} - {1} Item(s)</b>'],
+            groupCollapse : false,
+            groupOrder: ['asc'],
+            groupSummary : [true],
+            showSummaryOnHide: true,
+            groupDataSorted : true
+        },
+        caption: "Grouping Array Data"
+    });
+    </script>
+</apex:page>

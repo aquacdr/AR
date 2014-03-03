@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableEnhancedLookup>false</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>false</enableReports>
+    <fields>
+        <fullName>G1_Active_Reps_Txt__c</fullName>
+        <defaultValue>&apos;0&apos;</defaultValue>
+        <externalId>false</externalId>
+        <label>G1 Active Reps</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>G1_Adv_Unit_Leaders_Txt__c</fullName>
+        <defaultValue>&apos;0&apos;</defaultValue>
+        <externalId>false</externalId>
+        <label>G1 Adv Unit Leaders</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>G1_Exec_Unit_Leaders_Txt__c</fullName>
+        <defaultValue>&apos;0&apos;</defaultValue>
+        <externalId>false</externalId>
+        <label>G1 Exec Unit Leaders</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>G1_Sr_Exec_Unit_Leaders_1_Txt__c</fullName>
+        <defaultValue>&apos;0&apos;</defaultValue>
+        <externalId>false</externalId>
+        <label>G1 Sr Exec Unit 1 Leaders</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>G1_Sr_Exec_Unit_Leaders_2_Txt__c</fullName>
+        <defaultValue>&apos;0&apos;</defaultValue>
+        <externalId>false</externalId>
+        <label>G1 Sr Exec Unit 2 Leaders</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>G1_Sr_Exec_Unit_Leaders_3_Txt__c</fullName>
+        <defaultValue>&apos;0&apos;</defaultValue>
+        <externalId>false</externalId>
+        <label>G1 Sr Exec Unit 3 Leaders</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>G1_Sr_Exec_Unit_Leaders_4_Txt__c</fullName>
+        <defaultValue>&apos;0&apos;</defaultValue>
+        <externalId>false</externalId>
+        <label>G1 Sr Exec Unit 4 Leaders</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>G1_Unit_Leaders_Txt__c</fullName>
+        <defaultValue>&apos;0&apos;</defaultValue>
+        <externalId>false</externalId>
+        <label>G1 Unit Leaders</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Leadership_Title_Txt__c</fullName>
+        <defaultValue>&apos;0&apos;</defaultValue>
+        <externalId>false</externalId>
+        <label>Leadership Title</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Personal_Volume_Txt__c</fullName>
+        <defaultValue>&apos;0&apos;</defaultValue>
+        <externalId>false</externalId>
+        <label>Personal Volume</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Total_Unit_Sales_Txt__c</fullName>
+        <defaultValue>&apos;0&apos;</defaultValue>
+        <externalId>false</externalId>
+        <label>Total Unit Sales</label>
+        <length>100</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Earning Illustrator Row</label>
+    <nameField>
+        <label>Estimated Erng</label>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Earning Illustrator Row</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>Private</sharingModel>
+</CustomObject>

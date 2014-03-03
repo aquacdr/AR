@@ -1,0 +1,698 @@
+<!--
+Developed by:- Cognizant (Manas Maity) 
+This page is used for 90 Days Business plan.
+-->
+<apex:page showheader="false" sidebar="false" standardStyleSheets="false" 
+            cache="false" controller="BusinessPlanControllerNew" action="{!BPAction}" rendered="{!$Profile.Name=='Avon Leader'}">
+    <apex:outputPanel id="wholepage">
+    <apex:composition template="YOUPageTemplateNoActions">
+    <apex:define name="content">
+    <apex:form id="BPform">
+    <apex:outputPanel id="wholePan">
+    <div>
+    <apex:stylesheet value="{!URLFOR($Resource.ALMYouAssets, 'css/BP.css')}"/>
+    <apex:stylesheet value="{!URLFOR($Resource.DatePick, 'css/ui-lightness/jquery-ui-1.8.10.custom.css')}"/>
+    <apex:includeScript value="{!URLFOR($Resource.DatePick, 'js/jquery-ui-1.8.10.custom.min.js')}"/>
+    <script src="https://jquery-joshbush.googlecode.com/files/jquery.maskedinput-1.2.2.js"></script>
+    <style type="text/css">
+        a{
+            text-decoration:none;
+        }
+    .txt_black_plan_bp{
+        width:98%;
+        border:solid 1px #a4a4a4;
+        color:#000;
+        padding:5px 5px 5px 7px;
+        height:35px;
+        margin:0 0 4px 0;
+     }
+     .txt_grey_plan_bp {
+        border: 1px solid #A4A4A4;
+        color: #A2A1A1;
+        height: 35px;
+        margin: 0 0 4px;
+        overflow: auto;
+        padding: 5px 5px 5px 7px;
+        resize: none;
+        width: 99%;
+     }
+     .scnd_hdr_BP {
+        color: #000000;
+        font-size: 14px;
+        font-weight: 700;
+        padding: 35px 0 10px;
+    }
+    .yellow_Currency_BP {
+    	background: #F6DE05;
+    	border: solid 1px #5d5d5d;
+    	color: #000;
+    }
+    </style>
+    <script type="text/javascript">
+         ALM_PAGE_NAME="{!OmniturePageName}"; 
+         jQuery(document).ready(function(){
+         
+         //for masking Date fields
+         //jQuery(".myDate").mask("99/99/9999");
+         
+         //Masking ends
+                         
+         jQuery(".yellow_BP").keypress(function(e) {
+         if(e.which==0 ||e.which==8)
+         return true;
+	        //if (e.which==46 ||(e.which <= 90&&e.which >= 65)||(e.which <= 122&&e.which >= 97)) { 
+	        if (e.which<48||e.which>57) {              
+		        showIntOnlyMsg();
+		        return(false);
+	        }
+	    });
+	    
+	    jQuery(".yellow_Currency_BP").keypress(function(e) {
+         
+	         if(e.which==0 ||e.which==8)
+	         return true;
+	        if ((e.which!=46 && (e.which<48||e.which>57))) {
+	        //if (e.which<48||e.which>57) {              
+		        showIntOnlyMsg();
+		        return(false);
+	        }
+	        var decExist = this.value.indexOf(".");
+	        if(e.which==46 && decExist> -1) {
+	        	showIntOnlyMsg();
+		        return(false);
+	        }
+	    });
+        });//added swarnava for Decimal issue Defect Id:2350   
+        jQuery(".txt_grey_plan_bp,.action_ht_116_bp").focus(function(){
+                        if(this.value == '{!$Label.Action}' || this.value == '{!$Label.Candidates}'){
+                            this.value = '';
+                            jQuery(this).css('color','#000');
+                        }
+         });
+         jQuery(".txt_grey_plan_bp,.action_ht_116_bp").blur(function(){
+                    if (jQuery(this).attr('class')=='txt_grey_plan_bp' && this.value=='') {
+                        this.value = '{!$Label.Action}';
+                        jQuery(this).css('color','#a2a1a1');
+                    }else if(jQuery(this).attr('class')=='action_ht_116_bp' && this.value==''){
+                        this.value = '{!$Label.Candidates}';
+                        jQuery(this).css('color','#a2a1a1');
+                    }else{
+                        jQuery(this).css('color','#000');
+                    }
+                });
+        function labelcolor(){
+            jQuery(".txt_grey_plan_bp,.action_ht_116_bp").each(
+                function(index){
+                    if(jQuery(this).val()!='{!$Label.Action}' && jQuery(this).val()!='{!$Label.Candidates}')
+                    jQuery(this).css('color','#000');
+                }
+            );
+        }                
+         var fixStyling = function()
+           {
+            diasbleBtns();
+            //alert(document.getElementById('isChange').value);
+            jQuery("[href]").click(unloadForm);
+            jQuery(".txt_grey_plan_bp,.action_ht_116_bp").each(
+                function(index){
+                    if(jQuery(this).val()!='{!$Label.Action}' && jQuery(this).val()!='{!$Label.Candidates}')
+                    jQuery(this).css('color','#000');
+                }
+            );
+            jQuery(".txt_grey_plan_bp,.action_ht_116_bp").bind({
+                focus:function(){
+                        if(this.value == '{!$Label.Action}' || this.value == '{!$Label.Candidates}'){
+                            this.value = '';
+                            jQuery(this).css('color','#000');
+                        }
+                },
+                blur:function(){
+                    if (jQuery(this).attr('class')=='txt_grey_plan_bp' && this.value=='') {
+                        this.value = '{!$Label.Action}';
+                        jQuery(this).css('color','#a2a1a1');
+                    }else if(jQuery(this).attr('class')=='action_ht_116_bp' && this.value==''){
+                        this.value = '{!$Label.Candidates}';
+                        jQuery(this).css('color','#a2a1a1');
+                    }else{
+                        jQuery(this).css('color','#000');
+                    }
+                }
+         });
+        };
+        function revertBack(){
+            //alert('revert');
+            hideMask();
+            var cls = setTimeout(revertBack,10);
+        }
+        var retURL;
+        function unloadForm(){
+            //alert(jQuery(this).parent().attr("id"));
+            if(jQuery(this).parent().attr("id")=="srtnew"){
+                //alert('srtnew');
+            }else if(jQuery(this).parent().attr("id")=="btn"){
+                //alert('calculate');
+            }else if(jQuery(this).parent().attr("id")=="saveBtnDiv"){
+                //alert('save');
+            }else if(jQuery(this).parent().attr("id")=="page_help"){
+            }else{
+                //alert(jQuery("#isChange").val());
+                if(jQuery("#isChange").val()=='YES'){
+                    document.getElementById('isReload').value = 'YES';
+                    retURL = jQuery(this).attr('href');
+                    //alert(retURL);
+                    return confirmExit();
+                }else{
+                    return true;
+                }
+            }
+        }
+        function enableBtns(){
+            //alert(jQuery("#isChange").val());
+            enableCalBtn();
+            enableSaveBtn();
+            //document.getElementById('isChanged').value = 'true';
+        }
+        function enableCalBtn(){
+            jQuery("#isChange").val('YES');
+            jQuery("#btn").show();
+            jQuery("#btnDsbld").hide();
+        }
+        function enableSaveBtn(){
+            //alert('change');
+            jQuery("#isChange").val('YES');
+            jQuery("#saveBtnDiv").show();
+            jQuery("#saveBtnDivDsb").hide();
+        }
+        function diasbleBtns(){
+            jQuery("#saveBtnDiv").hide();
+            jQuery("#saveBtnDivDsb").show();
+            dsblCalBtn();
+        }
+        function isChange(){
+            jQuery("#isChange").val('YES');
+            jQuery("#saveBtnDivDsb").hide();
+            jQuery("#saveBtnDiv").show();
+            dsblCalBtn();
+            labelcolor();
+        }
+        function dsblCalBtn(){
+            jQuery("#btn").hide();
+            jQuery("#btnDsbld").show();
+            //jQuery("#saveBtnDivDsb").hide();
+        }
+        function confirmExit(){
+                if(jQuery("#email_sel_mask1").attr('class')=='white_trans_closed'){
+                    jQuery("#email_sel_mask1").attr('class','white_trans');
+                }else{
+                    jQuery("#email_sel_mask1").attr('class','white_trans_closed');
+                }
+               return false;
+          }
+          
+           function hideMask(){
+            if(jQuery("#email_sel_mask1").attr('class')=='white_trans'){
+                    jQuery("#email_sel_mask1").attr('class','white_trans_closed');
+                }else{
+                    jQuery("#email_sel_mask1").attr('class','white_trans');
+                }
+           }
+           function showIntOnlyMsg(){
+                if(jQuery("#integer_only").attr('class')=='white_trans_closed'){
+                    jQuery("#integer_only").attr('class','white_trans');
+                }else{
+                    jQuery("#integer_only").attr('class','white_trans_closed');
+                }
+               return false;
+          }
+           function hideIntOnly(){
+            if(jQuery("#integer_only").attr('class')=='white_trans'){
+                    jQuery("#integer_only").attr('class','white_trans_closed');
+                }else{
+                    jQuery("#integer_only").attr('class','white_trans');
+                }
+           }
+           function fwdPage(){
+            jQuery("#isChange").val('NO');
+            hideMask();
+            var cls = setTimeout(revertBack,10);
+           }
+           function redirectPage(){
+            //alert('retURL');
+            window.location.href=retURL;
+           }
+           function reloadPage(){
+            jQuery("#isChange").val('NO');
+            window.location.reload();
+           }
+           function newPlan(){
+            jQuery("#isChange").val('YES');
+            jQuery("#btn").hide();
+            jQuery("#saveBtnDiv").show();
+            jQuery("#saveBtnDivDsb").hide();
+            diasbleBtns();
+           }
+           function maxLength1(field,maxChars){
+            if(field.value.length >= maxChars){
+                field.value = field.value.substring(0,maxChars);
+            }
+           }  
+    jQuery(function() {        
+        jQuery( ".myDate" ).datepicker({
+            dateFormat:'{!dateFormat_BP_UI}',
+            changeMonth: true,
+            changeYear: true              
+        });    
+        jQuery( ".myDate" ).mask("99/99/9999");
+        var dateFormat='{!dateFormat_BP_UI}';
+        
+        if(dateFormat=='dd/mm/yy')
+        {
+         //alert('pattern set for:'+dateFormat);
+         jQuery( ".myDate" ).attr("pattern", "(0[1-9]|1[0-9]|2[0-9]|3[01]).(0[1-9]|1[012]).[0-9]{4}");
+        }
+        if(dateFormat=='mm/dd/yy')
+        {
+         //alert('pattern set for:'+dateFormat);
+         jQuery( ".myDate" ).attr("pattern", "(0[1-9]|1[012]).(0[1-9]|1[0-9]|2[0-9]|3[01]).[0-9]{4}");
+        }
+        //alert('pattern set');
+    });
+    
+    // adde by nalin 
+    function check(input) {
+        
+        /*  
+        if (input.validity) {
+          if (input.validity.valid === true) {
+            
+            return true;
+          } else {
+            
+            return false;
+          }
+        }
+        */
+        var dateFormat='{!dateFormat_BP_UI}';
+        var regexchk='';
+        var val=input.value;
+        
+        //alert('dateFormat: '+dateFormat);
+        //alert('val: '+val);
+        
+        if(val==''||val==null)
+        {
+         return true;
+        }
+        
+        if(dateFormat=='dd/mm/yy')
+        {
+         regexchk=val.match("(0[1-9]|1[0-9]|2[0-9]|3[01])/(0[1-9]|1[012])/[0-9]{4}");
+        }
+        if(dateFormat=='mm/dd/yy')
+        {
+         regexchk=val.match("(0[1-9]|1[012])/(0[1-9]|1[0-9]|2[0-9]|3[01])/[0-9]{4}");
+        }
+        
+        //alert('regexchk: '+regexchk);
+        
+        if(regexchk!=null)
+        {
+          return true;
+        }
+        {
+         return false
+        }
+        
+      };
+    
+    function validateJS()
+    {
+        if  ((document.getElementById("{!$Component.BPform.myDate}") != null)
+            && (document.getElementById("{!$Component.BPform.myDate2}") != null)
+            && (document.getElementById("{!$Component.BPform.myDate3}") != null))
+        {
+             
+             //alert('mydate:'+document.getElementById("{!$Component.BPform.myDate}").value);
+             //alert('mydate2:'+document.getElementById("{!$Component.BPform.myDate2}").value);
+             //alert('mydate3:'+document.getElementById("{!$Component.BPform.myDate3}").value);
+                                       
+             if(document.getElementById("{!$Component.BPform.myDate}").value != null)
+             {
+               var mydate=check(document.getElementById("{!$Component.BPform.myDate}"));
+             }
+             else
+             {
+                mydate=true;
+             }
+             
+             if(document.getElementById("{!$Component.BPform.myDate2}").value != null)
+             {
+               var mydate2=check(document.getElementById("{!$Component.BPform.myDate2}"));
+             }
+             else
+             {
+                mydate2=true;
+             }
+             
+             if(document.getElementById("{!$Component.BPform.myDate3}").value != null)
+             {
+               var mydate3=check(document.getElementById("{!$Component.BPform.myDate3}"));
+             }
+             else
+             {
+                mydate3=true;
+             }
+             
+            //alert('mydate:'+mydate);
+            //alert('mydate:'+mydate2);
+            //alert('mydate:'+mydate3);
+             
+             if(mydate&&mydate2&&mydate3)
+             {
+                var v = setTimeout(subPage,1);
+             }
+             else
+             {
+                alert("Invalid Date(s).Please try again.");
+             
+             }
+         }
+         else
+         {
+           //alert('New plan Saving');
+           var v = setTimeout(subPage,1);         
+         }
+     
+    }
+    //
+    
+    function OnBeforeUnLoad() {
+        if(jQuery("#isChange").val()=='YES' && jQuery("#isReload").val()=='YES'){
+                //document.getElementById('isChange').value = 'NO';
+                return "All data that you have entered will be lost!";
+            }
+        }
+        
+        
+    //Method added by Samudra on 9th Apr, 2013
+    function callOmniture_BP(){
+        
+        var s=s_gi('{!currMarket.Omniture_Suite_Name__c}');
+        s.prop8 = 'Save and Share';
+        s.pageName = 'Save and Share';
+        s.tl(this,'o', 'Save and Share');
+        
+        return false;
+        
+    }//End of Method
+    
+    //Method added by Raktim on 24th Apr, 2013
+    function callOmniture_NewBP(){
+        
+        var s=s_gi('{!currMarket.Omniture_Suite_Name__c}');
+        s.prop8 = 'Create New Plan';
+        s.pageName = 'Create New Plan';
+        s.tl(this,'o', 'Create New Plan');
+                
+        return false;
+        
+    }//End of Method
+    
+    </script> 
+    <body onbeforeUnload="return OnBeforeUnLoad()">
+    <apex:outputPanel rendered="{!NOT(isBPAvailable)}">
+        <center><h3 class="pink_med_hdr_BP">You do not qualify to create/View business plan</h3></center>
+    </apex:outputPanel>
+    <apex:outputPanel rendered="{!isBPAvailable}"> 
+    <apex:actionFunction name="revertBack" action="{!cancelChanges}" />
+    <apex:actionStatus id="counterStatus"  onstart="showProcessingMsg();" onstop="showProcessingMsg();"/>
+    <input type="hidden" id="isChange" value="NO"/>
+    <input type="hidden" id="isReload" value="YES"/>
+     <!--content area-->
+          <div class="big_pnk_hdr_BP" style="padding: 16px 0 0 35px;">
+            <table width="100%">
+                <tr>
+                    <td>
+                        <font color="#FFFFFF">{!$Label.Business_Plan}</font>
+                    </td>
+                    <td id="srtnew" style="vertical-align: text-top;">
+                       <!--  <apex:commandLink rendered="{!AND(isInProgPlan,NOT(isPageRO))}" action="{!startNewPlan}" style="bg-color:#FFFFFF;" onclick="callOmniture_NewBP();" 
+                            rerender="wholePan" oncomplete="javascript:newPlan();"><apex:image id="arrow" value="{!$Resource.Arrow}" width="16" height="13" style="margin:4px 0 0 6px;padding-top:2px"/>
+                            <font size="2" color="#FFFFFF" style="border-bottom: 1px solid #FFFFFF;">{!$Label.Start_new_plan}</font></apex:CommandLink> -->
+                    <apex:commandLink action="{!startNewPlan}" style="bg-color:#FFFFFF;" onclick="javascript:callOmniture_NewBP();" rerender="wholePan" oncomplete="javascript:newPlan();">
+                        <apex:image id="arrow" value="{!$Resource.Arrow}" width="16" height="13" style="margin:4px 0 0 6px;padding-top:2px"/>
+                        <font size="2" color="#FFFFFF" style="border-bottom: 1px solid #FFFFFF;">{!$Label.Start_new_plan}</font>
+                   </apex:CommandLink>
+                    
+                    </td>
+                    <td style="text-align:right;padding-right:15px;vertical-align: text-top;">
+                        <apex:outputText rendered="{!isInProgPlan}"><font size="2" color="#FFFFFF">{!$Label.Last_Updated}: {!lastUpdate}</font></apex:outputText>
+                    </td>
+                </tr>
+            </table>
+          
+          </div>
+          <h2 class="scnd_hdr_BP">{!$Label.Plan_Detail}<!-- {!$Label.Plan}&nbsp;{!$Label.Detail} --></h2>
+          <div class="cntr_BP pad_btm_15_BP horz-sprtr_BP">
+            <div class="gry_shdw_wrpr_BP">
+              <div class="gry_shdw_boxes_BP">
+                <h3 class="pink_med_hdr_BP">{!$Label.Dreams_and_Goals}</h3>
+                <div class="inps_wrpr_BP">
+                  <label>{!$Label.Short_Term}<!-- {!$Label.Short}&nbsp;{!$Label.Term} -->:</label>
+                  <apex:inputTextarea styleClass="input_blk_BP" value="{!shortTermGoals}" disabled="{!isPageRO}" style="overflow:auto;"
+                    onKeyUp="javascript:maxLength1(this,'500');" onchange="javascript:enableSaveBtn();"/>
+                </div>
+                <div class="inps_wrpr_BP">
+                  <label>{!$Label.Long_Term}<!-- {!$Label.Long}&nbsp;{!$Label.Term} -->:</label>
+                  <apex:inputTextarea styleClass="input_blk_BP" value="{!longTermGoals}" disabled="{!isPageRO}" style="overflow:auto;"
+                    onKeyUp="javascript:maxLength1(this,'500');" onchange="javascript:enableSaveBtn();"/>
+                </div>
+              </div>
+            </div>
+            <div class="gry_shdw_wrpr_BP mar_lft_10_BP">
+              <div class="gry_shdw_boxes_BP">
+                <h3 class="pink_med_hdr_BP">{!$Label.Prior_Quarter_Achievements}<!-- {!$Label.Prior_Quarter}&nbsp;{!$Label.Achievements} --></h3>
+                <div class="inps_wrpr_BP">
+                  <label>{!$Label.Personal}:</label>
+                  <apex:inputTextarea styleClass="input_blk_BP" value="{!personalAcheivementPY}" disabled="{!isPageRO}" style="overflow:auto;"
+                    onKeyUp="javascript:maxLength1(this,'500');" onchange="javascript:enableSaveBtn();"/>
+                </div>
+                <div class="inps_wrpr_BP">
+                  <label>{!$Label.Unit}:</label>
+                  <apex:inputTextarea styleClass="input_blk_BP" value="{!unitAcheivementPY}" disabled="{!isPageRO}" style="overflow:auto;"
+                    onKeyUp="javascript:maxLength1(this,'500');" onchange="javascript:enableSaveBtn();"/>
+                </div>
+              </div>
+            </div>
+            <div class="gry_shdw_wrpr_BP mar_lft_10_BP">
+              <div class="gry_shdw_boxes_BP">
+                <h3 class="pink_med_hdr_BP"><apex:outputLabel value="{!$Label.Prior_Quarter_Key_Learnings}" escape="false"/><!-- {!$Label.Prior_Quarter}&nbsp;<apex:outputLabel value="{!$Label.Key_Learnings}" escape="false"/> --></h3>
+                <div class="inps_wrpr_BP">
+                  <apex:outputLabel styleclass="mar_tp_20_BP" value="{!$Label.Key_Learnings}" escape="false"/>
+                  <apex:inputTextarea styleclass="input_blk_BP ht_90_BP" value="{!keyLearnings}" disabled="{!isPageRO}" style="overflow:auto;"
+                    onKeyUp="javascript:maxLength1(this,'500');" onchange="javascript:enableSaveBtn();"/>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Blank Business plan sec -->
+          <apex:outputPanel styleclass="cntr_BP pad_btm_15_BP horz-sprtr_BP">
+            <c:BusinessPlan bpController="{!ControllerRef}"/>
+            <table>
+            <tr style="vertical-align: top;"><td class="cntr_BP mar_tp_20_BP mar_btm_10_bp fnt_sml wd_70 left">
+            <!-- <div class="cntr_BP mar_tp_20_BP mar_btm_10_bp" > -->
+                {!$Label.BP_Declaration_1}
+                {!$Label.BP_Declaration_2} <a href="#" class="black" style="text-decoration: underline;"> {!$Label.BP_Declaration_3}</a>
+            <!-- </div> -->
+            </td>
+            <!-- <apex:outputPanel rendered="{!isCalculateBtn}"> -->
+                <td id="btn" style="{!If(isCalculateBtn,'display:yes','display:none')}; vertical-align:middle;">
+                    <apex:commandLink id="subBtn" styleClass="calculate_cta_bp right" action="{!processPage}" rerender="wholePan" oncomplete="Javascript:isChange();" status="counterStatus">{!$Label.Calculate_Now}<!-- {!$Label.Calculate}&nbsp;{!$Label.Now} --></apex:commandLink>
+                </td>
+                <td id="btnDsbld" style="{!If(isCalculateBtn,'display:yes','display:none')};vertical-align:middle;">
+                    <apex:outputLabel styleClass="calculate_cta_grey_bp right" >{!$Label.Calculate_Now}<!-- {!$Label.Calculate}&nbsp;{!$Label.Now} --></apex:outputLabel>
+                </td>
+            
+            </tr>
+            </table>
+            <!-- </apex:outputPanel> -->
+        </apex:outputPanel>
+          <!-- Blank Business plan sec -->
+          <div class="cntr_BP">
+            <h2 class="scnd_hdr_BP">{!$Label.Action_Plan}</h2>
+            <div class="lt_gry_bg_bp">
+              <div class="lgrey_box_bp">
+                <h3 class="pink_med_hdr_BP">{!$Label.RECRUITING}</h3>
+                <div class="cntr_BP pad_btm_15_BP">
+                    <apex:inputTextarea styleclass="txt_grey_plan_bp" value="{!recruiting_ActStr1}" disabled="{!isPageRO}" onKeyUp="javascript:maxLength1(this,'500');" onchange="javascript:enableSaveBtn();"/>
+                    <apex:inputTextarea styleclass="txt_grey_plan_bp" value="{!recruiting_ActStr2}" disabled="{!isPageRO}" onKeyUp="javascript:maxLength1(this,'500');" onchange="javascript:enableSaveBtn();"/>
+                    <apex:inputTextarea styleclass="txt_grey_plan_bp" value="{!recruiting_ActStr3}" disabled="{!isPageRO}" onKeyUp="javascript:maxLength1(this,'500');" onchange="javascript:enableSaveBtn();"/>
+                </div>
+                <h3 class="pink_med_hdr_BP mar_tp_10_bp">{!$Label.BP_Activity}</h3>
+                <div class="cntr_BP pad_btm_15_BP">
+                    <apex:inputTextarea styleclass="txt_grey_plan_bp" value="{!activity_ActStr1}" disabled="{!isPageRO}" onKeyUp="javascript:maxLength1(this,'500');" onchange="javascript:enableSaveBtn();"/>
+                    <apex:inputTextarea styleclass="txt_grey_plan_bp" value="{!activity_ActStr2}" disabled="{!isPageRO}" onKeyUp="javascript:maxLength1(this,'500');" onchange="javascript:enableSaveBtn();"/>
+                    <apex:inputTextarea styleclass="txt_grey_plan_bp" value="{!activity_ActStr3}" disabled="{!isPageRO}" onKeyUp="javascript:maxLength1(this,'500');" onchange="javascript:enableSaveBtn();"/>
+                </div>
+                <div class="cntr_BP mar_tp_10_bp pad_btm_15_BP">
+                  <h3 class="pink_med_hdr_BP mar_tp_10_bp">{!$Label.Top_Seller_BP_TITLE_ADVANCEMENT}<!-- {!$Label.Top_Seller}&nbsp;{!$Label.BP_TITLE}&nbsp;{!$Label.ADVANCEMENT}--></h3>
+                  <div class="lft_inp_wrpr_bp">
+                    <div class="cntr_BP pad_btm_15_BP">
+                        <apex:inputTextarea styleclass="txt_grey_plan_bp" value="{!topSeller_ActStr1}" disabled="{!isPageRO}" onKeyUp="javascript:maxLength1(this,'255');" onchange="javascript:enableSaveBtn();"/>
+                        <apex:inputTextarea styleclass="txt_grey_plan_bp" value="{!topSeller_ActStr2}" disabled="{!isPageRO}" onKeyUp="javascript:maxLength1(this,'255');" onchange="javascript:enableSaveBtn();"/>
+                        <apex:inputTextarea styleclass="txt_grey_plan_bp" value="{!topSeller_ActStr3}" disabled="{!isPageRO}" onKeyUp="javascript:maxLength1(this,'255');" onchange="javascript:enableSaveBtn();"/>
+                    </div>
+                  </div>
+                  <div class="rht_inp_wrpr_bp">
+                    <apex:inputTextarea styleclass="action_ht_116_bp" value="{!topSeller_Candidates}" disabled="{!isPageRO}" style="height:137px;overflow:auto;" onKeyUp="javascript:maxLength1(this,'500');" onchange="javascript:enableSaveBtn();"/>
+                  </div>
+                </div>
+                <div class="cntr_BP pad_btm_15_BP">
+                  <h3 class="pink_med_hdr_BP mar_tp_10_bp">{!$Label.BP_LEADERSHIP_BP_TITLE_ADVANCEMENT}<!-- {!$Label.BP_LEADERSHIP}&nbsp;{!$Label.BP_TITLE}&nbsp;{!$Label.ADVANCEMENT} --></h3>
+                  <div class="lft_inp_wrpr_bp">
+                    <div class="cntr_BP pad_btm_15_BP">
+                        <apex:inputTextarea styleclass="txt_grey_plan_bp" value="{!leadership_ActStr1}" disabled="{!isPageRO}" onKeyUp="javascript:maxLength1(this,'255');" onchange="javascript:enableSaveBtn();"/>
+                        <apex:inputTextarea styleclass="txt_grey_plan_bp" value="{!leadership_ActStr2}" disabled="{!isPageRO}" onKeyUp="javascript:maxLength1(this,'255');" onchange="javascript:enableSaveBtn();"/>
+                        <apex:inputTextarea styleclass="txt_grey_plan_bp" value="{!leadership_ActStr3}" disabled="{!isPageRO}" onKeyUp="javascript:maxLength1(this,'255');" onchange="javascript:enableSaveBtn();"/>
+                    </div>
+                  </div>
+                  <div class="rht_inp_wrpr_bp">
+                    <apex:inputTextarea styleclass="action_ht_116_bp" value="{!leadership_Candidates}" disabled="{!isPageRO}" style="height:137px;overflow:auto;" onKeyUp="javascript:maxLength1(this,'500');" onchange="javascript:enableSaveBtn();"/>
+                  </div>
+                </div>
+                <div class="cntr_BP pad_btm_15_BP">
+                  <h3 class="pink_med_hdr_BP mar_tp_10_bp">{!$Label.BP_PERSONAL_BP_DEVELOPMENT_BP_PLAN}<!-- {!$Label.BP_PERSONAL}&nbsp;{!$Label.BP_DEVELOPMENT}&nbsp;{!$Label.BP_PLAN} --></h3>
+                  <div class="lft_inp_wrpr_bp">
+                    <div class="cntr_BP pad_btm_15_BP">
+                        <apex:inputTextarea styleclass="txt_grey_plan_bp" value="{!perDev_ActStr1}" disabled="{!isPageRO}" onKeyUp="javascript:maxLength1(this,'255');" onchange="javascript:enableSaveBtn();"/>
+                        <apex:inputTextarea styleclass="txt_grey_plan_bp" value="{!perDev_ActStr2}" disabled="{!isPageRO}" onKeyUp="javascript:maxLength1(this,'255');" onchange="javascript:enableSaveBtn();"/>
+                        <apex:inputTextarea styleclass="txt_grey_plan_bp" value="{!perDev_ActStr3}" disabled="{!isPageRO}" onKeyUp="javascript:maxLength1(this,'255');" onchange="javascript:enableSaveBtn();"/>
+                    </div>
+                  </div>
+                  <div class="rht_inp_wrpr_bp">
+                    <apex:inputTextarea styleclass="txt_grey_plan_bp" value="{!perDev_ActStr4}" disabled="{!isPageRO}" onKeyUp="javascript:maxLength1(this,'255');" onchange="javascript:enableSaveBtn();"/>
+                    <apex:inputTextarea styleclass="txt_grey_plan_bp" value="{!perDev_ActStr5}" disabled="{!isPageRO}" onKeyUp="javascript:maxLength1(this,'255');" onchange="javascript:enableSaveBtn();"/>
+                    <apex:inputTextarea styleclass="txt_grey_plan_bp" value="{!perDev_ActStr6}" disabled="{!isPageRO}" onKeyUp="javascript:maxLength1(this,'255');" onchange="javascript:enableSaveBtn();"/>
+                  </div>
+                </div>
+                <apex:outputPanel styleclass="cntr_BP pad_btm_15_BP" rendered="{!isRisingStarSec}">
+                  <h3 class="pink_med_hdr_BP mar_tp_10_bp">{!$Label.BP_RISING_STARS_BP_DEVELOPMENT}<!-- {!$Label.BP_RISING_STARS}&nbsp;{!$Label.BP_DEVELOPMENT}--></h3>
+                  <div class="lft_inp_wrpr_bp">
+                    <div class="cntr_BP pad_btm_15_BP">
+                        <apex:inputTextarea styleclass="txt_grey_plan_bp" value="{!rising_ActStr1}" disabled="{!isPageRO}" onKeyUp="javascript:maxLength1(this,'255');" onchange="javascript:enableSaveBtn();"/>
+                        <apex:inputTextarea styleclass="txt_grey_plan_bp" value="{!rising_ActStr2}" disabled="{!isPageRO}" onKeyUp="javascript:maxLength1(this,'255');" onchange="javascript:enableSaveBtn();"/>
+                        <apex:inputTextarea styleclass="txt_grey_plan_bp" value="{!rising_ActStr3}" disabled="{!isPageRO}" onKeyUp="javascript:maxLength1(this,'255');" onchange="javascript:enableSaveBtn();"/>
+                    </div>
+                  </div>
+                  <div class="rht_inp_wrpr_bp">
+                    <apex:inputTextarea styleclass="action_ht_116_bp" value="{!rising_Candidates}" disabled="{!isPageRO}" style="height:137px;overflow:auto;" onKeyUp="javascript:maxLength1(this,'500');" onchange="javascript:enableSaveBtn();"/>
+                  </div>
+                </apex:outputPanel>
+              </div>
+            </div>
+          </div>
+          <apex:outputPanel styleclass="cntr_BP mar_tp_20_BP" rendered="{!isInProgPlan}">
+            <div class="scnd_hdr_BP">{!$Label.Followup_Meeting}</div>
+            <div class="calendar_wrpr">
+              <label>30 {!$Label.Day}</label>
+              <apex:inputText id="myDate" styleClass="myDate" value="{!followup30}" disabled="{!isPageRO}" onchange="javascript:enableSaveBtn();"/>
+            </div>
+            <div class="calendar_wrpr">
+                <label>60 {!$Label.Day}</label>
+                <apex:inputText id="myDate2" styleClass="myDate" value="{!followup60}" disabled="{!isPageRO}" onchange="javascript:enableSaveBtn();"/>
+            </div>
+            <div class="calendar_wrpr">
+                <label>90 {!$Label.Day}</label>
+                <apex:inputText id="myDate3" styleClass="myDate" value="{!followup90}" disabled="{!isPageRO}" onchange="javascript:enableSaveBtn();"/> 
+            </div>
+          </apex:outputPanel>
+          <apex:outputPanel rendered="{!isSaveBtn}">
+            <div class="cntr_BP mar_tp_20_BP mar_btm_10_bp fnt_sml wd_70">
+                {!$Label.BP_Disclaimer} 
+            </div>
+            <div id="saveBtnDiv">
+                <!--  Changed by Samudra on 9th Apr, 2013 -->
+                <!--<apex:commandLink id="saveBtn" styleClass="calculate_cta_bp right" action="{!savePage}" oncomplete="javascript:reloadPage();" status="counterStatus" onclick="callOmniture_BP();">{!$Label.Save_Report_and_Share}<!-- {!$Label.Save_Report}&nbsp;{!$Label.and}&nbsp;{!$Label.Share} --><!-- </apex:commandLink>-->
+                <apex:actionFunction name="subPage" action="{!savePage}" status="counterStatus" oncomplete="diasbleBtns();javascript:reloadPage();"/>
+                <!-- <input type="saveBtn" class="calculate_cta_bp right" value="{!$Label.Save_Report_and_Share}" onclick="validateJS();"  /> -->
+                <a class="calculate_cta_bp right" id="saveBtn" href="#saveBtn" onclick="javascript:validateJS();">{!$Label.Save_Report_and_Share}</a>
+                
+            </div>
+            <div id="saveBtnDivDsb" >
+                <apex:outputLabel styleClass="calculate_cta_grey_bp right">{!$Label.Save_Report_and_Share}<!-- {!$Label.Save_Report}&nbsp;{!$Label.and}&nbsp;{!$Label.Share}--></apex:outputLabel>
+            </div>
+          </apex:outputPanel>
+          <!-- <p class="cntr_BP mar_tp_10_bp mar_btm_10_bp" id="saveBtn"> <a href="#" class="calculate_cta_bp right">Save and Share</a></p> -->
+       
+      <!--content area ends-->
+        <apex:actionFunction name="revertBack" action="{!cancelChanges}" oncomplete="javascript:redirectPage();"/>
+    </apex:outputPanel>
+    <div id="integer_only" class="white_trans_closed">
+        <div id="bp_main"><center>
+            <div style="height: 300px;"></div>
+            <table width="300" height="120" border="0" align="center" style="background-color:
+            #FF6; padding-top:200px; padding-left:200px; font-size: 12px; font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+              <tr>
+                <td colspan="2" align="center" valign="middle">
+                    {!$Label.Integer_Only_Msg}
+                </td>
+              </tr>
+              <tr valign="top">
+                <td width="40%" height="20">&nbsp;</td>
+                <td height="20" align="left">
+                    <input type="button" class="bpbtn" id="bp_ok_btn" value="{!$Label.OK}" onclick="javascript:hideIntOnly();"/>
+                </td>
+              </tr>
+            </table>
+            </center>
+         </div>
+    </div>
+    <div id="email_sel_mask1" class="white_trans_closed">
+        <div id="bp_main"><center>
+            <div style="height: 300px;"></div>
+            <table width="300" height="120" border="0" align="center" style="background-color:
+            #FF6; padding-top:200px; padding-left:200px; font-size: 12px; font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;">
+              <tr>
+                <td>&nbsp;</td>
+              </tr>
+              <tr>
+                <td colspan="2" align="center" valign="middle">
+                    {!$Label.Unsaved_Info}
+                </td>
+              </tr>
+              <tr valign="bottom">
+                <td width="60%" height="20">&nbsp;</td>
+                <td height="20" align="right">
+                    <input type="button" class="bpbtn" id="bp_ok_btn" value="{!$Label.OK}" onclick="javascript:fwdPage();"/>
+                    <input type="button" class="bpbtn" value="{!$Label.Cancel}" id="bp_can_btn" onclick="javascript:hideMask();"/>
+                </td>
+              </tr>
+            </table>
+            </center>
+         </div>
+    </div>
+    </body>
+    </div>
+    </apex:outputPanel>
+   <apex:actionFunction name="viewRepDetail" action="{!callRepDetails}" rerender="repDetail" oncomplete="javascript:displayit();" status="coachCounterStatus">
+        <apex:param name="repDetailAcctNbr" assignTo="{!repDetailAcctNbr}" value="{!repDetailAcctNbr}"/>
+    </apex:actionFunction>
+    <apex:actionStatus id="coachCounterStatus"  onstart="showProcessingMsg();" onstop="showProcessingMsg();"/>
+    <div id="email_sel_mask2" class="white_trans_closed">
+    <apex:outputPanel id="repDetail" layout="none">
+        <c:CoachingRecord repacctnbr="{!repDetailAcctNbr}" rendered="{!repDetailAcctNbr!=null}"/>
+    </apex:outputPanel>
+    </div>
+    </apex:form>
+    </apex:define>
+    </apex:composition>
+    </apex:outputPanel>
+    <c:OmnitureWebTrack mktName="{!currMarket.Omniture_Suite_Name__c}" 
+                        mktAcctKey="{!currUser.MRKT_ID_ACCT_NR_KEY__c}"
+                        userType="{!currUser.Profile.Name}"
+                        userTitle="{!currUser.LDRSHP_TITL_LVL_NBR__c}"        
+                        rendered="{!globalConfig.Omniture_Tracking_Enabled__c}"/>
+</apex:page>

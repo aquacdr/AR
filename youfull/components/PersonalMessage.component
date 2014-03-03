@@ -1,0 +1,176 @@
+<apex:component controller="PersonalMessageController" allowDML="true">
+<style>
+.big_pnk_hdr_form {
+            padding-left:55px;
+            font-size:2.2em;
+            } 
+            
+</style>
+<script type="text/javascript">
+//ALM_PAGE_NAME="{!OmniturePageName}";
+
+function sendMyEmail(recpnt){
+    jQuery("#rechid").children().val(recpnt);
+    showHidePersonalMessage('SHOW');
+}
+function showHidePersonalMessage(showHide){
+         var tempPersMsgDiv=jQuery("#send_personal_Msg");
+         var persMsgDiv=jQuery("#personal_message");
+         if(showHide=='SHOW'){
+         
+           //  if(checkSelections()){
+                  //jQuery('#error_msgs_outer_almp').css('display','none');
+                  jQuery(persMsgDiv).attr('class','white_trans');
+                  //alert('pm'+jQuery(tempPersMsgDiv).html());
+                  //var topPos = (jQuery(window).height()/2)-(jQuery('#personal_message').height()/2);
+                  //var leftPos = (jQuery(window).width()/2)-(jQuery('#personal_message').width()/2);
+                  //jQuery("#personal_message").css('top',topPos);
+                  //jQuery("#personal_message").css('left',leftPos);
+                  //jQuery(persMsgDiv).html(jQuery(tempPersMsgDiv).html());
+                  //jQuery(tempPersMsgDiv).html('');
+                  jQuery(persMsgDiv).css('display','block');
+                  jQuery(persMsgDiv).css('visibility','visible');
+             //     jQuery('#pers_msg_err').css('visibility','hidden');
+            // }else{
+             //   showHideErrorMessage('SHOW');
+            // }
+              
+         }
+         if(showHide=='HIDE'){
+              
+              jQuery(persMsgDiv).attr('class','white_trans_closed');
+              jQuery(persMsgDiv).css('visibility','hidden');
+              jQuery('#pers_msg_err').css('visibility','hidden');
+         }
+          
+      }
+      function validatePersonalMsg(){
+        var msgSubj=jQuery("#persMsgSubj").val();
+        var msgDetl=jQuery("#persMsgDetl").val();
+        
+        if(msgSubj.length>0 && msgDetl.length>0){
+            jQuery("#subhid").children().val(msgSubj);
+            jQuery("#msghid").children().val(msgDetl);
+            
+            // Added by Raktim on 8th Apr, 2013
+            var s=s_gi('{!market.Omniture_Suite_Name__c}');
+            s.prop8 = 'Email Send';
+            //s.tl(this,'o', 'Email Send');
+            //EoC
+            
+            SubmitAct();
+            
+        }else{
+            jQuery('#pers_msg_err').css('visibility','visible');
+            jQuery('#pers_msg_err').attr('class','info_msgs_almp_err');
+        }
+      }
+      
+      function clearFields() {
+        jQuery("#persMsgSubj").val('');
+        jQuery("#persMsgDetl").val('');
+        jQuery("#subhid").children().val('');
+        jQuery("#msghid").children().val('');
+        
+      }
+      
+      function checkSelections(){
+            return (jQuery('.brd_none:checked').length>0);
+      }
+      
+      function showHideErrorMessage(sts){
+       if(sts=='SHOW'){
+        	alert(' ... MESSAGE SEND IF..');
+            jQuery('#error_msgs_outer_almp').css('display','block');
+            jQuery('#error_msgs_outer_almp').css('visibility','visible');
+            jQuery('#error_msgs_outer_almp').attr('class','info_msgs_almp_err');
+        }else{
+        	jQuery('#error_msgs_outer_almp').css('display','none');
+        }
+      }
+</script>
+
+<apex:actionRegion >
+<span id="subhid"><apex:inputHidden id="persMsgSubj" value="{!persMsgSubj}"/></span>
+<span id="msghid"><apex:inputHidden id="persMsgDetl" value="{!persMsgDetl}"/></span>
+<span id="rechid"><apex:inputHidden id="rcpntId" value="{!recpntId}"/></span>
+<div id="send_personal_Msg" style="display:none;">
+       <div class="popup_wrpr_msg">
+            <div class="pop_content_form" style="padding-top : 85px;">
+            <a href="#" onClick="showHidePersonalMessage('HIDE');" class="close_btn" style="position: relative;right:-826px;top:-100px;"></a>
+                <div class="big_pnk_hdr_form" style="margin: -87px 0 0 -29px;">
+                    <h1 class="left mar_rht_10">{!$Label.Send_your_own_Message}</h1>                        
+                </div>
+                <div class="wht_nfo_bx">
+                     <div id="pers_msg_err" style="visibility:hidden;">
+                            <apex:outputText value="{!$Label.Lead_pers_msg_send_error}" style="color:#f63724;font-weight:bold;padding-left:5px"/>
+                        </div>
+                       <div class="fltr_srch_form_left">
+                            <label class="form_text">{!$Label.Subject}:</label>
+                            <div class="free_form_text">
+                                <input id="persMsgSubj" type="text" style="width:605px;padding-left:5px;border-style : solid;border-color: gray;border-width:1px;"/></div>
+                                
+                        </div>
+                        <div class="fltr_srch_form_left"> 
+                            <label class="form_text">{!$Label.Message}:</label>
+                            <textarea id="persMsgDetl" class="free_form_area" style="padding-left:5px;border-style : solid;border-color: gray;border-width:1px;"></textarea>
+                            
+                        </div>
+                     <span class="cntr"> <a href="#" onClick="showHidePersonalMessage('HIDE');" class="left msg_cncl" >{!$Label.Cancel}</a>
+                         <a href="#" class="save_cta left" onClick="validatePersonalMsg();">{!$Label.Send}</a>
+                           <apex:actionFunction Name="SubmitAct" action="{!emailSelectedPersonalMsg}" oncomplete="clearFields(); showHidePersonalMessage('HIDE');"    reRender="myOmniture"/>
+                         </span><br />
+                         <apex:outputPanel id="myOmniture">
+                         <apex:outputPanel rendered="{!sendSuccess}">
+                         <script>
+                         	ALM_PAGE_NAME="{!OmniturePageName}";
+                         </script>
+                         	  <c:OmnitureWebTrack mktName="{!market.Omniture_Suite_Name__c}" 
+                    				mktAcctKey="{!currUsr.MRKT_ID_ACCT_NR_KEY__c}"
+                   					userType="{!currUsr.Profile.Name}"
+                    				userTitle="{!currUsr.LDRSHP_TITL_LVL_NBR__c}"        
+                    				rendered="{!globalConfig.Omniture_Tracking_Enabled__c}"/>
+                         </apex:outputPanel></apex:outputPanel>
+                </div>
+            </div>
+    </div>
+                    <!--div style="display:none;">
+                    <table width="100%">
+                    <tr>
+                        <td colspan="2" class="ecard_hdr_txt">{!$Label.Send_your_own_Message}</td>
+                    </tr>
+                    <tr class="rpt_ftr">
+                        <td class="rpt_ftr_cell_nopad" align="right" valign="top">{!$Label.Subject}:</td>
+                        <td><input id="persMsgSubj" maxlength="80" size="60"/>
+                        </td>
+                    </tr>
+                    <tr class="rpt_ftr">
+                        <td class="rpt_ftr_cell_nopad" align="right" valign="top">{!$Label.Message}:</td>
+                        <td>
+                        <textarea id="persMsgDetl" cols="65" rows="5"></textarea>
+                        </td>
+                    </tr>
+                    <tr class="rpt_ftr">
+                        <td colspan="2" class="rpt_ftr_cell_nopad" align="center">
+                            <div id="pers_msg_err" style="visibility:hidden;">
+                                <apex:outputText value="{!$Label.Lead_pers_msg_send_error}" style="color:#f63724;font-weight:bold;padding-left:5px"/>
+                            </div>
+                            <table>
+                            <!-- tr class="rpt_ftr">
+                                <td class="save_send_cancel">
+                                <apex:commandLink onClick="return validatePersonalMsg('{!$Component.theForm.persMsgSubj}','{!$Component.theForm.persMsgDetl}');" 
+                                                    action="{!emailSelectedPersonalMsg}">{!$Label.Send}
+                                </apex:commandLink>
+                                </td>
+                                <td width="10"></td>
+                                <td class="save_send_cancel"><a href="#" onClick="showHidePersonalMessage('HIDE');" class="rpt_ftr_cell_nopad">{!$Label.Cancel}</a></td>
+                            </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    </table>
+                    </div-->
+                </div>
+        </apex:actionRegion>
+    
+</apex:component>

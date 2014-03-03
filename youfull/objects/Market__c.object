@@ -1,0 +1,1674 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableEnhancedLookup>false</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>false</enableReports>
+    <fields>
+        <fullName>ALMPlus_Calendar__c</fullName>
+        <externalId>false</externalId>
+        <label>ALMPlus Calendar</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ALM_Rep_Indicator__c</fullName>
+        <externalId>false</externalId>
+        <label>ALM Rep Indicator</label>
+        <length>80</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ASLF_Market_Id__c</fullName>
+        <externalId>false</externalId>
+        <label>ASLF Market Id</label>
+        <length>10</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ASLF_Report_Url__c</fullName>
+        <externalId>false</externalId>
+        <label>ASLF Report Url</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ASLF_Timezone_Offset__c</fullName>
+        <defaultValue>0</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Timezone differential from your ASLF host. For example Bucharest is GMT+2 and is hosted in Corby (GMT) so the offset is -2.</inlineHelpText>
+        <label>ASLF Timezone Offset</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Action_Alert_Enabled__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Action Alert Enabled</label>
+        <trackHistory>true</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Action_Alerts__c</fullName>
+        <externalId>false</externalId>
+        <label>Action Alerts</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Rising Stars</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Title at Risk</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Title Lost</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Title Promoted</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Balance due</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Featured Product no activity</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>New and In-Progress Leads</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Orders Not submitted</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Orders Over Minimum to earn</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Orders Received Billed and Invoiced</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Orders Received In Process</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Orders under minimum to earn</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Past Due</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Pending Orders</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Reps with overdue</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Return sales</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Team sales above minimum</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Team sales below minimum</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Avon Anniversary</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Birthday</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Downline PSQ not achieved</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>G1 Appointments</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>G1 Candidates</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Inactive</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Inherited</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>LOA 0-6</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>New Repr LOA 0</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <type>MultiselectPicklist</type>
+        <visibleLines>5</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Action_Item_Mail_Plans__c</fullName>
+        <externalId>false</externalId>
+        <label>Action_Item_Mail_Plans</label>
+        <precision>4</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Allow_Free_Emails_For__c</fullName>
+        <description>Controls the free-form emailing functionality. If G1 is selected - free-form emails can only be sent to G1 Sales Leaders. &apos;All&apos; - to all people in the downline</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Controls the free-form emailing functionality. If G1 is selected - free-form emails can only be sent to G1 Sales Leaders. &apos;All&apos; - to all people in the downline</inlineHelpText>
+        <label>Allow_Free_Emails_For</label>
+        <picklist>
+            <picklistValues>
+                <fullName>G1</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>All</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Allow_Freeform_Email__c</fullName>
+        <description>Profile allowed to send freeform emails</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Profile allowed to send freeform emails</inlineHelpText>
+        <label>Allow Freeform Email</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Avon Leader</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Avon Zone Manager</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Avon Division Manager</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <type>MultiselectPicklist</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Available_Languages__c</fullName>
+        <externalId>false</externalId>
+        <label>Available Languages</label>
+        <picklist>
+            <picklistValues>
+                <fullName>en_US</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>fr</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ro</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>es</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>pl</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>hu</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>cs</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ru</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>es_MX</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>uk</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>sk</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>sh</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>en_MY</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>en_IN</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>bg</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>en_PH</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>en_AU</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>mk</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>bs</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>hr</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>sl</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>en_GB</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>en_CA</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>fr_CA</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>fi</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>pt_BR</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ka</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>et</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>lv</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>lt</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>th</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>true</trackHistory>
+        <type>MultiselectPicklist</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Batch_Load_In_Process__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Flag to be set by CDW when starting the nightly batch and reset after its complete.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Flag to be set by CDW when starting the nightly batch and reset after its complete.</inlineHelpText>
+        <label>Batch Load In Process</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Batch_Load_Strt_Dt__c</fullName>
+        <description>The date time when CDW started the batch process. This field is set by a workflow rule based on the flag value.</description>
+        <externalId>false</externalId>
+        <label>Batch Load Time</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Business_Plan_KPIs__c</fullName>
+        <description>This field decides which KPIs need to be shown in the 90DBP</description>
+        <externalId>false</externalId>
+        <inlineHelpText>This field decides which KPIs need to be shown in the 90DBP</inlineHelpText>
+        <label>Business Plan KPIs</label>
+        <length>3200</length>
+        <trackHistory>false</trackHistory>
+        <type>LongTextArea</type>
+        <visibleLines>2</visibleLines>
+    </fields>
+    <fields>
+        <fullName>CDW_DEDUCTED_RETURNS__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>CDW populates as true if the Market deducts returns, and the campaign has not gone through the EOC leadership, else it is false.</description>
+        <externalId>false</externalId>
+        <label>CDW Deducted Returns Ind</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>CMPGN_END_DT__c</fullName>
+        <externalId>false</externalId>
+        <label>CMPGN_END_DT</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>CMPGN_NR_NUMBER__c</fullName>
+        <description>Converts CMPGN_NR__C to Number</description>
+        <externalId>false</externalId>
+        <formula>VALUE(CMPGN_NR__c )</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>CMPGN_NR</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CMPGN_NR__c</fullName>
+        <externalId>false</externalId>
+        <label>CMPGN_NR</label>
+        <length>10</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CMPGN_STRT_DT__c</fullName>
+        <externalId>false</externalId>
+        <label>CMPGN_STRT_DT</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>CURRENT_CAMPAIGN_NR__c</fullName>
+        <externalId>false</externalId>
+        <formula>RIGHT(CMPGN_NR__c, 2)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Current Campaign Number</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CURRENT_QRTR__c</fullName>
+        <description>Current Quarter number. Format: YYYY-Q#, e.g 2012-Q1</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Current Quarter number. Format: YYYY-Q#, e.g 2012-Q1</inlineHelpText>
+        <label>CURRENT_QRTR</label>
+        <length>20</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CURRNT_CMPGN_MAIL_RMN_DAY_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Remaining days to Mail Order</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CURRNT_CMPGN_ONLN_RMN_DAY_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Remaining days to Online Order</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CURRNT_CMPGN_RMN_DAY_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>CURRNT_CMPGN_RMN_DAY_CNT</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CURRNT_CYCLE_CMPGN_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Curr no of campaign Cycle in Top  Seller</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CURR_OR_PREV_CMPGN_NR__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF (Campaign_NR_Changed__c, PREV_1_CMPGN_NR__c, CMPGN_NR__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>CURR OR PREV CMPGN NR</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Campaign_NR_Changed__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Set by MarketTrigger whenever the campaign number is changed on market record. This flag is reset by LeadMetricsBatch class.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Set by MarketTrigger whenever the campaign number is changed on market record. This flag is reset by LeadMetricsBatch class.</inlineHelpText>
+        <label>Campaign NR Changed</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Campaign_Report_Override_URL__c</fullName>
+        <externalId>false</externalId>
+        <label>Campaign Report Override URL</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Conditions_Of_Use_URL__c</fullName>
+        <externalId>false</externalId>
+        <label>Conditions Of Use URL</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Currency_Symbol_Code__c</fullName>
+        <description>Currency code for the market, e.g. code for &apos;$&apos; symbol is &amp;#36;</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Currency code for the market, e.g. code for &apos;$&apos; symbol is &amp;#36;</inlineHelpText>
+        <label>Currency Symbol Code</label>
+        <length>10</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>DEDUCT_RETURNS_ON_SALES__c</fullName>
+        <defaultValue>true</defaultValue>
+        <description>True if the Market deducts returns when displaying.</description>
+        <externalId>false</externalId>
+        <label>Deduct Returns Ind</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>EARN_ILLT_VIDEO_LNK_TYP__c</fullName>
+        <externalId>false</externalId>
+        <label>Erng Illustrtor Video Lnk Typ</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Link</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Video-Windows</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Video-Quick Time</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Video-You Tube</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Widget</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>EOC_IND__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>End Of Campaign Indicator. Used to trigger data clean up activities. This flag is set by a manual process once the campaign is finished.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>End Of Campaign Indicator. Used to trigger data clean up activities. This flag is set by a manual process once the campaign is finished.</inlineHelpText>
+        <label>EOC_IND</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Eligibility_No_Flags__c</fullName>
+        <description>Market-specific set of eligibility flags that should be considered while computing the value of the 	Is_Eligible__c field. The flags must be set to &apos;No&apos;/False for user to be eligible</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Select User fields that must be set to &apos;No&apos;/False for user to be eligible. E.g. 
+&apos;System Override&apos; must be set to &apos;No&apos;/False</inlineHelpText>
+        <label>Eligibility No Flags</label>
+        <picklist>
+            <picklistValues>
+                <fullName>ZM_Override__c</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>System_Override__c</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Out_of_Office__c</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <type>MultiselectPicklist</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Eligibility_Yes_Flags__c</fullName>
+        <description>Market-specific set of eligibility flags that should be considered while computing the value of the 	Is_Eligible__c field. The flags must be set to True for user to be eligible</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Select User fields that must be set to &apos;Yes&apos;/True for user to be eligible. E.g. Opt-In must be set to &apos;Yes&apos;/True</inlineHelpText>
+        <label>Eligibility Yes Flags</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Opt_In__c</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <type>MultiselectPicklist</type>
+        <visibleLines>5</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Enable_Legal_Purge__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Legal purge process is invoked once a day only if this flag is turned on. This flag can be controlled separately for different markets. For more details, visit LegalPurgeScheduler apex class.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Legal purge process is invoked once a day only if this flag is turned on. This flag can be controlled separately for different markets. For more details, visit LegalPurgeScheduler apex class.</inlineHelpText>
+        <label>Enable Legal Purge</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Enabled_Action_Item__c</fullName>
+        <externalId>false</externalId>
+        <label>Enabled Action Item</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Orders</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sales</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Current Business</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <type>MultiselectPicklist</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Escalation_Period__c</fullName>
+        <description>Lead Escalation Period in hours</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Escalation Period in hours</inlineHelpText>
+        <label>Escalation Period (Hours)</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Executive_Title_Nbr__c</fullName>
+        <externalId>false</externalId>
+        <label>Executive Title Nbr</label>
+        <precision>1</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>GI3_Keep_Alive_URL__c</fullName>
+        <externalId>false</externalId>
+        <label>GI3 Keep Alive URL</label>
+        <length>254</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Genealogy_Cleanup_Batch_Size__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Should not be null, Default value set to 10000, ideal range would depend on the market data.Advised Range should be 25000 - 35000</inlineHelpText>
+        <label>Genealogy Cleanup Batch Size</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Genealogy_Cleanup_Campaign__c</fullName>
+        <externalId>false</externalId>
+        <label>Genealogy Cleanup Campaign</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Genealogy_Overlay_Section__c</fullName>
+        <externalId>false</externalId>
+        <label>Genealogy Overlay Section</label>
+        <length>32768</length>
+        <trackHistory>false</trackHistory>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Genealogy_Report_Configurable__c</fullName>
+        <externalId>false</externalId>
+        <label>Genealogy Report Configurable</label>
+        <length>32768</length>
+        <trackHistory>false</trackHistory>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Genealogy_Root_Node_Section__c</fullName>
+        <externalId>false</externalId>
+        <label>Genealogy Root Node Section</label>
+        <length>32768</length>
+        <trackHistory>false</trackHistory>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Hide_Last_Campaign_Analysis__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Hide Last Campaign Analysis?</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Hide_Next_Campaign__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>When checked, Next Campaign data will be hidden from  KPI Summary 1 table on &quot;KPIs at a Glance&quot; tab.</description>
+        <externalId>false</externalId>
+        <label>Hide Next Campaign?</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Hide_Suggested_Activities__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Hide Suggested Activities?</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Is_ALMPLUS_Enabled__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Check to enable/disable ALM+ functionality</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Check to enable/disable ALM+ functionality</inlineHelpText>
+        <label>Is ALM+ Enabled</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Is_Branch__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Is Branch</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Is_Executive_Enabled__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Is_Executive_Enabled</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Is_Future_Campaign_Filter_Available__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Controls the future campaign filter value market-wide. If set to true future campaign filtering becomes enabled for all reports</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Controls the future campaign filter value market-wide. If set to true future campaign filtering becomes enabled for all reports</inlineHelpText>
+        <label>Is Future Campaign Filter Available</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Is_ZM_Override_Applicable__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>ZM Override Applicable</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>KPI_Measurement_Field__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Field that is displayed on the KPI at a glance as its measurement field . This will either be a difference value or a percent variance value.</inlineHelpText>
+        <label>KPI Measurement Field</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Percent Attainment</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Difference</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>LAST_UPDT_DT__c</fullName>
+        <externalId>false</externalId>
+        <label>LAST_UPDT_DT</label>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Last_Modified_Date_Time__c</fullName>
+        <externalId>false</externalId>
+        <formula>LastModifiedDate</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Last Modified Date Time</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>LeadMandatoryFields__c</fullName>
+        <description>Mandatory fields for the Lead Entry Form</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Mandatory fields for the Lead Entry Form</inlineHelpText>
+        <label>Lead Mandatory Fields</label>
+        <length>32768</length>
+        <trackHistory>false</trackHistory>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Lead_Conditions_Of_Use_URL__c</fullName>
+        <externalId>false</externalId>
+        <label>Lead Conditions Of Use URL</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Lead_Escalation_Age__c</fullName>
+        <description>Lead Age in hours, at which, if not contacted it gets rejected</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Age in hours, at which, if not contacted it gets rejected</inlineHelpText>
+        <label>Lead Escalation Age (Hours)</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Lead_Maximum_Age__c</fullName>
+        <description>Maximum allowed age for a lead</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Maximum allowed age for a lead</inlineHelpText>
+        <label>Lead Maximum Age</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Lead_Minimum_Age__c</fullName>
+        <description>Minimum allowed age for a lead</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Minimum allowed age for a lead</inlineHelpText>
+        <label>Lead Minimum Age</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Lead_Purge_Min__c</fullName>
+        <externalId>false</externalId>
+        <label>Lead Purge Min Age</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Lead_Security_and_Privacy_URL__c</fullName>
+        <externalId>false</externalId>
+        <label>Lead Security and Privacy URL</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Lead_Source_Exclusions__c</fullName>
+        <description>Contains Lead Source values that should be excluded for the market</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Contains Lead Source values that should be excluded for the market</inlineHelpText>
+        <label>Lead Source Exclusions</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Other</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Friends/relatives</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Recommendation</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Field contact</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Event</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Printed material</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>REPs own advertising</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>TV advertising</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Printed media advertising</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Internet</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Prospecting</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Acquaintance</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sales Leader Advertisement</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Questioning</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Invitation</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Press Advertising</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Advertisement</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Employee Referral</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>External Referral</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Partner</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Public Relations</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Seminar - Internal</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Seminar - Partner</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Trade Show</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Web</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Word of mouth</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Search - Google</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Search - Yandex</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <type>MultiselectPicklist</type>
+        <visibleLines>5</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Legal_Purge_Age__c</fullName>
+        <description>Unit is in hours. After the specified hours are elapsed, the leads associated to this market will be deleted after applying few other conditions which are specified in Legal_Purge_SOQL_Condition field on this market record.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Unit is in hours. After the specified hours are elapsed, the leads associated to this market will be deleted after applying few other conditions which are specified in Legal_Purge_SOQL_Condition field on this market record.</inlineHelpText>
+        <label>Legal Purge Age</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Legal_Purge_SOQL_Condition__c</fullName>
+        <description>Used to purge unused leads. Details can be seen in LegalPurgeScheduler apex class. Include ONLY the where condition (without WHERE keyword) in this field. The full SOQL is prepared inside the apex class.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Used to purge unused leads. Details can be seen in LegalPurgeScheduler apex class. Include ONLY the where condition (without WHERE keyword) in this field. The full SOQL is prepared inside the apex class.</inlineHelpText>
+        <label>Legal Purge SOQL Condition</label>
+        <length>1000</length>
+        <trackHistory>false</trackHistory>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>MAX_CMPGN_INACTV_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label># Inactive Campaigns before Removal</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MailPlan_LndingPg_Deflt__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <inlineHelpText>Checked-Selling Campaign Default,UnChecked-Current Campaign Default</inlineHelpText>
+        <label>MailPlan_LndingPg_Deflt</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Mail_Plan_Enabled__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Mail Plan Enabled</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Market_Administrator__c</fullName>
+        <externalId>false</externalId>
+        <label>Market Administrator</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Markets</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Market_Currency_Symbol__c</fullName>
+        <description>it denotes the currency symbol to be used in Coaching record page.</description>
+        <externalId>false</externalId>
+        <label>Market Currency Symbol</label>
+        <length>2</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Market_Id__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <externalId>true</externalId>
+        <label>MRKT_ID</label>
+        <length>15</length>
+        <required>true</required>
+        <trackHistory>true</trackHistory>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Max_Ldr_Titl_LVL__c</fullName>
+        <externalId>false</externalId>
+        <label>Max_Ldr_Titl_LVL</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Mgr_Omniture_Suite_Name__c</fullName>
+        <description>This Suite is used for ZM/DM Omniture tracking.</description>
+        <externalId>false</externalId>
+        <label>Mgr Omniture Suite Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Minimum_to_Earn__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Minimum value to earn.  Currently is used in the my team orders report for a filter.</inlineHelpText>
+        <label>Minimum to Earn</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT_1_CMPGN_NR__c</fullName>
+        <externalId>false</externalId>
+        <label>NEXT_1_CMPGN_NR</label>
+        <length>10</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NRT_ACTIVE_USES_NET__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Does this market use the net value (positive – returns) for determining active?  Otherwise, it would use positive orders only.</description>
+        <externalId>false</externalId>
+        <label>NRT Active Users Net</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>NRT_Enabled__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Flag to determine, if this market is participating in NRT or not.</description>
+        <externalId>false</externalId>
+        <label>NRT Enabled</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>NRT_HAS_DLY_INVC__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Does this market support intraday updates for Invoiced orders?</description>
+        <externalId>false</externalId>
+        <label>NRT Has Daily Invoice</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>NRT_HAS_SUBMTD_AMT__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Does this market support amounts for supported amounts</description>
+        <externalId>false</externalId>
+        <label>NRT Has Submitted Amount</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>NRT_Hide_Held_Column__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>This field hides held column from NRT overlay.</description>
+        <externalId>false</externalId>
+        <label>NRT Hide Held Column</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>NRT_Hide_Saved_Column__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>The boolean value that is supposed to control the display of saved column in the NRT overlay.</description>
+        <externalId>false</externalId>
+        <label>NRT Hide Saved Column</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Name_Format__c</fullName>
+        <externalId>false</externalId>
+        <label>Name Format</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Number_of_Exec_Leader_Title__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Count of Executive leader titles of this market</inlineHelpText>
+        <label>Number of Exec Leader Title</label>
+        <summaryFilterItems>
+            <field>Leader_Title__c.EXEC_IND__c</field>
+            <operation>equals</operation>
+            <value>Y</value>
+        </summaryFilterItems>
+        <summaryForeignKey>Leader_Title__c.Market__c</summaryForeignKey>
+        <summaryOperation>count</summaryOperation>
+        <trackHistory>false</trackHistory>
+        <type>Summary</type>
+    </fields>
+    <fields>
+        <fullName>OPERTNL_CMPGN_CMPLTN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <label>OPERTNL_CMPGN_CMPLTN_PCT</label>
+        <precision>15</precision>
+        <required>false</required>
+        <scale>3</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Omniture_JS_URL__c</fullName>
+        <description>Location in which Omniture Javascript code is stored</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Location in which Omniture Javascript code is stored</inlineHelpText>
+        <label>Omniture JS URL</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>Omniture_RSID__c</fullName>
+        <description>RSID used in Omniture JS code</description>
+        <externalId>false</externalId>
+        <inlineHelpText>RSID used in Omniture JS code</inlineHelpText>
+        <label>Omniture RSID</label>
+        <length>20</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Omniture_Suite_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Omniture Suite Name</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>true</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PREV_1_CMPGN_NR__c</fullName>
+        <externalId>false</externalId>
+        <label>PREV_1_CMPGN_NR</label>
+        <length>10</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Phone_Format__c</fullName>
+        <externalId>false</externalId>
+        <label>Phone Format</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Postcode_Format__c</fullName>
+        <externalId>false</externalId>
+        <label>Postcode Format</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Prior_Campaign_Count__c</fullName>
+        <description>Represents how many prior campaigns a Market want to see.</description>
+        <externalId>false</externalId>
+        <label>Prior Campaign Count</label>
+        <precision>1</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>QPA_Enabled__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>QPA Enabled</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Rep_Detail_Columns__c</fullName>
+        <externalId>false</externalId>
+        <label>Rep Detail Columns</label>
+        <length>32000</length>
+        <trackHistory>false</trackHistory>
+        <type>LongTextArea</type>
+        <visibleLines>10</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Rep_LOA_Nr__c</fullName>
+        <externalId>false</externalId>
+        <label>Rep LOA Nr</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SMS_Provider_URL__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Used by SMS Manager to send SMS out.</inlineHelpText>
+        <label>SMS Provider URL</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Url</type>
+    </fields>
+    <fields>
+        <fullName>SPONSOR_QLFYING_ORD_AMT__c</fullName>
+        <externalId>false</externalId>
+        <label>Order Amount for Qualifying Appointment</label>
+        <precision>15</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SPPY_CMPGN_NR__c</fullName>
+        <externalId>false</externalId>
+        <label>SPPY_CMPGN_NR</label>
+        <length>10</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Section_EUP__c</fullName>
+        <description>Items to be used in Executive Unit Performance section.</description>
+        <externalId>false</externalId>
+        <label>Section EUP</label>
+        <length>32768</length>
+        <trackHistory>false</trackHistory>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Section_Ldrship__c</fullName>
+        <description>items to be displayed in leadership section</description>
+        <externalId>false</externalId>
+        <label>Section Ldrship</label>
+        <length>32768</length>
+        <trackHistory>false</trackHistory>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Section_PSB__c</fullName>
+        <description>items to be used to display in Personal Sales Business</description>
+        <externalId>false</externalId>
+        <label>Section PSB</label>
+        <length>32768</length>
+        <trackHistory>false</trackHistory>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Security_and_Privacy_URL__c</fullName>
+        <externalId>false</externalId>
+        <label>Security and Privacy URL</label>
+        <length>255</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Site_Maintenance_Enabled__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Site Maintenance Enabled</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Splash_Page_Enabled__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Splash Page Enabled</label>
+        <trackHistory>true</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Title_Exclusion__c</fullName>
+        <externalId>false</externalId>
+        <label>Title Exclusion</label>
+        <picklist>
+            <picklistValues>
+                <fullName>-2</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>0</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>1</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>2</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>3</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>4</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>5</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>6</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>UQ</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <type>MultiselectPicklist</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>X90_Day_Camp_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>90 Day Campaign Count</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>eCard_Status_Message_Header__c</fullName>
+        <externalId>false</externalId>
+        <label>eCard Status Message Header</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>isDisplayBlock__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>isDisplayBlock</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>isDisplayQPA__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>isDisplayQPA</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>is_YOU_ASLF_Enabled__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>is YOU ASLF Enabled</description>
+        <externalId>false</externalId>
+        <label>is YOU ASLF Enabled</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <label>Market</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <label>Market Name</label>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Markets</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>Private</sharingModel>
+    <validationRules>
+        <fullName>Alert_null_check</fullName>
+        <active>true</active>
+        <errorConditionFormula>IF( Action_Alert_Enabled__c ,  ISNULL(Action_Alerts__c) , false)</errorConditionFormula>
+        <errorMessage>Please select Action Alerts value to proceed.</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Campaign_count</fullName>
+        <active>true</active>
+        <errorConditionFormula>IF( X90_Day_Camp_CNT__c &gt;6, true, false)</errorConditionFormula>
+        <errorMessage>Campaign count cannot be more than 6</errorMessage>
+    </validationRules>
+    <webLinks>
+        <fullName>Create_Leader_Specific_Message</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>url</linkType>
+        <masterLabel>Create Leader Specific Message</masterLabel>
+        <openType>replace</openType>
+        <protected>false</protected>
+        <url>/00T/e</url>
+    </webLinks>
+    <webLinks>
+        <fullName>Create_New_Broadcast_Message</fullName>
+        <availability>online</availability>
+        <displayType>button</displayType>
+        <linkType>url</linkType>
+        <masterLabel>Create New Broadcast Message</masterLabel>
+        <openType>replace</openType>
+        <protected>false</protected>
+        <url>/00T/e?what_id={!Market__c.Id}</url>
+    </webLinks>
+</CustomObject>

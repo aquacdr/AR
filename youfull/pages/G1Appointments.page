@@ -1,0 +1,212 @@
+<apex:page sidebar="false" showHeader="false" standardStyleSheets="false" controller="G1AppointmentsController"
+            action="{!NULLVALUE(redPage, null)}"> <!-- Gaziz May23 -->
+
+<style>
+.cmpright{width:145px !important;}
+.contentDiv table td {font-weight: normal;}
+</style>
+            <apex:outputPanel rendered="true">
+    <div id="G1AppointmentsScroll" style="height: 342px; overflow-x: hidden;overflow-y: auto;"> 
+    <!--<div class="cmpG11stBox" style="width:100%; height:{!listAppointment.size*180}px;">-->
+        <div class="cmpG11stBox" style="width:100%; height:{!listAppointment.size*143}px;">
+        <apex:outputPanel rendered="{!IF(listAppointment.size > 0, FALSE, TRUE)}">
+           <div width="100%" align="center">
+               <h4 class="cmprep_hdr">{!$Label.No_Information_Available}</h4>
+           </div>
+        </apex:outputPanel>
+        
+        <apex:repeat value="{!listAppointment}" var="appointment">
+                <!-- Changes done by Snehashis on 18thFeb, 2013 Start -->
+                <!--<div class="{!IF(appointment.status='red','cmpred_box',IF(appointment.status='green','cmpgreen_box','cmpnocolor_box'))}  box">-->
+                <div class="cmpnocolor_box box">
+                <!-- Changes done by Snehashis on 18thFeb, 2013 End -->
+                  <div style="height:14px;" class="cmpttl_hdr cmphorz-sprtr">
+                    <div id="{!SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(appointment.Name,' ',''), '/',''), '(',''), ')',''), '#',''), '&','')}_hdr" style="float:left;"></div>
+                    <!--<a class="cmpblack" href="/apex/demopagenew?acctkey=TestAccount1">{!appointment.Name}</a>-->
+                    <a class="cmpblack" href="{!appointment.NameLink}">{!appointment.Name}</a>
+                      <!-- Changes done for CR : 2395 START -->
+                      <!--
+                      <p class="cmpright" style="width:20% !important;"> <a href="{!appointment.myTeamReportURL}" class="cmppeople"></a> <a href="javascript:viewRepDetail('{!appointment.accountNumber}');" class="cmpnote"></a> <a href="{!appointment.myTeamOrdersURL}" class="cmpgraph"></a> </p>
+                      -->
+                      <!--<p class="cmpright" style="width:20% !important;"><a href="javascript:viewRepDetail('{!appointment.accountNumber}');" class="cmpnote"></a></p>-->
+                      <p class="cmpright" style="width:5% !important;"><a href="javascript:viewRepDetail('{!appointment.accountNumber}');" class="cmpnote"></a></p>
+                      <!-- Changes done for CR : 2395 END -->
+                    </div>
+
+
+                    <div class="cmpsmall_tb_cnt contentDiv">
+                      <div class="cmpleft" style="width: 40%;">
+                        <table border="0" cellspacing="0" cellpadding="0" class="cmpsml_tabular">
+                          <tbody><tr>
+                             <td ><!-- {!appointment.badgeTitle} --></td>
+                          </tr>
+                          <tr>
+                            <td style="font-weight: 500;"> 
+                            <!--<a href="mailto:{!appointment.preferredEmail}" class="cmpmagenta">{!appointment.preferredEmail}</a>-->
+                             <!-- <a href="#" onClick="showHidePersonalMessage('SHOW');" class="magenta">{!appointment.preferredEmail}</a> -->
+                            
+                            </td> 
+                            
+                          </tr>                          
+                          
+                          <tr>
+                            <td style="color: #494848; font-weight: 500;">{!appointment.accountNumber}</td>
+                          </tr>
+                          <tr>
+                            <td style="color: #494848; font-weight: 500;"><!-- {!appointment.sponsor} --></td>
+                          </tr>
+                          <tr>                      
+                            <td style="color: #494848; font-weight: 500;">
+                            <!-- This section is blocked by Raktim for Mail Plan Change - 7th Aug 2013 START -->
+                            <!--  
+                            <apex:outputPanel rendered="{!isPHMarkt}">
+                                {!$Label.Branch_Name} : 
+                            </apex:outputPanel>
+                            <apex:outputPanel rendered="{!NOT(isPHMarkt)}">
+                                {!$Label.Zone} : 
+                            </apex:outputPanel> -->
+                            <!-- This section is blocked by Raktim for Mail Plan Change - 7th Aug 2013 END -->
+                                {!appointment.zoneManager}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td style="color: #494848; font-weight: 500;">{!appointment.preferredPhone}</td>
+                          </tr>
+                          <!-- Added by Raktim for Mail Plan Change - 7th Aug 2013 START -->
+                          <tr>                      
+                            <td style="color: #494848; font-weight: 500;">{!IF(isMailPln, $Label.Mail_Plan+': '+appointment.mailPlanCode , '')}</td>
+                          </tr>
+                          <!-- Added by Raktim for Mail Plan Change - 7th Aug 2013 END --> 
+                        </tbody></table>
+                      </div>
+                      <div class="cmpright" style="width:172px !important;">
+                        <table border="0" cellspacing="0" cellpadding="0" class="cmpsml_tabular">
+                          <tbody>
+                          
+                          <!-- Blank row added -->
+                          <tr>
+                            <td></td><td class="cmptxt_left"></td>
+                          </tr>
+                          <tr>
+                            <td></td><td class="cmptxt_left"></td>
+                          </tr> 
+                          <!-- End of Blank row -->
+                          
+                          <tr>
+                            <!-- This section is blocked, CR : 2413 on 08Mar, 2013 by Raktim -->
+                            <!--  
+                            <td>{!$Label.Conversion}:</td>
+                            <td class="cmptxt_left"><apex:outputText value="{!appointment.conversionDate}" escape="false" /></td>
+                            -->
+                            <!-- End of blocked section -->
+                            
+                            <!-- 'Appointment Date' displayed, CR : 2413 on 08Mar, 2013 by Raktim -->
+                            <td>{!$Label.Appointment_Data_Short}:</td>
+                            <td class="cmptxt_left"><apex:outputText value="{!appointment.appntmntDate}" escape="false" /></td>
+                            <!-- End of display -->
+                          </tr>
+                          
+                          <tr>
+                            <!-- This section is blocked, CR : 2413 on 08Mar, 2013 by Raktim -->
+                            <!--
+                            <td>{!$Label.Order_By_Date}:</td>
+                            <td class="cmptxt_left"><apex:outputText value="{!appointment.orderByDate}" escape="false" /></td>
+                            -->
+                            <!-- End of blocked section -->
+                            <!-- 'First Order' displayed, CR : 2413 on 08Mar, 2013 by Raktim -->
+                            <td>{!$Label.Qual_Order}:</td>
+                            <td class="cmptxt_left">{!currencyCharacter}<apex:outputText value="{!appointment.qualifiedOrder}" escape="false" /></td>
+                            <!-- End of display -->
+                          </tr>
+                          
+                          <!-- This section is blocked, CR : 2413 on 08Mar, 2013 by Raktim -->
+                          <!--  
+                          <tr>
+                            <td>{!$Label.Training}:</td>
+                            <td class="cmptxt_left"><apex:outputText value="{!appointment.training}" escape="false" /></td>
+                          </tr>
+                          <!-- End of blocked section -->
+                          
+                          <!-- This section is blocked, CR : 2413 on 08Mar, 2013 by Raktim -->
+                          <!--  
+                          <tr>
+                            <td>{!$Label.Actual_Order}:</td>
+                            <td class="cmptxt_left"><apex:outputText value="{!appointment.actualOrderDate}" escape="false" /></td>
+                          </tr>
+                          <!-- End of blocked section -->
+                          
+                          <!-- This section is blocked, CR : 2413 on 08Mar, 2013 by Raktim -->
+                          <!--
+                          <tr>
+                            <td>{!$Label.Qual_Order}:</td>
+                            <td class="cmptxt_left">{!currencyCharacter}<apex:outputText value="{!appointment.qualifiedOrder}" escape="false" /></td>
+                          </tr>
+                          <!-- End of blocked section -->
+                          <!-- This section is blocked by Dipak to hide Due date(QC#3186)23102013 -->
+                          <!--
+                          <tr>
+                            <td>{!$Label.Pay_By_Date}:</td>
+                            <td class="cmptxt_left"><apex:outputText value="{!appointment.payByDate}" escape="false" /></td>
+                          </tr>
+                          -->
+                          <!-- End of blocked section 23102013 -->
+                          <!-- New row added, CR : 2413 on 08Mar, 2013 by Raktim -->
+                          <apex:outputPanel layout="block" rendered="{!isDisplayQPA}"><!-- show/hide QPA, on 8th Oct 2013, subhamay -->
+                          <tr>
+                            <td>{!$Label.QPA_Short}:</td>
+                            <td class="cmptxt_left"><apex:outputText value="{!appointment.qpaStatus}" escape="false" /></td>
+                          </tr>
+                          </apex:outputPanel><!-- show/hide QPA, on 8th Oct 2013, subhamay -->
+                          <!-- End of new row -->
+                                                      
+                         </tbody></table>
+                      </div>
+                    </div>
+                </div>
+        </apex:repeat>
+        <br/>
+        </div>
+        <br/>
+        </div>
+        
+        <!--  This section is blocked, CR : 2359 START -->
+        <!--
+        <apex:outputPanel rendered="{!IF(messageText !=null, TRUE, FALSE)}">
+        <div class="cmpabv_btm">
+            <p class="cmppnk_star cmpleft">
+                <apex:outputPanel rendered="{!IF(messageUrl !=null, TRUE, FALSE)}">
+                    <a class="cmpgrey3" href="{!messageUrl}"><apex:outputText value="{!messageText}" escape="false" /></a>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(messageUrl !=null, FALSE, TRUE)}">
+                    <apex:outputText value="{!messageText}" escape="false" />
+                </apex:outputPanel>
+            </p>
+        </div>
+        </apex:outputPanel>
+        -->
+        <!--  This section is blocked, CR : 2359 END -->
+        
+        <div class="cmpbtm_bx_gry cmpG12ndBox" align="center">
+                <a class="cmppnk_cta cmpcentering_cn" href="{!viewFullReportURL}">{!$Label.View_Full_Report}</a>
+            
+        </div>
+            </apex:outputPanel>
+
+<script>
+    fleXenv.fleXcrollMain("G1AppointmentsScroll");
+    //alert(' .....g1Aptnmt_hasData '+{!g1Aptnmt_hasData});
+    
+    var tempG1AppointmentsScroll = '{!listAppointment.size}';
+    if(tempG1AppointmentsScroll >= 3)
+    {
+        jQuery("#G1AppointmentsScroll_vscrollerbase").css('visibility','visible');
+        jQuery("#G1AppointmentsScroll_vscrollerbar").css('visibility','visible');
+    }else{
+        //alert(' .....g1Aptnmt_hasData '+{!g1Aptnmt_hasData});
+        jQuery("#G1AppointmentsScroll_vscrollerbase").hide();
+        jQuery("#G1AppointmentsScroll_vscrollerbar").hide();
+        
+    }
+</script>
+
+</apex:page>

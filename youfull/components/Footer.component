@@ -1,0 +1,11 @@
+<apex:component >
+    <apex:attribute name="privacyURL" description="Security and Privacy URL" type="string" required="true" />
+    <apex:attribute name="conditionsURL" description="Conditions of Use URL" type="string" required="true" />
+                <div class="footer_wrpr" style="width:780px">
+                <ul class="footer_lnks" style="padding-left:180px">
+                    <li><a href="{!privacyURL}" target="_blank">{!$Label.Security_and_Privacy}</a></li>
+                    <li class="last"><a href="{!conditionsURL}" target="_blank">{!$Label.Conditions_of_Use}</a></li>
+                </ul>
+                <p>&copy; 2013, Avon Products Inc.</p>
+                </div>
+</apex:component>

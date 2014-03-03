@@ -1,0 +1,10 @@
+<apex:page controller="dmeyerDoNotDeployOrSaveToGithub" >
+<apex:pageMessages />
+  <!-- Begin Default Content REMOVE THIS -->
+  <h1>Congratulations</h1>
+  This is your new Page: dmeyerDoNotDeployOrSaveToGithub
+  <!-- End Default Content REMOVE THIS -->
+  {!qryFail}
+  
+  {!cpuTime}
+</apex:page>

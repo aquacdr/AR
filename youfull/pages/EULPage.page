@@ -1,0 +1,96 @@
+<apex:page showHeader="false" sidebar="false" standardStyleSheets="false" 
+            cache="false">
+<apex:composition template="YOUPageTemplate">
+        <apex:define name="content">
+         <script type="text/javascript"> 
+        function showCoachingPage(repId){
+                if(jQuery("#email_sel_mask").attr('class')=='white_trans_closed'){
+                    jQuery("#email_sel_mask").attr('class','white_trans');
+                }else{
+                    jQuery("#email_sel_mask").attr('class','white_trans_closed');
+                }
+                /*var topPos = (jQuery(window).height()/2)-(jQuery('#rep_detail_box').height()/2);
+                var leftPos = (jQuery(window).width()/2)-(jQuery('#rep_detail_box').width()/2);
+                jQuery("#rep_detail_box").css('top',topPos);
+                jQuery("#rep_detail_box").css('left',leftPos);*/
+                jQuery("#coach_main").load("{!URLFOR($Page.CoachingPage)}?acctnbr="+repId);
+                //jQuery("#rep_detail_box").css('display','block');
+          }
+          
+           function hideCoachingPage(){
+            if(jQuery("#email_sel_mask").attr('class')=='white_trans'){
+                    jQuery("#email_sel_mask").attr('class','white_trans_closed');
+                }else{
+                    jQuery("#email_sel_mask").attr('class','white_trans');
+                }
+           }
+        </script>
+
+<apex:includeScript value="{!URLFOR($Resource.EUL_Resources, 'JQuery.js')}"/>
+<apex:stylesheet value="{!URLFOR($Resource.EUL_Resources, 'cmp_style.css')}"/>
+<style>
+.cmpslide_tabular {
+    }
+
+.cmpslide_tabular td {
+    padding-left:5px;
+    padding-top:3px;
+    padding-right:5px;
+    font-size: 12px;
+    color:#888;
+    font-weight: 700;
+}
+
+.cmpblack {
+    color: black;
+    font-weight: 700;
+}
+
+.cmpabv_btm {
+    float:left;
+    padding:5px 20px;
+    background-color:white;
+    bottom:48px;
+    width:318px;
+    position:absolute;
+    overflow:hidden;
+    left:0px;
+}
+
+.cmpmagenta {
+    color:#Ed008c;
+}
+
+.cmpinnerBox .cmpheader {
+    font: normal bold 12px Helvetica, serif;
+    padding-bottom: 10px;
+}
+
+</style>
+
+
+<br/>
+
+    <div style="width: 800px;">
+
+        <c:PageSection sectionTitle="Title Achievement" loadPageName="/apex/Title_Achievement" sectionColor="pink" sectionDir="left" rendered="True"/>
+        <c:PageSection sectionTitle="G1 Sales Leaders" loadPageName="/apex/G1_Sales_Leaders" sectionColor="pink" sectionDir="right" rendered="True" reportSection="true"/>
+        <c:PageSection sectionTitle="EL / Rising Star" loadPageName="/apex/ELRisingStars" sectionColor="pink" sectionDir="left"  rendered="true" reportSection="true"/>
+        <c:PageSection sectionTitle="G1 Candidates" loadPageName="/apex/G1Candidates" sectionColor="grey" sectionDir="right" rendered="True" reportSection="true"/>
+        <c:PageSection sectionTitle="G1 Appointments" loadPageName="/apex/G1Appointments" sectionColor="grey" sectionDir="left" rendered="true" reportSection="true"/> 
+        <c:PageSection sectionTitle="Incentives" loadPageName="/apex/Incentives" sectionColor="grey"  sectionDir="right" rendered="true"/> 
+    </div>
+
+</apex:define>
+<apex:define name="contentHidden">
+<!-- 
+    empty div that will be populated with dynamic content from RepDetail Page
+-->
+<div id="email_sel_mask" class="white_trans_closed"> 
+<div id="coach_main">
+  <c:ProcessingMsg />
+ </div>
+ </div>
+</apex:define>    
+</apex:composition>    
+</apex:page>

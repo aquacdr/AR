@@ -1,0 +1,168 @@
+<!--
+** VF Page Name            				: ZM_ActivityForecastTrackerInput
+** VF Standard Controller   			: N/A
+** VF Custom Controller    				: ?
+** VF Extension(s)            			:
+** 
+** Has JavaScript?            			: ?
+**
+** Purpose [short summary]    			: Forecast input for zone managers and division managers.
+**
+**
+** Change Log (Put the latest entry on top)	:
+**	3/8/2013	G Created
+**	3/9/2013	Modified
+**  4/22/2013   Modified - Omniture Integration
+** 
+-->
+<apex:page controller="ZM_ForecastATInputController" ><!-- tabstyle="My_Business_Plan__tab">--> 
+   
+   <link type="text/css" rel="stylesheet" href="/resource/ZM_Resources/css/style.css"/>
+   <script src="/resource/ZM_Resources/js/jquery-1.8.2.js"></script>
+   <script src="/resource/ZM_Resources/js/script.js"></script>
+   
+   
+    <!--  Omniture method invocation starts -->
+	<script> 
+		ALM_PAGE_NAME="{!OmniturePageName}"; 
+		function disableEnterKey(e)
+        {//prevents submitting the form when pressing the "Enter" key
+            var key;     
+            if(window.event)
+                key = window.event.keyCode; //IE
+            else
+                key = e.which; //firefox     
+            return (key != 13);
+        }	
+	</script>
+    <!--  Omniture method invocation ends -->
+   
+	<apex:sectionHeader title="{!$Label.ZM_Activity_Tracker}" />
+	<!--div class="floatLt logo">&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; <span class="logoText">{!$Label.ZM_Activity_Tracker} </span></div-->
+	
+	<apex:form >
+	       <apex:actionFunction name="submitForm" action="{!submit}"/>
+		   <apex:selectList value="{!activeZone}" size="1" rendered="{!zoneOptions.size>1}">
+				<apex:actionSupport event="onchange" action="{!changeZone}" />
+				<apex:selectOptions value="{!zoneOptions}" />
+			</apex:selectList>
+			<apex:pageBlock tabstyle="My_Business_Plan__tab" Id="mainBlock">
+				<apex:pagemessages />
+				  <apex:pageBlockSection columns="1">
+					  <h1>{!$Label.ZM_Activity_Tracker_Header} </h1>
+					  <apex:outputText escape="false" value="{!$Label.ZM_Activity_Tracker_Discription}"/><br/>
+				  </apex:pageBlockSection>
+				  
+				  <apex:outputPanel >
+					<apex:selectList value="{!activeZone}" size="1" rendered="{!IF(zoneOptions!=null, TRUE, FALSE)}">
+						<apex:actionSupport event="onchange" action="{!changeZone}" />
+						<apex:selectOptions value="{!zoneOptions}" />
+					</apex:selectList>
+				  </apex:outputPanel>
+				  
+				  <apex:pageBlockSection rendered="{!NOT(inputRecord=null)}">
+						<apex:repeat value="{!configFields}" var="key">
+						
+							<apex:pageBlockSectionItem >
+			                    <apex:outputLabel value="{!$Label[key]} {!blankInputRecord[mapFields[key].ForecastField__c]}" for="field"/>
+			                    <apex:inputField onkeypress="return disableEnterKey(event)" value="{!blankInputRecord[mapFields[key].ForecastField__c]}" /> 
+			                </apex:pageBlockSectionItem>
+			                
+						</apex:repeat>
+				  </apex:pageBlockSection>
+				  
+				  <apex:PageBlockButtons location="bottom" rendered="{!NOT(inputRecord=null)}">
+				    <apex:commandButton value="{!$Label.ZM_Submit}"  
+				                        accessKey="1"
+				                        onClick="alert('{!$Label.ZM_ACTVT_TRCKR_MSG}');" 
+				                        action="{!submit}"/><!-- -->
+				  </apex:PageBlockButtons>
+			</apex:pageBlock>
+			
+	</apex:form>
+	<!--
+	<style>
+		.chartHeader {
+			background-color: lightgrey;
+			color: black;
+			padding: 5px 0px 0px 0px;
+			text-align: center;
+			height: 20px;
+			border:1px solid lightgrey;
+		}
+		
+		.odd {
+			background-color: lightgray;
+		}
+		
+		.tableFooter {
+			border-top: 1px solid gray;
+			padding: 5px 0px 0px 0px;
+			text-align: center;
+			height: 30px;
+		}
+	</style>
+	<apex:form >
+		<apex:outputPanel >
+			<apex:selectList value="{!activeZone}" size="1" rendered="{!IF(zoneOptions!=null, TRUE, FALSE)}">
+				<apex:actionSupport event="onchange" action="{!changeZone}" />
+				<apex:selectOptions value="{!zoneOptions}" />
+			</apex:selectList>
+			
+			<div class="chartHeader">
+				<h1>{!$Label.ZM_Activity_Tracker}</h1>
+			</div>
+			<apex:dataTable style="border:1px solid lightgrey;"
+				value="{!mapFields}" var="key" id="activityForecastTable"
+				rowClasses="odd,even" width="100%" footerClass="tableFooter">
+
+				<apex:facet name="footer">{!$Label.ZM_Activity_Tracker} </apex:facet>
+
+				<apex:column >
+					<apex:facet name="header">{!$Label.ZM_KPI_Name}</apex:facet>
+					<apex:outputtext value="{!key}:" />
+				</apex:column>
+				
+				<apex:column >
+					<apex:facet name="header">{!$Label.ZM_Goal}</apex:facet>
+					<apex:outputtext value="{!inputRecord[mapFields[key].PlanField__c]}" />
+				</apex:column>
+				
+				<apex:column >
+					<apex:facet name="header">{!$Label.ZM_Forecast}</apex:facet>
+					<apex:outputtext value="{!inputRecord[mapFields[key].ForecastField__c]}" />
+				</apex:column>
+				
+				<apex:column >
+					<apex:facet name="header">{!$Label.ZM_Pcnt_Goal}</apex:facet>
+					<apex:outputtext value="{!inputRecord[mapFields[key].ForecastGoalField__c]}" />
+				</apex:column>
+				
+				<apex:column >
+					<apex:facet name="header">{!$Label.ZM_Last_Date_Pesponded}</apex:facet>
+					<apex:outputField value="{!inputRecord.LST_DT_RSPD__c}" />
+				</apex:column>
+				
+			</apex:dataTable>
+			<!--table border="1">
+				<tr>
+					<th>{!$Label.ZM_KPI_Name}</th>
+					<th>{!$Label.ZM_Goal}</th>
+					<th>{!$Label.ZM_Forecast}</th>
+				</tr>
+				<apex:repeat value="{!mapFields}" var="key">
+					<tr>
+						<td>{!key}: </td>
+						<td><apex:outputField value="{!inputRecord[mapFields[key].PlanField__c]}" /></td>
+						<td><apex:outputField value="{!inputRecord[mapFields[key].ForecastField__c]}" /></td>
+					</tr>
+				</apex:repeat>
+			</table--
+		</apex:outputPanel>
+	</apex:form>
+	-->
+	<!-- Omniture Integration Starts -->
+	<apex:include pageName="ZMDMOmnitureTrack"/>
+	<!-- Omniture Integration Ends -->
+	
+</apex:page>

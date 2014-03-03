@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>Hierarchy</customSettingsType>
+    <customSettingsVisibility>Public</customSettingsVisibility>
+    <description>The hierarchical custom setting to store the genealogy level of the logged in or the currently impersonating user.</description>
+    <enableEnhancedLookup>false</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Accnt_Nr__c</fullName>
+        <description>Stores the logged in user&apos;s account number</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Stores the logged in user&apos;s account number</inlineHelpText>
+        <label>Accnt Nr</label>
+        <length>80</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Data_Object_Name__c</fullName>
+        <externalId>false</externalId>
+        <label>Data Object Name</label>
+        <length>80</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Gen_Index__c</fullName>
+        <externalId>false</externalId>
+        <label>Gen Index</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Market_Id__c</fullName>
+        <externalId>false</externalId>
+        <label>Market Id</label>
+        <length>10</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SelectedCampaign__c</fullName>
+        <description>Campaign selected by the user to view the report.</description>
+        <externalId>false</externalId>
+        <label>SelectedCampaign</label>
+        <length>32</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>DownloadAll Gen Level</label>
+</CustomObject>

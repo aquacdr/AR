@@ -1,0 +1,74 @@
+<apex:component >
+
+    <apex:stylesheet value="{!URLFOR($Resource.ALMYouAssets, 'css/YOU_style.css')}"/>
+    
+    <style type="text/css">
+      .info_msgs_almp_err{        
+        background-repeat:no-repeat;
+        background-position:top left;
+        padding: 3px 0px 10px 30px;
+        font-family:arial;
+        font-size:12px;
+        font-weight:normal;
+        display:block;
+        white-space:normal;
+        text-align:center;
+    }
+    </style>
+    
+    <div class="white_trans" id="emailmsgwrapper">
+    <div class="popup_wrpr_overlay">
+        <div class="popup_ccntr_overlay">
+            <a href="javascript:hideEmailOverlayPage();" class="close_btn"></a>
+            <div class="key_pop_content">
+                <apex:outputPanel layout="none">
+                <div class="cntr"></div>             
+                <div class="cntr mar_tp_20">
+                    <table border="0" width="100%" cellspacing="0" cellpadding="0" class="keppopup_tab_data tabs_border">
+                        <table style="background-color : #FFFFFF; border : 1px solid #E41A1A; width : 850px; padding:5px;height:120px">
+                        <tr>
+                            <td style="height:2px"></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td style="width:2px"></td>
+                            <td style="background-color : #E41A1A;">&nbsp;</td>
+                            <td style="width:2px"></td>
+                        </tr>
+                        <tr>
+                            <td style="width:2px"></td>
+                            <td style="background-color : #E41A1A;" align="left">
+                                <font style="font-size : 30px; color : #FFFFFF; padding-left: 20px;">
+                                <apex:image url="{!URLFOR($Resource.YOU_Asset,'images/alert.gif')}"/>
+                                {!$Label.error_email_msg_1} <br /></font>
+                            </td>
+                            <td style="width:2px"></td>
+                        </tr>
+                        <tr>
+                            <td style="width:2px"></td>
+                            <td style="background-color : #E41A1A;">&nbsp;</td>
+                            <td style="width:2px"></td>
+                        </tr>
+                        <tr>
+                            <td style="width:2px"></td>
+                            <td style="background-color : #E41A1A;" align="left">
+                                <font style="font-size : 16px; color : #FFFFFF; padding-left: 20px;">{!$Label.error_email_msg_2} <br /><br /></font>
+                            </td>
+                            <td style="width:2px"></td>
+                        </tr>
+                        <tr>
+                            <td style="height:2px"></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        </table>
+                    </table>    
+                </div>
+                </apex:outputPanel>
+            </div>
+        </div>
+    </div>
+    </div>
+
+</apex:component>

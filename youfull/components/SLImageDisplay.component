@@ -1,0 +1,9 @@
+<apex:component controller="Controller_SLImageDisplay">
+    <apex:attribute name="contentTitle" assignTo="{!contentTitle}" description="Title for content to be displayed" type="string" required="true" />
+
+    <apex:outputpanel id="imgPanel"> 
+        <div id="imgContainer" >
+            <apex:image id="theImage" value="data:image/jpg;base64,{!image}"/>
+        </div>
+    </apex:outputpanel>
+</apex:component>

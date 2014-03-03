@@ -1,0 +1,62 @@
+<apex:page showHeader="false" sidebar="false" standardStyleSheets="false" controller="SiteHeaderController" action="{!init}" language="{!$CurrentPage.parameters.langcd}">
+     <script type="text/javascript">
+    alert('El desarrollo esta en progreso. Por favor revise mas tarde');
+    history.back();
+</script>
+ 
+ <head>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+        <title>{!$Label.You_Page_Title}</title>
+         <apex:includeScript value="{!URLFOR($Resource.ALMPlus_Asset,'js/jquery-1.5.1.min.js')}"/>
+        <apex:stylesheet value="{!URLFOR($Resource.ALMYouAssets,'css/YOU_style.css')}" />
+<style type="text/css">
+      .info_msgs_almp_err{
+        background-image:url({!URLFOR($Resource.ALMPlus_Asset,'images/error_img.png')});
+        background-repeat:no-repeat;
+        background-position:top left;
+        padding: 3px 0px 10px 30px;
+        font-family:arial;
+        font-size:12px;
+        font-weight:normal;
+        display:block;
+        white-space:normal;
+        text-align:left;
+    }
+    </style>
+  </head>
+  <body style="margin:0px;font-size:62.5%;">
+     <div class="main_cntr">
+     <!--Top navigation area-->
+     <div class="tp_nav_cntr">
+    <div class="cntr">
+    <a class="logo_plhlder" href="#">
+    <apex:image value="{!URLFOR($Resource.ALMYouAssets,'images/avon-logo.jpg')}" alt="AVON" title="AVON" onclick="javascript:window.location.replace('/secur/logout.jsp' );"/></a>
+    </div>
+      <div class="cntr"> 
+   <div class="cntr"> 
+    <a class="logo_plhlder" href="#">
+    <apex:image value="{!URLFOR($Resource.ALMYouAssets,'images/avon-logobig.gif')}" alt="AVON" title="AVON"/></a>
+     <div class="top_nav_wrpr">
+        <div class="cntr">
+          <p class="name_cntr"><span class="sml_dtd_sprt">{!currUsr.FirstName}&nbsp;{!currUsr.LastName}<apex:outputText value=",&nbsp; {!ldrTitle}" rendered="{!userProfile='Avon Leader'}" escape="false"/></span><span class="pad_lft_10">{!$Label.Last_Updated}:&nbsp;<apex:outputField value="{!market.LAST_UPDT_DT__c}"/></span></p>
+        </div>
+      </div>
+    </div>
+    </div>
+    </div>
+     <!--Top navigation area ends-->
+     <div class="content_cntr" id="cnt_cntr">
+    <div id="msg_box" style="margin-left:200px;">
+         <!-- <div id="msg_box_inner" class="info_msgs_almp_err" style="color:red;font-weight:bold;">
+            <apex:outputText > {!$Label[errorMessageLabel]} </apex:outputText>
+          </div>-->
+    </div>
+    </div>
+     <!--Footer area starts-->
+     <div class="footer_area" id="global_footer" style="margin-top: 400px;">
+       <c:Footer privacyURL="{!market.Security_and_Privacy_URL__c}" conditionsURL="{!market.Conditions_Of_Use_URL__c}"/>
+     </div>
+    <!--Footer area ends--> 
+   </div>
+    </body>
+</apex:page>

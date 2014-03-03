@@ -1,0 +1,9 @@
+<apex:page >
+ <!-- JQGRID showing Report Data -->
+  <apex:outputPanel id="repData">
+    <c:SLJQGridComponent reportId="123" filterLogic="(1 AND 2)" 
+                       filters="" displayCheckboxes="false" 
+                       noOfColumnsToFreeze="0"/>                      
+  </apex:outputPanel>
+
+</apex:page>

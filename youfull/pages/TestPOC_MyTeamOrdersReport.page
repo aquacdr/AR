@@ -1,0 +1,117 @@
+<apex:page showheader="true" sidebar="true" controller="Controller_SLMyTeamOrdersReport" id="thePage">
+<apex:includeScript value="{!URLFOR($Resource.ALMPlus_Asset,'js/jquery-1.5.1.min.js')}"/>
+<style type="text/css">
+    .custPopup{
+        background-color: white;
+        border-width: 2px;
+        border-style: solid;
+        z-index: 9999;
+        left: 50%;
+        padding:10px;
+        position: absolute;        
+        width: 500px;
+        margin-left: -250px;
+        top:100px;
+    }
+    .popupBackground{
+        background-color:black;
+        opacity: 0.20;
+        filter: alpha(opacity = 20);
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: 9998;
+    }
+    
+    .popupHidden {
+        display: none;
+    }   
+    
+</style>
+<script>
+    function exportReport(params) {
+        downloadReport(params, 'export=1&enc=UTF-8&xf=xls');
+    }
+    
+    function printReport(params) {
+        downloadReport(params, 'excel=1');
+    }
+    
+    function downloadReport(params, querystring) {
+      try{              
+        //Determine reportId
+        var reportId = '{!reportId}';        
+        
+        //prepare URL
+        var redirectURL = '/'+reportId+'?';
+        if(params != ''){
+            redirectURL += params+'&';  
+        }    
+        redirectURL += querystring;
+        
+        //Download
+        window.location =  redirectURL;   
+       
+      } catch(Err) {
+         alert(Err.message);
+      }
+    }
+    
+    function displayEmailPopUp(){
+        jQuery("#bckPanel").attr('class', 'popupBackground');
+        jQuery("#popupPanel").attr('class', 'custPopup');               
+    }
+    
+    function hideEmailPopUp(){
+        jQuery("#bckPanel").attr('class', 'hidden');
+        jQuery("#popupPanel").attr('class', 'hidden');
+    }
+</script>
+<apex:sectionHeader title="My Team Orders"/>
+<apex:pageMessages />
+<apex:form >   
+  <apex:pageblock title="Report Filters">
+<!--        Report Section :: Display list of reports  -->
+      <apex:pageBlockSection columns="1" Id="reportSection">
+        <apex:actionFunction immediate="false" name="populateFilters" action="{!populateFilterColumns}"  rerender="filterSection,repData" />
+        <apex:pageBlockSectionItem Id="reportList">
+            <apex:outputLabel value="Select Criteria"/>
+            <apex:selectList id="selectReport" size="1" value="{!selectedReport}" onchange="populateFilters();"> 
+                <apex:selectOptions value="{!reportList}"/>
+            </apex:selectList> 
+        </apex:pageBlockSectionItem>
+      </apex:pageblockSection>
+      
+<!--       Report Filter Section :: Display list of filter columns  -->
+      <apex:outputPanel id="filterSection" rendered="{!salesLeaderDTO.showFilters}" >
+        <c:ReportFilters reportFilters="{!salesLeaderDTO.filters}" currentMarket="{!salesLeaderDTO.market}" />
+      </apex:outputPanel>
+        
+       <apex:actionFunction name="printFunc" action="{!doNothing}" oncomplete="printReport('{!ReportArguments}'); return false;" />
+       <apex:actionFunction name="exportFunc" action="{!doNothing}" oncomplete="exportReport('{!ReportArguments}'); return false;" />
+     
+       <apex:pageBlockButtons location="top" >
+          <apex:commandButton value="View" action="{!getReportData}" Id="buttonItem1" rerender="repData" />
+          <c:ReportPageButtons displayPrintButton="{!isPrintEnabled}" displayEmailButton="{!isEmailEnabled}" displayExportButton="{!isExportEnabled}" />
+       </apex:pageBlockButtons>      
+  </apex:pageblock>
+
+<!--   JQGRID showing Report Data -->
+  <apex:outputPanel id="repData">
+    <c:MultiLevelJQGrid reportId="{!reportId}" filterLogic="{!salesLeaderDTO.filterLogic}" 
+                       filters="{!salesLeaderDTO.filters}" displayCheckboxes="{!isEmailEnabled}" 
+                       noOfColumnsToFreeze="{!columnsToFreeze}"
+                       groupingColumn="ALM_Rep_Performance_1__c.UPLN_ACCT_KEY__c.Name"/> 
+  </apex:outputPanel>
+  
+  <apex:outputPanel id="emailPanel">
+      <div id="bckPanel" class="popupHidden"></div>
+      <div id="popupPanel" class="popupHidden" >
+          <c:EmailMessageComponent id="emlmsgoverlay" />
+      </div>
+  </apex:outputPanel>
+  
+</apex:form>
+</apex:page>

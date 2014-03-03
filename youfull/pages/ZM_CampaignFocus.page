@@ -1,0 +1,11 @@
+<apex:page controller="ZM_CampaignFocusController" showheader="false" >
+	
+	<!--  Omniture method invocation starts -->
+	<script>
+		ALM_PAGE_NAME="{!OmniturePageName}"; 	
+	</script>
+	<!--  Omniture method invocation ends -->
+	
+	<c:ALM_CampaignFocus sourceParam="home" />
+	<apex:include pageName="ZMDMOmnitureTrack"/>
+</apex:page>

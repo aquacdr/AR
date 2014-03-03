@@ -1,0 +1,17 @@
+<apex:component >
+
+	<apex:attribute name="GenealogyList" description="Description here." type="GenealogyWrapper[]" required="true"></apex:attribute>
+	<apex:attribute name="TeamPrintColumnList" description="Description here." type="MTRPrintColumn[]" required="true"></apex:attribute>
+	<apex:attribute name="MergePrintColumnList" description="Description here." type="MTRPrintColumn[]" required="true"></apex:attribute>
+	<apex:attribute name="PersonalPrintColumnList" description="Description here." type="MTRPrintColumn[]" required="true"></apex:attribute>
+	<apex:attribute name="IsTList" description="Description here." type="Boolean" required="false"></apex:attribute>
+	<apex:attribute name="OnDataItemCreatedCallback" description="Description here." type="String" required="false"></apex:attribute>
+
+	<apex:repeat value="{!GenealogyList}" var="genealogy">    
+	
+		<c:MTRPrintRow id="PrintRow" RowType="{!genealogy.RowType}" Genealogy="{!genealogy}" PrintColumnList="{!CASE(genealogy.RowType, 'Team', TeamPrintColumnList, 'Personal', PersonalPrintColumnList, 'Merged', MergePrintColumnList, MergePrintColumnList)}" />
+
+	</apex:repeat>
+
+    
+</apex:component>

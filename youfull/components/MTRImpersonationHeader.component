@@ -1,0 +1,29 @@
+<apex:component >
+
+	<apex:attribute name="JQueryParentId" description="" type="String" required="false" ></apex:attribute>
+	<apex:attribute name="FullName" description="" type="String" required="true" ></apex:attribute>
+	<apex:attribute name="MarketId" description="" type="String" required="false" ></apex:attribute>
+	<apex:attribute name="selectOptions" type="SelectOption[]" description="Select Options" required="false"/>
+	<script>
+		$(document).ready(function() {
+  			createFancyDropdown('implstMyTeamType', 181, 'select_large blacktext', 20);
+  		});
+	</script>
+	
+	<div id="header">
+		<div class="breadcrumb_imper">
+			<h2 class="brd_hdr">{!FullName}</h2>
+			<div style="float:right">
+				<span class="frm_cntr">
+					<c:ReportLinksSelectList selectOptions="{!selectOptions}" elementId="implstMyTeamType" elementName="implstMyTeamType" className="myselect" size="1" style="width:242px; height:26px !important" onchange="onSelectValue(this.value);" />
+				</span>
+			</div>
+		</div>
+	</div>
+	
+<script language="JavaScript">
+	
+	$('{!JQueryParentId}').prepend($('#header'));
+</script>
+
+</apex:component>

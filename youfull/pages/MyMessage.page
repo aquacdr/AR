@@ -1,0 +1,131 @@
+<apex:page Controller="MyMessageController" showHeader="false" sidebar="false" standardStyleSheets="false">
+<apex:form >  
+   <apex:composition template="YOUPageTemplateNoActions">
+    <apex:define name="content">
+            <script type="text/javascript">
+            ALM_PAGE_NAME="{!OmniturePageName}";   
+            function showDetail(recId){
+            if(jQuery("#email_sel_maskmessagedetails").attr('class')=='white_trans_closed'){
+                  jQuery("#email_sel_maskmessagedetails").attr('class','white_trans');
+                }else{
+                    jQuery("#email_sel_maskmessagedetails").attr('class','white_trans_closed');
+                }
+                var topPos = (jQuery(window).height()/2)-(jQuery('#email_message_details').height()/2);
+                var leftPos = (jQuery(window).width()/2)-(jQuery('#email_message_details').width()/2);
+                jQuery("#email_message_details").css('top',topPos);
+                jQuery("#email_message_details").css('left',leftPos);
+                jQuery("#email_message_details").load("{!URLFOR($Page.MyMessageDetail)}?id="+recId+"&random=" + Math.random()*99999);
+             }
+              function hideDetail(){
+            if(jQuery("#email_sel_maskmessagedetails").attr('class')=='white_trans'){
+                    jQuery("#email_sel_maskmessagedetails").attr('class','white_trans_closed');
+                }else{
+                    jQuery("#email_sel_maskmessagedetails").attr('class','white_trans');
+                }
+           }
+              </script>
+           
+            <div>
+                <div class="big_pnk_hdr">
+                    <h1 class="left mar_rht_10">{!$Label.Ecard_History_Header}</h1>
+                </div>
+                <div class="cntr">
+      
+            <!-- <div class="rsing_bg">
+                <ul class="cross_hdrs">
+                    <li class="box_rotate" style="margin-left:139px;width: 100px;">{!$Label.ActivityDate}</li>
+                    <li class="box_rotate" style="margin-left:106px; width: 100px;">{!$Label.Subject}</li>
+                    <li class="box_rotate" style="margin-left:-44px;width: 100px;">{!$Label.Email_Sent_Success}</li>
+                    <li class="box_rotate" style=" margin-left:-44px;width: 100px;">{!$Label.Email_Sent_Failed}</li>
+                    <li class="box_rotate" style="margin-left: -44px;width: 100px;">{!$Label.No_Email}</li>
+               </ul>
+            </div> -->
+
+<table id="tableHeader" style="background: #F6F5F5;">
+        <tbody><tr height="24">
+            <td  style="width:174px;color: #838282;align:center;vertical-align: middle;font-size: 8pt;border-right: 1px solid #AAA8A8;padding: 5px;height: 24px;" align="center">{!$Label.ActivityDate}</td>
+            <td style="width:215px;color: #838282;align:center;vertical-align: middle;font-size: 8pt;border-right: 1px solid #AAA8A8;padding: 5px;height: 24px;" align="center">{!$Label.Subject}</td>
+            <td style="width:170px;color: #838282;align:center;vertical-align: middle;font-size: 8pt;border-right: 1px solid #AAA8A8;padding: 5px;height: 24px;" align="center">{!$Label.Email_Sent_Success}</td>
+            <td style="width:170px;color: #838282;align:center;vertical-align: middle;font-size: 8pt;border-right: 1px solid #AAA8A8;padding: 5px;height: 24px;" align="center">{!$Label.Email_Sent_Failed}</td>
+            <td style="width:170px;color: #838282;align:center;vertical-align: middle;font-size: 8pt;border-right: 1px solid #AAA8A8;padding: 5px;height: 24px;" align="center">{!$Label.No_Email}</td>
+            
+        </tr>
+        <tr class="subhead" height="17" style="height: 17px;background: #E9E9E9;">
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td>&nbsp; </td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+    </tbody></table>
+
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" class="risingstar_tab">
+              <tr>
+                <td width="45"><table width="100%" border="0" cellspacing="0" cellpadding="0" class="txt_right">
+                  <!-- <tr>
+                    <td class="pad_tp_none fnt_sml_hdr">&nbsp;</td>
+                    <td class="pad_tp_none fnt_sml_hdr">&nbsp;</td>
+                    <td class="pad_tp_none fnt_sml_hdr">&nbsp;</td>
+                    <td class="pad_tp_none fnt_sml_hdr">&nbsp;</td>
+                    <td class="pad_tp_none fnt_sml_hdr">&nbsp;</td>
+                  </tr> -->
+                  <apex:variable var="cnt" value="{!0}" />
+                  <apex:repeat value="{!eCardHistories}" var="eCardHistory">
+                      <tr>
+                         <td style="width:174px;{!IF(MOD(cnt,2)=0,'background-color:white;','background-color:rgb(224,224,224);')}">
+                         <apex:outputField value="{!eCardHistory.eCard.CreatedDate}"/>
+                         </td>
+                        <td  style="width:215px;{!IF(MOD(cnt,2)=0,'background-color:white;','background-color:rgb(224,224,224);')}">
+                            <a href="#" onClick="showDetail('{!eCardHistory.eCard.Id}');">
+                                 <apex:outputField value="{!eCardHistory.eCard.Name}"/>
+                            </a>
+                        </td>
+                        <td style="width:170px;align:center;{!IF(MOD(cnt,2)=0,'background-color:white;','background-color:rgb(224,224,224);')}">
+                            <apex:outputField value="{!eCardHistory.eCard.Success_Count__c}"/>
+                        </td>
+                        <td style="width:170px;align:center;{!IF(MOD(cnt,2)=0,'background-color:white;','background-color:rgb(224,224,224);')}">
+                            <apex:outputField value="{!eCardHistory.eCard.Failed_Count__c}"/>
+                        </td>
+                        <td style="width:170px;align:center;{!IF(MOD(cnt,2)=0,'background-color:white;','background-color:rgb(224,224,224);')}">
+                            <apex:outputField value="{!eCardHistory.eCard.No_Email_Count__c}"/>
+                        </td>        
+                        
+                      </tr>
+                      <apex:variable var="cnt" value="{!cnt+1}"/>
+                  </apex:repeat>
+               </table></td>
+              </tr>
+            </table>
+          </div>
+            </div>
+    	<!-- View RepDetail Integrations Starts -->
+	<apex:actionFunction name="viewRepDetail" action="{!callRepDetails}" rerender="repDetail" oncomplete="javascript:displayit();" status="coachCounterStatus">
+    	<apex:param name="repDetailAcctNbr" assignTo="{!repDetailAcctNbr}" value="{!repDetailAcctNbr}"/>
+	</apex:actionFunction>
+    <apex:actionStatus id="coachCounterStatus"  onstart="showProcessingMsg();" onstop="showProcessingMsg();"/>
+   	<div id="email_sel_mask2" class="white_trans_closed">
+     	<apex:outputPanel id="repDetail" layout="none">
+        	<c:CoachingRecord repacctnbr="{!repDetailAcctNbr}" rendered="{!repDetailAcctNbr!=null}"/>
+       	</apex:outputPanel>
+   	</div>
+    <!-- View RepDetail Integrations Ends -->    
+    </apex:define>
+    <apex:define name="contentHidden">
+<!-- 
+    empty div that will be populated with dynamic content from RepDetail Page
+-->
+<div id="email_sel_maskmessagedetails" class="white_trans_closed"> 
+<div id="email_message_details">
+  <c:ProcessingMsg />
+ </div>
+ </div>
+</apex:define>
+</apex:composition>
+<c:OmnitureWebTrack mktName="{!market.Omniture_Suite_Name__c}" 
+                        mktAcctKey="{!currUsr.MRKT_ID_ACCT_NR_KEY__c}"
+                        userType="{!currUsr.Profile.Name}"
+                        userTitle="{!currUsr.LDRSHP_TITL_LVL_NBR__c}"        
+                        rendered="{!globalConfig.Omniture_Tracking_Enabled__c}"/>
+</apex:form>                          
+</apex:page>

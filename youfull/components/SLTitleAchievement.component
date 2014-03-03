@@ -1,0 +1,46 @@
+<apex:component controller="Controller_SLTitleAchievement">
+   <link type="text/css" rel="stylesheet" href="/resource/ZM_Resources/css/style.css"/>
+   
+<apex:form >
+
+<apex:actionFunction name="setCampaignValue" action="{!initialize}" rerender="dataPanel">
+    <apex:param name="campValue" value="" assignTo="{!selectedCampaign}" />
+</apex:actionFunction>
+
+<apex:outputPanel id="dataPanel">
+
+<!--<c:CampaignSelector selCampaign="{!selectedCampaign}"/>-->
+
+    <div class="floatLt logo"><span class="logoText">{!$Label.TitleAchievement} - {!selectedCampaign }</span></div>
+    <div class="clear"></div>
+    <div class="tablecontainer">
+        <apex:outputPanel >
+            <apex:pagemessages ></apex:pagemessages>
+            <apex:outputPanel id="thePanelCenter" layout="block" rendered="{!if(metricList.size>0,true,false)}" >
+                <table cellspacing="0" cellpadding="0" border="0" id="" class="compass">
+                    <thead>
+                        <tr>
+                            <th class="width20 txtAlgCenter">{!$Label.ZM_KPI_Performance_KPI}</th>
+                            <th class="width10 txtAlgCenter">{!$Label.SL_KPI_Performance_Goal}</th>
+                            <th class="width10 txtAlgCenter">{!$Label.ZM_KPI_Performance_Actual}</th>                           
+                            <th class="width20 txtAlgCenter" colspan="2">{!$Label.ZM_Results}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <apex:repeat value="{!metricList}" var="metric" id="theRepeat" >
+                            <tr>
+                                <td>{!($Label[metric.label])}</td> 
+                                <td>{!(metric.plan)}</td>
+                                <td>{!(metric.actual)}</td>  
+                                <td><div class="meter {!metric.barColor}" style="margin-top:12px;"><span style="width:{!IF(VALUE(IF(contains(metric.percent, ','), SUBSTITUTE(metric.percent, ',', ''), metric.percent)) >100,100,metric.percent)}%"></span></div></td>                                                              
+                                <td class="meterpercentage"><apex:outputtext value="{!metric.percent}"/>%</td>
+                            </tr>
+                        </apex:repeat>
+                    </tbody>
+                </table>
+            </apex:outputPanel> 
+        </apex:outputPanel>
+    </div>
+</apex:outputPanel>
+</apex:form> 
+</apex:component>

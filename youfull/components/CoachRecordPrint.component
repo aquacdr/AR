@@ -1,0 +1,1152 @@
+<apex:component controller="CoachRecordController" extensions="BusinessPlanControllerNew" allowDML="true">
+    <apex:attribute name="repacctnbr" description="coachActno" type="string" assignTo="{!repacctnbr}" required="false" />
+    <apex:stylesheet value="{!URLFOR($Resource.ALMYouAssets, 'css/BP.css')}"/>
+         {!Initialized}
+    <html>
+    <head>
+        <script type="text/javascript">
+        
+        function printpage(){
+             var elem = document.getElementById('Print');
+             elem.parentNode.removeChild(elem);
+             window.print();
+        
+        }
+        
+        </script>
+    
+            <apex:includeScript value="{!URLFOR($Resource.ALMPlus_Asset,'js/jquery-1.5.1.min.js')}"/>
+            <apex:stylesheet value="{!URLFOR($Resource.ALMYouAssets, 'css/YOU_style.css')}"/>
+            <apex:stylesheet value="{!URLFOR($Resource.ALM_Assetsv2,'css/alm_2.css')}"/>
+            <apex:stylesheet value="{!URLFOR($Resource.ALMYouAssets, 'css/BP.css')}"/>
+    </head>
+</html>
+
+    
+    
+    
+   <style type="text/css">
+
+        a{
+            text-decoration:none;
+        }
+        .my_business_plan_blank{ 
+            text-align:right;
+            font-size:1.3em;
+            font-weight:700; 
+            width:3%;
+        } 
+        .action_plan_blank{ 
+            text-align:right;
+            font-size:1.3em;
+            font-weight:700; 
+            width:1%;
+        }
+        .my_business_plan_lbl{ 
+            text-align:right;
+            font-size:1.3em;
+            font-weight:700; 
+            width:6%;
+        }
+        .my_business_plan_lbl_long{ 
+            text-align:left;
+            font-size:1.3em;
+            font-weight:700;            
+        }
+        .my_business_plan_txt{ 
+            text-align:left;
+            font-size:1.3em;
+            width:10%;
+        }
+        .my_business_plan_txt_long{ 
+            font-size:1.3em;
+            padding:6px 10px 6px 15px;
+            color:#010101;
+        }
+        .coch_dtl_hdr{
+            color:black;
+            padding-left:5px;
+        }
+        .coch_dtl_hdr a,.coch_dtl_hdr a:visited{
+            color:black;
+        }
+        ul.items {
+            list-style-type: none;
+            margin: 0;
+            padding: 0 0 0 10px;
+            width: 350px;
+        }
+        ul.item {
+            width: 105px;            
+            list-style-type: none;
+            margin: 0;
+            padding: 0 0 0 10px;
+        }
+        
+/* New class added on 13th Aug, 2012 */
+    ul.itemlong {
+    list-style-type: none;
+    margin: 0;
+    padding: 0 0 0 10px;
+    width: 800px;
+}
+     .itemlong li, ul.item li, ul.items li{      
+    background: url("{!URLFOR($Resource.ALMYouAssets,'images/default-bullet.png')}") no-repeat 0 7px;
+    font-size:12px;
+    font-weight: 700;
+    padding: 2px 10px 0 12px;
+}    
+        .list_font {
+            font-weight:normal;
+        }
+        div.wrapText {
+            word-wrap: break-word;
+            width: 670px;
+            overflow: hidden; 
+            display: block;
+        }
+        div.wrapTextSB {
+            word-wrap: break-word;
+            width: 320px;
+            overflow: hidden; 
+            display: block;
+        }
+        table.tablHeader {
+            border-collapse:collapse;
+        }
+        table.tablHeader td
+        {
+            border:solid 1px #b5b4b4;
+            padding:10px 15px 7px 15px;
+            font-size:1.2em;
+            margin:0 10px 0 0;
+            float:left
+            text-align:right
+        }
+                
+    </style>
+        
+    <script type="text/javascript">
+    
+    jQuery(document).ready(
+            function(){
+                var displayMyBusiness = {!boolMyBussTab};
+                if(displayMyBusiness) {
+                    jQuery("#myBusinessPlanTab").css('display','block');
+                } else {
+                    jQuery("#myBusinessPlanTab").css('display','none');
+                }
+        });
+        function showHideDetails(el, tab1, tab2, section){
+            var sub;
+            if(jQuery(el).attr('class')=='tab_list_hdr'){
+                jQuery(el).attr('class','tab_list_hdr_open');
+                jQuery(tab1).attr('class','tab_list_hdr');
+                jQuery(tab2).attr('class','tab_list_hdr');
+            }else{
+                jQuery(el).attr('class','tab_list_hdr');
+                jQuery(tab1).attr('class','tab_list_hdr');
+                jQuery(tab2).attr('class','tab_list_hdr');
+            }
+            //alert('section: '+section);
+            if(section == 'psbSubmit') {
+                sub = setTimeout(psbSubmit, 10);
+            } else if(section == 'ldrSubmit') {
+                sub = setTimeout(ldrSubmit, 10);
+            } else if(section == 'exeSubmit') {
+                sub = setTimeout(exeSubmit, 10);
+            }
+            //var sub = setTimeout(, 10);
+        }
+        function openTab(tab, el) {
+            jQuery('#historicalTab').css('display','none');
+            jQuery('#myBusinessPlanTab').css('display','none');
+            jQuery('#tab1').attr('class','')
+            jQuery('#tab2').attr('class','')
+            
+            jQuery('#'+tab).css('display','block');
+            jQuery(el).attr('class','selected');
+            callBP();
+        }
+        function callBP(){
+            var v = setTimeout(bussinessPlan,10);
+        }
+        ALM_PAGE_NAME="{!OmniturePageName4Coach}";   //added swarnava
+        
+        //Method added by Samudra on 9th Apr, 2013
+        function callOmniture_PrintCoaching(){
+            var s=s_gi('{!market.Omniture_Suite_Name__c}');
+            s.prop8 = 'Print Coaching Record';
+            s.tl(this,'o', 'Print Coaching Record');
+            return false;
+        
+        }//End of Method
+        
+        
+        //for Print
+        function hideCoachingPage(){
+            parent.close();
+           }
+        function printfnc(){
+            window.print();
+            hideCoachingPage();
+        }
+        </script>
+        
+        <script>
+        jQuery(document).ready(function(){
+           jQuery(".tp_nav_cntr").hide();
+           var v;
+           try {
+                v = setTimeout(bussinessPlan,1);
+           } catch(err) {
+                v = setTimeout(printfnc,1);
+           }
+         });
+    </script>
+        
+    
+<apex:actionRegion >
+      <!--popup area-->
+      <apex:outputText value="{!PrintFunction}"/>
+        <div class="popup_wrpr">
+        <div class="popup_ccntr" id="coachsec" style="right:21%">
+           <a href="javascript:hideCoachingPage();" class="close_btn"></a>
+            <div class="pop_content">
+                <div class="big_pnk_hdr" id="Print">
+                    <h1 class="left mar_rht_10">{!$Label.Coaching_Record}</h1>
+                </div>
+                <div class="cntr">
+                    <h2 class="popup_hdrs left">{!$Label.PersonalInfo}</h2>
+                    <apex:outputPanel rendered="{!boolDisplay}">
+                        <a class="rht_pnk_lnk" style="text-decoration: underline;" href="{!strGI3Link}" target="_blank">{!$Label.edit_my_persl_info}</a> <!-- bring this link if SL is looking self record. Unless not needed. -->
+                    </apex:outputPanel>
+                </div>
+               <div class="shdow_wrpr">
+                   <div class="gry_nfo_bx">
+                        <div class="left wd_50">
+                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                            <apex:repeat value="{!personalInfo.col1}" var="detlCol">
+                              <tr>
+                                <td class="lft_sd">{!detlCol.fldLabel}</td>
+                                <td class="rht_sd">
+                                    <apex:outputText value="{!detlCol.fldValue}" rendered="{!AND(detlCol.fldType!='Email', detlCol.fldType!='CEmail')}" escape="false"/>
+                                    <apex:outputText value="{!detlCol.fldValue}" rendered="{!AND(detlCol.fldType='CEmail', boolDisplay)}" escape="false"/>
+                                    <apex:outputLink value="javascript:sendMyEmail('{!market.Market_Id__c}{!personalInfo.strAccountNbr}')" rendered="{!AND(detlCol.fldType='CEmail', boolDisplay!=true)}">{!detlCol.fldValue}</apex:outputLink>
+                                </td>
+                              </tr>
+                            </apex:repeat>
+                            </table>
+                        </div>
+                        <div class="right wd_50">
+                         <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                             <apex:repeat value="{!personalInfo.col2}" var="detlCo2">
+                                  <tr>
+                                    <td class="lft_sd">{!detlCo2.fldLabel}</td>
+                                    <td class="rht_sd">
+                                    <apex:outputText value="{!detlCo2.fldValue}" rendered="{!detlCo2.fldType!='Email'}" escape="false"/>
+                                    <apex:outputLink value="javascript:sendMyEmail('{!market.Market_Id__c}{!personalInfo.strUplineAccNr}')" rendered="{!detlCo2.fldType='Email'}">{!detlCo2.fldValue}</apex:outputLink>
+                                    </td>
+                                  </tr>
+                              </apex:repeat>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <apex:outputPanel rendered="{!NOT(isG1RepCC)}">
+                <div class="cntr mar_tp_10">
+                    <div class="tabs_cnt">
+                        <ul class="tabs_btm_shdw">
+                            <li id="tab1" onclick="openTab('historicalTab', this)" class="selected"><a href="javascript:void(0);">{!$Label.Historical_Record}</a><span></span></li>
+                            <apex:outputPanel rendered="{!boolMyBussTab}">
+                            <li id="tab2" onclick="openTab('myBusinessPlanTab', this)" class=""><a href="javascript:void(0);">{!$Label.My_Business_Plan}</a><span></span></li>
+                            </apex:outputPanel>
+                        </ul>
+                        <div id="historicalTab" class="cntr">
+                            <h2 class="tab_list_hdr" id="prsl_sctn">
+                                <span class="coch_dtl_hdr">{!$Label.Persl_Sales_Business}</span>
+                            </h2>
+                            <div class="shdow_wrpr mar_btm_15">
+                                <div class="pop_gry_conbox">
+                                    <apex:outputPanel layout="none"  rendered="{!isDispBlock}">
+                                    <h3 class="coaching_pnk_hdr">{!$Label.Persl_QualfVol}</h3>
+                                    </apex:outputPanel>
+                                    <div class="cntr">
+                                        <apex:outputPanel layout="none"  rendered="{!isDispBlock}">
+                                        <div class="coach_gry_data_boxes">
+                                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                              <tr>
+                                                <td>{!$Label.Current_Year_YTD}</td>
+                                                <td class="txt_right">{!personalInfo.strCurrentYTD}</td>
+                                              </tr>
+                                              <tr>
+                                                <td>{!$Label.Prior_Year_YTD}</td>
+                                                <td class="txt_right">{!personalInfo.strPriorYTD}</td>
+                                              </tr>
+                                              <tr>
+                                                <td class="magenta">{!$Label.Variance}</td>
+                                                <td class="txt_right magenta">{!personalInfo.strDiffCurrentPrior}</td>
+                                              </tr>
+                                            </table>
+                                           </div>
+                                           
+                                           <div class="coach_gry_data_boxes">
+                                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                              <tr>
+                                                <td>{!$Label.Current} {!$Label.Year} - {!$Label.Last} {!nCampgnCnt} {!$Label.Campaigns}</td>
+                                                <td class="txt_right">{!personalInfo.strPerslVolNCamps}</td>
+                                              </tr>
+                                              <tr>
+                                                <td>{!$Label.Prior} {!$Label.Year} - {!$Label.Last} {!nCampgnCnt} {!$Label.Campaigns}</td>
+                                                <td class="txt_right">{!personalInfo.strSPPYPerslVolNCamps}</td>
+                                              </tr>
+                                              <tr>
+                                                <td class="magenta">{!$Label.Variance}</td>
+                                                <td class="txt_right magenta">{!personalInfo.strDiffCurrentSPPYN}</td>
+                                              </tr>
+                                            </table>
+                                           </div>
+                                           </apex:outputPanel>
+                                           <div class="coach_gry_data_boxes">
+                                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                              <tr>
+                                                <td>{!$Label.Current_Balance}</td>
+                                                <td class="txt_right">{!personalInfo.strCurrentBaln}</td>
+                                              </tr>
+                                              <tr>
+                                                <td>{!$Label.Amount_Due}</td>
+                                                <td class="txt_right">{!personalInfo.strAmtDue}</td>
+                                              </tr>
+                                              <tr>
+                                                <td>{!$Label.Due_Date}</td>
+                                                <td class="txt_right">{!personalInfo.strDueDate}</td>
+                                              </tr>
+                                              <tr>
+                                                <td colspan="2" class="updt_txt">{!$Label.Last_Updated} {!personalInfo.strUpdatedDate} {!$Label.At} {!personalInfo.strUpdatedTime}</td>
+                                              </tr>
+                                            </table>
+                                           </div>
+                                    </div>
+                                    <div id="data1" style="margin-top: 20px; margin-bottom: 20px; float: left; width: 844px; height: auto; overflow:hidden;">
+                                    <table id="dataTableId" width="100%" border="0" cellspacing="0" cellpadding="0" class="coaching_tab_data">
+                                          <tr>
+                                            <th rowspan="2" class="pad_0"></th>
+                                            <th class="alt_wht">&nbsp;</th>
+                                            <th rowspan="20" class="pad_0 brd_clr_highlight brd_top_highlight" width="1"><apex:image value="{!URLFOR($Resource.ALMYouAssets,'images/spacer.gif')}" width="1" alt=""/></th>
+                                            <apex:repeat var="header1" value="{!listCmpgn}" first="0" rows="3">
+                                                <th class="magenta coach_highlight brd_top_highlight">{!header1}</th>
+                                            </apex:repeat>
+                                            <th rowspan="20" class="pad_0 brd_clr_highlight brd_top_highlight" width="1"><apex:image value="{!URLFOR($Resource.ALMYouAssets,'images/spacer.gif')}" width="1" alt=""/></th>
+                                            <apex:repeat var="header2" value="{!listCmpgn}" first="3">
+                                                <th class="alt_wht">{!header2}</th>
+                                            </apex:repeat>
+                                            <th class="pad_0"></th>
+                                          </tr>
+                                          <tr>
+                                            <th class="pad_0 coaching_tab_border"><apex:image value="{!URLFOR($Resource.ALMYouAssets,'images/spacer.gif')}" width="1" alt=""/></th>
+                                            <th colspan="3" class="pad_0 coaching_tab_border"><apex:image value="{!URLFOR($Resource.ALMYouAssets,'images/spacer.gif')}" width="1" alt=""/></th>
+                                            <th colspan="7" class="pad_0 coaching_tab_border"><apex:image value="{!URLFOR($Resource.ALMYouAssets,'images/spacer.gif')}" width="1" alt=""/></th>
+                                          </tr>                                          
+                                          <apex:repeat var="rowKPI" value="{!psbInfo.listPSBData}" first="0" rows="1">
+                                              <tr>                  
+                                                <td rowspan="20" class="pad_0 coaching_tab_border"><apex:image value="{!URLFOR($Resource.ALMYouAssets,'images/spacer.gif')}" width="1" alt=""/></td>                            
+                                                <!-- display KPI name -->
+                                                <td class="{!IF(rowKPI.altRow,'alt_wht txt_left','txt_left')}" style="width:200px !important">{!rowKPI.strKPILabel}</td>
+                                                <!-- value for variance, current campaign, sppy campaign -->
+                                                <apex:repeat var="dataKPI" value="{!rowKPI.listData}" first="0" rows="3">
+                                                    <td class="{!IF(rowKPI.altRow,'alt_wht coach_highlight','')}"><apex:outputText value="{!dataKPI}"/></td>
+                                                </apex:repeat>
+                                                <!-- value for all previous campaign -->
+                                                <apex:repeat var="dataKPI" value="{!rowKPI.listData}" first="3">
+                                                    <td class="{!IF(rowKPI.altRow,'alt_wht','')}"><apex:outputText value="{!dataKPI}"/></td>
+                                                </apex:repeat>
+                                                <td rowspan="20" class="pad_0 coaching_tab_border"><apex:image value="{!URLFOR($Resource.ALMYouAssets,'images/spacer.gif')}" width="1" alt=""/></td>
+                                              </tr>
+                                          </apex:repeat>
+                                          <apex:repeat var="rowKPI" value="{!psbInfo.listPSBData}" first="1">
+                                              <tr>                                              
+                                                <!-- display KPI name -->
+                                                <td class="{!IF(rowKPI.altRow,'alt_wht txt_left','txt_left')}" style="width:200px !important">{!rowKPI.strKPILabel}</td>
+                                                <!-- value for variance, current campaign, sppy campaign -->
+                                                <apex:repeat var="dataKPI" value="{!rowKPI.listData}" first="0" rows="3">
+                                                    <td class="{!IF(rowKPI.altRow,'alt_wht coach_highlight','')}"><apex:outputText value="{!dataKPI}"/></td>
+                                                </apex:repeat>
+                                                
+                                                <!-- value for all previous campaign -->
+                                                <apex:repeat var="dataKPI" value="{!rowKPI.listData}" first="3">
+                                                    <td class="{!IF(rowKPI.altRow,'alt_wht','')}"><apex:outputText value="{!dataKPI}"/></td>
+                                                </apex:repeat>
+                                              </tr>
+                                          </apex:repeat>
+                                          <tr>
+                                            <td colspan="20" class="pad_0 coaching_tab_border"><apex:image value="{!URLFOR($Resource.ALMYouAssets,'images/spacer.gif')}" width="1" alt=""/></td>
+                                          </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        <apex:outputPanel rendered="{!NOT(boolNonLdr)}">
+                            <h2 class="tab_list_hdr" id="ldrshp_sctn">
+                                <span class="coch_dtl_hdr">{!$Label.Group_Information}</span>
+                            </h2>
+                                <div class="shdow_wrpr mar_btm_15">
+                                    <div class="pop_gry_conbox">
+                                        <h3 class="coaching_pnk_hdr">{!$Label.Generation_Information}</h3>
+                                        <!-- subhamay 12032013 as per new requirment -->
+                                        <div id="data1" style="margin-top: 20px; margin-bottom: 20px; float: left; width: 844px; height: auto; overflow:hidden;">
+                                            <!-- G1 data -->
+                                            <table id="dataTableId" width="100%" border="0" cellspacing="0" cellpadding="0" class="coaching_tab_data">
+                                              <tr>
+                                                <th rowspan="2" class="pad_0"></th>
+                                                <th class="alt_wht">&nbsp;</th>
+                                                <th rowspan="20" class="pad_0 brd_clr_highlight brd_top_highlight" width="1"><apex:image value="{!URLFOR($Resource.ALMYouAssets,'images/spacer.gif')}" width="1" alt=""/></th>
+                                                <apex:repeat var="header1" value="{!listCmpgn}" first="0" rows="3">
+                                                    <th class="magenta coach_highlight brd_top_highlight">{!header1}</th>
+                                                </apex:repeat>
+                                                <th rowspan="20" class="pad_0 brd_clr_highlight brd_top_highlight" width="1"><apex:image value="{!URLFOR($Resource.ALMYouAssets,'images/spacer.gif')}" width="1" alt=""/></th>
+                                                <apex:repeat var="header2" value="{!listCmpgn}" first="3">
+                                                    <th class="alt_wht">{!header2}</th>
+                                                </apex:repeat>
+                                                <th class="pad_0"></th>
+                                                
+                                              </tr>
+                                              <tr>
+                                                <th class="pad_0 coaching_tab_border"><apex:image value="{!URLFOR($Resource.ALMYouAssets,'images/spacer.gif')}" width="1" alt=""/></th>
+                                                <th colspan="3" class="pad_0 coaching_tab_border"><apex:image value="{!URLFOR($Resource.ALMYouAssets,'images/spacer.gif')}" width="1" alt=""/></th>
+                                                <th colspan="7" class="pad_0 coaching_tab_border"><apex:image value="{!URLFOR($Resource.ALMYouAssets,'images/spacer.gif')}" width="1" alt=""/></th>
+                                              </tr>
+                                              <apex:repeat var="rowKPI" value="{!psbInfo.listLDRUIG1Data}" first="0" rows="1">
+                                                  <tr>
+                                                    <td rowspan="14" class="pad_0 coaching_tab_border"><apex:image value="{!URLFOR($Resource.ALMYouAssets,'images/spacer.gif')}" width="1" alt=""/></td>
+                                                    <!-- display KPI name -->
+                                                    <td class="{!IF(rowKPI.altRow,'alt_wht txt_left','txt_left')}" style="width:200px !important">{!rowKPI.strKPILabel}</td>
+                                                    <!-- value for variance, current campaign, sppy campaign -->
+                                                    <apex:repeat var="dataKPI" value="{!rowKPI.listData}" first="0" rows="3">
+                                                        <td class="{!IF(rowKPI.altRow,'alt_wht coach_highlight','')}"><apex:outputText value="{!dataKPI}"/></td>
+                                                    </apex:repeat>
+                                                    
+                                                    <!-- value for all previous campaign -->
+                                                    <apex:repeat var="dataKPI" value="{!rowKPI.listData}" first="3">
+                                                        <td class="{!IF(rowKPI.altRow,'alt_wht','')}"><apex:outputText value="{!dataKPI}"/></td>
+                                                    </apex:repeat>
+                                                    <td rowspan="14" class="pad_0 coaching_tab_border"><apex:image value="{!URLFOR($Resource.ALMYouAssets,'images/spacer.gif')}" width="1" alt=""/></td>
+                                                  </tr>
+                                              </apex:repeat>
+                                              <apex:repeat var="rowKPI" value="{!psbInfo.listLDRUIG1Data}" first="1">
+                                                  <tr>                                              
+                                                    <!-- display KPI name -->
+                                                    <td class="{!IF(rowKPI.altRow,'alt_wht txt_left','txt_left')}" style="width:200px !important">{!rowKPI.strKPILabel}</td>
+                                                    <!-- value for variance, current campaign, sppy campaign -->
+                                                    <apex:repeat var="dataKPI" value="{!rowKPI.listData}" first="0" rows="3">
+                                                        <td class="{!IF(rowKPI.altRow,'alt_wht coach_highlight','')}"><apex:outputText value="{!dataKPI}"/></td>
+                                                    </apex:repeat>
+                                                    
+                                                    <!-- value for all previous campaign -->
+                                                    <apex:repeat var="dataKPI" value="{!rowKPI.listData}" first="3">
+                                                        <td class="{!IF(rowKPI.altRow,'alt_wht','')}"><apex:outputText value="{!dataKPI}"/></td>
+                                                    </apex:repeat>
+                                                  </tr>
+                                              </apex:repeat>
+                                              <tr>
+                                                <td colspan="17" class="pad_0 coaching_tab_border"><apex:image value="{!URLFOR($Resource.ALMYouAssets,'images/spacer.gif')}" width="1" alt=""/></td>
+                                              </tr>
+                                            </table>
+                                        </div>
+                                        &nbsp;
+                                        <div id="data1" style="margin-top: 20px; margin-bottom: 20px; float: left; width: 844px; height: auto; overflow:hidden;">
+                                            <!-- G2 data -->
+                                            <table id="dataTableId" width="100%" border="0" cellspacing="0" cellpadding="0" class="coaching_tab_data">
+                                              <tr>
+                                                <th rowspan="2" class="pad_0"></th>
+                                                <th class="alt_wht">&nbsp;</th>
+                                                <th rowspan="20" class="pad_0 brd_clr_highlight brd_top_highlight" width="1"><apex:image value="{!URLFOR($Resource.ALMYouAssets,'images/spacer.gif')}" width="1" alt=""/></th>
+                                                <apex:repeat var="header1" value="{!listCmpgn}" first="0" rows="3">
+                                                    <th class="magenta coach_highlight brd_top_highlight">{!header1}</th>
+                                                </apex:repeat>
+                                                <th rowspan="20" class="pad_0 brd_clr_highlight brd_top_highlight" width="1"><apex:image value="{!URLFOR($Resource.ALMYouAssets,'images/spacer.gif')}" width="1" alt=""/></th>
+                                                <apex:repeat var="header2" value="{!listCmpgn}" first="3">
+                                                    <th class="alt_wht">{!header2}</th>
+                                                </apex:repeat>
+                                                <th class="pad_0"></th>
+                                                
+                                              </tr>
+                                              <tr>
+                                                <th class="pad_0 coaching_tab_border"><apex:image value="{!URLFOR($Resource.ALMYouAssets,'images/spacer.gif')}" width="1" alt=""/></th>
+                                                <th colspan="3" class="pad_0 coaching_tab_border"><apex:image value="{!URLFOR($Resource.ALMYouAssets,'images/spacer.gif')}" width="1" alt=""/></th>
+                                                <th colspan="7" class="pad_0 coaching_tab_border"><apex:image value="{!URLFOR($Resource.ALMYouAssets,'images/spacer.gif')}" width="1" alt=""/></th>
+                                              </tr>
+                                              <apex:repeat var="rowKPI" value="{!psbInfo.listLDRUIG2Data}" first="0" rows="1">
+                                                  <tr>
+                                                    <td rowspan="14" class="pad_0 coaching_tab_border"><apex:image value="{!URLFOR($Resource.ALMYouAssets,'images/spacer.gif')}" width="1" alt=""/></td>
+                                                    <!-- display KPI name -->
+                                                    <td class="{!IF(rowKPI.altRow,'alt_wht txt_left','txt_left')}" style="width:200px !important">{!rowKPI.strKPILabel}</td>
+                                                    <!-- value for variance, current campaign, sppy campaign -->
+                                                    <apex:repeat var="dataKPI" value="{!rowKPI.listData}" first="0" rows="3">
+                                                        <td class="{!IF(rowKPI.altRow,'alt_wht coach_highlight','')}"><apex:outputText value="{!dataKPI}"/></td>
+                                                    </apex:repeat>
+                                                    
+                                                    <!-- value for all previous campaign -->
+                                                    <apex:repeat var="dataKPI" value="{!rowKPI.listData}" first="3">
+                                                        <td class="{!IF(rowKPI.altRow,'alt_wht','')}"><apex:outputText value="{!dataKPI}"/></td>
+                                                    </apex:repeat>
+                                                    <td rowspan="14" class="pad_0 coaching_tab_border"><apex:image value="{!URLFOR($Resource.ALMYouAssets,'images/spacer.gif')}" width="1" alt=""/></td>
+                                                  </tr>
+                                              </apex:repeat>
+                                              <apex:repeat var="rowKPI" value="{!psbInfo.listLDRUIG2Data}" first="1">
+                                                  <tr>                                              
+                                                    <!-- display KPI name -->
+                                                    <td class="{!IF(rowKPI.altRow,'alt_wht txt_left','txt_left')}" style="width:200px !important">{!rowKPI.strKPILabel}</td>
+                                                    <!-- value for variance, current campaign, sppy campaign -->
+                                                    <apex:repeat var="dataKPI" value="{!rowKPI.listData}" first="0" rows="3">
+                                                        <td class="{!IF(rowKPI.altRow,'alt_wht coach_highlight','')}"><apex:outputText value="{!dataKPI}"/></td>
+                                                    </apex:repeat>
+                                                    
+                                                    <!-- value for all previous campaign -->
+                                                    <apex:repeat var="dataKPI" value="{!rowKPI.listData}" first="3">
+                                                        <td class="{!IF(rowKPI.altRow,'alt_wht','')}"><apex:outputText value="{!dataKPI}"/></td>
+                                                    </apex:repeat>
+                                                  </tr>
+                                              </apex:repeat>
+                                              <tr>
+                                                <td colspan="17" class="pad_0 coaching_tab_border"><apex:image value="{!URLFOR($Resource.ALMYouAssets,'images/spacer.gif')}" width="1" alt=""/></td>
+                                              </tr>
+                                            </table>
+                                        </div>
+                                        &nbsp;
+                                        <div id="data1" style="margin-top: 20px; margin-bottom: 20px; float: left; width: 844px; height: auto; overflow:hidden;">
+                                            <!-- G3 data -->                                            
+                                            <table id="dataTableId" width="100%" border="0" cellspacing="0" cellpadding="0" class="coaching_tab_data">
+                                              <tr>
+                                                <th rowspan="2" class="pad_0"></th>
+                                                <th class="alt_wht">&nbsp;</th>
+                                                <th rowspan="20" class="pad_0 brd_clr_highlight brd_top_highlight" width="1"><apex:image value="{!URLFOR($Resource.ALMYouAssets,'images/spacer.gif')}" width="1" alt=""/></th>
+                                                <apex:repeat var="header1" value="{!listCmpgn}" first="0" rows="3">
+                                                    <th class="magenta coach_highlight brd_top_highlight">{!header1}</th>
+                                                </apex:repeat>
+                                                <th rowspan="20" class="pad_0 brd_clr_highlight brd_top_highlight" width="1"><apex:image value="{!URLFOR($Resource.ALMYouAssets,'images/spacer.gif')}" width="1" alt=""/></th>
+                                                <apex:repeat var="header2" value="{!listCmpgn}" first="3">
+                                                    <th class="alt_wht">{!header2}</th>
+                                                </apex:repeat>
+                                                <th class="pad_0"></th>
+                                                
+                                              </tr>
+                                              <tr>
+                                                <th class="pad_0 coaching_tab_border"><apex:image value="{!URLFOR($Resource.ALMYouAssets,'images/spacer.gif')}" width="1" alt=""/></th>
+                                                <th colspan="3" class="pad_0 coaching_tab_border"><apex:image value="{!URLFOR($Resource.ALMYouAssets,'images/spacer.gif')}" width="1" alt=""/></th>
+                                                <th colspan="7" class="pad_0 coaching_tab_border"><apex:image value="{!URLFOR($Resource.ALMYouAssets,'images/spacer.gif')}" width="1" alt=""/></th>
+                                              </tr>
+                                              <apex:repeat var="rowKPI" value="{!psbInfo.listLDRUIG3Data}" first="0" rows="1">
+                                                  <tr>
+                                                    <td rowspan="14" class="pad_0 coaching_tab_border"><apex:image value="{!URLFOR($Resource.ALMYouAssets,'images/spacer.gif')}" width="1" alt=""/></td>
+                                                    <!-- display KPI name -->
+                                                    <td class="{!IF(rowKPI.altRow,'alt_wht txt_left','txt_left')}" style="width:200px !important">{!rowKPI.strKPILabel}</td>
+                                                    <!-- value for variance, current campaign, sppy campaign -->
+                                                    <apex:repeat var="dataKPI" value="{!rowKPI.listData}" first="0" rows="3">
+                                                        <td class="{!IF(rowKPI.altRow,'alt_wht coach_highlight','')}"><apex:outputText value="{!dataKPI}"/></td>
+                                                    </apex:repeat>
+                                                    
+                                                    <!-- value for all previous campaign -->
+                                                    <apex:repeat var="dataKPI" value="{!rowKPI.listData}" first="3">
+                                                        <td class="{!IF(rowKPI.altRow,'alt_wht','')}"><apex:outputText value="{!dataKPI}"/></td>
+                                                    </apex:repeat>
+                                                    <td rowspan="14" class="pad_0 coaching_tab_border"><apex:image value="{!URLFOR($Resource.ALMYouAssets,'images/spacer.gif')}" width="1" alt=""/></td>
+                                                  </tr>
+                                              </apex:repeat>
+                                              <apex:repeat var="rowKPI" value="{!psbInfo.listLDRUIG3Data}" first="1">
+                                                  <tr>                                              
+                                                    <!-- display KPI name -->
+                                                    <td class="{!IF(rowKPI.altRow,'alt_wht txt_left','txt_left')}" style="width:200px !important">{!rowKPI.strKPILabel}</td>
+                                                    <!-- value for variance, current campaign, sppy campaign -->
+                                                    <apex:repeat var="dataKPI" value="{!rowKPI.listData}" first="0" rows="3">
+                                                        <td class="{!IF(rowKPI.altRow,'alt_wht coach_highlight','')}"><apex:outputText value="{!dataKPI}"/></td>
+                                                    </apex:repeat>
+                                                    
+                                                    <!-- value for all previous campaign -->
+                                                    <apex:repeat var="dataKPI" value="{!rowKPI.listData}" first="3">
+                                                        <td class="{!IF(rowKPI.altRow,'alt_wht','')}"><apex:outputText value="{!dataKPI}"/></td>
+                                                    </apex:repeat>
+                                                  </tr>
+                                              </apex:repeat>
+                                              <tr>
+                                                <td colspan="17" class="pad_0 coaching_tab_border"><apex:image value="{!URLFOR($Resource.ALMYouAssets,'images/spacer.gif')}" width="1" alt=""/></td>
+                                              </tr>
+                                            </table>
+                                        </div>  
+                                        &nbsp;&nbsp;&nbsp;                                      
+                                        <!-- eoc subhamay 12032013 as per new requirment -->
+                                        <apex:outputPanel layout="none" rendered="{!isDispBlock}" >
+                                        <h3 class="coaching_pnk_hdr">{!$Label.ErngIllustratr_TotUnitSl}</h3>
+                                        <div class="cntr">
+                                            <!-- subhamay 11032013 as per new requirement --> 
+                                             <div class="coach_gry_data_boxes">
+                                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                  <tr>
+                                                    <td>{!$Label.Current_Year_YTD}</td>
+                                                    <td class="txt_right">{!personalInfo.strCurrentYTDLdr}</td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td>{!$Label.Prior_Year_YTD}</td>
+                                                    <td class="txt_right">{!personalInfo.strPriorYTDLdr}</td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td class="magenta">{!$Label.Variance}</td>
+                                                    <td class="txt_right magenta">{!personalInfo.strDiffCurrentPriorLdr}</td>
+                                                  </tr>
+                                                </table>
+                                               </div> 
+                                               
+                                               <div class="coach_gry_data_boxes">
+                                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                  <tr>
+                                                    <td>{!$Label.Current} {!$Label.Year} - {!$Label.Last} 4 {!$Label.Campaigns}</td>
+                                                    <td class="txt_right">{!personalInfo.strPerslVolNCampsLdr}</td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td>{!$Label.Prior} {!$Label.Year} - {!$Label.Last} 4 {!$Label.Campaigns}</td>
+                                                    <td class="txt_right">{!personalInfo.strSPPYPerslVolNCampsLdr}</td>
+                                                  </tr>
+                                                  <tr>
+                                                    <td class="magenta">{!$Label.Variance}</td>
+                                                    <td class="txt_right magenta">{!personalInfo.strDiffCurrentSPPYNLdr}</td>
+                                                  </tr>
+                                                </table>
+                                               </div>
+                                             <!-- eoc subhamay 11032013 as per new requirement -->
+                                        </div>
+                                        </apex:outputPanel>
+                                        <div id="data1" style="margin-top: 20px; margin-bottom: 20px; float: left; width: 844px; height: auto; overflow: hidden;">
+                                            <table id="dataTableId" width="100%" border="0" cellspacing="0" cellpadding="0" class="coaching_tab_data">
+                                              <tr>
+                                                <th rowspan="2" class="pad_0"></th>
+                                                <th class="alt_wht">&nbsp;</th>
+                                                <th rowspan="20" class="pad_0 brd_clr_highlight brd_top_highlight" width="1"><apex:image value="{!URLFOR($Resource.ALMYouAssets,'images/spacer.gif')}" width="1" alt=""/></th>
+                                                <apex:repeat var="header1" value="{!listCmpgn}" first="0" rows="3">
+                                                    <th class="magenta coach_highlight brd_top_highlight">{!header1}</th>
+                                                </apex:repeat>
+                                                <th rowspan="20" class="pad_0 brd_clr_highlight brd_top_highlight" width="1"><apex:image value="{!URLFOR($Resource.ALMYouAssets,'images/spacer.gif')}" width="1" alt=""/></th>
+                                                <apex:repeat var="header2" value="{!listCmpgn}" first="3">
+                                                    <th class="alt_wht">{!header2}</th>
+                                                </apex:repeat>
+                                                <th class="pad_0"></th>
+                                              </tr>
+                                              <tr>
+                                                <th class="pad_0 coaching_tab_border"><apex:image value="{!URLFOR($Resource.ALMYouAssets,'images/spacer.gif')}" width="1" alt=""/></th>
+                                                <th colspan="3" class="pad_0 coaching_tab_border"><apex:image value="{!URLFOR($Resource.ALMYouAssets,'images/spacer.gif')}" width="1" alt=""/></th>
+                                                <th colspan="7" class="pad_0 coaching_tab_border"><apex:image value="{!URLFOR($Resource.ALMYouAssets,'images/spacer.gif')}" width="1" alt=""/></th>
+                                              </tr>
+                                              <apex:repeat var="rowKPI" value="{!psbInfo.listLDRData}" first="0" rows="1">
+                                                  <tr>
+                                                    <td rowspan="20" class="pad_0 coaching_tab_border"><apex:image value="{!URLFOR($Resource.ALMYouAssets,'images/spacer.gif')}" width="1" alt=""/></td>
+                                                    <!-- display KPI name -->
+                                                    <td class="{!IF(rowKPI.altRow,'alt_wht txt_left','txt_left')}" style="width:200px !important">{!rowKPI.strKPILabel}</td>
+                                                    <!-- value for variance, current campaign, sppy campaign -->
+                                                    <apex:repeat var="dataKPI" value="{!rowKPI.listData}" first="0" rows="3">
+                                                        <td class="{!IF(rowKPI.altRow,'alt_wht coach_highlight','')}"><apex:outputText value="{!dataKPI}"/></td>
+                                                    </apex:repeat>
+                                                    
+                                                    <!-- value for all previous campaign -->
+                                                    <apex:repeat var="dataKPI" value="{!rowKPI.listData}" first="3">
+                                                        <td class="{!IF(rowKPI.altRow,'alt_wht','')}"><apex:outputText value="{!dataKPI}"/></td>
+                                                    </apex:repeat>
+                                                    <td rowspan="20" class="pad_0 coaching_tab_border"><apex:image value="{!URLFOR($Resource.ALMYouAssets,'images/spacer.gif')}" width="1" alt=""/></td>
+                                                  </tr>
+                                              </apex:repeat>
+                                              <apex:repeat var="rowKPI" value="{!psbInfo.listLDRData}" first="1" rows="1">
+                                                  <tr>
+                                                    <!-- display KPI name -->
+                                                    <td class="brdr_bottom_blk txt_left" style="width:200px !important">{!rowKPI.strKPILabel}</td>
+                                                    <!-- value for variance, current campaign, sppy campaign -->
+                                                    <apex:repeat var="dataKPI" value="{!rowKPI.listData}" first="0" rows="3">
+                                                        <td class="brdr_bottom_blk"><apex:outputText value="{!dataKPI}"/></td>
+                                                    </apex:repeat>
+                                                    <!-- value for all previous campaign -->
+                                                    <apex:repeat var="dataKPI" value="{!rowKPI.listData}" first="3">
+                                                        <td class="brdr_bottom_blk"><apex:outputText value="{!dataKPI}"/></td>
+                                                    </apex:repeat>
+                                                  </tr>
+                                              </apex:repeat>
+                                              <apex:repeat var="rowKPI" value="{!psbInfo.listLDRData}" first="2" rows="2">
+                                                  <tr>
+                                                    <!-- display KPI name -->
+                                                    <td class="{!IF(rowKPI.altRow,'alt_wht txt_left','txt_left')}" style="width:200px !important">{!rowKPI.strKPILabel}</td>
+                                                    <!-- value for variance, current campaign, sppy campaign -->
+                                                    <apex:repeat var="dataKPI" value="{!rowKPI.listData}" first="0" rows="3">
+                                                        <td class="{!IF(rowKPI.altRow,'alt_wht coach_highlight','')}"><apex:outputText value="{!dataKPI}"/></td>
+                                                    </apex:repeat>
+                                                    <!-- value for all previous campaign -->
+                                                    <apex:repeat var="dataKPI" value="{!rowKPI.listData}" first="3">
+                                                        <td class="{!IF(rowKPI.altRow,'alt_wht','')}"><apex:outputText value="{!dataKPI}"/></td>
+                                                    </apex:repeat>
+                                                  </tr>
+                                              </apex:repeat>
+                                              <apex:repeat var="rowKPI" value="{!psbInfo.listLDRData}" first="4" rows="1">
+                                                  <tr>
+                                                    <!-- display KPI name -->
+                                                    <td class="brdr_bottom_blk txt_left alt_wht" style="width:200px !important">{!rowKPI.strKPILabel}</td>
+                                                    <!-- value for variance, current campaign, sppy campaign -->
+                                                    <apex:repeat var="dataKPI" value="{!rowKPI.listData}" first="0" rows="3">
+                                                        <td class="brdr_bottom_blk alt_wht coach_highlight"><apex:outputText value="{!dataKPI}"/></td>
+                                                    </apex:repeat>
+                                                    
+                                                    <!-- value for all previous campaign -->
+                                                    <apex:repeat var="dataKPI" value="{!rowKPI.listData}" first="3">
+                                                        <td class="brdr_bottom_blk alt_wht"><apex:outputText value="{!dataKPI}"/></td>
+                                                    </apex:repeat>
+                                                  </tr>
+                                              </apex:repeat>
+                                              <apex:repeat var="rowKPI" value="{!psbInfo.listLDRData}" first="5">
+                                                  <tr>
+                                                    <!-- display KPI name -->
+                                                    <td class="{!IF(rowKPI.altRow,'alt_wht txt_left','txt_left')}" style="width:200px !important">{!rowKPI.strKPILabel}</td>
+                                                    <!-- value for variance, current campaign, sppy campaign -->
+                                                    <apex:repeat var="dataKPI" value="{!rowKPI.listData}" first="0" rows="3">
+                                                        <td class="{!IF(rowKPI.altRow,'alt_wht coach_highlight','')}"><apex:outputText value="{!dataKPI}"/></td>
+                                                    </apex:repeat>
+                                                    
+                                                    <!-- value for all previous campaign -->
+                                                    <apex:repeat var="dataKPI" value="{!rowKPI.listData}" first="3">
+                                                        <td class="{!IF(rowKPI.altRow,'alt_wht','')}"><apex:outputText value="{!dataKPI}"/></td>
+                                                    </apex:repeat>
+                                                  </tr>
+                                              </apex:repeat>
+                                              <tr>
+                                                <td colspan="20" class="pad_0 coaching_tab_border"><apex:image value="{!URLFOR($Resource.ALMYouAssets,'images/spacer.gif')}" width="1" alt=""/></td>
+                                              </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                              <!-- 
+                              </apex:outputPanel>
+                            </apex:outputPanel> -->
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!boolExeLdr}">
+                            <h2 class="tab_list_hdr" id="experf_sctn">
+                                <span class="coch_dtl_hdr">{!$Label.Exec_Group_Info}</span>                                                               
+                            </h2>
+                                <div class="shdow_wrpr mar_btm_15">
+                                    <div class="pop_gry_conbox">
+                                    <h3 class="coaching_pnk_hdr">{!$Label.Eexe_Unit_Perf}</h3> 
+                                        <div id="data1" style="margin-top: 20px; margin-bottom: 20px; float: left; width: 844px; height: auto; overflow:hidden;">
+                                            <table id="dataTableId" width="100%" border="0" cellspacing="0" cellpadding="0" class="coaching_tab_data">
+                                              <tr>
+                                                <th rowspan="2" class="pad_0"></th>
+                                                <th class="alt_wht">&nbsp;</th>
+                                                <th rowspan="20" class="pad_0 brd_clr_highlight brd_top_highlight" width="1"><apex:image value="{!URLFOR($Resource.ALMYouAssets,'images/spacer.gif')}" width="1" alt=""/></th>
+                                                <apex:repeat var="header1" value="{!listCmpgn}" first="0" rows="3">
+                                                    <th class="magenta coach_highlight brd_top_highlight">{!header1}</th>
+                                                </apex:repeat>
+                                                <th rowspan="20" class="pad_0 brd_clr_highlight brd_top_highlight" width="1"><apex:image value="{!URLFOR($Resource.ALMYouAssets,'images/spacer.gif')}" width="1" alt=""/></th>
+                                                <apex:repeat var="header2" value="{!listCmpgn}" first="3">
+                                                    <th class="alt_wht">{!header2}</th>
+                                                </apex:repeat>
+                                                <th class="pad_0"></th>
+                                                
+                                              </tr>
+                                              <tr>
+                                                <th class="pad_0 coaching_tab_border"><apex:image value="{!URLFOR($Resource.ALMYouAssets,'images/spacer.gif')}" width="1" alt=""/></th>
+                                                <th colspan="3" class="pad_0 coaching_tab_border"><apex:image value="{!URLFOR($Resource.ALMYouAssets,'images/spacer.gif')}" width="1" alt=""/></th>
+                                                <th colspan="7" class="pad_0 coaching_tab_border"><apex:image value="{!URLFOR($Resource.ALMYouAssets,'images/spacer.gif')}" width="1" alt=""/></th>
+                                              </tr>
+                                              <apex:repeat var="rowKPI" value="{!psbInfo.listEUPData}" first="0" rows="1">
+                                                  <tr>
+                                                    <td rowspan="14" class="pad_0 coaching_tab_border"><apex:image value="{!URLFOR($Resource.ALMYouAssets,'images/spacer.gif')}" width="1" alt=""/></td>
+                                                    <!-- display KPI name -->
+                                                    <td class="{!IF(rowKPI.altRow,'alt_wht txt_left','txt_left')}" style="width:200px !important">{!rowKPI.strKPILabel}</td>
+                                                    <!-- value for variance, current campaign, sppy campaign -->
+                                                    <apex:repeat var="dataKPI" value="{!rowKPI.listData}" first="0" rows="3">
+                                                        <td class="{!IF(rowKPI.altRow,'alt_wht coach_highlight','')}"><apex:outputText value="{!dataKPI}"/></td>
+                                                    </apex:repeat>
+                                                    
+                                                    <!-- value for all previous campaign -->
+                                                    <apex:repeat var="dataKPI" value="{!rowKPI.listData}" first="3">
+                                                        <td class="{!IF(rowKPI.altRow,'alt_wht','')}"><apex:outputText value="{!dataKPI}"/></td>
+                                                    </apex:repeat>
+                                                    <td rowspan="14" class="pad_0 coaching_tab_border"><apex:image value="{!URLFOR($Resource.ALMYouAssets,'images/spacer.gif')}" width="1" alt=""/></td>
+                                                  </tr>
+                                              </apex:repeat>
+                                              <apex:repeat var="rowKPI" value="{!psbInfo.listEUPData}" first="1">
+                                                  <tr>                                              
+                                                    <!-- display KPI name -->
+                                                    <td class="{!IF(rowKPI.altRow,'alt_wht txt_left','txt_left')}" style="width:200px !important">{!rowKPI.strKPILabel}</td>
+                                                    <!-- value for variance, current campaign, sppy campaign -->
+                                                    <apex:repeat var="dataKPI" value="{!rowKPI.listData}" first="0" rows="3">
+                                                        <td class="{!IF(rowKPI.altRow,'alt_wht coach_highlight','')}"><apex:outputText value="{!dataKPI}"/></td>
+                                                    </apex:repeat>
+                                                    
+                                                    <!-- value for all previous campaign -->
+                                                    <apex:repeat var="dataKPI" value="{!rowKPI.listData}" first="3">
+                                                        <td class="{!IF(rowKPI.altRow,'alt_wht','')}"><apex:outputText value="{!dataKPI}"/></td>
+                                                    </apex:repeat>
+                                                  </tr>
+                                              </apex:repeat>
+                                              <tr>
+                                                <td colspan="17" class="pad_0 coaching_tab_border"><apex:image value="{!URLFOR($Resource.ALMYouAssets,'images/spacer.gif')}" width="1" alt=""/></td>
+                                              </tr>
+                                            </table>
+    
+                                        </div>
+                                    </div>
+                                </div> 
+                        </apex:outputPanel>
+                            <h3 class="magenta" align="center">{!$Label.Disclaimer_for_decimals_truncation}</h3>
+                        </div>
+                        <apex:actionFunction name="bussinessPlan" action="{!BPAction}" rerender="BPlanSec" oncomplete="javascript:printfnc();">
+                        <apex:param name="coachParam" value="coach" assignTo="{!coachParam}"/>
+                        </apex:actionFunction>
+                        <div id="myBusinessPlanTab" class="cntr" style="display:none">
+                            <h2 class="tab_list_hdr_open">
+                                {!$Label.Business_Plan_Coach}                               
+                            </h2>
+                            <apex:outputPanel styleclass="shdow_wrpr mar_btm_15" id="BPlanSec">
+                                <div class="pop_gry_conbox">
+                                    <div class="cntr mar_tp_10">
+                                        <h3 class="coaching_pnk_hdr">&nbsp;{!$Label.Followup_Meeting}</h3>
+                                        <table  width="100%" border="0" cellspacing="0" cellpadding="0">
+                                            <tr>                                                
+                                                <td>
+                                                    <ul class="item">
+                                                        <li>{!$Label.Day_30}&nbsp;<font class="list_font"><apex:outputText value="{!
+
+followup30}"/></font></li>
+                                                    </ul>
+                                                </td> 
+                                                <td>
+                                                    <ul class="item">
+                                                        <li>{!$Label.Day_60}&nbsp;<font class="list_font"><apex:outputText value="{!
+
+followup60}"/></font></li>
+                                                    </ul>
+                                                </td> 
+                                                <td>
+                                                    <ul class="item">
+                                                        <li>{!$Label.Day_90}&nbsp;<font class="list_font"><apex:outputText value="{!
+
+followup90}"/></font></li>
+                                                    </ul>
+                                                </td> 
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="cntr mar_tp_10">
+                                        <h3 class="coaching_pnk_hdr">&nbsp;{!$Label.Dreams_and_Goals}</h3>
+                                        <table  width="100%" border="0" cellspacing="0" cellpadding="0">
+                                            <tr>
+                                                <td>
+                                                    <ul class="itemlong">
+                                                        <li>
+                                                            <table>
+                                                                <tr>
+                                                                    <td>{!$Label.Short} {!$Label.Term}:&nbsp;</td>
+                                                                    <td><div style="word-wrap: break-word;width: 670px;overflow: Visible; display: 
+
+block;"><font class="list_font"><apex:outputText value="{!shortTermGoals}"/></font></div></td>
+                                                                </tr>
+                                                            </table>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <ul class="itemlong">
+                                                        <li>
+                                                            <table>
+                                                                <tr>
+                                                                    <td>{!$Label.Long} {!$Label.Term}:&nbsp;</td>
+                                                                    <td><div style=" word-wrap: break-word;width: 670px;overflow: hidden; display: 
+
+block;"><font class="list_font"><apex:outputText value="{!longTermGoals}"/></font></div></td>
+                                                                </tr>
+                                                            </table>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="cntr mar_tp_10">
+                                        <h3 class="coaching_pnk_hdr">&nbsp;{!$Label.Prior_Quarter} {!$Label.Achievements}</h3>
+                                        <table  width="100%" border="0" cellspacing="0" cellpadding="0">
+                                            <tr>
+                                                <td width="20">
+                                                    <ul class="itemlong">
+                                                        <li>
+                                                            <table>
+                                                                <tr>
+                                                                    <td>{!$Label.Personal}:&nbsp;</td>
+                                                                    <td><div style=" word-wrap: break-word;width: 670px;overflow: hidden; display: 
+
+block;"><font class="list_font"><apex:outputText value="{!personalAcheivementPY}"/></font></div></td>
+                                                                </tr>
+                                                            </table>
+                                                        </li>
+                                                    </ul>
+                                                </td> 
+                                            </tr>
+                                            <tr>
+                                                <td width="20">
+                                                    <ul class="itemlong">
+                                                        <li>
+                                                            <table>
+                                                                <tr>
+                                                                    <td>{!$Label.Unit}:&nbsp;</td>
+                                                                    <td><div style=" word-wrap: break-word;width: 670px;overflow: hidden; display: 
+
+block;"><font class="list_font"><apex:outputText value="{!unitAcheivementPY}"/></font></div></td>
+                                                                </tr>
+                                                            </table>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="cntr mar_tp_10 horz-sprtr pad_btm_20">
+                                        <h3 class="coaching_pnk_hdr">&nbsp;{!$Label.Prior_Quarter} {!$Label.Key_Learnings}</h3>
+                                        <table  width="100%" border="0" cellspacing="0" cellpadding="0">
+                                            <tr>
+                                                <td width="20">
+                                                    <ul class="itemlong">
+                                                        <li>
+                                                            <table>
+                                                                <tr>
+                                                                    <td><apex:outputlabel value="{!$Label.Key_Learnings}" 
+
+escape="false">:</apex:outputlabel></td>
+                                                                    <td><div style=" word-wrap: break-word;width: 670px;overflow: hidden; display: 
+
+block;"><font class="list_font"><apex:outputText value="{!keyLearnings}"/></font></div></td>
+                                                                </tr>
+                                                            </table>
+                                                         </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    
+                                    <div class="cntr mar_tp_10 horz-sprtr pad_btm_20">
+                                        <c:BusinessPlan bpController="{!ControllerRef}"/>
+                                    </div>
+                                    
+                                    <div class="cntr mar_tp_20">
+                                        <h3 class="popup_hdrs">&nbsp;{!$Label.Action} {!$Label.Plan}</h3>
+                                        <div class="gry_nfo_bx">
+                                            <div class="cntr mar_tp_10">
+                                                <h3 class="coaching_pnk_hdr brdr_btm" style="padding-bottom:1px;">&nbsp;{!$Label.Recuit}</h3>
+                                                <table  width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                    <tr>
+                                                        <td>
+                                                            <ul class="items">
+                                                                <li style="{!IF(AND(recruiting_ActStr1 == null, recruiting_ActStr2 == null, 
+
+recruiting_ActStr3 == null),'display:yes','display:none')}"><div style=" word-wrap: break-word;width: 670px;overflow: hidden; display: 
+
+block;"><apex:outputText value="{!$Label.No_data_entered}"/></div></li>
+                                                                <li style="{!IF(recruiting_ActStr1 !=null,'display:yes','display:none')}"><div style=" word-
+
+wrap: break-word;width: 670px;overflow: hidden; display: block;"><apex:outputText value="{!recruiting_ActStr1}"/></div></li>
+                                                                <li style="{!IF(recruiting_ActStr2 !=null,'display:yes','display:none')}"><div style=" word-
+
+wrap: break-word;width: 670px;overflow: hidden; display: block;"><apex:outputText value="{!recruiting_ActStr2}"/></div></li>
+                                                                <li style="{!IF(recruiting_ActStr3 !=null,'display:yes','display:none')}"><div style=" word-
+
+wrap: break-word;width: 670px;overflow: hidden; display: block;"><apex:outputText value="{!recruiting_ActStr3}"/></div></li>
+                                                            </ul>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="cntr mar_tp_10">
+                                                <h3 class="coaching_pnk_hdr brdr_btm" style="padding-bottom:1px;">&nbsp;{!$Label.ActivityYOU}</h3>
+                                                <table  width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                    <tr>
+                                                        <td>
+                                                            <ul class="items">
+                                                                <li style="{!IF(AND(activity_ActStr1 == null, activity_ActStr2 == null,activity_ActStr3 == 
+
+null),'display:yes','display:none')}"><div style=" word-wrap: break-word;width: 670px;overflow: hidden; display: block;"><apex:outputText value="{!
+
+$Label.No_data_entered}"/></div></li>
+                                                                <li style="{!IF(activity_ActStr1 !=null,'display:yes','display:none')}"><div style=" word-
+
+wrap: break-word;width: 670px;overflow: hidden; display: block;"><apex:outputText value="{!activity_ActStr1}"/></div></li>
+                                                                <li style="{!IF(activity_ActStr2 !=null,'display:yes','display:none')}"><div style=" word-
+
+wrap: break-word;width: 670px;overflow: hidden; display: block;"><apex:outputText value="{!activity_ActStr2}"/></div></li>
+                                                                <li style="{!IF(activity_ActStr3 !=null,'display:yes','display:none')}"><div style=" word-
+
+wrap: break-word;width: 670px;overflow: hidden; display: block;"><apex:outputText value="{!activity_ActStr3}"/></div></li>
+                                                            </ul>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="cntr mar_tp_10">
+                                                <h3 class="coaching_pnk_hdr brdr_btm" style="padding-bottom:1px;">&nbsp;{!$Label.Top_Seller_Title_Achie}</h3>
+                                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                    <tr>
+                                                        <td>
+                                                            <ul class="items">
+                                                                <li style="{!IF(AND(topSeller_ActStr1 == null, topSeller_ActStr2 == null,topSeller_ActStr3 == 
+
+null),'display:yes','display:none')}"><div style=" word-wrap: break-word;width: 670px;overflow: hidden; display: block;"><apex:outputText value="{!
+
+$Label.No_data_entered}"/></div></li>
+                                                                <li style="{!IF(topSeller_ActStr1 !=null,'display:block','display:none')}"><div style="word-
+
+wrap: break-word;width: 320px;overflow: hidden; display: block;"><apex:outputText value="{!topSeller_ActStr1}"/></div></li>
+                                                                <li style="{!IF(topSeller_ActStr2 !=null,'display:block','display:none')}"><div style="word-
+
+wrap: break-word;width: 320px;overflow: hidden; display: block;"><apex:outputText value="{!topSeller_ActStr2}"/></div></li>
+                                                                <li style="{!IF(topSeller_ActStr3 !=null,'display:block','display:none')}"><div style="word-
+
+wrap: break-word;width: 320px;overflow: hidden; display: block;"><apex:outputText value="{!topSeller_ActStr3}"/></div></li>
+                                                            </ul>
+                                                        </td>
+                                                        <td>
+                                                            <ul class="items">
+                                                                <li><div style="word-wrap: break-word;width: 320px;overflow: hidden; display: 
+
+block;"><apex:outputText value="{!IF(topSeller_Candidates !=null,topSeller_Candidates,$Label.No_data_entered)}"/></div></li>                                  
+
+                       
+                                                            </ul>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="cntr mar_tp_10">
+                                                <h3 class="coaching_pnk_hdr brdr_btm" style="padding-bottom:1px;">&nbsp;{!$Label.Ldrship_Title_Achie}</h3>
+                                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                    <tr>
+                                                        <td>
+                                                            <ul class="items">
+                                                                <li style="{!IF(AND(leadership_ActStr1 == null, leadership_ActStr2 == null,leadership_ActStr3 
+
+== null),'display:yes','display:none')}"><div style=" word-wrap: break-word;width: 670px;overflow: hidden; display: block;"><apex:outputText value="{!
+
+$Label.No_data_entered}"/></div></li>
+                                                                <li style="{!IF(leadership_ActStr1 !=null,'display:block','display:none')}"><div 
+
+style="word-wrap: break-word;width: 320px;overflow: hidden; display: block;"><apex:outputText value="{!leadership_ActStr1}"/></div></li>
+                                                                <li style="{!IF(leadership_ActStr2 !=null,'display:block','display:none')}"><div 
+
+style="word-wrap: break-word;width: 320px;overflow: hidden; display: block;"><apex:outputText value="{!leadership_ActStr2}"/></div></li>
+                                                                <li style="{!IF(leadership_ActStr3 !=null,'display:block','display:none')}"><div 
+
+style="word-wrap: break-word;width: 320px;overflow: hidden; display: block;"><apex:outputText value="{!leadership_ActStr3}"/></div></li>
+                                                            </ul>
+                                                        </td>
+                                                        <td>
+                                                            <ul class="items">
+                                                                <li><div style="word-wrap: break-word;width: 320px;overflow: hidden; display: 
+
+block;"><apex:outputText value="{!IF(leadership_Candidates !=null,leadership_Candidates,$Label.No_data_entered)}"/></div></li>
+                                                            </ul>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <div class="cntr mar_tp_10">
+                                                <h3 class="coaching_pnk_hdr brdr_btm" style="padding-bottom:1px;">&nbsp;{!$Label.Persl_Devel_Plan}</h3>
+                                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                    <tr>
+                                                        <td>
+                                                            <ul class="items">
+                                                                <li style="{!IF(AND(perDev_ActStr1 == null, perDev_ActStr2 == null,perDev_ActStr3 == 
+
+null),'display:yes','display:none')}"><div style=" word-wrap: break-word;width: 670px;overflow: hidden; display: block;"><apex:outputText value="{!
+
+$Label.No_data_entered}"/></div></li>
+                                                                <li style="{!IF(perDev_ActStr1 !=null,'display:block','display:none')}"><div style="word-
+
+wrap: break-word;width: 320px;overflow: hidden; display: block;"><apex:outputText value="{!perDev_ActStr1}"/></div></li>
+                                                                <li style="{!IF(perDev_ActStr2 !=null,'display:block','display:none')}"><div style="word-
+
+wrap: break-word;width: 320px;overflow: hidden; display: block;"><apex:outputText value="{!perDev_ActStr2}"/></div></li>
+                                                                <li style="{!IF(perDev_ActStr3 !=null,'display:block','display:none')}"><div style="word-
+
+wrap: break-word;width: 320px;overflow: hidden; display: block;"><apex:outputText value="{!perDev_ActStr3}"/></div></li>
+                                                            </ul>
+                                                        </td>
+                                                        <td>
+                                                            <ul class="items">
+                                                                <li style="{!IF(AND(perDev_ActStr4 == null, perDev_ActStr5 == null,perDev_ActStr6 == 
+
+null),'display:yes','display:none')}"><div style=" word-wrap: break-word;width: 670px;overflow: hidden; display: block;"><apex:outputText value="{!
+
+$Label.No_data_entered}"/></div></li>
+                                                                <li style="{!IF(perDev_ActStr4 !=null,'display:block','display:none')}"><div style="word-
+
+wrap: break-word;width: 320px;overflow: hidden; display: block;"><apex:outputText value="{!perDev_ActStr4}"/></div></li>
+                                                                <li style="{!IF(perDev_ActStr5 !=null,'display:block','display:none')}"><div style="word-
+
+wrap: break-word;width: 320px;overflow: hidden; display: block;"><apex:outputText value="{!perDev_ActStr5}"/></div></li>
+                                                                <li style="{!IF(perDev_ActStr6 !=null,'display:block','display:none')}"><div style="word-
+
+wrap: break-word;width: 320px;overflow: hidden; display: block;"><apex:outputText value="{!perDev_ActStr6}"/></div></li>
+                                                            </ul>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                            <apex:outputPanel styleclass="cntr mar_tp_10" rendered="{!isRisingStarSec}">
+                                                <h3 class="coaching_pnk_hdr brdr_btm">&nbsp;{!$Label.Rising_Stars_Devel}</h3>
+                                                <table  width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                    <tr>
+                                                        <td>
+                                                            <ul class="items">
+                                                                <li style="{!IF(AND(rising_ActStr1 == null, rising_ActStr2 == null, rising_ActStr3 == 
+
+null),'display:yes','display:none')}"><div style=" word-wrap: break-word;width: 670px;overflow: hidden; display: block;"><apex:outputText value="{!
+
+$Label.No_data_entered}"/></div></li>
+                                                                <li style="{!IF(rising_ActStr1 !=null,'display:block','display:none')}"><div style="word-
+
+wrap: break-word;width: 320px;overflow: hidden; display: block;"><apex:outputText value="{!rising_ActStr1}"/></div></li>
+                                                                <li style="{!IF(rising_ActStr2 !=null,'display:block','display:none')}"><div style="word-
+
+wrap: break-word;width: 320px;overflow: hidden; display: block;"><apex:outputText value="{!rising_ActStr2}"/></div></li>
+                                                                <li style="{!IF(rising_ActStr3 !=null,'display:block','display:none')}"><div style="word-
+
+wrap: break-word;width: 320px;overflow: hidden; display: block;"><apex:outputText value="{!rising_ActStr3}"/></div></li>
+                                                            </ul>
+                                                        </td>
+                                                        <td>
+                                                            <ul class="items">
+                                                                <li><div style="word-wrap: break-word;width: 320px;overflow: hidden; display: 
+
+block;"><apex:outputText value="{!IF(rising_Candidates !=null,rising_Candidates,$Label.No_data_entered)}"/></div></li>
+                                                            </ul>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </apex:outputPanel>
+                                        </div>
+                                    </div>
+                                </div>
+                            </apex:outputPanel>
+                        </div>
+                    </div>
+                </div>
+              </apex:outputPanel> <!-- subhamay 21032013 G1 Rep check -->
+            </div>
+        </div>
+        </div>
+  <!--popup area ends-->
+  <apex:actionFunction action="{!toggleLeadership}" rerender="pnlLeadership,pnlSalesBusiness" name="toggle_Leadership">
+  </apex:actionFunction>
+  <apex:actionFunction action="{!togglePSB}" rerender="pnlSalesBusiness,pnlLeadership" name="toggle_PSB">
+  </apex:actionFunction>
+  <apex:actionFunction action="{!toggleEUP}" rerender="pnlExeUnitPerformance,pnlLeadership,pnlSalesBusiness"  name="toggle_EUP">
+  </apex:actionFunction>
+</apex:actionRegion>
+<c:OmnitureWebTrack mktName="{!market.Omniture_Suite_Name__c}" 
+                        mktAcctKey="{!currentUser.MRKT_ID_ACCT_NR_KEY__c}"
+                        userType="{!currentUser.Profile.Name}"
+                        userTitle="{!currentUser.LDRSHP_TITL_LVL_NBR__c}"        
+                        rendered="{!globalConfig.Omniture_Tracking_Enabled__c}"/>
+</apex:component>

@@ -1,0 +1,57 @@
+<apex:page showHeader="false" sidebar="false" standardStyleSheets="false" language="{!$CurrentPage.parameters.langcd}" controller="MyTeamReportPageController">
+
+    <apex:form >
+        <apex:composition template="YOUPageTemplateNoActions_Clone">
+        <apex:define name="content">
+            <apex:includeScript value="{!URLFOR($Resource.MTRUtility)}"/>
+            <apex:includeScript value="{!URLFOR($Resource.MTRWriteItems)}"/>
+            <apex:includeScript value="{!URLFOR($Resource.MTRDataTable)}"/>
+            <apex:includeScript value="{!URLFOR($Resource.MTRHSGChildTable)}"/>
+            <apex:includeScript value="{!URLFOR($Resource.MTRMasterHSGTable)}"/>
+            <apex:includeScript value="{!URLFOR($Resource.MyTeamJS)}"/>
+            <apex:includeScript value="{!URLFOR($Resource.NRR, 'js/jquery.jscrollpane.min.js')}"/>
+            <apex:includeScript value="{!$Resource.NumberFormatter}" />
+            <apex:stylesheet value="{!URLFOR($Resource.NRR,'css/jquery.jscrollpane_vert.css')}" />
+            <apex:stylesheet value="{!URLFOR($Resource.MyTeam)}" />
+        
+            
+              <c:MyTeamReport_Clone ReportType="TitleAdvancement" />   
+            <apex:actionFunction name="viewRepDetail" action="{!callRepDetails}" rerender="repDetail" oncomplete="javascript:displayit();" status="counterStatus">
+                <apex:param name="repDetailAcctNbr" assignTo="{!repDetailAcctNbr}" value="{!repDetailAcctNbr}"/>
+            </apex:actionFunction>
+            <apex:actionStatus id="counterStatus"  onstart="showProcessingMsg();" onstop="showProcessingMsg();"/>
+            
+            <div id="email_sel_mask2" class="white_trans_closed">
+                <apex:outputPanel id="repDetail" layout="none">
+                    <c:CoachingRecord_Clone repacctnbr="{!repDetailAcctNbr}" rendered="{!repDetailAcctNbr!=null}"/>
+                </apex:outputPanel>                
+            </div>
+            <!-- added by amartya 05-nov-2012 for summaryoverlay start -->
+            <div id="summary_overlay"  class="white_trans_soverlay_closed">
+                <apex:outputPanel id="summaryoverlay" layout="none">
+                    <c:SummaryOverlay_Clone camp_number="{!$CurrentPage.parameters.CmpgnSeltd}" SiteHeaderController="{!siteh}" id="summoverlay" />
+                </apex:outputPanel>
+            </div> 
+            <!-- added by amartya 05-nov-2012 for summaryoverlay end --> 
+                
+        </apex:define>
+        <apex:define name="additionalOverlays">
+            <c:DownloadOverlay />   
+        </apex:define>      
+        </apex:composition>
+
+
+<!-- ADDED BY Vijay Mittal FOR SEARCH COMPONENT POPUP WINODOW -->
+<apex:actionFunction name="showSearchResults" action="{!saveSearchText}" rerender="searchPanelBox" oncomplete="javascript:toggleSearchBoxDisplay();" status="counterStatus">
+        <apex:param name="searchText" assignTo="{!searchText}" value="{!searchText}"/>
+</apex:actionFunction>
+
+    <div id="search_dialog_box" class="white_trans_closed">
+        <apex:outputPanel id="searchPanelBox" layout="block" rendered="{!isLeader}">
+            <c:Search keywordParam="{!searchText}" rendered="{!isLeader}"/>
+        </apex:outputPanel>
+    </div>
+<!-- CHNAGES BY Vijay Mittal ENDS HERE     -->
+
+    </apex:form>
+</apex:page>

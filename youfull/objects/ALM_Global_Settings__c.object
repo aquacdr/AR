@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <customSettingsVisibility>Protected</customSettingsVisibility>
+    <description>Holds global settings that apply across the entire application.</description>
+    <enableEnhancedLookup>false</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>API_Endpoint_Base_URL__c</fullName>
+        <externalId>false</externalId>
+        <label>API Endpoint Base URL</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Action_Alert_Template_Id__c</fullName>
+        <externalId>false</externalId>
+        <label>Action_Alert_Template_Id</label>
+        <length>50</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Activation_Delay_Mins__c</fullName>
+        <externalId>false</externalId>
+        <label>Activation Delay Mins</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Activation_Key__c</fullName>
+        <externalId>false</externalId>
+        <label>Activation Key</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Activation_Username__c</fullName>
+        <externalId>false</externalId>
+        <label>Activation Username</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Genealogy_Cleanup_Mail__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Email for Genealogy Cleaup Notification in case of Success &amp; Errors</inlineHelpText>
+        <label>Genealogy Cleanup Mail</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Genealogy_Page_Size__c</fullName>
+        <externalId>false</externalId>
+        <label>Genealogy_Page_Size</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Lead_Escalation_BatchJob_Interval_Mins__c</fullName>
+        <description>Specifies the interval between two consecutive executions of LeadEscalationBatch class.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Specifies the interval between two consecutive executions of LeadEscalationBatch class.</inlineHelpText>
+        <label>Lead Escalation BatchJob Interval (Mins)</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Lead_Metrics_BatchJob_Interval_Mins__c</fullName>
+        <description>Specifies the interval between two consecutive executions of LeadMetricsBatch class.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Specifies the interval between two consecutive executions of LeadMetricsBatch class.</inlineHelpText>
+        <label>Lead Metrics BatchJob Interval (Mins)</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Lead_Metrics_Batch_Size__c</fullName>
+        <description>Used by LeadMetricsBatch apex class to specify the batch size for the job</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Used by LeadMetricsBatch apex class to specify the batch size for the job</inlineHelpText>
+        <label>Lead Metrics Batch Size</label>
+        <precision>5</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Lead_Personal_Email_Template_Id__c</fullName>
+        <externalId>false</externalId>
+        <label>Lead Personal Email Template Id</label>
+        <length>20</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Login_Endpoint__c</fullName>
+        <externalId>false</externalId>
+        <label>Login Endpoint</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Max_User_Reports__c</fullName>
+        <externalId>false</externalId>
+        <label>Max User Reports</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Notification_Queue_Email_Service_Address__c</fullName>
+        <description>Email address that belongs to &quot;NotificationQueueEmailService&quot; class. This is different for various environments.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Email address that belongs to &quot;NotificationQueueEmailService&quot; class</inlineHelpText>
+        <label>Notification Queue Email Service Address</label>
+        <required>false</required>
+        <type>Email</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Omniture_Tracking_Enabled__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Omniture Tracking Enabled</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Personal_Email_Template_Id__c</fullName>
+        <externalId>false</externalId>
+        <label>Personal Email Template Id</label>
+        <length>20</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Real_Time_Activation_Enabled__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Real Time Activation Enabled</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Report_Page_Size__c</fullName>
+        <externalId>false</externalId>
+        <label>Report Page Size</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Shared_Secret__c</fullName>
+        <externalId>false</externalId>
+        <label>Shared Secret</label>
+        <length>50</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Site_Url__c</fullName>
+        <externalId>false</externalId>
+        <label>Site Url</label>
+        <length>200</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Username_Postfix__c</fullName>
+        <externalId>false</externalId>
+        <label>Username_Postfix</label>
+        <length>50</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Widget_Lifetime__c</fullName>
+        <externalId>false</externalId>
+        <label>Widget Lifetime</label>
+        <precision>6</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <label>ALM Global Settings</label>
+</CustomObject>

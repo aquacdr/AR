@@ -1,0 +1,36 @@
+<apex:page controller="ActivateUserController" showHeader="false" sidebar="false" action="{!activateALMAccess}" cache="false"
+standardStylesheets="{!IF($CurrentPage.parameters.debug='1',true,false)}">
+	<apex:pageMessages />
+	<table border="0" cellpadding="0" cellspacing="0" width="80%">
+		<tr>
+			<td height="10">&nbsp;</td>
+		</tr>
+		<tr>
+			<td>
+				<table width="100%" border="0">
+					<tr>
+						<td align="left" valign="center">
+							<apex:image value="{!URLFOR($Resource.ALM_Assetsv2,'images/logo.png')}"
+										width="191" height="70" alt="ALM Logo" />
+						</td>
+						<td align="right" valign="center">
+							<c:CloseThisPageButton />
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td align="left" class="data_cell">
+				<apex:pageMessages rendered="{!ISNULL(stsMsg)}"/>
+				<apex:outputPanel rendered="{!NOT(ISNULL(stsMsg))}" layout="none">
+                    <div class="msg_box">
+                        <div class="info_msgs">
+							<apex:outputText value="{!stsMsg}" escape="false"/>
+                        </div>
+                    </div>
+                </apex:outputPanel>
+			</td>
+		</tr>
+	</table>
+</apex:page>

@@ -1,0 +1,38 @@
+<apex:page standardController="Market_Content__c" extensions="MarketContentController" showheader="true" sidebar="true">
+    <apex:includeScript value="{!URLFOR($Resource.ALM_Assetsv2,'js/jquery-1.4.2.min.js')}"/>
+	<apex:includeScript value="{!URLFOR($Resource.fckEditor,'/fckeditor/fckeditor.js')}"/> 
+	<apex:form id="theForm">
+		<apex:pageMessages />
+		<apex:pageBlock id="theBlock">
+			<apex:pageBlockButtons id="buttons">
+			    <apex:commandButton value="Save" action="{!saveContent}"/>
+			</apex:pageBlockButtons>
+			<apex:pageBlockSection columns="1" id="info">
+				<apex:inputField value="{!Market_Content__c.Name}" required="true"/>
+				<apex:inputField id="contentType" value="{!Market_Content__c.Type__c}"  required="true"/>
+				<apex:inputField id="userType" value="{!Market_Content__c.User_Type__c}" required="true"/>
+				<apex:inputField id="leaderTitle" value="{!Market_Content__c.Title_Levels__c}" required="true"/>
+				<apex:inputField value="{!Market_Content__c.Content_Type__c}"  required="true"/>
+				<apex:inputField value="{!Market_Content__c.ALM_Page_Id__c}"/>
+			</apex:pageBlockSection>
+			<apex:pageBlockSection columns="1" id="content">
+			    <apex:inputTextarea styleclass="editor2" id="abs" value="{!Market_Content__c.Content__c}"/><br/>				
+			</apex:pageBlockSection>
+			<script type="text/javascript">
+				window.onload = function() {
+					var editId = $(".editor2").attr("id");
+					var newEditor = new FCKeditor($(".editor2").attr("id"));
+					newEditor.BasePath = "{!URLFOR($Resource.fckEditor, '/fckeditor/')}";
+					newEditor.Config['CustomConfigurationsPath'] = newEditor.BasePath + 'richtext.config.js';
+					newEditor.ToolbarSet = 'SalesforceBasic';
+					newEditor.Config['ImageBrowserURL'] = '{!$Page.SiteFileBrowser}';
+					newEditor.Config['SkinPath'] = newEditor.BasePath + 'editor/skins/sfdc/';
+					newEditor.Width = '100%'; 
+					newEditor.Height = '512';
+					newEditor.ReplaceTextarea();
+				}
+			</script>
+
+	    </apex:pageBlock>
+	</apex:form>
+</apex:page>

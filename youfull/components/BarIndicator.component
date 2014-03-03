@@ -1,0 +1,192 @@
+<apex:component >
+<apex:attribute name="compId" type="String" description="Id of BarIndicator Component" required="true"/>
+<apex:attribute name="secondColorOpacity1" default="0.6" type="String" description="Second Color Opacity 1"/>
+<apex:attribute name="secondColorOpacity2" default="60" type="String" description="Second Color Opacity 2"/>
+<apex:attribute name="borderColor" default="1px solid #bbb" type="String" description="Border Color"/>
+<apex:attribute name="height" default="0" type="Integer" description="Height of the Bar Indicator" required="true"/>
+<apex:attribute name="width" default="0" type="Integer" description="Width of the Bar Indicator" required="true"/>
+<apex:attribute name="darkColorVal" type="Integer" description="Dark Color Value of Graph"/> <!-- 4 lines modified by Gaziz-->
+<apex:attribute name="lightColorVal" type="Integer" description="Light Color Maximum Value of Graph"/>
+<apex:attribute name="linePoint" type="Integer" description="" required="true"/>
+<apex:attribute name="lowlinePoint" type="Integer" description="" default="-1"/><!--attribute added by swarnava for TL-->
+<apex:attribute name="IsTL" type="boolean" description="" default="false"/>
+<apex:attribute name="maxVal" type="Integer" description="Maximum Value of Graph" required="true"/>
+<apex:attribute name="scaleInterPoint" type="Integer" description="Scale intermediate Point"/>
+<apex:attribute name="themeColor" type="String" description="if LinePoint is not provided [red, blue, green]"/>
+
+<style>
+/* Corner radius */
+.ui-corner-all, .ui-corner-top, .ui-corner-left, .ui-corner-tl { -moz-border-radius-topleft: 4px/*{cornerRadius}*/; -webkit-border-top-left-radius: 4px/*{cornerRadius}*/; -khtml-border-top-left-radius: 4px/*{cornerRadius}*/; border-top-left-radius: 4px/*{cornerRadius}*/; }
+.ui-corner-all, .ui-corner-top, .ui-corner-right, .ui-corner-tr { -moz-border-radius-topright: 4px/*{cornerRadius}*/; -webkit-border-top-right-radius: 4px/*{cornerRadius}*/; -khtml-border-top-right-radius: 4px/*{cornerRadius}*/; border-top-right-radius: 4px/*{cornerRadius}*/; }
+.ui-corner-all, .ui-corner-bottom, .ui-corner-left, .ui-corner-bl { -moz-border-radius-bottomleft: 4px/*{cornerRadius}*/; -webkit-border-bottom-left-radius: 4px/*{cornerRadius}*/; -khtml-border-bottom-left-radius: 4px/*{cornerRadius}*/; border-bottom-left-radius: 4px/*{cornerRadius}*/; }
+.ui-corner-all, .ui-corner-bottom, .ui-corner-right, .ui-corner-br { -moz-border-radius-bottomright: 4px/*{cornerRadius}*/; -webkit-border-bottom-right-radius: 4px/*{cornerRadius}*/; -khtml-border-bottom-right-radius: 4px/*{cornerRadius}*/; border-bottom-right-radius: 4px/*{cornerRadius}*/; }
+
+<!-- Added by Prakash on 09/16 to reflect Morgans HTML page -->
+
+.indicatorBar {
+    position: relative;
+    clear:both;
+    height:auto;
+    width:auto;
+    margin-top:5;
+    margin-bottom:25px;
+    background-color:#fef1e4;
+}
+
+.indicatorBar .first {
+    border-right: 0px !important;
+    height:100%;
+}
+
+.indicatorBar .last {
+    border-left: 0px !important;
+    //background: url('{!URLFOR($Resource.EUL_Resources, 'indicators/barLightGray.png')}');
+    background-color:#fef1e4;
+    filter:alpha(opacity=60);
+    opacity: 0.6;
+    height:100%;
+}
+
+.indicatorBar .barSlice {
+    float:left;
+    background-repeat:repeat-x;
+    position:relative;
+    height:100%;
+}
+
+.indicatorBar .second {
+    border-color: #999;
+    border-left: 0px !important;
+    border-right: 0px !important;
+    height:100%;
+}
+.indicatorBar .greenBar {
+    background: url('{!URLFOR($Resource.EUL_Resources, 'indicators/barGreen.png')}');
+}
+
+.indicatorBar .redBar {
+    background: url('{!URLFOR($Resource.EUL_Resources, 'indicators/barRed.png')}');
+}
+
+.indicatorBar .blueBar {
+    background: url('{!URLFOR($Resource.EUL_Resources, 'indicators/barBlue.png')}');
+}
+
+.indicatorLine {
+    width: 1px;
+    height: 0px;
+    background-color: #4D4D4D;
+    position: absolute;
+    top: -5px;
+    z-index: 3;
+}
+
+.lowindicatorLine {
+    width: 1px;
+    height: 0px;
+    background-color: #4D4D4D;
+    position: absolute;
+    top: -5px;
+    z-index: 3;
+}
+
+.scaleInterPoint {
+    width: 0px;
+    height: 0px;
+    position: absolute;
+    z-index: 2;
+    opacity: 0.6;
+    filter:alpha(opacity=60)
+}
+
+</style>
+
+<div class="indicatorBar" id="IndicatorBar_{!compId}">
+    <div class="indicatorLine">
+        <center>
+        <div style="float:left; margin: {!height+13}px 0px 0px -25px; width:50px; font-weight:700;">{!ROUND(linePoint, 0)}</div>
+        </center>
+    </div>
+    <!--Change for Transition Leaders:Swarnava-->
+    <apex:outputPanel rendered="{!IsTL && lowlinePoint!=-1}">
+    <div class="lowindicatorLine">
+        <center>
+        <div style="float:left; margin: {!height+13}px 0px 0px -25px; width:50px; font-weight:700;">{!IF(lowlinePoint!=-1,ROUND(lowlinePoint, 0),'')}</div>
+        </center>
+    </div>
+    </apex:outputPanel>
+    <div class="scaleInterPoint">
+        <!-- 
+        <center>
+        <div style="float:left; margin: {!height+8}px 0px 0px -25px; width:50px;">{!ROUND(scaleInterPoint, 0)}</div>
+        </center>
+         -->
+    </div>
+    <div class="barSlice first" style="border: {!borderColor};">
+        <!-- 
+        <center>
+        <div style="float:left; margin: {!height+7}px 0px 0px -3px; opacity: 0.6; filter:alpha(opacity=60);">0</div>
+        </center>
+         -->
+    </div>
+    <div class="barSlice second" style="border: {!borderColor}; opacity: {!secondColorOpacity1}; filter:alpha(opacity={!secondColorOpacity2});"></div>
+    <div class="barSlice last" style="border: {!borderColor};">
+        <!-- 
+        <center>
+        <div style="float:right; margin: {!height+7}px -6px 0px 0px;">{!ROUND(maxVal, 0)}</div>
+        </center>
+         -->
+    </div>
+</div>
+
+
+<script>
+var firstSliceWidth = {!darkColorVal}/{!maxVal} * {!width};
+var secondSliceWidth = {!lightColorVal}/{!maxVal} * {!width};
+var secondSliceWidthMax = ({!lightColorVal} + {!darkColorVal});
+var thirdSliceWidth = ({!maxVal} - secondSliceWidthMax)/{!maxVal} * {!width};
+
+var linePoint = {!width}/{!maxVal} * {!linePoint};
+var scaleInterPoint = {!width}/{!maxVal} * {!scaleInterPoint};
+
+jQuery("#IndicatorBar_{!compId}").ready(function() {
+    jQuery("#IndicatorBar_{!compId} > .barSlice").each(function() {
+        jQuery(this).css("height","{!height}");
+    });
+    
+    jQuery("#IndicatorBar_{!compId} > .indicatorLine").css('left', linePoint);
+    jQuery("#IndicatorBar_{!compId} > .indicatorLine").css('height',{!height}+12 );
+    //Execute for Tansition Leader:Change by swarnava:Start        
+    if("{!IsTL==true && lowlinePoint!=-1}"=="true")
+    {
+    //console.log('inside transition');
+    var lowlinePoint = {!width}/{!maxVal} * {!lowlinePoint};
+    //console.log('lowlinepoint-->'+lowlinePoint);
+    jQuery("#IndicatorBar_{!compId} .lowindicatorLine").css('left', lowlinePoint);
+    jQuery("#IndicatorBar_{!compId} .lowindicatorLine").css('height',{!height}+12 );
+    }
+    //Execute for Tansition Leader:Change by swarnava:End
+
+
+    jQuery("#IndicatorBar_{!compId} > .scaleInterPoint").css('left', scaleInterPoint);
+
+    if("{!themeColor}" == "" || "{!themeColor}" == "null" ) { 
+        jQuery("#IndicatorBar_{!compId} > .first").css('width', firstSliceWidth).addClass({!linePoint} > secondSliceWidthMax ? "redBar" : "greenBar");
+        jQuery("#IndicatorBar_{!compId} > .second").css('width', secondSliceWidth).addClass({!linePoint} > secondSliceWidthMax ? "redBar" : "greenBar");
+    }
+    else
+    {
+        jQuery("#IndicatorBar_{!compId} > .first").css('width', firstSliceWidth).addClass({!linePoint} > secondSliceWidthMax ? "redBar" : "greenBar");
+        jQuery("#IndicatorBar_{!compId} > .second").css('width', secondSliceWidth).addClass({!linePoint} > secondSliceWidthMax ? "redBar" : "greenBar");
+   
+    }
+    jQuery("#IndicatorBar_{!compId} > .last").css('width', thirdSliceWidth);
+
+    jQuery("#IndicatorBar_{!compId}").css('height', {!height}+2);
+    jQuery("#IndicatorBar_{!compId}").css('width', {!width}+2);
+
+});
+
+</script>
+
+</apex:component>

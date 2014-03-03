@@ -1,0 +1,1132 @@
+<apex:component controller="cls_My_Genealogy">
+<apex:attribute name="strHeaderTitle" description="strHeaderTitle" type="String" required="false" />
+<apex:attribute name="referrer" description="referred from" type="String" required="false" />
+<!-- <apex:stylesheet value="{!URLFOR($Resource.ALMYouAssets,'css/Gen_style.css')}"/> -->
+
+<apex:stylesheet value="{!URLFOR($Resource.Gen_Pop_Up,'style.css')}"/>
+ 
+<link REL='stylesheet' HREF='{!$Resource.Hover_Over_Genealogy_CSS}' TYPE='text/css' />
+<script type='text/javascript' src='https://www.google.com/jsapi'></script>
+
+<!-- 
+<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js'></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+ -->
+
+<!--<apex:includeScript value="{!URLFOR($Resource.jQueryEarningIllustratorFinal, 'js/jquery-ui-1.7.1.custom.min.js')}"/> --> 
+
+<!--
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/jquery-ui.min.js"></script>
+-->
+ 
+<script src="{!$Resource.jScrollPaneWheel}"></script>
+<script src="{!$Resource.jScrollPane}"></script>
+<script src="{!$Resource.sylvester}"></script>
+
+
+<!-- <script src="{!$Resource.Dialog}"></script>  -->
+<apex:includeScript value="{!$Resource.Dialog}" />
+<apex:includeScript value="{!$Resource.NumberFormatter}" />
+<apex:includeScript value="{!$Resource.Core}" />
+<apex:includeScript value="{!$Resource.Draggable}" />
+
+<html>
+    <head>
+        
+        <style>   
+        .sr_icon{
+        margin:0;
+        }  
+        .srch_keywrd_display{
+        z-index:-1;
+        }   
+        .ge_pop_hdr {
+background: #ed008c;
+color: #fff;
+width: 380px;
+float: left;
+padding: 10px 20px; 
+}
+#leftFooter {
+    height: 24px;
+    width: 15.5%;//99%    
+    background-image: url("{!URLFOR($Resource.MTRImages,'greybar_background.png')}");
+    border-top: 1px solid #c3c3c3;
+    border-bottom: 1px solid #c3c3c3;
+    border-left: 1px solid #c3c3c3;
+    border-right: 1px solid #c3c3c3;
+    padding-top: 1px;
+    position : absolute;//added newly
+}
+
+.frm_cntr_large {
+padding-bottom: 5px;
+position: relative;
+width: 181px;
+}
+div.row span.filterLabel {
+float: left;
+width: 65px;
+text-align: left;
+}
+div.row span.filterList {
+float: left;
+text-align: left;
+padding-right: 14px;
+}
+div.row {
+clear: both;
+padding-top: 0px;
+}
+
+
+ .jspContainer
+{
+    overflow: hidden;
+    position: relative;
+}
+
+.jspPane
+{
+    position: absolute;
+}
+
+.jspVerticalBar
+{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 16px;
+    height: 95%;  //Changed by Rajib
+    //background: red;
+}
+
+.jspHorizontalBar
+{
+   /* position: absolute;*/
+    bottom: 0;
+    left: 0;
+    width: 100%;    
+    height: 19px;    
+    background: #FFFFFF;    
+    z-index:2;
+}
+
+.jspVerticalBar *,
+.jspHorizontalBar *
+{
+    margin: 0;
+    padding: 0;
+}
+
+.jspCap
+{
+    display: none;
+}
+
+.jspHorizontalBar .jspCap
+{
+    float: left;
+}
+
+.jspTrack
+{
+    /*background: #dde;*/
+    position: relative;
+}
+
+.jspDrag
+{
+    /*background: #bbd;*/
+    position: relative;
+    top: 0; 
+    left: 5;
+    cursor: pointer;
+    
+}
+
+.jspHorizontalBar .jspTrack,
+.jspHorizontalBar .jspDrag
+{
+    float: left;
+    height: 100%;
+    
+}
+
+.jspArrow
+{
+    background: #50506d;
+    text-indent: -20000px;
+    display: block;
+    cursor: pointer;
+}
+
+.jspArrow.jspDisabled
+{
+    cursor: default;
+    background: #80808d;
+}
+
+.jspVerticalBar .jspArrow
+{
+    height: 16px;
+}
+
+.jspHorizontalBar .jspArrow
+{
+    width: 16px;
+    float: left;
+    height: 100%;
+}
+
+.jspVerticalBar .jspArrow:focus
+{
+    outline: none;
+}
+
+.jspCorner
+{
+    background: #eeeef4;
+    float: left;
+    height: 100%;
+}
+
+/* Yuk! CSS Hack for IE6 3 pixel bug :( */
+* html .jspCorner
+{
+    margin: 0 -3px 0 0;
+}
+ .myselect {
+        font-size: 11px;
+        height: 26px !important;
+        line-height: 26px;
+    }
+ .select_large {
+        position: absolute;
+        bottom:0;
+        float:left;
+        left:0;
+        top:0;
+        height:26px;
+        line-height:26px;
+        text-indent:10px;
+        background:url("{!URLFOR($Resource.MTRImages,'dropdown_large.gif')}") no-repeat top left;
+        cursor:default;
+        z-index:1;
+        font-size:11px;
+    }
+    .blacktext {
+        color:#000000;
+    }
+     #reportheader {
+        width: 946px;
+        height: 79px;
+        background: url("{!URLFOR($Resource.MTRImages,'header_background.png')}"); 
+    }
+
+    #main {
+        width: 1000px;
+    }
+
+    #header li {
+        list-style: none;
+    }
+
+    #header ul {
+        list-style: none;
+    }
+
+    .breadcrumb_imper {
+        float: left;
+        width: 100%;
+    }
+
+    .brd_hdr {
+        color: #EC008C;
+        font-size: 1.8em;
+        padding: 4px 0 0 20px;
+        float: left;
+        width: 44%;
+    }
+
+    .brds_wrp {
+        float: left;
+        width: 238px;
+        padding: 5px 0 0 0;
+    }
+   // .left {
+   //     float: left;
+       // font-size: 10px;
+   //     font-weight: normal;
+   // }
+
+    #header .brd_lst li.last {
+        border: 0 !important;
+        width: auto;
+    }
+
+    .brd_lst li {
+        float: left;
+        padding: 0 5px;
+        border-right: solid 1px #777;
+    }
+
+    .brd_lst li a.selected {
+        text-decoration: none;
+        color: #EC008C;
+    }
+
+    .brd_lst li a {
+        color: #777;
+        font-size: 12px;
+    }
+
+    .pnk_srch {
+        background: url({!URLFOR($Resource.NRR,'images/pnk_srch.gif')}) no-repeat;
+        width: 144px;
+        height: 24px;
+        float: left;
+        margin: 10px 0 0 20px;
+    }
+
+    .pnk_srch input {
+        display: block;
+        float: left;
+        font-size: 1.1em;
+        padding: 4px 5px 3px 10px;
+        width: 90px;
+        background: none;
+        border: 0;
+    }
+
+    .subhead {
+        background-image: none;
+    }
+        </style>
+<script type="text/javascript">
+
+
+var ALM_PAGE_NAME = '{!OmniturePageName}'
+
+// Two variables added by Rajib on 6th Sept, 2013 for Comma-Decimal Separator
+var decimalSeperator = '{!decimlSeprtr}';
+var commaSeperator = '{!commaSeprtr}';
+
+    
+jQuery(document).ready(function() { 
+        jQuery = jQuery.noConflict();        
+        
+         //Added by Rajib for Mail Paln
+        var mailPlan = '{!mailPlanEnabled}';        
+        var genDispType = '{!genealogyDisplayType}';       
+        /*
+        if(mailPlan == 'true' && genDispType == 'N'){           
+                jQuery("#mailplanGen").show();
+        }else{          
+            jQuery("#mailplanGen").hide();
+        }
+        */      
+         //Endeded by Rajib for Mail Paln 
+         if(genDispType == 'N'){            
+                jQuery("#executiveRisingStar").hide();
+                jQuery("#exeDisclaimer").hide();
+        }else if(genDispType == 'E'){           
+            jQuery("#executiveRisingStar").show();
+            jQuery("#exeDisclaimer").show();
+        }       
+        
+        if(mailPlan == 'true'){         
+                    jQuery("#mailplanZone").hide();
+                    jQuery("#mailplanGen").show();
+                    jQuery("#mailplanZone_risingStar").hide();
+                    jQuery("#mailplanGen_risingStar").show();
+                    
+            }else{          
+                jQuery("#mailplanZone").show();
+                jQuery("#mailplanGen").hide();
+                jQuery("#mailplanZone_risingStar").show();
+                jQuery("#mailplanGen_risingStar").hide();
+        }
+        
+        
+        jQuery('.jspVerticalBar > .jspTrack > .jspDrag').css('margin-left','5px');
+        if (!jQuery.browser.opera){
+                    var i=0;
+                    var isImpersonated = {!s_IsImpersonated};
+                    var listReports = '{!lst_ReportLinks}';
+                    if(isImpersonated){
+                        var impersonationHeader =   '<div id="reportheader">'+
+                                                        '<div class="breadcrumb_imper">'+
+                                                            '<h2 class="brd_hdr">{!s_Impersonated_UserName}</h2>'+
+                                                                '<div style="float:right">'+ 
+                                                                    '<span class="frm_cntr">'+
+                                                                    '<select id="lstReportType_impersonation" name="lstReportType_impersonation" class="myselect" title="{!$Label.My_Sales_Leaders_Genealogy}" size="1" style="width:181px;" onchange="ReportRedirect(this.value);return false;">'+
+                                                                        '<option value="0">{!$Label.Other_Reports}</option>'+
+                                                                        '<option value="/apex/YouHome?pgId=1">{!$Label.ALM_Home}</option>'+
+                                                                        '<option value="CR">{!$Label.Coaching_Record}</option>'+
+                                                                        '<apex:repeat value="{!lst_ReportLinks}" var="l">'+
+                                                                            '<option value="{!IF(AND(LEN(l.Report_URL__c)>0,NOT(ISBLANK(l.Report_URL__c)),NOT(ISNULL(l.Report_URL__c))),l.Report_URL__c,"/apex/YouHome?pgId=1")}" id="{!l.Report_Type__c}">{!$Label[l.Report_Type__c]}</option>'+    
+                                                                        '</apex:repeat>'+
+                                                                    '</select>'+
+                                                                    '</span>'+
+                                                                '</div>'+
+                                                        '</div>'+
+                                                        '</div>';
+                                                                                        
+                    var theValue='Other_Reports';
+                    jQuery('#cnt_cntr').prepend((impersonationHeader));
+                    jQuery("#Other_Reports").attr('selected',true);
+                    
+                    }
+        
+                    // select element styling
+                    jQuery(".myselect").each(function(){
+                        var title = jQuery(this).attr('title');
+                        var ids=jQuery(this).attr('id');
+                        var divids='';
+                        if(ids!=null && ids!=''){
+                            divids=ids+'_im';
+                        }
+                        else{
+                            divids=i+'_im';
+                            i=i+1;
+                        }
+                        if(jQuery('option:selected', this).val() != '') 
+                            title = jQuery('option:selected',this).text();
+                            //logically adding class
+                           // if(jQuery(this).attr('id')=='lstReportType'){
+                                jQuery(this).css({'z-index':10,'opacity':0,'-khtml-appearance':'none'})
+                                    .after('<div class="select_large blacktext" style="width:181px" id='+divids+' >' +title + '</div>')
+                                    .change(function(){
+                                        val = jQuery('option:selected',this).text();
+                                        jQuery(this).next().text(val);
+                                        })
+
+                    });
+                    
+                    if({!s_IsImpersonated}){
+                            jQuery('#lstReportType_im').hide();
+                        }
+                    
+                };
+      
+      // Following Lines are blocked by Rajib on 6th Sept, 2013 for Comma-Decimal Separator           
+         /*       
+         var mapDecimalSeperator = new Object();
+        var mapCommaSeperator = new Object();
+        
+        mapDecimalSeperator['tr_TR'] = ',';
+        mapDecimalSeperator['en_US'] = '.';
+        mapDecimalSeperator['en_CA'] = '.';
+        mapDecimalSeperator['fr_CA'] = '.';
+        
+        
+        mapCommaSeperator['tr_TR'] = '.';
+        //mapCommaSeperator['tr_TR'] = ',';
+        mapCommaSeperator['en_US'] = ',';
+        mapCommaSeperator['en_CA'] = ',';
+        mapCommaSeperator['fr_CA'] = ',';
+        
+        function getDecimalSeperator(k) {
+           return mapDecimalSeperator[k];
+        }
+        function getCommaSeperator(k){
+            return mapCommaSeperator[k];
+        }
+           */     
+        
+        jQuery(".Number").each(function(){
+                          var text = jQuery(this).text();
+                          var num = new NumberFormat();
+                         // alert(' TEXT >>>>> '+text);
+                          num.setInputDecimal('.');
+                          num.setSeparators(true, ',', ',');    
+                          
+                           //var decimalSeperator = getDecimalSeperator('{!s_User_Language}');
+                          // var commaSeperator = getCommaSeperator('{!s_User_Language}');
+                            
+                           if(decimalSeperator!='' && decimalSeperator!=null){
+                                num.setInputDecimal(decimalSeperator);
+                            }   
+                           if(commaSeperator!='' && commaSeperator!=null){
+                                num.setSeparators(true, commaSeperator, commaSeperator);
+                            }                               
+
+                            num.setNumber(text);
+                            
+                            //num.setPlaces('0', false);
+                            num.setPlaces('0', true); // Changed by Raktim - defect id : 2350
+                            
+                            num.setCurrencyValue('$');
+                            num.setCurrency(false);
+                            num.setCurrencyPosition(num.LEFT_OUTSIDE);
+                            num.setNegativeFormat(num.LEFT_DASH);
+                            num.setNegativeRed(false);
+                            jQuery(this).text(num.toFormatted());
+                             //alert(' TEXT >>>>> '+jQuery(this).text());
+                             
+                             
+                           
+                 });   
+        jQuery(".Currency").each(function(){
+                        var text = jQuery(this).text();
+                        var num = new NumberFormat();
+                        
+                          num.setInputDecimal('.');
+                          num.setSeparators(true, ',', ',');    
+                          // Following Lines are blocked by Rajib on 6th Sept, 2013 for Comma-Decimal Separator 
+                           //var decimalSeperator = getDecimalSeperator('{!s_User_Language}');
+                          // var commaSeperator = getCommaSeperator('{!s_User_Language}');
+                            
+                           if(decimalSeperator!='' && decimalSeperator!=null){
+                                num.setInputDecimal(decimalSeperator);
+                            }   
+                           if(commaSeperator!='' && commaSeperator!=null){
+                                num.setSeparators(true, commaSeperator, commaSeperator);
+                            }         
+                        num.setNumber(text); 
+                        num.setPlaces('2', true);
+                        num.setCurrencyValue('$');
+                        num.setCurrency(false);
+                        num.setCurrencyPosition(num.LEFT_OUTSIDE);
+                        num.setNegativeFormat(num.LEFT_DASH);
+                        num.setNegativeRed(false);
+                       
+                        jQuery(this).text(num.toFormatted());
+                        
+                        
+                });
+       
+                
+});
+
+function degreesToRadians(num) {
+    return (num) * Math.PI / 180;
+}
+function createIEMatrixString(M) {
+    return 'M11=' + M.e(1, 1) + ', M12=' + M.e(1,2) + ', M21=' + M.e(2,1) + ', M22=' + M.e(2,2);
+}
+function f_ImpersonateUser(acctnr){
+
+        window.parent.location.href='/apex/youhome?pgId=1&acctkey='+acctnr;
+}
+function getPosition(obj){
+        var topValue= 0,leftValue= 0,rightValue=0;
+        while(obj){
+            leftValue+= obj.offsetLeft;
+            topValue+= obj.offsetTop;
+            obj= obj.offsetParent;
+        }
+        finalvalue = leftValue + "," + topValue;
+        return finalvalue;
+    }
+
+function rotateElement(e, deg) {
+    deg_str = deg + "";
+    rotate_transform = "rotate(" + deg + "deg)";
+    matrix_str = createIEMatrixString(Matrix.Rotation(degreesToRadians(deg)));
+    filter_str = "progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', " + matrix_str + ")";
+    filter_str_ms="-ms-filter:progid:DXImageTransform.Microsoft.Matrix(sizingMethod='auto expand', " + matrix_str + ")";
+    e.style["rotation"] = deg_str + "deg"; // CSS3
+    e.style.MozTransform = rotate_transform; // Moz
+    e.style.OTransform = rotate_transform; // Opera
+    e.style.WebkitTransform = rotate_transform; // Webkit/Safari/Chrome
+    e.style.filter = filter_str; // IE 6/7
+    e.style.MsFilter = filter_str_ms; // IE 8
+    e.style["zoom"] = "1"; // ??? Probably IEs    
+    //alert(e);
+}    
+    var myCars=new Array({!s_Google_Chart});//added by swarnava
+    if(myCars.length>0){      
+    google.load('visualization', '1', {packages:['orgchart']});    
+    google.setOnLoadCallback(drawChart);
+    }
+    //     drawChart();
+      
+    function drawChart(){
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Name');
+        data.addColumn('string', 'Manager');
+        data.addColumn('string', 'ToolTip');        
+        data.addRows([
+         {!s_Google_Chart}
+        ]);
+        data.setRowProperty(0,'style','display:none');
+        var chart = new google.visualization.OrgChart(document.getElementById('chart_div'));
+        if(data.getNumberOfColumns()>0) //changed by swarnava
+        chart.draw(data, {allowHtml:true,size:'small'});
+        
+        var div_Height =  jQuery('#table_chart_div_container').width();
+        var div_Width =  jQuery('#table_chart_div_container').height();
+        
+        browser_version= parseInt(navigator.appVersion);
+        browser_type = navigator.appName;
+        div_Height=div_Height+20;    
+        var el=jQuery('#first_node_div_table');
+        
+        if (browser_type == "Microsoft Internet Explorer" && (browser_version >= 4)) {
+                  document.getElementById('table_chart_div_container').style.height=div_Height+'px';
+                  document.getElementById('table_chart_div_container').style.width='500px';
+                  rotateElement(document.getElementById("table_chart_div_container"), 270);
+                  el.css('margin-top','25px');
+            }
+            else{
+                
+                document.getElementById('table_chart_div_container').style.height=div_Height+'px';
+                rotateElement(document.getElementById("table_chart_div_container"), 270);
+                el.css('margin-top','35px');
+            }
+        
+        if(div_Height<700){
+        
+                    document.getElementById('leftFooter').style.visibility='hidden';
+                    /*var margin_Left = (700-((div_Height-20)))/7;
+                    var el_tc = jQuery('#table_chart_div_container');
+                    el_tc.css('margin-left',margin_Left+'px');*/
+                    
+                    if (browser_type == "Microsoft Internet Explorer" && (browser_version >= 4)) {
+                      document.getElementById('table_chart_div_container').style.width=div_Width+'px';
+                      rotateElement(document.getElementById("table_chart_div_container"), 270);
+                      var el_tc = jQuery('#table_chart_div_container');
+                      el_tc.css('margin-left','-20px');
+                    }
+                    else{
+                        if(div_Height<400){
+                            document.getElementById('table_chart_div_container').style.width=div_Width+'px';
+                            rotateElement(document.getElementById("table_chart_div_container"), 270);
+                            var el_tc = jQuery('#table_chart_div_container');
+                            el_tc.css('margin-left','1px');
+                        }
+                        if(div_Height>=400){
+                            document.getElementById('table_chart_div_container').style.height=div_Height+'px';
+                            rotateElement(document.getElementById("table_chart_div_container"), 270);
+                            //var el_tc = jQuery('#table_chart_div_container');
+                            //el_tc.css('margin-left','25px');
+                        }
+                    }
+                    
+                    
+        }
+        jQuery('#div_chart_container').jScrollPane({horizontalDragMinWidth: 96,horizontalDragMaxWidth: 96,hijackInternalLinks: true});
+        jQuery('.google-visualization-orgchart-table').children('tr').first().remove();
+       // jQuery('.google-visualization-orgchart-table').children('.google-visualization-orgchart-linenode').first().replaceWith('&nbsp;');
+  }
+  
+function f_OpenDetailedDiv(id){
+
+//showProcessingMsg();
+var s_RepId ='{!s_MktID}' + id.split(':')[1];
+var s_CampaignId=id.split(':')[2];
+var s_Title=id.split(':')[3];
+var s_Object ='{!s_Rep_Object}';
+//Added By Rajib - Mail Plan
+var isMailPlan = '{!mailPlanEnabled}';
+var genealogyTreeDispType = '{!genealogyDisplayType}';
+var titleLabel = "{!$Label.Title}";
+
+
+Visualforce.remoting.Manager.invokeAction(
+        '{!$RemoteAction.cls_My_Genealogy.s_GetDetails}', 
+        s_RepId,s_CampaignId,s_Object.replace('__c','__r'),isMailPlan,'{!s_mrkt_ID}','{!s_User_Language}',genealogyTreeDispType, 
+        function(result, event){
+            if (event.status) {
+                       
+           var lstresult = result.col1;                               
+           var leftOverlatData = '';
+           for (var n=0; n<lstresult.length; n++){           
+                      leftOverlatData+='<tr><td>';
+                      leftOverlatData += lstresult[n].strKPILabel;
+                      //if(lstresult[n].strKPILabel == titleLabel){
+                      if(lstresult[n].kpiType == "Text"){                      
+                        leftOverlatData +=':</td><td class="txt_right">';
+                        }else{
+                        leftOverlatData +=':</td><td class="txt_right Number">';
+                        }
+                      leftOverlatData +=lstresult[n].kpiValue;
+                      leftOverlatData +='</td></tr>';
+               }
+            
+            var lstresult2 = result.col2;    
+            var rightOverlatData = '';
+           for (var n=0; n<lstresult2.length; n++){
+                      rightOverlatData+='<tr><td>';
+                      rightOverlatData += lstresult2[n].strKPILabel;
+                      if(lstresult2[n].kpiType == "Text"){                      
+                        rightOverlatData +=':</td><td class="txt_right">';
+                        }else{
+                        rightOverlatData +=':</td><td class="txt_right Number">';
+                        }                     
+                      rightOverlatData +=lstresult2[n].kpiValue;
+                      rightOverlatData +='</td></tr>';
+               }
+           
+           
+           
+            
+            var PositionLeft=0,PositionTop=0;
+            var PositionValueArray = getPosition(document.getElementById(id));
+            var PositionValue = getPosition(document.getElementById(id)).split(',');
+            if(PositionValue.length==2){
+                PositionLeft=PositionValue[0];
+                PositionTop=PositionValue[1];
+            }
+              
+          if(isMailPlan=='true'){ 
+            var strPopUpTable='<div class="magenta_gene_bx" style="white-space: nowrap;background: #ED008C;color: white;width: 420px;float: left;padding: 0px 0px;">'+
+                                '<div class="ge_pop_hdr" style="width: 420px;">'+
+                                    '<table width="100%" border="0" cellspacing="0" cellpadding="0">'+
+                                              '<tbody>'+
+                                              '<tr>'+
+                                                '<td class="left" style="font-size: 1.2em;font-weight: 700;color: white;text-decoration:underline;" height="20">'+result.g_Name+'</td>'+
+                                                '<td class="right" style="color: white;font-size: 1.2em;font-weight:700;" height="20">'+'{!$Label.Zone_Genealogy_Tree}'+' : '+result.g_SalesZoneCode+'</td>'+
+                                              '</tr>'+
+                                               '<tr>'+
+                                               '<td class="left" style="color: white;font-size: 1.2em;font-weight:700;">'+result.g_TitleStatusCode+'</td>'+
+                                               '<td class="right" style="color: white;font-size: 1.2em;font-weight:700;">'+'{!$Label.Mail_Plan}'+' : '+result.gen_mailPlanCd+'</td>'+
+                                               '</tr>'+
+                                               '</tbody>'+
+                                               '</table>'+                                         
+                                    '</div>'+
+                               ' </div>';
+            
+           }else{
+           
+           var strPopUpTable='<div class="magenta_gene_bx" style="white-space: nowrap;background: #ED008C;color: white;width: 420px;float: left;padding: 0px 0px;">'+
+                                '<div class="ge_pop_hdr" style="width: 420px;">'+
+                                    '<table width="100%" border="0" cellspacing="0" cellpadding="0">'+
+                                              '<tbody>'+
+                                              '<tr>'+
+                                                '<td class="left" style="font-size: 1.2em;font-weight: 700;color: white;text-decoration:underline;" height="20">'+result.g_Name+'</td>'+
+                                                '<td class="right" style="color: white;font-size: 1.2em;font-weight:700;" height="20">'+'{!$Label.Zone_Genealogy_Tree}'+' : '+result.g_SalesZoneCode+'</td>'+
+                                              '</tr>'+
+                                               '<tr>'+
+                                               '<td class="left" style="color: white;font-size: 1.2em;font-weight:700;">'+result.g_TitleStatusCode+'</td>'+
+                                               '<td class="right" >'+'</td>'+
+                                               '</tr>'+
+                                               '</tbody>'+
+                                               '</table>'+                                         
+                                    '</div>'+
+                               ' </div>';
+           
+           }     
+         
+                  
+         
+            var strTableDetails='<div style="width:460px;float:left;">'+                                 
+                                   ' <div class="gene_data" style="width:420px;">'+
+                                        '<div class="tbl_left" style="width:60%">'+
+                                            '<table width="90%" border="0" cellspacing="0" cellpadding="0">'+
+                                              '<tbody>'+                                               
+                                              leftOverlatData+                                                                                            
+                                            '</tbody></table>'+
+                                        '</div>'+
+                                        '<div class="tbl_right" style="width:40%">'+
+                                            '<table width="100%" border="0" cellspacing="0" cellpadding="0">'+
+                                              '<tbody>'+                                                
+                                              rightOverlatData+                                              
+                                            '</tbody></table>'+
+                                        '</div>'+
+                                            '<div class="gene_pop_fot">'+
+                                            '<p>&nbsp;</p>'+
+                                            '<p>&nbsp;</p>'+
+                                            '<p>&nbsp;</p>'+
+                                            '<p>&nbsp;</p>'+
+                                            '<p><span>'+result.leaderTitleCodes+'</span></p>'+ 
+                                                '</div>'+ 
+                                          ' </div>'+
+                               ' </div>';
+                                              
+                        
+                               
+                var sdialog = jQuery('<div></div>').html(strTableDetails).dialog({position:[PositionLeft,PositionTop],  width: 500,autoOpen: false, closeOnEscape: true,resizable:false,modal: true,title:strPopUpTable,show: "blind",hide: "slide"});
+              //  showProcessingMsg();
+                sdialog.dialog('open');
+                
+               // jQuery(".ui-dialog-titlebar").css('height', '38px');
+               
+        
+        jQuery(".Number").each(function(){
+                          var text = jQuery(this).text();
+                          var num = new NumberFormat();
+                         // alert(' TEXT >>>>> '+text);
+                          num.setInputDecimal('.');
+                          num.setSeparators(true, ',', ',');    
+                          // Following Lines are blocked by Rajib on 6th Sept, 2013 for Comma-Decimal Separator
+                           //var decimalSeperator = getDecimalSeperator('{!s_User_Language}');
+                          // var commaSeperator = getCommaSeperator('{!s_User_Language}');
+                            
+                           if(decimalSeperator!='' && decimalSeperator!=null){
+                                num.setInputDecimal(decimalSeperator);
+                            }   
+                           if(commaSeperator!='' && commaSeperator!=null){
+                                num.setSeparators(true, commaSeperator, commaSeperator);
+                            }                               
+
+                            num.setNumber(text);
+                            
+                            //num.setPlaces('0', false);
+                            num.setPlaces('0', true); // Changed by Raktim - defect id : 2350
+                            
+                            num.setCurrencyValue('$');
+                            num.setCurrency(false);
+                            num.setCurrencyPosition(num.LEFT_OUTSIDE);
+                            num.setNegativeFormat(num.LEFT_DASH);
+                            num.setNegativeRed(false);
+                            jQuery(this).text(num.toFormatted());
+                             //alert(' TEXT >>>>> '+jQuery(this).text());
+                             
+                             
+                           
+                 });   
+        jQuery(".Currency").each(function(){
+                        var text = jQuery(this).text();
+                        var num = new NumberFormat();
+                        
+                          num.setInputDecimal('.');
+                          num.setSeparators(true, ',', ',');    
+                          
+                          // var decimalSeperator = getDecimalSeperator('{!s_User_Language}');
+                          // var commaSeperator = getCommaSeperator('{!s_User_Language}');
+                            
+                           if(decimalSeperator!='' && decimalSeperator!=null){
+                                num.setInputDecimal(decimalSeperator);
+                            }   
+                           if(commaSeperator!='' && commaSeperator!=null){
+                                num.setSeparators(true, commaSeperator, commaSeperator);
+                            }         
+                        num.setNumber(text); 
+                        num.setPlaces('2', true);
+                        num.setCurrencyValue('$');
+                        num.setCurrency(false);
+                        num.setCurrencyPosition(num.LEFT_OUTSIDE);
+                        num.setNegativeFormat(num.LEFT_DASH);
+                        num.setNegativeRed(false);
+                       
+                        jQuery(this).text(num.toFormatted());
+                        
+                        
+                });
+       
+               
+               //return false;
+            } else if (event.type === 'exception') {
+                
+            } else {
+               
+            }
+        }, 
+        {escape: true}
+    );
+
+}
+  
+  function showOverlay(args) {
+       if(arguments.length == 0) {
+            throw new Error('Expected at least one argument.');
+       }    
+       var type = arguments[0];
+       var px = 0;
+       var py = 0;
+       var winHei = 0;
+       var heiSum = 0;
+       if(type == 'download') {
+               px = jQuery("#global_footer").css('height');
+               qx = jQuery(".footer_lnks").css('height');
+               winHei = jQuery(".footer_area").position().top;
+               heiSum = parseInt(winHei)+parseInt(px)+parseInt(qx);
+               jQuery("#download_main").css('height',heiSum);
+               jQuery("#download_main").attr('class','white_trans');
+               jQuery("#download_main").css('display','block');
+        }else {
+           throw new Error('Invalid type provided.');
+       }
+    }
+
+    function hideOverlay(){
+      jQuery("#email_sel_mask").attr('class','white_trans_closed'); 
+      jQuery("#download_main").css('display', 'none');
+    }
+    
+ function displayProcessingMsg(){
+        jQuery("#processing_msgs").css("top",function(){return (jQuery(window).scrollTop()+jQuery(window).height()/2)});
+        var px=jQuery("#global_footer").css('height');
+        var qx=jQuery(".footer_lnks").css('height');
+        var winHei=jQuery(".footer_area").position().top;
+        var heiSum=parseInt(winHei)+parseInt(px)+parseInt(qx);
+        jQuery("#email_sel_mask").css('height',heiSum);
+        if(jQuery("#email_sel_mask").attr('class')=='white_trans_closed'){
+            jQuery("#email_sel_mask").attr('class','white_trans');
+        }else{ 
+            jQuery("#email_sel_mask").attr('class','white_trans_closed');
+        }
+      }
+function ReportRedirect(page){
+        var isImpersonatedAccount ='{!$CurrentPageReference.Parameters.acctkey}';
+        if(page=='0');//do nothing, added by swarnava for other report fix
+        else if(isImpersonatedAccount!=null && isImpersonatedAccount!='' && page!='CR'){
+            window.parent.location.href=page+'&acctkey='+isImpersonatedAccount;
+        }
+        else if(isImpersonatedAccount!=null && isImpersonatedAccount!='' && page=='CR'){
+            viewRepDetail('{!$CurrentPageReference.Parameters.acctkey}');
+        }
+        else{
+            window.parent.location.href=page;
+        }
+    }
+
+ 
+     
+</script>
+<script language="JavaScript">
+            browser_version= parseInt(navigator.appVersion);
+            browser_type = navigator.appName;
+            if (browser_type == "Microsoft Internet Explorer" && (browser_version >= 4)) {            
+            document.write("<link REL='stylesheet' HREF='{!$Resource.IE_Genealogy_CSS_Milon}' TYPE='text/css'>");   
+            }
+            else if ((browser_type == "Netscape" && (browser_version >= 4)))  {
+                document.write("<link REL='stylesheet' HREF='{!$Resource.GSM_Genealogy_CSS}' TYPE='text/css'>");
+            }
+            else if(opera){
+                document.write("<link REL='stylesheet' HREF='{!$Resource.Opera_Genealogy_CSS}' TYPE='text/css'>");
+            }
+           
+    
+                
+</script>
+
+   <style>
+    div#div_chart_container { height: 500px; width: 700px; overflow: auto; padding-right:12px;}
+   </style>
+
+
+    </head>
+        <body style="overflow-y:hidden;">
+            <div id="maindiv" >
+                
+            <div id="wholepan">
+                <!-- <h1 class="big_pnk_hdr">{!$Label.My_Sales_Leaders_Genealogy} -->
+                <h1 class="big_pnk_hdr">{!strHeaderTitle}
+                     <span class="frm_cntr">
+                        <select id="lstReportType" name="lstReportType" class="myselect"  style="width:181px;height: 14px !important;" title="{!$Label.Other_Reports}" size="1" onchange="ReportRedirect(this.value);return false;">
+                                
+                                // Added by Raktim - defect id : 2400
+                                <option value="">{!$Label.Other_Reports}</option>
+                                // End of Addition
+                                    <apex:outputPanel rendered="{!IF(s_IsImpersonated,true,false)}">
+                                        <option value='/apex/YouHome?pgId=1'>{!$Label.ALM_Home}</option>
+                                        <option value="CR">{!$Label.Coaching_Record}</option>
+                                </apex:outputPanel>
+                                <apex:repeat value="{!lst_ReportLinks}" var="l">
+                                    <apex:outputPanel rendered="{!IF(NOT(CONTAINS($Label[l.Report_Type__c],$Label.My_Sales_Leaders_Genealogy)),true,false)}">
+                                        <option value="{!IF(AND(LEN(l.Report_URL__c)>0,NOT(ISBLANK(l.Report_URL__c)),NOT(ISNULL(l.Report_URL__c))),l.Report_URL__c,'/apex/YouHome?pgId=1')}">{!$Label[l.Report_Type__c]}</option>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel rendered="{!IF(CONTAINS($Label[l.Report_Type__c],$Label.My_Sales_Leaders_Genealogy),true,false)}" >
+                                       <!--  <option selected="selected" value="{!IF(AND(LEN(l.Report_URL__c)>0,NOT(ISBLANK(l.Report_URL__c)),NOT(ISNULL(l.Report_URL__c))),l.Report_URL__c,'/apex/YouHome?pgId=1')}">{!$Label[l.Report_Type__c]}</option> -->
+                                    </apex:outputPanel>
+                            </apex:repeat>
+                        </select>
+                    </span>
+                </h1>
+                <div style="height: 28px;">
+            <div>
+                <div class="row">
+                     <table> 
+                        <tbody><tr>
+                            <td style="padding-left:25px">
+                                <span class="filterLabel" style="font-size: 12px;text-align: center;padding-bottom:15px;">
+                                        {!$Label.Campaign}:
+                                    </span>
+                            </td>
+                            <td>
+                                <span class="frm_cntr_large filterList" style="padding-right:14px">
+                                <apex:selectList size="1" styleClass="myselect" style="position: relative;width:181px;" title="{!s_Current_Selected_Campaign}" value="{!s_Current_Selected_Campaign}" multiSelect="false">
+                                        <apex:selectOptions value="{!l_Campaign}"/>
+                                        </apex:selectList>
+                                </span>
+                            </td>
+                            <td>
+                               
+                            </td>
+                            <td>
+                                <apex:commandLink id="lnkFilter" action="{!filterReport}" onclick="showProcessingMsg();" styleClass="round_go" style="padding-bottom: 10px;margin-left:-2px;"/>
+                            </td>
+                        </tr>
+                    </tbody></table>
+                </div>
+             </div>
+    </div>
+                
+                
+            </div>
+            <div style="height: 28px;"></div>
+              <div class="spacer"></div>   
+              <div id="container_div">
+                  <table border="0">
+                        <tr>
+                            <td style="vertical-align:top;">
+                                <table id="information_table">
+                                    <tr>
+                                        <td style="vertical-align:middle;"> 
+                                            <div id="first_node_div_table" style="float: left;margin: 0 0 0 48px;"> <!-- width: 185px; -->
+                                                <div>
+                                                    <div class="magenta_gene_bx">
+                                                        <p style="float: left;color: white;background: # {!s_CurrUsr_Style};padding: 10px 3px;text-transform: uppercase;border: solid 1px white;margin: 0 10px 0 0;width: 26px;text-align: center;">{!genRootNodeInfo.g_CurrUsr_Title}</p>
+                                                        <p class="gene_tx_wr">
+                                                            <!-- <apex:repeat value="{!p_Contact}" var="p">  -->
+                                                                <span style="word-wrap:break-word; text-decoration:underline;">{!genRootNodeInfo.p_Name}</span>
+                                                                <span id="mailplanZone">{!$Label.Zone_Genealogy_Tree}: {!genRootNodeInfo.p_SalesZoneCode}</span>
+                                                                <!-- Added by Rajib -->                                                               
+                                                                                  <span id="mailplanGen"> {!$Label.Zone_In_Short}: {!genRootNodeInfo.p_SalesZoneCode} / {!$Label.MailPlan_In_Short}: {!genRootNodeInfo.g_mailPlanCd} </span>
+                                                                                  
+                                                                <span>{!genRootNodeInfo.s_title_Status}</span>
+                                                            <!-- </apex:repeat>  -->
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                    <div class="gene_gry_brdr">
+                                              <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                               <tbody>  
+                                               <apex:repeat value="{!genRootNodeInfo.listrootNodeData}" var="detlCol"> 
+                                               <tr width="100%">                         
+                                                <td width="45%">{!detlCol.strKPILabel}</td>
+                                                <td class="txt_right Number" width="55%">
+                                                    <apex:outputText value="{!detlCol.kpiValue}"/>
+                                                </td>
+                                                </tr>
+                                                </apex:repeat>
+                                              </tbody>
+                                              </table>
+                                                    <div class="cntr gene_tp_sprtr mar_tp_5 pad_tp_5">
+                                                      <table border="0" cellpadding="0" cellspacing="0" width="95%">                                                           
+                                                          <tbody>  
+                                                                <apex:repeat value="{!genRootNodeInfo.leaderCount}" var="detlCol1"> 
+                                                                <tr width="90%">                                                       
+                                                            <td width="45%">{!detlCol1.strKPILabel}</td>
+                                                            <td class="txt_right Number" width="55%">
+                                                                <apex:outputText value="{!detlCol1.kpiValue}"/>
+                                                            </td>                                   
+                                                            </tr>
+                                                            </apex:repeat>
+                                                         </tbody>                                                            
+                                                            
+                                                        </table>
+                                                    </div>
+                                                 </div>
+                                            </div>          
+                                        </td>
+                                    </tr>
+                            </table>
+                           <!-- <div id="leftFooter" style="margin: 110px 0 0 0 ;"> </div> changed for scroll pane --><!--margin: 145px 0 0 0 ;  -->
+                        </td>
+                        <td style="vertical-align:top;">
+                            <div id="div_chart_container">
+                                
+                                <table id="table_chart_div_container" style="margin-left:0px;">
+                                    <tr>
+                                        <td>
+                                           <div id='chart_div' class="chart_div" dir="rtl">
+                                           </div>
+                                           
+                                           </td>
+                                       </tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>    
+                  </div>
+                  
+                  <div id="leftFooter" style="margin: -23px 0 0 0 ;"></div>
+                  
+                  
+                  <div style="float: left;padding: 3px 10px 28px;width: 884px;" id = "exeDisclaimer">
+                    <table>
+                        <tr>
+                            <td>    
+                                <h3 style="font-size: 1.1em;font-weight: 800;padding-bottom: 33px;float: left;width: 100%;color:#363636;">{!$Label.Disclaimer}</h3>                             
+                            </td>
+                        </tr>
+                    </table>
+                  </div>
+                <div class="gene_rising_star_wrpr" id = "executiveRisingStar">
+                        <h3>{!$Label.My_Rising_Stars}</h3>
+                        <apex:repeat value="{!l_RisingStars}" var="r">
+                            <div class="gene_sub_box mar_rht_70" style="width:190px;">
+                            <a href="javascript:void(0);" id="r_rs{!r.AccNoCmpgn}" accNoCmpgn="{!r.AccNoCmpgn}" onclick="f_OpenDetailedDiv(this.id);"><img  style="-webkit-transform:rotate(180deg);-moz-transform:rotate(180deg);-ms-filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);" align="right"  src="{!$Resource.Triangle}"></img></a>
+                            <p style="float:left;color: white;background:#{!r.str_LeaderStyle};padding: 10px 3px;text-transform: uppercase;text-align: center;border: solid 1px white;margin: 0 10px 0 0;width: 26px;">{!r.Title}</p>
+                            <p class="gene_tx_wr">
+                                <a href="javascript:void(0);" onclick="f_ImpersonateUser('{!r.AccountNumber}')">{!r.Name}</a>
+                                <!-- Changed by Rajib -->  
+                                <!--<span>{!IF(LEN(r.Zone)>0,$Label.Zone_Genealogy_Tree & ':'& r.Zone,'')}</span> -->
+
+                                <apex:outputPanel rendered="{!NOT(mailPlanEnabled)}">
+                                <span>{!$Label.Zone_Genealogy_Tree} : {!r.Zone}</span>
+                                </apex:outputPanel>
+                                <apex:outputPanel rendered="{!mailPlanEnabled}">
+                                <span style= "font-size:8pt;">{!$Label.Zone_In_Short}:{!r.Zone}/{!$Label.MailPlan_In_Short}:{!r.MailPlanCode}</span>
+                                
+                                </apex:outputPanel>
+                                <span style="font-size:8pt; font-style:italic;color:{!r.ColorCode}">{!r.TitleStatus}</span>
+                                <!-- <span id="mailplanGen_risingStar">{!$Label.Zone_In_Short}: {!r.Zone} / {!$Label.MailPlan_In_Short}: {!r.MailPlanCode} </span>  -->
+                                <!--EOC - Changed by Rajib -->  
+                            </p>
+                        </div>
+                        <apex:outputPanel rendered="{!IF(MOD(VALUE(r.i_RisingStarIndex),3)=0,TRUE,FALSE)}">
+                            <div style="float: left;padding: 10px 0px 0px;width: 884px;">
+                            </div>
+                        </apex:outputPanel>
+                        </apex:repeat>
+                    </div>
+             </div>
+            <!--   <div class="gene_rising_star_wrpr">
+                         <apex:variable var="cnt" value="{!0}" />
+                        <h3>{!$Label.My_Rising_Stars}</h3>
+                        <apex:repeat value="{!l_RisingStars}" var="r">
+                             <apex:variable var="cnt" value="{!cnt+1}"/>
+                            <div class="gene_sub_box mar_rht_70" style="width:190px;">
+                            <a href="javascript:void(0);" id="r_rs:{!r.AccountNumber}:{!r.CampaignNumber}:{!r.Title}" onclick="f_OpenDetailedDiv(this.id);"><img  style="-webkit-transform:rotate(180deg);-moz-transform:rotate(180deg);-ms-filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);" align="right"  src="{!$Resource.Triangle}"></img></a>
+                            <p style="float:left;color: white;background:#ec008c;padding: 10px 3px;text-transform: uppercase;text-align: center;border: solid 1px white;margin: 0 10px 0 0;width: 26px;">{!r.Title}</p>
+                            <p class="gene_tx_wr">
+                                <a href="javascript:void(0);" onclick="f_ImpersonateUser('{!r.AccountNumber}')">{!r.Name}</a>
+                                <span>{!IF(LEN(r.Zone)>0,$Label.Zone_Genealogy_Tree & ':'& r.Zone,'')}</span>
+                            </p>
+                        </div>
+                        <apex:outputPanel rendered="{!IF(MOD(cnt,3)=0,TRUE,FALSE)}">
+                            <div style="float: left;padding: 10px 0px 0px;width: 884px;">
+                            </div>
+                        </apex:outputPanel>
+                        </apex:repeat>
+                    </div>-->
+                 <div id="processing_msg" style="visibility:hidden;display:block;">
+                    <c:ProcessingMsg />
+                 </div>
+   <apex:actionFunction name="viewRepDetail" action="{!callRepDetails}" rerender="repDetail" oncomplete="javascript:displayit();" status="coachCounterStatus">
+        <apex:param name="repDetailAcctNbr" assignTo="{!repDetailAcctNbr}" value="{!repDetailAcctNbr}"/>
+    </apex:actionFunction>
+    <apex:actionStatus id="coachCounterStatus"  onstart="showProcessingMsg();" onstop="showProcessingMsg();"/>
+    <div id="email_sel_mask2" class="white_trans_closed">
+    <apex:outputPanel id="repDetail" layout="block">
+        <c:CoachingRecord repacctnbr="{!repDetailAcctNbr}" rendered="{!repDetailAcctNbr!=null}"/>
+    </apex:outputPanel>
+   </div>
+        
+        </body>
+    </html>
+    <!-- ADDED BY Vijay Mittal FOR SEARCH COMPONENT POPUP WINODOW -->
+<apex:actionFunction name="showSearchResults" action="{!saveSearchText}" rerender="searchPanelBox" oncomplete="javascript:toggleSearchBoxDisplay();" status="coachCounterStatus">
+        <apex:param name="searchText" assignTo="{!searchText}" value="{!searchText}"/>
+</apex:actionFunction>
+
+    <div id="search_dialog_box" class="white_trans_closed">
+        <apex:outputPanel id="searchPanelBox" layout="block">
+            <c:Search keywordParam="{!searchText}"/>
+        </apex:outputPanel>
+    </div>
+<!-- CHNAGES BY Vijay Mittal ENDS HERE     -->
+   <c:OmnitureWebTrack mktName="{!market.Omniture_Suite_Name__c}" 
+                        mktAcctKey="{!currUsr.MRKT_ID_ACCT_NR_KEY__c}"
+                        userType="{!currUsr.Profile.Name}"
+                        userTitle="{!currUsr.LDRSHP_TITL_LVL_NBR__c}"        
+                        rendered="{!globalConfig.Omniture_Tracking_Enabled__c}"/> 
+</apex:component>

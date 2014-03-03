@@ -1,0 +1,323 @@
+<apex:page showHeader="false" sidebar="false" standardStyleSheets="false" cache="true"  controller="NewRepController">
+<!--<style type="text/css">
+.printControls {
+    width: 15em;
+    float: right;
+    }  
+</style>-->  
+<script type="text/javascript">
+
+function printSplit(id)
+  {
+      var tableArray = new Array();
+      var table1 = $('<table width="80%" height="90%" border="1" style="border: 1px solid black;" cellpadding="0" cellspacing="0"></table>');
+      table1.attr('style', jQuery('#printTable').attr('style'));
+      tableArray[0] = table1;
+      
+      var tableHeaderArray = new Array();
+      var tableHeightArray = new Array();
+      
+      var fixedTopTh = $('<thead></thead>');
+      
+      var totWidth = 0;
+      var singleTableWidth = 850;
+      var singleTableHeight = 500;
+      var fixedCol = {!NoOfColumns};
+      
+      $('#printTable tr:lt(1)').each(function(i,el) {
+            var thtd = $('<th></th>');
+            thtd.append(jQuery(el).clone());
+            thtd.attr('style', jQuery(el).attr('style'));
+            fixedTopTh.append(thtd.html());
+      });
+      
+      tableArray[0] = tableArray[0].append(fixedTopTh);
+      var th1 = $('<thead></thead>');
+      
+      //insert headers to the tables
+      $('#printTable tr:gt(0):lt(2)').each(function(i,el) {
+      
+         var thFixedCol = new Array();
+         tableHeightArray[i] = jQuery(el).height();
+        
+         $(this).find('th').each(function(index, tdData) {
+             var thtd = $('<th></th>');<!--modified by Amartya on 1st Feb,2013-->
+             thtd.append(jQuery(tdData).html());
+             thtd.attr('style', jQuery(tdData).attr('style'));     
+             
+             //put first columns in fixed col
+             if(index < fixedCol)
+             {
+                thFixedCol[index] = thtd.clone();
+             }
+             
+             totWidth += jQuery(tdData).width();
+             if(totWidth > singleTableWidth)
+             {
+                 totWidth = jQuery(tdData).width();
+                 var tableSize = tableArray.length;
+                 tableHeaderArray[tableSize-1] = th1.clone();
+                 tableArray[tableSize-1] = tableArray[tableSize-1].append(th1); 
+                 
+                 var newTable = $('<table width="80%" border="1" style="border: 1px solid black;"></table>');
+                 newTable.append(fixedTopTh.clone());
+                 tableArray[tableSize] = newTable;
+                 
+                 th1 = $('<thead></thead>');
+                 for(var i=0; i< fixedCol; i++)
+                 {
+                    th1.append(thFixedCol[i].clone());
+                 }
+             }
+             th1.append(thtd);
+             
+         });
+      });
+      
+      var tableSize = tableArray.length;
+      tableHeaderArray[tableSize-1] = th1.clone();
+      tableArray[tableSize-1] = tableArray[tableSize-1].append(th1);
+      
+      
+      //insert body to the tables
+      $('#printTable tr:gt(1)').each(function(rowIndex, trData) {
+         var tr1 = $('<tr></tr>');
+         var tableIndex = 0;
+         var totRowWidth = 0;
+         
+         var trFixedCol = new Array();
+         var trFixedColWidth = new Array();
+         tableHeightArray[rowIndex+1] = jQuery(trData).height();
+         
+         $(this).find('td').each(function(index, tdData) {
+             trtd = $('<td></td>');<!-- modified by Samudra on Feb 1,2013-->
+             trtd.append(jQuery(tdData).html());
+             trtd.attr('style', jQuery(tdData).attr('style'));   
+             trtd.css("font-family", "Arial");
+             trtd.css("font-size", "10px");
+             trtd.attr('align', jQuery(tdData).attr('align'));
+             
+             //put first columns in fixed col
+             if(index < fixedCol)
+             {
+                trFixedCol[index] = trtd.clone();
+                trFixedColWidth[index] = jQuery(tdData).width();
+             }
+             
+             totRowWidth += jQuery(tdData).width();
+             //var incrTableIndex = tableIndex+1;
+             if(totRowWidth > singleTableWidth)
+             {
+                 tableArray[tableIndex] = tableArray[tableIndex].append(tr1);
+                 tableIndex++;
+                 
+                 tr1 = $('<tr></tr>');
+                 for(var i=0; i< fixedCol; i++)
+                 {
+                    tr1.append(trFixedCol[i].clone());
+                    
+                 }
+                 totRowWidth = jQuery(tdData).width();
+             }
+             
+             tr1.append(trtd);
+             
+         });
+                  
+         if(tableIndex<tableSize)
+         tableArray[tableIndex] = tableArray[tableIndex].append(tr1);         
+      });
+
+      var splitTableArray = new Array();
+      var splitTableIndex = 0;
+      $.each(
+        tableArray,
+        function(tableIndex, thisTable){
+            
+            $('#tempPrintTable').append(thisTable.html());
+            
+            var heightTable = 0;
+            var tableHeadHeight = 0;
+            if(tableIndex == 0)
+                heightTable = 100;
+            
+            $('#tempPrintTable').find('thead').each(function(index, thData) {
+                tableHeadHeight = jQuery(thData).height();
+            });
+            heightTable += tableHeadHeight;
+            
+            var splitTable = $('<table width="100%" height="90%" border="1" style="border: 1px solid black;" cellpadding="0" cellspacing="0"></table>');
+            
+            $('#tempPrintTable').find('tr').each(function(index, trData) {
+                var trSplitTable = $(this).clone();
+                
+                heightTable += jQuery(trData).height();
+                
+                if(heightTable > singleTableHeight)
+                 {
+                     heightTable = tableHeadHeight;
+                     heightTable += jQuery(trData).height();
+                     
+                     splitTableArray[splitTableIndex] = splitTable;
+                     splitTableIndex++;
+                     
+                     splitTable = $('<table width="100%" height="90%" border="1" style="border: 1px solid black;" cellpadding="0" cellspacing="0"></table>');
+                     splitTable.append(tableHeaderArray[tableIndex].html());
+                 }
+                 
+                 splitTable.append(trSplitTable);
+            });
+            
+            splitTableArray[splitTableIndex] = splitTable;
+            splitTableIndex++;
+            
+            jQuery('#tempPrintTable').empty();
+        }
+      );
+      
+      jQuery('#printTable').empty();
+      var tableSize = splitTableArray.length;
+      var div1 = $('<div></div>');
+      for(i = 0; i<tableSize; i++)
+      {
+        div1.append(splitTableArray[i]);
+        var brDiv = jQuery('<br/>');
+        div1.append(brDiv.clone());
+        div1.append(brDiv.clone());
+        $('#tableDiv1').append(div1);
+        
+        div1 = $('<div></div>');
+        $(div1).attr('style', 'page-break-before: always');
+      }
+      
+  }
+          jQuery(document).ready(function() { 
+             printSplit('printTable');
+          });
+</script>     
+<head>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+        <title>ALM Report</title>
+    <style type="text/css">
+    @media print
+    {
+        #ad{ display: none; }
+        #printdiv{ display: block; }
+    }
+      @media print{@page {size: landscape}}
+ 
+    
+    </style>
+    <apex:includeScript value="{!URLFOR($Resource.ALMPlus_Asset,'js/jquery-1.5.1.min.js')}"/>
+    
+</head>
+<apex:form >
+<div class="printControls" id="ad">
+    <ul>
+        <li>
+            <apex:commandLink action="{!refreshPage}" value="{!$Label.Return_to_Previous_Page}"/>
+        </li>
+         <li>
+             <apex:commandLink onClick="javascript:window.print()" value="{!$Label.Print_this_page}"/>
+        </li>
+    </ul>
+</div>
+</apex:form>
+
+<div id="tableDiv1"></div>
+<table cellspacing="0" cellpadding="0" border="1" id="tempPrintTable"/>
+<div id="printdiv">
+
+<table id="printTable" width="100%" height="90%" border="1" style="border: 1px solid black;" cellpadding="0" cellspacing="0"> <!-- changed by amartya -->
+    <thead>
+        <tr>
+            <th style="font-weight:bold;font-family:Arial;font-size:11px;text-align:center" colspan="{!nColspan}" bgcolor="#cccccc"><apex:outputText value="{!strBodyReportName}"/></th>
+        </tr>
+        <tr>
+            <apex:variable var="cnt" value="{!0}" />
+            <apex:repeat value="{!tableHeader}" var="headerData">
+                <apex:variable var="isprinted" value="{!0}" />
+                <apex:repeat value="{!invisibleList}" var="inL">
+                    <apex:outputPanel layout="none" rendered="{!dataD[cnt].shID == inL }">
+                        <apex:variable var="isprinted" value="{!isprinted+1}" />
+                    </apex:outputPanel>
+                </apex:repeat>
+                <apex:outputPanel layout="none" rendered="{!isprinted == 0 }">
+                    <th style="font-weight:bold; font-family:Arial;font-size:11px;text-align:center"><apex:outputText value="{!headerData}"/></th>
+                </apex:outputPanel>
+            <apex:outputPanel layout="none" rendered="{!cnt < dataD.size - 1}">
+                <apex:variable var="cnt" value="{!cnt+1}"/>
+            </apex:outputPanel>
+            </apex:repeat>
+        </tr>
+    </thead>
+    
+    
+    
+    <!--    This chang is done to remove Top Row on 9th Sept, 2013 by Raktim - START
+    <tbody>
+            <tr>
+                <apex:variable var="cnt" value="{!0}" />
+                <apex:repeat value="{! }" var="bodyData">
+                    <apex:variable var="isprinted" value="{!0}" />
+                    <apex:repeat value="{!invisibleList}" var="inL">
+                        <apex:outputPanel layout="none" rendered="{!dataD[cnt].shID == inL }">
+                            <apex:variable var="isprinted" value="{!isprinted+1}" />
+                        </apex:outputPanel>
+                    </apex:repeat>
+                    <apex:outputPanel layout="none" rendered="{!isprinted == 0 }">
+                        <td align="{!if((dataD[cnt].vartype='Number'),'right','left')}">  //  changed by amartya 
+                        <apex:outputPanel rendered="{!dataD[cnt].vartype='Number' && ISNUMBER(bodyData)}">
+                        <apex:outputText value="{0, number, ,###}">
+                        <apex:param value="{!FLOOR(VALUE(bodyData))}" />
+                        </apex:outputText>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="dataD[cnt].vartype!='Number' || !ISNUMBER(bodyData)">
+                        <apex:outputText value="{!bodyData}"/>
+                        </apex:outputPanel>
+                        </td>
+                    </apex:outputPanel>   // Changed by Swarnava - defect id : 2350 Truncate Number
+                    <apex:outputPanel layout="none" rendered="{!cnt < dataD.size - 1}">
+                        <apex:variable var="cnt" value="{!cnt+1}"/>
+                    </apex:outputPanel>
+                </apex:repeat>        
+            </tr>
+    </tbody>
+   This chang is done to remove Top Row on 9th Sept, 2013 by Raktim - END --> 
+    
+    
+    <tbody>
+             <apex:repeat value="{!curothrow}" var="other">
+            <tr>
+                <apex:variable var="cnt" value="{!0}" />
+                <apex:repeat value="{!other}" var="otherdata">
+                    <apex:variable var="isprinted" value="{!0}" />
+                        <apex:repeat value="{!invisibleList}" var="inL">
+                            <apex:outputPanel layout="none" rendered="{!dataD[cnt].shID == inL }">
+                                <apex:variable var="isprinted" value="{!isprinted+1}" />
+                            </apex:outputPanel>
+                        </apex:repeat>
+                        <apex:outputPanel layout="none" rendered="{!isprinted == 0 }">
+                            <td align="{!if((dataD[cnt].vartype='Number'),'right','left')}"> <!-- changed by amartya -->
+                            <apex:outputPanel rendered="{!dataD[cnt].vartype='Number' && ISNUMBER(otherdata)}">
+                        <apex:outputText value="{0, number, ,###}">
+                        <apex:param value="{!FLOOR(VALUE(otherdata))}" />
+                        </apex:outputText>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!dataD[cnt].vartype!='Number' || !ISNUMBER(otherdata)}">
+                        <apex:outputText value="{!otherdata}"/>
+                        </apex:outputPanel>
+                            </td>
+                        </apex:outputPanel><!-- Changed by Swarnava - defect id : 2350 Truncate Number-->
+                    <apex:outputPanel layout="none" rendered="{!cnt < dataD.size - 1}">
+                        <apex:variable var="cnt" value="{!cnt+1}"/>
+                    </apex:outputPanel>
+                </apex:repeat>        
+            </tr>
+             </apex:repeat>  
+    </tbody>
+</table>
+</div>
+
+
+</apex:page>

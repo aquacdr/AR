@@ -1,0 +1,195 @@
+<apex:page StandardController="Sales_Org_Summary__c" extensions="ZM_SalesOrgSummaryController" id="page" standardStylesheets="false" sidebar="true" tabstyle="My_Business_Plan__tab">
+   <link type="text/css" rel="stylesheet" href="/resource/ZM_Resources/css/style.css"/>
+    <script src="/resource/ZM_Resources/js/jquery-1.8.2.js"></script>
+   <script src="/resource/ZM_Resources/js/script.js"></script>
+   <style>
+     .campaignPoints1 {
+        height:40px; 
+        font-family: Arial,Helvetica,sans-serif;
+        font-size: 14px;
+        font-weight:bold!important; 
+        border-top:1px solid #000;  
+        border-bottom:1px solid #000; 
+        border-left: 1px solid #C6C6C6;
+        border-right: 1px solid #C6C6C6;
+        vertical-align:middle!important;
+        margin:0px 0 0 28px;
+        width:1038px;
+        padding-top:30px;
+        padding-left:10px;
+        /*background-image: url(/resource/ZM_Resources/images/star.jpg);*/
+        background-repeat: no-repeat;
+        background-position: 200px 23px;
+        background-color:#ffffff;
+        
+        }
+   </style>
+    <!--  Omniture method invocation starts -->
+    <script>
+        ALM_PAGE_NAME="{!OmniturePageName}";    
+    </script>
+    <!--  Omniture method invocation ends -->
+    <apex:variable var="visibleTxtAreas" value="{!IF(AND(hideSuggestedActivities,hideLastCampAnalysis), 1, (IF(OR(hideSuggestedActivities,hideLastCampAnalysis ), 2, 3)))}"/>
+    
+   <script type="text/javascript">
+   
+      function saveProgress() 
+      {
+         saveAsDraft();
+      }
+   </script>
+   
+    
+    <apex:form id="changeStatusForm">
+         <apex:actionFunction name="saveAsDraft" action="{!saveAsDraft}" rerender="saveStatus"/>
+        <apex:actionStatus startText="requesting..." id="saveStatus"/>
+        <apex:pageMessages />
+        <c:ZM_Help rendered="{!Show}" />
+        
+        <div>
+        <div class="floatLt logo"><span class="logoText">{!$Label.ZM_Compass_Business_Plan_For_Campaign} {!currentCampaignNmbr }</span></div>
+            <div class="clear"></div>
+            <div class="tablecontainer" > 
+                <div class="container">
+                    <apex:outputPanel rendered="{!isDropDown}" >
+                    <BR></BR>
+                    <BR></BR> 
+                    &nbsp;&nbsp;
+                    <apex:outputLabel value="{!$Label.ZM_KPI_Performance_Select_Zone}:" for="selecList" /> &nbsp;
+                        <apex:selectList value="{!strZoneNrSOS}" size="1"  id="selecList" >
+                            <apex:selectOptions value="{!zoneList}"/>
+                            <apex:actionSupport event="onchange"  status="counterStatus" action="{!changeData}" />
+                        </apex:selectList> &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+                        <apex:actionStatus id="counterStatus" startText=" (Working...)" />
+                    <!--apex:commandButton action="{!changeData}" value=" Go " id="theButton" /-->
+                    <BR></BR>
+                    <BR></BR> 
+                    </apex:outputPanel>
+                    <apex:pagemessages ></apex:pagemessages>
+                     <apex:outputPanel id="thePanelCenter" layout="block" rendered="{!if(lstWrapperZoneKPIConfig.size>0,true,false)}" >
+                    <table cellspacing="0" cellpadding="0" border="0" id="" class="compass">
+                        <thead>
+                            <tr>
+                                <th class="width20 txtAlgCenter">{!$Label.ZM_KPI_Performance_KPI}</th>
+                                <th class="width10 txtAlgCenter">{!$Label.ZM_KPI_Performance_Prior_Plan}</th>
+                                <th class="width10 txtAlgCenter">{!$Label.ZM_KPI_Performance_Prior_Actual}</th>
+                                <!--th class="width10 txtAlgCenter">{!$Label.ZM_KPI_Performance_Variance}</th-->
+                                <th class="width10 txtAlgCenter">{!$Label.ZM_Division_Rank}</th>                              
+                                <th class="width20 txtAlgCenter" colspan="2">{!$Label.ZM_Results}</th>
+                                <th class="width20 txtAlgCenter">{!$Label.ZM_Current_Campaign_Plan}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <apex:repeat value="{!lstWrapperZoneKPIConfig}" var="salesOrg" id="theRepeat" >
+<!-- Net Sales-->           <tr>
+                                <td>
+                                <p><img id="show_hide"  contentID="{!salesOrg.IdTRslidingData}" src="/resource/ZM_Resources/images/icon_expand.png"/>   
+                                <span class="expandtxt">  
+                                {!($Label[salesOrg.strCustomLabel])}
+                                </span></p></td> 
+                                <td>{!(salesOrg.dbPlanField)}</td>
+                                <td>{!(salesOrg.dbActualField)}</td>
+                                <!--td>{!FLOOR(salesOrg.dbVarianceField)}</td-->
+                                <td>{!(salesOrg.dbRankField)}</td>
+                                <!-- Quick Fix
+                                <apex:outputPanel rendered="{!VALUE(IF(contains(salesOrg.dbResultsField, ','), SUBSTITUTE(salesOrg.dbResultsField, ',', ''), salesOrg.dbResultsField)) >= 96}" >
+                                    <td><div class="meter green" style="margin-top:12px;"><span style="width:{!IF(VALUE(IF(contains(salesOrg.dbResultsField, ','), SUBSTITUTE(salesOrg.dbResultsField, ',', ''), salesOrg.dbResultsField)) >100,100,salesOrg.dbResultsField )}%"></span></div></td>
+                                </apex:outputPanel>
+               
+                                <apex:outputPanel rendered="{!AND(VALUE(IF(contains(salesOrg.dbResultsField, ','), SUBSTITUTE(salesOrg.dbResultsField, ',', ''), salesOrg.dbResultsField))< 96 ,VALUE(IF(contains(salesOrg.dbResultsField, ','), SUBSTITUTE(salesOrg.dbResultsField, ',', ''), salesOrg.dbResultsField) ) >= 90)}" >
+                                    <td><div class="meter yellow" style="margin-top:12px;"><span style="width:{!salesOrg.dbResultsField }%"></span></div></td>
+                                </apex:outputPanel>
+                                
+                                <apex:outputPanel rendered="{!VALUE(IF(contains(salesOrg.dbResultsField, ','), SUBSTITUTE(salesOrg.dbResultsField, ',', ''), salesOrg.dbResultsField) ) < 90}">
+                                    <td><div class="meter red" style="margin-top:12px;"><span style="width:{!salesOrg.dbResultsField }%"></span></div></td>
+                                </apex:outputPanel>
+                                 -->
+                                
+                                <!-- Added by Parul Gupta BEGIN -->                                                                 
+                                	<td><div class="meter {!salesOrg.barColor}" style="margin-top:12px;"><span style="width:{!IF(VALUE(IF(contains(salesOrg.dbResultsField, ','), SUBSTITUTE(salesOrg.dbResultsField, ',', ''), salesOrg.dbResultsField)) >100,100,salesOrg.dbResultsField )}%"></span></div></td>                               
+                                <!-- Added by Parul Gupta END  -->
+                                
+                                <!-- Commented out by Parul Gupta BEGIN  -->
+                                <!--  <apex:outputPanel rendered="{!IF (contains(salesOrg.strCustomLabel,'ZM_KPI_Performance_Removals') || CONTAINS(salesOrg.strCustomLabel,'Full_Box_Returns') || CONTAINS(salesOrg.strCustomLabel,'Past_Due_Percent') || CONTAINS(salesOrg.strCustomLabel,'ZM_KPI_Performance_Removals'),false,true)}" >   
+                                    <apex:outputPanel rendered="{!VALUE(IF(contains(salesOrg.dbResultsField, ','), SUBSTITUTE(salesOrg.dbResultsField, ',', ''), salesOrg.dbResultsField)) >= 96}" >
+                                    <td><div class="meter green" style="margin-top:12px;"><span style="width:{!IF(VALUE(IF(contains(salesOrg.dbResultsField, ','), SUBSTITUTE(salesOrg.dbResultsField, ',', ''), salesOrg.dbResultsField)) >100,100,salesOrg.dbResultsField )}%"></span></div></td>
+                                    </apex:outputPanel>
+                                
+                                    <apex:outputPanel rendered="{!AND(VALUE(IF(contains(salesOrg.dbResultsField, ','), SUBSTITUTE(salesOrg.dbResultsField, ',', ''), salesOrg.dbResultsField))< 96 ,VALUE(IF(contains(salesOrg.dbResultsField, ','), SUBSTITUTE(salesOrg.dbResultsField, ',', ''), salesOrg.dbResultsField) ) >= 90)}" >
+                                    <td><div class="meter yellow" style="margin-top:12px;"><span style="width:{!salesOrg.dbResultsField }%"></span></div></td>
+                                    </apex:outputPanel>
+                                
+                                    <apex:outputPanel rendered="{!VALUE(IF(contains(salesOrg.dbResultsField, ','), SUBSTITUTE(salesOrg.dbResultsField, ',', ''), salesOrg.dbResultsField) ) < 90}">
+                                    <td><div class="meter red" style="margin-top:12px;"><span style="width:{!salesOrg.dbResultsField }%"></span></div></td>
+                                    </apex:outputPanel>
+                                
+                                </apex:outputPanel>
+                                
+                                <apex:outputPanel rendered="{!IF (CONTAINS(salesOrg.strCustomLabel,'ZM_KPI_Performance_Removals') || CONTAINS(salesOrg.strCustomLabel,'Full_Box_Returns') || CONTAINS(salesOrg.strCustomLabel,'Past_Due_Percent') || CONTAINS(salesOrg.strCustomLabel,'ZM_KPI_Performance_Removals'),true,false)}" >                       
+                                    <apex:outputPanel rendered="{!VALUE(IF(contains(salesOrg.dbResultsField, ','), SUBSTITUTE(salesOrg.dbResultsField, ',', ''), salesOrg.dbResultsField)) >= 96}" >
+                                    <td><div class="meter red" style="margin-top:12px;"><span style="width:{!IF(VALUE(IF(contains(salesOrg.dbResultsField, ','), SUBSTITUTE(salesOrg.dbResultsField, ',', ''), salesOrg.dbResultsField)) >100,100,salesOrg.dbResultsField )}%"></span></div></td>
+                                    </apex:outputPanel>
+                                
+                                    <apex:outputPanel rendered="{!AND(VALUE(IF(contains(salesOrg.dbResultsField, ','), SUBSTITUTE(salesOrg.dbResultsField, ',', ''), salesOrg.dbResultsField))< 96 ,VALUE(IF(contains(salesOrg.dbResultsField, ','), SUBSTITUTE(salesOrg.dbResultsField, ',', ''), salesOrg.dbResultsField) ) >= 90)}" >
+                                    <td><div class="meter yellow" style="margin-top:12px;"><span style="width:{!salesOrg.dbResultsField }%"></span></div></td>
+                                    </apex:outputPanel>
+                                
+                                    <apex:outputPanel rendered="{!VALUE(IF(contains(salesOrg.dbResultsField, ','), SUBSTITUTE(salesOrg.dbResultsField, ',', ''), salesOrg.dbResultsField) ) < 90}">
+                                    <td><div class="meter green" style="margin-top:12px;"><span style="width:{!salesOrg.dbResultsField }%"></span></div></td>
+                                    </apex:outputPanel>
+                                
+                                </apex:outputPanel>-->
+                                 <!-- Commented out by Parul Gupta END  -->
+                                 
+                                <td class="meterpercentage"><apex:outputtext value="{!salesOrg.dbResultsField}"/>%</td>
+                                <td>{!(salesOrg.dbCurrentCampaignPlan)}</td>
+                            </tr>
+                             <tr>
+                                <td colspan="8"  class="bordernone">
+                                    <div class="{!salesOrg.IdTRslidingData} rowexpansion displaynone" style="margin-left: 10pt;padding-right:22px;">
+                                        <p class="topTextspace" style="text-align:center">
+                                        <apex:outputPanel rendered="{!NOT(hideSuggestedActivities)}" style="display: inline-block;width:{!900/visibleTxtAreas}px"><span >{!$Label.ZM_Suggested_Activities}</span></apex:outputPanel>
+                                        <apex:outputPanel rendered="{!NOT(hideLastCampAnalysis)}" style="display: inline-block;width:{!900/visibleTxtAreas}px"><span>{!$Label.ZM_Last_campaign_analysis}</span></apex:outputPanel>
+                                        <span style="display: inline-block;width:{!900/visibleTxtAreas}px">{!$Label.ZM_My_Actions}</span>
+                                        </p>
+                                        <p style="text-align:center">
+                                        <apex:inputTextarea readonly="true" rendered="{!NOT(hideSuggestedActivities)}" value="{!salesOrg.strSuggestedActivities}" style="background-color: #E8E7E7; width:{!900/visibleTxtAreas}px" disabled="{!buttonReadOnly}" onblur="saveProgress();"/>
+                                        <apex:inputTextarea rendered="{!NOT(hideLastCampAnalysis)}" styleClass="reTextareamarLt" value="{!salesOrg.strLastCampaignAnalysis}" style="background-color: white; width:{!900/visibleTxtAreas}px" disabled="{!buttonReadOnly}"  onblur="saveProgress();"/>
+                                        <apex:inputTextarea styleClass="reTextareamarLt" value="{!salesOrg.strMyAction}" style="background-color: white; width:{!900/visibleTxtAreas}px" disabled="{!buttonReadOnly}" onblur="saveProgress();" />
+                                        </p>
+                                    </div>
+                                </td>
+<!-- Net Sales-->           </tr>
+                           </apex:repeat>
+                        </tbody>
+                    </table>
+                   </apex:outputPanel> 
+                </div>
+                <apex:outputPanel id="thePanel" layout="block" rendered="{!IsVeiwStar}">
+                    <div class="campaignPoints1">
+                        <div style="display:table-cell; vertical-align:middle;">{!$Label.ZM_POINTS_FOR_CAMPAIGN}:
+                            <apex:repeat value="{!lstStarColored}" var="StarColored" id="RepeatStarColored" >
+                                <img src="{!URLFOR($Resource.ZM_Resources,'images/StarColored.jpg')}"/>
+                            </apex:repeat>
+                            <apex:repeat value="{!lstStarGrey}" var="starGrey" id="RepeatStarGrey" >
+                                <img src="{!URLFOR($Resource.ZM_Resources,'images/StarGrey.jpg')}"/>
+                            </apex:repeat>
+                        </div>
+                    </div>
+                </apex:outputPanel>
+                <div class="inputButtons"> 
+                <div  style="text-align:right;">
+                    <apex:commandButton value="    {!$Label.Print_this_page}" Onclick="window.print(); return false;" rendered="{!if(lstWrapperZoneKPIConfig.size>0,true,false)}"  disabled="{!buttonReadOnly}" />
+                    <apex:commandButton value="   {!$Label.Save_as_Draft}   " rendered="{!if(lstWrapperZoneKPIConfig.size>0,true,false)}"  disabled="{!buttonReadOnly}" />
+                    <apex:commandButton value="   {!$Label.Save_Report_and_Share}   " action="{!saveAsPDF}" disabled="{!buttonReadOnly}" rendered="{!if(lstWrapperZoneKPIConfig.size>0,true,false)}" />&nbsp;&nbsp;
+                </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Omniture Integration Starts -->
+        <apex:include pageName="ZMDMOmnitureTrack"/>
+        <!-- Omniture Integration Ends -->
+       
+    </apex:form>
+</apex:page>

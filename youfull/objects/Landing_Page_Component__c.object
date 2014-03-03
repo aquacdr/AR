@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableEnhancedLookup>false</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>false</enableReports>
+    <fields>
+        <fullName>Component_Header_Color__c</fullName>
+        <externalId>false</externalId>
+        <label>Component Header Color</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Pink</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Grey</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Component_Title__c</fullName>
+        <externalId>false</externalId>
+        <label>Component Title</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Display_Row__c</fullName>
+        <description>Row at which the component should be displayed, e.g. 1,2,3,...</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Row at which the component should be displayed, e.g. 1,2,3,...</inlineHelpText>
+        <label>Display Row</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Full_Report_Link_URL__c</fullName>
+        <description>URL for the &apos;View Full Report&apos; link, if applicable</description>
+        <externalId>false</externalId>
+        <inlineHelpText>URL for the &apos;View Full Report&apos; link, if applicable</inlineHelpText>
+        <label>Full Report Link URL</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Height__c</fullName>
+        <defaultValue>100</defaultValue>
+        <description>Height of the widget</description>
+        <externalId>false</externalId>
+        <label>Height</label>
+        <precision>4</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Horizontal_Position__c</fullName>
+        <externalId>false</externalId>
+        <label>Horizontal Position</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Left</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Right</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Is_Full_Report_Link_Available__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Set to TRUE to indicate that the component should have the &apos;View Full Report&apos; link</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Set to TRUE to indicate that the component should have the &apos;View Full Report&apos; link</inlineHelpText>
+        <label>Is Full Report Link Available</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Is_summary_overlay_display__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Is_summary_overlay_display</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Landing_Page_Config__c</fullName>
+        <externalId>false</externalId>
+        <label>Landing Page Config</label>
+        <referenceTo>Landing_Page_Config__c</referenceTo>
+        <relationshipLabel>Landing Page Components</relationshipLabel>
+        <relationshipName>Landing_Page_Components</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>true</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Number_of_rows_to_display__c</fullName>
+        <defaultValue>10</defaultValue>
+        <description># of rows to be displayed for components of type &apos;G1 Sales Leaders&apos;</description>
+        <externalId>false</externalId>
+        <inlineHelpText># of rows to be displayed for components of type &apos;G1 Sales Leaders&apos;</inlineHelpText>
+        <label>Number of rows to display</label>
+        <precision>2</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>VF_Page_Name__c</fullName>
+        <description>Name of a VF page displayed inside the component</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Name of a VF page displayed inside the component</inlineHelpText>
+        <label>VF Page Name</label>
+        <picklist>
+            <picklistValues>
+                <fullName>TitleAchievement</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>G1SalesLeaders</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ELRisingStars</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>G1Candidates</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>G1Appointments</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Incentives</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Title_Achievement</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <label>Landing Page Component</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>Display_Row__c</columns>
+        <columns>Horizontal_Position__c</columns>
+        <columns>Component_Title__c</columns>
+        <columns>Number_of_rows_to_display__c</columns>
+        <columns>VF_Page_Name__c</columns>
+        <columns>Component_Header_Color__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <nameField>
+        <displayFormat>LPC-{0}</displayFormat>
+        <label>LP Component Name</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Landing Page Components</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ControlledByParent</sharingModel>
+</CustomObject>

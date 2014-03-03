@@ -1,0 +1,57 @@
+<apex:component >
+    
+    <apex:attribute name="nxtMailPlanCl"  description="Mail Plan Code" type="String" required="true"  />
+    <apex:attribute name="market" description="SiteHeaderController.market" type="Market__c" required="true" />
+    <apex:attribute name="strTrendSetter" description="SiteHeaderController.strTrendSetter" type="String" required="false" />
+    <apex:attribute name="mailPlan" description="SiteHeaderController.mailPlan" type="MailPlan_Order_Oppty__c" required="true" /> 
+    <apex:attribute name="mailPlancamp" description="" type="String" required="false" /> 
+          
+    
+    <div class="tp_roll_menu cam_ps">
+                <div class="tp_act"><a href="#" class="campgn_hvr" title="{!$Label.Campaign}">{!$Label.Campaign}&nbsp;{!IF(market.Mail_Plan_Enabled__c,RIGHT(mailPlancamp,2),market.CURRENT_CAMPAIGN_NR__c)}</a></div>
+                <div class="tp_act_gr">
+                <div class="cmp_rl_cnt">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <apex:outputPanel layout="block" rendered="{!NOT(ISNULL(mailPlancamp))}">
+            <tr>
+                <td>{!$Label.Selling_Campaign}</td>
+                <td class="rl_rt">{!mailPlancamp}</td>
+            </tr>
+        </apex:outputPanel>
+        <apex:outputPanel layout="block" rendered="{!NOT(ISNULL(market.CURRNT_CMPGN_ONLN_RMN_DAY_CNT__c))}">
+            <tr>
+                <td>{!$Label.Online_Ord_Days_Remaining}</td>
+                <td class="rl_rt">
+                <apex:outputText value="{!IF((market.CURRNT_CMPGN_ONLN_RMN_DAY_CNT__c>0),
+                                              ROUND (market.CURRNT_CMPGN_ONLN_RMN_DAY_CNT__c, 0),0)}" /></td>
+            </tr>
+        </apex:outputPanel>
+        <apex:outputPanel layout="block" rendered="{!NOT(ISNULL(market.CURRNT_CMPGN_MAIL_RMN_DAY_CNT__c))}">
+            <tr>
+                <td>{!$Label.Mail_Sub_Ord_Days_Remainng}</td>
+                <td class="rl_rt"><apex:outputText value="{!IF((market.CURRNT_CMPGN_MAIL_RMN_DAY_CNT__c>0),ROUND (market.CURRNT_CMPGN_MAIL_RMN_DAY_CNT__c, 0),0)}" /></td>
+            </tr>
+        </apex:outputPanel>
+        <apex:outputPanel layout="block" rendered="{!NOT(ISNULL(market.CURRENT_CAMPAIGN_NR__c))}">
+            <tr>
+                <td>{!$Label.Order_Processing_Campaign}</td>
+                <td class="rl_rt"><apex:outputField value="{!market.CURRENT_CAMPAIGN_NR__c}" /></td>
+            </tr>
+        </apex:outputPanel>
+        <apex:outputPanel layout="block" rendered="{!AND(NOT(ISNULL(strTrendSetter)),strTrendSetter='Y')}">
+            <tr>
+                <td>{!$Label.TrendSetterOverlay}</td>
+                <td class="rl_rt">&nbsp;</td>
+            </tr>
+        </apex:outputPanel>
+        <apex:outputPanel layout="block" rendered="{!market.Mail_Plan_Enabled__c}">  <!-- !NOT(ISNULL(nxtMailPlanCl)) ,mailPlan.NEXT_MLPLN_TO_CLOS_CD__c  -->
+            <tr>
+                <td>{!$Label.Next_Processing_day_to_close}</td>  <!--<apex:outputField value="{!nxtMailPlanCl}" />-->
+                <td class="rl_rt">{!nxtMailPlanCl}</td> <!-- mailPlan.NEXT_MLPLN_TO_CLOS_CD__c  -->
+            </tr>
+        </apex:outputPanel>
+    </table>
+                </div>
+                </div>
+            </div>
+</apex:component>

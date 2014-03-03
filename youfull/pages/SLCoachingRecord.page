@@ -1,0 +1,32 @@
+<apex:page id="page" controller="Controller_SLCoachingRecord" showHeader="false" sidebar="false" >
+<apex:form >
+  <apex:pageBlock title="{!$Label.Coaching_Record}">
+      <apex:pageBlockSection title="{!$Label.PersonalInfo}" columns="2">
+        <apex:outputField value="{!contactUser.LDRSHP_TITL_LVL_DESC__c}" />  
+        <apex:pageBlockSectionItem >
+          <apex:outputLabel value="Leader Type" for="leaderType" />
+          <apex:outputField id="leaderType" value="{!contactUser.LDR_TYP__c}" />
+        </apex:pageBlockSectionItem> 
+        <apex:outputField value="{!currentUser.ACCT_NR__c}" />
+        <apex:pageBlockSectionItem >
+          <apex:outputLabel value="Rising Star Satatus" for="rsStatus" />
+          <apex:outputField id="rsStatus" value="{!almRep.RSNG_STR_IND__c}" />
+        </apex:pageBlockSectionItem>
+        <apex:pageBlockSectionItem >
+          <apex:outputLabel value="Mail Plan" for="mailPlan" />
+          <apex:outputField id="mailPlan" value="{!currentUser.MLPLN_CD__c}" />
+        </apex:pageBlockSectionItem> 
+        <apex:outputField value="{!contactUser.REP_EMAIL_ADDR_TXT__c}" /> 
+        <apex:outputField value="{!contactUser.REP_LANG_CD__c}" />
+        <apex:outputField id="zoneManager" value="{!almRep.ZONE_MGR_NAME__c}" />
+        <apex:outputField value="{!contactUser.REP_APPT_CMPGN_NR__c}" /> 
+        <apex:pageBlockSectionItem >
+          <apex:outputLabel value="G1 Actives Base" for="G1Actives" />
+          <apex:outputField id="G1Actives" value="{!almRep.G1_ACTV_BASE_CNT__c}" />
+        </apex:pageBlockSectionItem>
+        <apex:outputField value="{!contactUser.LOA_NR__c}" />
+                      
+      </apex:pageBlockSection>       
+  </apex:pageBlock>
+</apex:form>
+</apex:page>

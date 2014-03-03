@@ -1,0 +1,60 @@
+<project name="CMC Sprint 12" default="test" basedir="." xmlns:sf="antlib:com.salesforce">
+
+  <property file="../build.properties"/>
+  <property environment="env"/>
+
+
+    <!--
+         *************************************************************
+         ORG2local targets
+         *************************************************************
+    -->
+
+     <!-- SYNTAX: ant targetname -Dversion=3.6 -Dsource=sourcename(qa, uat etc...) optional: -DcheckOnly=true -DrunAllTests=true -->
+    <target name="ittest32local">
+      <sf:retrieve
+                   username="${avon.ittest3.username}"
+                   password="${avon.ittest3.password}"
+                   serverurl="${prod.serverurl}"
+                   pollWaitMillis="10000"
+                   maxPoll="5000"
+                   unpackaged="package.xml"
+                   retrieveTarget="amersrc" />
+    </target>
+
+ <!-- SYNTAX: ant targetname -Dversion=3.6 -Dsource=sourcename(qa, uat etc...) optional: -DcheckOnly=true -DrunAllTests=true -->
+    <target name="almfull32local">
+      <sf:retrieve
+                   username="${avon.almfull3.username}"
+                   password="${avon.almfull3.password}"
+                   serverurl="${sandbox.serverurl}"
+                   pollWaitMillis="10000"
+                   maxPoll="5000"
+                   unpackaged="package.xml"
+                   retrieveTarget="almfull3src" />
+    </target>
+
+    <!-- SYNTAX: ant targetname -Dversion=3.6 -Dsource=sourcename(qa, uat etc...) optional: -DcheckOnly=true -DrunAllTests=true -->
+    <target name="amer32local">
+      <sf:retrieve
+                   username="${avon.amer3.username}"
+                   password="${avon.amer3.password}"
+                   serverurl="${prod.serverurl}"
+                   pollWaitMillis="10000"
+                   maxPoll="5000"
+                   unpackaged="package.xml"
+                   retrieveTarget="amersrc" />
+    </target>
+    <!-- SYNTAX: ant targetname -Dversion=3.6 -Dsource=sourcename(qa, uat etc...) optional: -DcheckOnly=true -DrunAllTests=true -->
+    <target name="youfull2local">
+      <sf:retrieve
+                   username="${avon.yf.username}"
+                   password="${avon.yf.password}"
+                   serverurl="${sandbox.serverurl}"
+                   pollWaitMillis="10000"
+                   maxPoll="5000"
+                   unpackaged="package.xml"
+                   retrieveTarget="youfull" />
+    </target>
+
+</project>

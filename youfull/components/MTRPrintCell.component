@@ -1,0 +1,33 @@
+<apex:component controller="MTRPrintCellController" layout="none">
+
+    <apex:attribute name="RowType" description="Description here." type="String" required="true" assignTo="{!InternalRowType}"></apex:attribute>
+    <apex:attribute name="Genealogy" description="Description here." type="GenealogyWrapper" required="true" assignTo="{!InternalGenealogy}"></apex:attribute>
+    <apex:attribute name="PrintColumn" description="Description here." type="MTRPrintColumn" required="true" assignTo="{!InternalPrintColumn}"></apex:attribute>
+    <apex:attribute name="ColumnData" description="Description here." type="Object" required="true" assignTo="{!InternalColumnData}"></apex:attribute>
+
+    <apex:variable var="varEscapeOutput" value="'" rendered="{!NOT($CurrentPage.parameters.print='1')}">
+    </apex:variable>
+    
+    <apex:variable var="varRuleException" value="" rendered="{!PrintColumn.IsRuleException}">
+      {!RuleExceptionOutput}
+    </apex:variable>
+    <!-- Change done by Swarnava - Defect id : 2350  START -->
+    <!--<apex:variable var="varStringNumber" value="" rendered="{!NOT(PrintColumn.IsRuleException) && (PrintColumn.ColumnInfo.ColumnType == 'Text' || PrintColumn.ColumnInfo.ColumnType == 'Number')}">-->
+    <apex:variable var="varStringNumber" value="" rendered="{!NOT(PrintColumn.IsRuleException) && (PrintColumn.ColumnInfo.ColumnType == 'Text')}">
+     {!ColumnData}
+    </apex:variable>
+    <apex:variable var="varNumber" value="" rendered="{!NOT(PrintColumn.IsRuleException) && (PrintColumn.ColumnInfo.ColumnType == 'Number')}">
+      {!NumberOutput}
+    </apex:variable>
+    <!-- Change done by Swarnava - Defect id : 2350  END -->
+    <apex:variable var="varCurrency" value="" rendered="{!NOT(PrintColumn.IsRuleException) && (PrintColumn.ColumnInfo.ColumnType == 'Currency')}">
+      {!CurrencyOutput}
+    </apex:variable>
+    <apex:variable var="varDate" value="" rendered="{!NOT(PrintColumn.IsRuleException) && (PrintColumn.ColumnInfo.ColumnType == 'Date')}">
+      {!DateOutput}
+    </apex:variable>
+    <apex:variable var="varJustPrint" value="" rendered="{!NOT(PrintColumn.IsRuleException) && (LEN(PrintColumn.ColumnInfo.Name) == 0)}">
+      {!ColumnData}
+    </apex:variable>
+
+</apex:component>

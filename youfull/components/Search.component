@@ -1,0 +1,433 @@
+<apex:component controller="SearchResultController">
+<apex:attribute name="keywordParam" assignTo="{!defaultKeyword}" type="String" description="Search Text" />
+
+<apex:outputText value="{!Initialized}"/>
+<apex:outputPanel rendered="{!showSearchPanel}">
+  <!--popup area-->
+ 
+<!--popup area-->
+        <div class="popup_wrpr">
+        <div class="popup_ccntr">
+           <a href="javascript:hideSearchPage();" class="close_btn"></a>
+            <div class="pop_content" style="padding:10px 12px 25px 12px;"> 
+ 
+ 
+  
+<!--<div class="white_trans" style="background-color:#ddd;">
+
+    <div class="popup_wrpr_srch">
+        <div class="popup_ccntr_srch">.
+           <a href="{!retUrl}" class="close_btn"></a>-->
+<!-- 
+<apex:includeScript value="{!URLFOR($Resource.ALMPlus_Asset,'js/jquery-1.5.1.min.js')}"/>
+<apex:stylesheet value="{!URLFOR($Resource.ALMYouAssets,'css/YOU_style.css')}"/>
+<apex:stylesheet value="{!URLFOR($Resource.ALMYouAssets,'css/tutorsty.css')}"/>
+<apex:stylesheet value="{!URLFOR($Resource.EUL_Resources, 'cmp_style.css')}"/>
+ -->
+ 
+<apex:stylesheet value="{!URLFOR($Resource.MyTeam)}" />
+<apex:includeScript value="{!URLFOR($Resource.MTRUtility)}"/>
+    <style>
+    tr.evenRow td { background-color: #ECEBEB !important;}
+    tr.oddRow td { background-color: #FFF !important;}
+    
+    div.row {
+        clear: both;
+        padding-top: 0px; /* change by amartya */
+    }
+    div.row span.label {
+        float: left;
+        width: 150px;
+        text-align: right;
+    }
+    div.row span.formelement {
+        float: right;
+        width: 250px;
+        text-align: left;
+    }
+    div.spacer {
+        clear: both;
+        padding-bottom: 4px; /* change by amartya */
+    }
+    .select_campaign {
+        position: absolute;
+        bottom:0;
+        float:left;
+        left:0;
+        top:0;
+        height:26px;
+        line-height:26px;
+        text-indent:10px;
+        background:url("{!URLFOR($Resource.MTRImages,'dropdown_campaign.gif')}") no-repeat top left;
+        cursor:default;
+        z-index:1;
+        font-size:11px;
+    }
+    .select_large {
+        position: absolute;
+        bottom:0;
+        float:left;
+        left:0;
+        top:0;
+        height:26px;
+        line-height:26px;
+        text-indent:10px;
+        background:url("{!URLFOR($Resource.MTRImages,'dropdown_large.gif')}") no-repeat top left;
+        cursor:default;
+        z-index:1;
+        font-size:11px;
+    }
+    .blacktext {
+        color:#000000;
+    }
+    frm_cntr{ 
+    position: relative; 
+    width: 242px; 
+    padding-bottom:5px; 
+    }
+    .srch_type_drp select {
+        z-index: 10;
+        opacity: 0;
+        filter: alpha(opacity=0);
+        -webkit-appearance: none;
+    }
+</style>
+    
+    <script type="text/javascript">
+jQuery(document).ready(
+            function(){
+            
+           //jQuery("#email_sel_mask").css('height',);
+           
+          
+           }); /* end of document.ready */
+               
+    
+        function forceFancyDropdownRefresh(fancyDropDownId, lengthLimit) {
+            var fancyDropdown = getElement(fancyDropDownId); 
+            var regularDropdown = getElement(fancyDropDownId.replace('fdd_', '').replace('_text', ''));
+            var selectedText = jQuery(regularDropdown).find('option:selected').text();
+          
+            if(selectedText.length > lengthLimit) {
+                selectedText = selectedText.substring(0, lengthLimit) + '...';
+            }
+          
+            jQuery(fancyDropdown).text(selectedText);
+            jQuery(fancyDropdown).attr('title', selectedText);
+        }
+        
+        function createTextSearchFancyDropdown2(regularDropdownId, lengthLimit) {
+            var regularDropdown = getElement(regularDropdownId);
+            var fancyDropdownId = 'fdd_' + regularDropdownId + '_text';
+            forceFancyDropdownRefresh(fancyDropdownId, lengthLimit);
+            
+            jQuery(regularDropdown).change(function() {
+                forceFancyDropdownRefresh(fancyDropdownId, lengthLimit);
+            });
+        }
+  
+  /*
+  var fixStyling = function (){ 
+        //Styling for Select box 
+        if (!jQuery.browser.opera){ 
+            // select element styling 
+            jQuery(".myselect").each(function(){ 
+                var title = jQuery(this).attr('title'); 
+                if(jQuery('option:selected', this).val() != '') 
+                    title = jQuery('option:selected',this).text(); 
+                jQuery(this).css({'z-index':10,'opacity':0,'-khtml-appearance':'none'}) 
+                    .after('<div class="select_cust profselec">' +title + '</div>') 
+                    .change(function(){ 
+                        val = jQuery('option:selected',this).text(); 
+                        jQuery(this).next().text(val); 
+                        }) 
+            }); 
+        }; 
+}; 
+*/
+  function onEnterTextSearch(field, e) {
+      if(e.keyCode == 13) {
+          doSearch(getElement('{!$Component.txtSearch}').value);//changed by swarnava for I.E9
+          return false;
+      }
+      return true;
+  }
+  
+  function onFocusTextSearch(field, e) {
+  //alert('focus');
+    if(jQuery(field).val() == '{!$Label.Search_My_Team}') {
+        jQuery(field).val('');
+    }
+    
+    return true;
+  }
+  
+  function onBlurTextSearch(field, e) {
+  
+    if(jQuery(field).val().length == 0) {
+        jQuery(field).val('{!$Label.Search_My_Team}');
+    }
+    return true;
+  }
+  
+  
+  function firstPage1(){
+      firstpage();
+  }
+  function lastPage1(){
+      lastpage();
+  }
+  function nextPage1(){
+      nextpage();
+  }
+  function previousPage1(){
+      previouspage();
+  }
+  
+  /*function hideCoachingPage(){
+      window.location.reload();
+  }*/
+  
+  /*
+  function showCoachingPage(repId){
+    // hide search page
+    //hideSearchPage();
+    jQuery("#search_dialog_box").attr('class','white_trans_closed');  
+    
+    // open coaching page
+    viewRepDetail(repId);
+    
+    //jQuery("#email_sel_mask2").attr('class','white_trans');  
+    //jQuery("#email_sel_mask2").load("{!URLFOR($Page.CoachingPage)}?AccKey="+repId);
+    return false;
+  }
+  */
+
+    </script>
+
+
+<!--<c:MTRTextSearch AccountNum="1234" 
+MarketId="18" 
+TextSearch="{!NULLVALUE($CurrentPage.parameters.textsearch, $Label.Search_My_Team)}" 
+TSCriteria="{!NULLVALUE($CurrentPage.parameters.tscriteria, '')}" 
+OnSubmit="m_SearchType = 'TextSearch'; m_TSObject = txtSearchObject; LoadGenealogyBySearchType(m_SearchType, m_TSObject);" 
+OnBeginRequest="processImageVisible(true);" 
+OnEndRequest="processImageVisible(false);"/>-->
+
+
+<div class="cntr mar_btm_15"><br/>
+<h2 class="srch_header" style="padding-left:20px;">{!$Label.Search_Result}</h2>
+
+<div class="txt_srch_wrap">
+        <div class="srch_type_drp">
+             <apex:selectList id="lstCriteria" value="{!option}" size="1"  style="z-index: 10;filter: alpha(opacity=0);">
+                <apex:selectOption itemValue="(none)" itemLabel="{!$Label.Search_Type}"/>
+                <apex:selectOption itemValue="Name" itemLabel="{!$Label.Name}"/>
+                <apex:selectOption itemValue="AccountNumber" itemLabel="{!$Label.Account_Number}"/>
+             </apex:selectList>
+             <div id="fdd_{!$Component.lstCriteria}" class="srch_type_drp_display">
+                <div id="fdd_{!$Component.lstCriteria}_text" style="float:left; width:63px; height:12px; overflow:hidden;">Search Type</div>
+                <div class="srch_type_dn"></div>
+             </div>
+         </div>
+         <div class="srch_keywrd">
+            <apex:inputText id="txtSearch"
+                value="{!keyword}" onclick="onFocusTextSearch(this,event);"
+                onfocus="return onFocusTextSearch(this,event);"
+                onblur="return onBlurTextSearch(this,event);"
+                onkeypress="return onEnterTextSearch(this,event);" />
+                
+             <div id="fdd_{!$Component.lstKeyword}" class="srch_keywrd_display">
+                <div id="fdd_{!$Component.lstKeyword}_text" style="float: left; width:80px; height:12px; overflow:hidden;"></div>
+             </div>
+             <a id="lnkTextSearch" class="sr_icon" href="javascript:void(0)" onclick="doSearch(getElement('{!$Component.txtSearch}').value);"></a><!--changed by swarnava for I.E 9-->
+         </div>
+</div>
+</div>
+
+<apex:actionFunction name="doSearch" action="{!doSearch}"  status="processingStatus" rerender="searchPanel,omntid"> 
+<apex:param name="keytosearch" assignTo="{!keyword}" value=""/><!--added by swarnava for I.E 9 fix-->
+</apex:actionFunction>
+<apex:actionFunction name="firstpage" action="{!FirstPageList}" reRender="searchPanel" status="processingStatus" />
+<apex:actionFunction name="lastpage" action="{!LastPageList}" reRender="searchPanel" status="processingStatus" /> 
+<apex:actionFunction name="nextpage" action="{!NextPageList}" reRender="searchPanel" status="processingStatus"  /> 
+<apex:actionFunction name="previouspage" action="{!PrevPageList}" reRender="searchPanel" status="processingStatus"  /> 
+<apex:actionFunction name="viewLink" action="{!viewLink}"  /> 
+
+
+
+<script language="JavaScript">
+
+  createTextSearchFancyDropdown2('{!$Component.lstCriteria}', 20);
+  
+  createTextSearchFancyDropdown2('{!$Component.lstKeyword}', 20);
+  
+  var lstCriteria = getElement('{!$Component.lstCriteria}');
+  
+  //updateTextSearchUI(lstCriteria);
+  
+  jQuery(document).ready(function() {
+    
+    var txtSearch = getElement('{!$Component.txtSearch}');
+    var keyword = '{!keyword}';
+
+    if(keyword == '' || keyword == null){
+        jQuery(txtSearch).val('{!$Label.Search_My_Team}');
+    }
+    
+});
+  
+ 
+</script>
+
+<apex:outputPanel id="searchPanel">
+            <div class="cntr" style="margin-top:35px">
+                <center>
+                <apex:outputPanel id="NoResultTable"
+                    rendered="{!IF(CurrentPageList.size>0, false, true)}">
+                  <!--<div class="srch_scroll"><h4 class="cmprep_hdr">{!$Label.No_Results_Found}</h4></div> -->
+                <table style="background-color : #FFFFFF; border : 1px solid #E41A1A; width : 800px; padding:5px;height:120px;">
+                        <tr>
+                            <td style="height:2px">
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr>
+                        <td style="width:2px"></td>
+                        <td style="background-color : #E41A1A;">&nbsp;</td>
+                        <td style="width:2px"></td>
+                        </tr>
+                        <tr>
+                            <td style="width:2px"></td>
+                            <td style="background-color : #E41A1A;">
+                                <font style="font-size : 30px; color : #FFFFFF;padding-left:30px;">
+                                <apex:image url="{!URLFOR($Resource.YOU_Asset,'images/alert.gif')}"/>
+                                {!$Label.We_are_Sorry}<br /></font>
+                                <br />                                
+                                <font style="font-size : 16px; color : #FFFFFF;padding-left:30px;">{!$Label.No_Result_Search}</font>
+                            </td>
+                            <td style="width:2px"></td>
+                        </tr>
+                        <tr>
+                            <td style="height:2px">
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                    </table>
+
+                </apex:outputPanel> 
+                </center>
+                <apex:outputPanel id="resultTable" rendered="{!IF(CurrentPageList.size>0, true, false)}">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td>
+                        <table width="100%" border="0" cellspacing="0" cellpadding="0" class="srch_tabular_pnk">
+                            <tr>
+                                <th width="133">{!$Label.Name}</th>
+                                <th width="65">{!$Label.Zone} #</th>
+                                <th width="80">{!$Label.Account}</th>
+                                <apex:outputPanel layout="none" rendered="{!currMarket.Is_Branch__c == true}">  
+                                    <th width="44">{!$Label.Branch_Name}</th>
+                                </apex:outputPanel>
+                                <th width="65">{!$Label.Title}</th>
+                                <th width="75">{!$Label.Phone}</th>
+                                <th width="65">&nbsp;</th>
+                            </tr>
+                        </table>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                        <div class="srch_scroll">
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0" class="srch_tabular">
+                          <Apex:repeat value="{!CurrentPageList}" var="result">
+                              <tr>
+                                <td width="133" class="alt_wht">{!result.name}</td>
+                                <td width="65" class="alt_wht">{!result.zoneNumber}</td>
+                                <td width="80" class="alt_wht">{!result.accountNumber}</td>
+                                <apex:outputPanel layout="none" rendered="{!currMarket.Is_Branch__c == true}">  
+                                    <td width="44" class="alt_wht">{!result.branchName}</td>
+                                </apex:outputPanel>
+                                <td width="65" class="alt_wht">{!result.badgeTitle}</td>
+                                <td width="75" class="alt_wht">{!result.phoneNumber}</td>
+                                <td width="55" class="alt_wht">  
+                                
+                                <!--                                                              
+                                <apex:commandLink value="View" onclick="viewLink()" oncomplete="showCoachingPage('st')" styleclass="view" rendered="{!result.showCoachingLink}"/>
+                                <apex:outputLink styleClass="view" value="{!result.viewLink}" rendered="{!(!result.showCoachingLink)}">View</apex:outputLink>
+                                 -->
+                                <a href="{!IF(result.showCoachingLink==true, 'javascript:void(0)', result.viewLink)}" 
+                                        class="view" 
+                                        onclick="{!IF(result.showCoachingLink==true, 'hideSearchPage();'+result.viewLink, '')}" >{!$Label.View}</a>
+                                <!-- 
+                                    href param: "javascript:return false;" in case coaching popup should be displayed else the URL
+                                    onlclick param:  "javascript:viewRepDetail('92000');" in case coaching popup should be displayed else blank
+                                <a href="{hrefParam}" class="view" onclick="{onlclickParam}" >Test</a>
+                                 -->
+                                </td>
+                              </tr>
+                          </Apex:repeat>
+                        </table>
+                        
+                        </div>
+                    </td>
+                  </tr>
+                </table>
+                
+                <script>
+                    var counter = 1;
+                    jQuery(".srch_tabular tbody tr").each(function(){
+                        var rowClass = counter % 2 ==1 ?  'oddRow' : 'evenRow';
+                        jQuery(this).addClass(rowClass);
+                        counter++
+                    });
+                </script>
+                
+                </apex:outputPanel>
+                <br/>
+                
+                <div style="height:40px;clear:both;">
+                    <apex:image url="{!URLFOR($Resource.Pagination, 'first_pink.gif')}" onclick="firstPage1()" rendered="{!First}" />
+                    <apex:image url="{!URLFOR($Resource.Pagination, 'previous_pink.gif')}" onclick="previousPage1()" rendered="{!Previous}"/>
+                    <apex:image url="{!URLFOR($Resource.Pagination, 'next_pink.gif')}" onclick="nextPage1()" rendered="{!Next}"/>
+                    <apex:image url="{!URLFOR($Resource.Pagination, 'last_pink.gif')}"  onclick="lastPage1()" rendered="{!Last}"/>
+    
+                    <apex:actionStatus id="processingStatus">              
+                         <apex:facet name="start">
+                              <c:ProcessingMsg id="processingMsgComp"/>
+                           </apex:facet>                
+                    </apex:actionStatus>
+                </div>
+                
+            </div>
+            </apex:outputPanel>
+
+
+  <!--popup area ends-->
+
+</div>
+</div>
+</div>
+
+</apex:outputPanel>
+<!--Added for Omniture by swarnava-->
+<apex:outputPanel id="omntid">
+<apex:outputPanel rendered="{!searchused}">
+<script>
+var isSearch="{!searchused}";
+if(isSearch=='true')
+ALM_PAGE_NAME="{!OmniturePageName}";//added swarnava for Omniture
+</script>
+<c:OmnitureWebTrack mktName="{!currMarket.Omniture_Suite_Name__c}" 
+                        mktAcctKey="{!currUser.MRKT_ID_ACCT_NR_KEY__c}"
+                        userType="{!currUser.Profile.Name}"
+                        userTitle="{!currUser.LDRSHP_TITL_LVL_NBR__c}"        
+                        rendered="{!globalConfig.Omniture_Tracking_Enabled__c}"/>
+</apex:outputPanel></apex:outputPanel>                      
+</apex:component>

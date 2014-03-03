@@ -1,0 +1,171 @@
+<apex:page sidebar="false" showHeader="false" standardStyleSheets="false" controller="G1SalesLeadersController" language="{!userLang}"> <!-- language property modified by Raktim on 7th Oct Impersonation Issue -->
+
+<style>
+.contentDiv table td {
+    font-weight: normal;
+}
+</style>
+
+<script>
+var downLineNames = new Array();
+</script>
+
+    <apex:outputPanel >
+    <!--<div id="G1SalesScroll" style="height: 432px; overflow-x: hidden;overflow-y: hidden;">--><!--Changd from auto to hidden-->
+    <div id="G1SalesScroll" style="height: 342px; overflow-x: hidden;overflow-y: auto;">
+    <!--<div class="cmpG11stBox " style="width:100%; height:{!listDownline.size*125}px;">--><!--Changed from 125 to 100-->
+        <div class="cmpG11stBox" style="width:100%; height:{!listDownline.size*g1EachRowHeight}px;"> 
+        <apex:outputPanel rendered="{!IF(listDownline.size > 0, FALSE, TRUE)}">
+           <div width="100%" align="center">
+               <h4 class="cmprep_hdr">{!$Label.No_Information_Available}</h4>
+           </div>
+        </apex:outputPanel>
+        
+        <apex:repeat value="{!listDownline}" var="downline">
+            <script>
+            var downLineName = "{!SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(downline.Name,'.',''),' ',''), '*', ''), '/',''), '(',''), ')',''), '#',''), '&','')}";
+            downLineNames.push(downLineName); 
+            </script>
+        </apex:repeat>
+        
+        <apex:repeat value="{!listDownline}" var="downline">
+                <!-- Changes done by Raktim on 4thDec, 2012 Start -->
+                <!--<div class="{!IF(downline.titleValue='At Risk','cmpred_box',IF(downline.titleValue='Rising Star','cmpgreen_box','cmpnocolor_box'))}  box">-->
+                <div class="cmpnocolor_box box">
+                <!-- Changes done by Raktim on 4thDec, 2012 End -->
+                    <div style="height:12px;" class="cmpttl_hdr cmphorz-sprtr"> 
+                        <div id="{!SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(downline.Name,'.',''),' ',''), '*', ''), '/',''), '(',''), ')',''), '#',''), '&','')}_hdr" class="cmplnk_arw" style="float:left;">&nbsp;</div>
+                        <!--  <a class="cmpblack" href="/apex/demopagenew?acctkey=TestAccount1&Impersonation=true"> {!downline.Name}</a> --> <!-- {!nameLink} -->
+                        <a class="cmpblack" href="{!downline.nameLink}">{!downline.Name}</a>
+                        <p class="cmpright" style="width:20% !important;"> <a href="{!downline.myTeamReportURL}" class="cmppeople"></a> <a href="javascript:viewRepDetail('{!downline.accountNumber}');" class="cmpnote"></a> <a href="{!downline.myTeamOrdersURL}" class="cmpgraph"></a> </p>
+                    </div>
+                    <div class="contentDiv" id="{!SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(downline.Name,'.',''),' ',''), '*', ''), '/',''), '(',''), ')',''), '#',''), '&','')}" style="width:107.2%; background:#f1f1f1 url('{!URLFOR($Resource.EUL_Resources, 'bottom-grey-block_btm_shadow.gif')}') 
+                    																																																					repeat-x scroll center bottom; float:left; padding-bottom:5px; position: relative;left: -16px; right: -14px;" >
+                        <table border="0" cellspacing="0" cellpadding="0" class="cmpslide_tabular" width="100%">
+                          <tbody ><tr>
+                            <td width="50%">
+                                <!--<a href="mailto:{!downline.preferredEmail}" class="cmpmagenta">{!downline.preferredEmail}</a>-->
+                                 <!-- <a href="#" class="magenta" onClick="showHidePersonalMessage('SHOW');">{!downline.preferredEmail}</a> -->
+                                {!downline.accountNumber} 
+                            </td>
+                            <!--<td width="50%" class="cmptxt_right"><!-- {!downline.sponsor} --><!--{!IF(isMailPln,$Label.ZoneBranch+' '+Mail_Plan_Zone_Code,downline.zoneManager)}</td>--> <!--changed by swarnava:Mail Plan--> 
+                            <td width="50%" class="cmptxt_right">{!IF(isMailPln,IF(isBranch, $Label.Branch_Name+' '+Mail_Plan_Zone_Code, $Label.Zone+' '+Mail_Plan_Zone_Code), downline.zoneManager)}</td>  <!--changed by raktim :Mail Plan Market show only Zone - Client Suggestion on 19Jul 2013 -->
+                          </tr> 
+                          <tr>
+                            <td width="50%">{!downline.preferredPhone}</td>
+                            <td width="50%" class="cmptxt_right"> {!IF(isMailPln,$Label.Mail_Plan_Code+' '+Mail_Plan_Code,'')}</td><!--changed by swarnava:Mail Plan-->
+                          </tr> 
+                                                  
+                        </tbody></table>
+                    </div>
+                    <script>
+                        jQuery("#{!SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(downline.Name,'.',''),' ',''), '*', ''), '/',''), '(',''), ')',''), '#',''), '&','')}").hide();
+
+                        jQuery("#{!SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(downline.Name,'.',''),' ',''), '*', ''), '/',''), '(',''), ')',''), '#',''), '&','')}_hdr").hover(function() {
+                            jQuery(this).css('cursor','pointer');
+                        }, function() {
+                            jQuery(this).css('cursor','auto');
+                        });
+
+                        jQuery("#{!SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(downline.Name,'.',''),' ',''), '*', ''), '/',''), '(',''), ')',''), '#',''), '&','')}_hdr").click(function(){
+                            for (var i = 0; i < downLineNames.length; i++) {
+                                if(downLineNames[i] != "{!SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(downline.Name,'.',''),' ',''), '*', ''), '/',''), '(',''), ')',''), '#',''), '&','')}") {
+                                    jQuery("#" + downLineNames[i]).slideUp(300);
+                                    jQuery("#" + downLineNames[i]+"_hdr").removeClass("cmplnk_arw_down");
+                                }
+                            }
+                            
+                            jQuery("#{!SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(downline.Name,'.',''),' ',''), '*', ''), '/',''), '(',''), ')',''), '#',''), '&','')}").slideToggle(300);
+                            jQuery("#{!SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(downline.Name,'.',''),' ',''), '*', ''), '/',''), '(',''), ')',''), '#',''), '&','')}_hdr").toggleClass("cmplnk_arw_down");
+                        });
+                    </script><br/>
+                    <!--<div class="cmpsmall_tb_cnt contentDiv" style="padding:5px 0 0;">-->
+                    <div class="cmpsmall_tb_cnt contentDiv">
+                      <div class="cmpleft" style="width:52%;">
+                        <table border="0" cellspacing="0" cellpadding="0" class="cmpsml_tabular">
+                          <tbody><tr>
+                            <!-- Title Status Change by Raktim on 5th Sept, 2013 START -->
+                            <!--<td colspan="2">{!$Label.Title}: &nbsp; {!downline.badgeTitle} &nbsp; <span class="{!IF(downline.titleValue='At Risk','cmpred','cmpgreen')}">{!downline.titleValue}</span></td>-->
+                            <!-- Commeted by Milon on 12/4 for fixing Defect 3495
+                            <td colspan="2">{!$Label.Title}: &nbsp; {!downline.badgeTitle} &nbsp; <span class="{!IF(CONTAINS(downline.titleValue, $Label.ZM_Formula_At_Risk) || CONTAINS(downline.titleValue, $Label.Formula_Base_At_Risk), 'cmpred', 'cmpgreen')}">{!downline.titleValue}</span></td>
+                             -->
+                            <!-- Title Status Change by Raktim on 5th Sept, 2013 END -->
+                            <td>{!$Label.Title}:</td>
+                            <td class="cmptxt_right"><apex:outputText value="{!downline.badgeTitle}" escape="false" />&nbsp; <span class="{!IF(CONTAINS(downline.titleValue, $Label.ZM_Formula_At_Risk) || CONTAINS(downline.titleValue, $Label.Formula_Base_At_Risk), 'cmpred', 'cmpgreen')}">{!downline.titleValue}</span></td>
+                          </tr>
+                          <tr>
+                            <td>{!$Label.Sales_Volume}:</td>
+                            <td class="cmptxt_right"><apex:outputText value="{!downline.salesVolume}" escape="false" /></td>
+                          </tr>
+                          <tr>
+                            <td>{!$Label.Team_Sales}:</td>
+                            <td class="cmptxt_right"><apex:outputText value="{!downline.teamSales}" escape="false" /></td>
+                          </tr>
+                        </tbody></table>
+                      </div>
+                      <div class="cmpright" style="width:49%;">
+                        <table border="0" cellspacing="0" cellpadding="0" class="cmpsml_tabular">
+                          <tbody><tr>
+                            <td style="width:90px;">{!$Label.G1_Actives}:</td> <!-- border: 2px dotted green; -->
+                            <!-- Blank td addition starts, Right Alignment needs to be done here, Business Requirement on 14Mar, 2013 -->
+                            <!--<td class="cmptxt_right"></td>
+                            <td class="cmptxt_right"></td>
+                            <td class="cmptxt_right"></td>
+                            <td class="cmptxt_right"></td>-->
+                            <!-- Blank td addition ends -->
+                            <td class="cmptxt_right"><apex:outputText value="{!downline.g1Actives}" escape="false" /></td>
+                          </tr>
+                          <tr>
+                          	<!-- Blank td addition starts, Right Alignment needs to be done here, Business Requirement on 14Mar, 2013 -->
+                            <td style="width:90px;">{!$Label.Team_Appts}:</td>
+                            <!-- <td class="cmptxt_right"></td>
+                            <td class="cmptxt_right"></td>
+                            <td class="cmptxt_right"></td>
+                            <td class="cmptxt_right"></td>-->
+                            <td class="cmptxt_right"><apex:outputText value="{!downline.teamAppts}" escape="false" /></td>
+                            <!-- Blank td addition ends -->
+                          </tr>
+                          <tr>
+                          	<!-- Blank td addition starts, Right Alignment needs to be done here, Business Requirement on 14Mar, 2013 -->
+                            <td style="width:90px;">{!$Label.G1_Leaders}:</td>
+                            <!-- <td class="cmptxt_right"></td>
+                            <td class="cmptxt_right"></td>
+                            <td class="cmptxt_right"></td>
+                            <td class="cmptxt_right"></td>-->
+                            <!-- Blank td addition ends -->
+                            <td class="cmptxt_right"><apex:outputText value="{!downline.g1Leaders}" escape="false" /></td>
+                          </tr>
+                        </tbody></table>
+                      </div>
+                    </div>
+                   
+                </div>
+        </apex:repeat>
+        <br/>
+        </div>
+        <br/>
+        </div>
+        <div class="cmpbtm_bx_gry cmpG12ndBox" align="center">
+            <a class="cmppnk_cta cmpcentering_cn" href="{!viewFullReportURL}">{!$Label.View_Full_Report}</a>
+        </div>
+  
+            </apex:outputPanel>
+<script>
+    fleXenv.fleXcrollMain("G1SalesScroll");
+    var tempELRisingScroll = '{!listDownline.size}';
+    
+    //if(tempELRisingScroll > 4)//Changed from >=4 to >4
+    if(tempELRisingScroll >= 3)//Changed from >4 to >=3
+    {
+        //alert('.... YES');
+        jQuery("#G1SalesScroll_vscrollerbase").css('visibility','visible');
+        jQuery("#G1SalesScroll_vscrollerbar").css('visibility','visible');
+    }else{
+    	jQuery("#G1SalesScroll_vscrollerbase").hide();
+        jQuery("#G1SalesScroll_vscrollerbar").hide();
+    
+    } 
+   
+</script>
+
+</apex:page>

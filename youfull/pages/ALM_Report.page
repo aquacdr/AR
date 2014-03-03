@@ -1,0 +1,224 @@
+<apex:page showheader="true" sidebar="true" controller="ALM_Controller_Report" id="thePage" action="{!updateUserGenIndex}" >
+<apex:includeScript value="{!URLFOR($Resource.ALMPlus_Asset,'js/jquery-1.5.1.min.js')}"/>
+<style type="text/css">
+    .custPopup{
+        background-color: white;
+        border-width: 2px;
+        border-style: solid;
+        z-index: 9999;
+        left: 50%;
+        padding:10px;
+        position: absolute;
+        /* These are the 3 css properties you will need to change so the popup 
+        displays in the center of the screen. First set the width. Then set 
+        margin-left to negative half of what the width is. You can add 
+        the height property for a fixed size pop up if you want.*/
+        width: 500px;
+        margin-left: -250px;
+        top:100px;
+    }
+    
+    .popupBackground{
+        background-color:black;
+        opacity: 0.20;
+        filter: alpha(opacity = 20);
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: 9998;
+    }
+    
+    .popupHidden {
+        display: none;
+    }   
+    
+</style>
+<script>
+    var selectedRecords;
+    var emailOption;
+    
+    jQuery( document ).ready(function() {
+      // If deep link parameter mode=run is availbale, making Call out for getting report data
+      if('{!salesLeaderDTO.isModeRun}' == 'true'){
+        getReport();
+        
+        // Note : We are using document.ready function beacause we need to do call out in a different thread 
+        // after the page action 'updateUserGenIndex'
+      }   
+    });
+    
+    function exportReport(params) {
+        downloadReport(params, 'export=1&enc=UTF-8&xf=xls');
+    }
+    
+    function printReport(params) {
+        downloadReport(params, 'excel=1');
+    }
+       
+    //display email popUp
+    function displayEmailPopUp(){
+        jQuery("#bckPanel").attr('class', 'popupBackground');
+        jQuery("#popupPanel").attr('class', 'custPopup'); 
+    }
+    
+    //Hide email popUp
+    function hideEmailPopUp(){
+        jQuery("#bckPanel").attr('class', 'hidden');
+        jQuery("#popupPanel").attr('class', 'hidden');
+    }
+    
+    //Method to handle all/selected email actions
+    function emailFunc(flag){
+        emailOption = flag;
+        if(emailOption == 'Selected'){
+            selectedRecords = jQuery("#recordsGrid").jqGrid('getGridParam','selarrrow');
+            if(selectedRecords.length < 1){
+                alert('{!$Label.Email_Select_One_Record}');
+                return false;
+            }
+        } 
+        displayEmailPopUp();                  
+    }
+    
+    // Send email
+    function sendEmail(subject, msg){
+        hideEmailPopUp();
+        
+        var toAddresses = new Array();
+        var contactIds = new Array();
+        
+        if(emailOption == 'Selected'){
+            for (var i = 0; i < selectedRecords.length; i++) {
+                //get each selected row
+                var selRow = jQuery("#recordsGrid").jqGrid('getRowData', selectedRecords[i]);
+                
+                //get the data from selected row by column name
+                var emailVal = selRow['{!emailField}'];
+                var idColVal = selRow['{!contactIdField}'];
+                var idValue = idColVal.substr(idColVal.indexOf('/')+1, 18);
+                
+                if(emailVal != '' && emailVal != '-') { 
+                    toAddresses.push(emailVal); 
+                    contactIds.push(idValue);                   
+                }
+            }           
+        }
+        sendEmailAction(emailOption, subject, msg, toAddresses, contactIds);
+    }
+    
+    // Hide filter section
+    function hideFilterSection(){
+        var filterSectionId = '{!$Component.thePage.theForm.mainPageBlock.filterComponent.reportFilterComponent.filterBlockSection}';   
+        var filterSection = document.getElementById(filterSectionId);
+        if(filterSection != null){
+            var childs = filterSection.getElementsByClassName('pbSubsection');
+            if(childs != null){
+                childs[0].style.display = 'none';
+            }
+        }    
+    }
+    
+</script>
+<apex:sectionHeader title="{!salesLeaderDTO.reportTranslationLabel}"/>
+<apex:pageMessages id="pgMsgs"/>
+<apex:form id="theForm">
+<c:ProcessingAjax />
+<apex:pageblock title="Reports" id="mainPageBlock">
+  <apex:outputPanel id="pageScripts">
+  <script>
+    
+  </script>
+  </apex:outputPanel>
+  
+  <!-- Action Status  -->   
+  <apex:actionStatus id="processingStatus" onstart="lockScreen(true)" onstop="lockScreen(false)">
+    <apex:facet name="start">
+      <c:ProcessingMsg id="processingMsgComp" />
+    </apex:facet>
+  </apex:actionStatus>
+  
+  <!-- Action Functions  -->   
+  <apex:actionFunction immediate="false" name="populateFilters" action="{!populateFilterColumns}"  rerender="pgMsgs,filterSection,scriptPanel" >
+  	<apex:param name="selectedReport" value="" assignTo="{!selectedReport}" />
+  </apex:actionFunction>
+  <apex:actionFunction name="fetchALMRepPerformance" action="{!doNothing}" oncomplete="printReport('{!ReportArguments}'); return false;" />
+  <apex:actionFunction name="printFunc" action="{!doNothing}" oncomplete="printReport('{!ReportArguments}'); return false;" />
+  <apex:actionFunction name="exportFunc" action="{!doNothing}" oncomplete="exportReport('{!ReportArguments}'); return false;" />
+  <apex:actionFunction name="getReport" action="{!getReportData}" reRender="pgMsgs,repData"/>
+  <apex:actionFunction name="sendEmailAction" status="processingStatus" action="{!sendEmail}" reRender="pgMsgs,emlmsgoverlay" >
+    <apex:param name="emailOption" value="" assignTo="{!emailToFlag}" />
+    <apex:param name="subject" value="" assignTo="{!emailSubject}" />
+    <apex:param name="msg" value="" assignTo="{!emailBody}" />
+    <apex:param name="toAdds" value="" assignTo="{!toAddresses}" />
+    <apex:param name="conIds" value="" assignTo="{!contactIds}" />
+  </apex:actionFunction>
+  
+  <!-- Report Section :: Display list of reports  -->   
+  <apex:pageBlockSection columns="1" Id="reportSection">
+<!--    <apex:pageBlockSectionItem Id="reportList">-->
+<!--        <apex:outputLabel value="Select Criteria"/>-->
+<!--        <apex:selectList id="selectReport" size="1" value="{!selectedReport}" onchange="populateFilters();"> -->
+<!--            <apex:selectOptions value="{!reportList}"/>-->
+<!--        </apex:selectList> -->
+<!--    </apex:pageBlockSectionItem>-->
+     <apex:pageBlockSectionItem Id="campaignList">
+        <apex:outputLabel value="Campaign Number"/>
+     	<apex:selectList id="selectCampaign" size="1" value="{!salesLeaderDTO.selectedCampaign}"> 
+     		<apex:selectOptions value="{!salesLeaderDTO.campaignList}"/>
+     	</apex:selectList>
+     </apex:pageBlockSectionItem>
+  </apex:pageblockSection>
+  
+  <!-- Report Filter Section :: Display list of filter columns  -->
+  <apex:outputPanel id="filterSection" rendered="{!salesLeaderDTO.showFilters}" >
+    <c:ReportFilters reportFilters="{!salesLeaderDTO.filters}" currentMarket="{!salesLeaderDTO.market}" 
+    reportList="{!reportList}" selectedReport="{!selectedReport}" id="filterComponent"/>
+  </apex:outputPanel>
+  
+   <!-- Report Buttons :: Display list of report buttons -->
+  <apex:pageBlockButtons location="top" >
+    <apex:commandButton value="View"  status="processingStatus" action="{!getReportData}" Id="buttonItem1" rerender="pgMsgs,repData" onclick="hideFilterSection();" />
+    <c:ReportPageButtons displayPrintButton="{!isPrintEnabled}" displayEmailButton="{!isEmailEnabled}" displayExportButton="{!isExportEnabled}" />
+  </apex:pageBlockButtons>      
+</apex:pageblock>
+
+  <!-- JQGRID showing Report Data -->
+  <apex:outputPanel id="repData">
+    <c:SLJQGridComponent reportId="{!reportId}" filterLogic="{!salesLeaderDTO.filterLogic}" 
+                       filters="{!salesLeaderDTO.filters}" displayCheckboxes="{!isEmailEnabled}" 
+                       noOfColumnsToFreeze="{!columnsToFreeze}"/>                      
+  </apex:outputPanel>
+  
+  <apex:outputPanel id="emailPanel">
+    <div id="bckPanel" class="popupHidden"></div>
+    <div id="popupPanel" class="popupHidden" >
+        <c:EmailMessageComponent id="emlmsgoverlay" />
+    </div>
+  </apex:outputPanel>  
+  <apex:outputPanel Id="scriptPanel">
+  	<script>
+  		function downloadReport(params, querystring) {
+	      try{              
+	        //Determine reportId
+	        var reportId = '{!selectedReport}';
+	     
+	        //prepare URL
+	        var redirectURL = '/'+reportId+'?';
+	        if(params != ''){
+	            redirectURL += params+'&';  
+	        }    
+	        redirectURL += querystring;
+	        
+	        //Download
+	        window.location =  redirectURL;   
+	       
+	      } catch(Err) {
+	         alert(Err.message);
+	      }
+    	}  
+  	</script>
+  </apex:outputPanel>
+</apex:form>
+</apex:page>

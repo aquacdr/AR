@@ -1,0 +1,301 @@
+<apex:page controller="GenerateMTRExcelController" showheader="false" cache="true" sidebar="false" standardStylesheets="false" 
+contenttype="{!IF($CurrentPage.parameters.print='1','','application/vnd.ms-excel#' &
+ReportDownloadName & '.xls')}">
+
+<apex:includeScript value="{!URLFOR($Resource.ALMPlus_Asset,'js/jquery-1.5.1.min.js')}"/>
+<apex:includeScript value="{!URLFOR($Resource.MTRUtility)}"/>
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+</head>
+<script type="text/javascript">
+
+
+ /* $(window).load(function() {
+    parent.printPage();
+    
+  });*/
+  function altRows(id){
+    
+    if(document.getElementsByTagName){  
+        
+        var table = document.getElementById(id);  
+        var rows = table.getElementsByTagName("tr"); 
+         
+        for(i = 0; i < rows.length; i++){          
+            if(i % 2 == 0){
+                rows[i].className = "evenrowcolor";
+            }else{
+                rows[i].className = "oddrowcolor";
+            }      
+        }
+    }
+  }
+  
+  function printSplit(id)
+  {
+      var tableArray = new Array();
+      var table1 = $('<table></table>');
+      tableArray[0] = table1;
+      
+      var tableHeaderArray = new Array();
+      var tableHeightArray = new Array();
+      
+      var th1 = $('<thead></thead>');
+      
+      var totWidth = 0;
+      var singleTableWidth = {!ReportWidth};
+      var singleTableHeight = {!ReportHeight};
+      var fixedCol = {!NoOfColumns};
+      
+      //insert headers to the tables
+      $('#printTable tr:lt(1)').each(function(i,el) {
+      
+         var thFixedCol = new Array();
+         tableHeightArray[i] = jQuery(el).height();
+        
+         $(this).find('td').each(function(index, tdData) {
+             var thtd = $('<td style="font-weight:bold;font-family:Arial;font-size:14px;text-align:center"></td>');<!--modified by Amartya on 1st Feb,2013-->
+             thtd.append(jQuery(tdData).html());
+             
+             
+             //put first columns in fixed col
+             if(index < fixedCol)
+             {
+                thFixedCol[index] = thtd.clone();
+             }
+             
+             totWidth += jQuery(tdData).width();
+             if(totWidth > singleTableWidth)
+             {
+                 totWidth = jQuery(tdData).width();
+                 var tableSize = tableArray.length;
+                 tableHeaderArray[tableSize-1] = th1.clone();
+                 tableArray[tableSize-1] = tableArray[tableSize-1].append(th1); 
+                 
+                 var newTable = $('<table></table>');
+                 tableArray[tableSize] = newTable;
+                 
+                 th1 = $('<thead></thead>');
+                 for(var i=0; i< fixedCol; i++)
+                 {
+                    th1.append(thFixedCol[i].clone());
+                 }
+             }
+             
+             th1.append(thtd);
+             
+         });
+      });
+      
+      var tableSize = tableArray.length;
+      tableHeaderArray[tableSize-1] = th1.clone();
+      tableArray[tableSize-1] = tableArray[tableSize-1].append(th1);
+      
+      
+      //insert body to the tables
+      $('#printTable tr:gt(0)').each(function(rowIndex, trData) {
+         var tr1 = $('<tr></tr>');
+         var tableIndex = 0;
+         var totRowWidth = 0;
+         
+         var trFixedCol = new Array();
+         var trFixedColWidth = new Array();
+         tableHeightArray[rowIndex+1] = jQuery(trData).height();
+         
+         $(this).find('td').each(function(index, tdData) {
+             trtd = $('<td></td>');<!-- modified by Samudra on Feb 1,2013-->
+             trtd.append(jQuery(tdData).html());
+             trtd.attr('style', jQuery(tdData).attr('style'));   
+             
+             //put first columns in fixed col
+             if(index < fixedCol)
+             {
+                trFixedCol[index] = trtd.clone();
+                trFixedColWidth[index] = jQuery(tdData).width();
+             }
+             
+             totRowWidth += jQuery(tdData).width();
+             if(totRowWidth > singleTableWidth)
+             {
+                 totRowWidth = jQuery(tdData).width();
+                 tableArray[tableIndex] = tableArray[tableIndex].append(tr1);
+                 
+                 tableIndex++;
+                 
+                 tr1 = $('<tr></tr>');
+                 for(var i=0; i< fixedCol; i++)
+                 {
+                    tr1.append(trFixedCol[i].clone());
+                    //totRowWidth += trFixedColWidth[i];
+                 }
+             }
+             
+             tr1.append(trtd);
+             
+         });
+         
+         tableArray[tableIndex] = tableArray[tableIndex].append(tr1);
+      });
+
+      var splitTableArray = new Array();
+      var splitTableIndex = 0;
+      $.each(
+        tableArray,
+        function(tableIndex, thisTable){
+            
+            //$('#tempPrintTable').append(tableHeaderArray[tableIndex].html());
+            $('#tempPrintTable').append(thisTable.html());
+            
+            var heightTable = 0;
+            var tableHeadHeight = 0;
+            if(tableIndex == 0)
+                heightTable = 100;
+            
+            $('#tempPrintTable').find('thead').each(function(index, thData) {
+                tableHeadHeight = jQuery(thData).height();
+            });
+            heightTable += tableHeadHeight;
+            
+            var splitTable = $('<table></table>');
+            //splitTable.append(tableHeaderArray[tableIndex].html());
+            
+            $('#tempPrintTable').find('tr').each(function(index, trData) {
+                var trSplitTable = $(this).clone();
+                
+                heightTable += jQuery(trData).height();
+                
+                if(heightTable > singleTableHeight)
+                 {
+                     heightTable = tableHeadHeight;
+                     heightTable += jQuery(trData).height();
+                     
+                     splitTableArray[splitTableIndex] = splitTable;
+                     splitTableIndex++;
+                     
+                     splitTable = $('<table></table>');
+                     splitTable.append(tableHeaderArray[tableIndex].html());
+                 }
+                 
+                 splitTable.append(trSplitTable);
+            });
+            
+            splitTableArray[splitTableIndex] = splitTable;
+            splitTableIndex++;
+            
+            jQuery('#tempPrintTable').empty();
+        }
+      );
+      
+      jQuery('#printTable').empty();
+      var tableSize = splitTableArray.length;
+      var div1 = $('<div></div>');
+      for(i = 0; i<tableSize; i++)
+      {
+        div1.append(splitTableArray[i]);
+        jQuery('#tableDiv1').append(div1);
+        
+        div1 = $('<div></div>');
+        $(div1).attr('style', 'page-break-before: always');
+      }
+      
+  }
+
+  /*window.onload=function(){
+    altRows('printTable');
+    printSplit('printTable');
+  }*/
+
+jQuery(document).ready(function() { 
+//    parent.printPage();
+//alert('In here...');
+    
+      //altRows('printTable');
+    printSplit('printTable');
+    parent.printPage();
+  });
+
+  
+</script>
+
+
+
+<style type="text/css">
+
+  /*.darkborder {
+        border: 1px solid #E0E0E0; <!--Commented by Samudra on 15th Jan,2013-->
+        border-collapse:collapse; 
+    }
+  */  
+   /* table
+    {
+        border-collapse:collapse;<!--lines 14 to 21 Added by Samudra on 15th Jan,2013-->
+    }
+    table,th,tr,td
+    {
+        border: 1px solid black;
+    }*/
+    
+    #evenrowcolor
+    {
+        background-color:#F6F5F5;
+    }
+    #oddrowcolor
+    {
+        background-color:#FFFFFF;
+    }
+   
+   
+   @media print {
+       thead {display: table-header-group;}
+    }
+</style>
+    
+   <!-- <apex:form >-->
+
+   <!-- <div align='center'> 
+        <b>{!ReportDownloadName}</b>
+    </div>
+    <br/>{!doCharacterEncoding}-->
+    
+    <apex:outputPanel rendered="{$CurrentPage.parameters.print='1'}">
+    <div width="100%" id="tableDiv1"/>
+    
+    <table cellspacing="0" cellpadding="0" border="0" id="tempPrintTable"/>
+    </apex:outputPanel>
+    <table cellspacing="0" cellpadding="0" border="0" id="printTable" width="100%"> <!--added by Samudra on 9th Jan-->                        
+        <thead>                  
+            <tr style="height:20px">
+               <apex:repeat value="{!ColumnOrderList}" var="columnOrder">
+                    <td align="center" class="{!IF($CurrentPage.parameters.print='1', 'darkborder', '')}" style="font-family:Calibri;font-size:15px;font-weight: bold;">{!columnOrder}</td>
+                </apex:repeat>  
+            </tr>
+        </thead>    
+            <tbody>
+            <apex:variable var="call" value="{!1}" />
+            <apex:repeat value="{!GenealogyWrapperList}" var="genealogyW">    
+                <tr>
+                    <apex:repeat value="{!CASE(genealogyW.RowType, 'Team', TeamPrintColumnList, 'Personal', PersonalPrintColumnList, 'Merged', MergePrintColumnList, 'Branch', BranchPrintColumnList, MergePrintColumnList)}" var="printColumn">
+                        
+                        <apex:variable var="varColumnData" value="{!genealogyW[printColumn.ColumnValue]}"></apex:variable>
+                        
+                        <apex:outputPanel rendered="{!(printColumn.ColumnInfo.ColumnType != 'Number' && printColumn.ColumnInfo.ColumnType != 'Currency')}">
+                            <td align="left" style="font-family:Calibri;font-size:14px"><!--added by Samudra on 17th Jan-->
+                                <c:MTRPrintCell id="PrintCell" RowType="{!genealogyW.RowType}"  Genealogy="{!genealogyW}" PrintColumn="{!printColumn}" ColumnData="{!varColumnData}" />
+                            </td>
+                        </apex:outputPanel>
+                        
+                        <apex:outputPanel rendered="{!NOT(printColumn.IsRuleException) && (printColumn.ColumnInfo.ColumnType == 'Number' || printColumn.ColumnInfo.ColumnType == 'Currency')}">
+                            <td align="right" style="font-family:Calibri;font-size:14px">
+                                <c:MTRPrintCell id="PrintCellText" RowType="{!genealogyW.RowType}"  Genealogy="{!genealogyW}" PrintColumn="{!printColumn}" ColumnData="{!varColumnData}" />
+                            </td>
+                        </apex:outputPanel>
+                        
+                   </apex:repeat>
+               </tr>
+               <apex:variable var="call" value="{!call+1}"/>
+            </apex:repeat>
+        </tbody>
+    </table>
+
+  <!--  </apex:form>-->
+</apex:page>

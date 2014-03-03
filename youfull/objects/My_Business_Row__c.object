@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableEnhancedLookup>false</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>false</enableReports>
+    <fields>
+        <fullName>CC_1nd_Gen_Cnt__c</fullName>
+        <externalId>false</externalId>
+        <label>CC 1nd Gen Count</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CC_1st_Gen_Amt__c</fullName>
+        <externalId>false</externalId>
+        <label>CC 1st Gen Amt</label>
+        <precision>16</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CC_1st_Gen_Txt__c</fullName>
+        <externalId>false</externalId>
+        <label>CC 1st Gen Txt</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CC_2nd_Gen_Amt__c</fullName>
+        <externalId>false</externalId>
+        <label>CC 2nd Gen Amt</label>
+        <precision>16</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CC_2nd_Gen_Cnt__c</fullName>
+        <externalId>false</externalId>
+        <label>CC 2nd Gen Count</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CC_2nd_Gen_Txt__c</fullName>
+        <externalId>false</externalId>
+        <label>CC 2nd Gen Txt</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CC_3rd_Gen_Amt__c</fullName>
+        <externalId>false</externalId>
+        <label>CC 3rd Gen Amt</label>
+        <precision>16</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CC_3rd_Gen_Cnt__c</fullName>
+        <externalId>false</externalId>
+        <label>CC 3rd Gen Count</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CC_3rd_Gen_Txt__c</fullName>
+        <externalId>false</externalId>
+        <label>CC 3rd Gen Txt</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CC_Amt__c</fullName>
+        <externalId>false</externalId>
+        <label>CC Amt</label>
+        <precision>15</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CC_Cnt__c</fullName>
+        <externalId>false</externalId>
+        <label>CC Count</label>
+        <precision>16</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CC_Date__c</fullName>
+        <externalId>false</externalId>
+        <label>CC Date</label>
+        <required>false</required>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>CC_Txt__c</fullName>
+        <externalId>false</externalId>
+        <label>CC Txt</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Data_Type__c</fullName>
+        <externalId>false</externalId>
+        <label>Data Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Currency</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Number</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Text</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Is_Market_Tag__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Is Market Tag</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Is_Title_Tag__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Is Title Tag</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>NC_Amt__c</fullName>
+        <externalId>false</externalId>
+        <label>NC Amt</label>
+        <precision>16</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NC_Cnt__c</fullName>
+        <externalId>false</externalId>
+        <label>NC Count</label>
+        <precision>16</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NC_Txt__c</fullName>
+        <externalId>false</externalId>
+        <label>NC Txt</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Odd_Row__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Odd Row</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Override_Label__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Override Label</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>PC_1st_Gen_Amt__c</fullName>
+        <externalId>false</externalId>
+        <label>PC_1st_Gen_Amt</label>
+        <precision>15</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PC_2nd_Gen_Amt__c</fullName>
+        <externalId>false</externalId>
+        <label>PC_2nd_Gen_Amt</label>
+        <precision>15</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PC_3rd_Gen_Amt__c</fullName>
+        <externalId>false</externalId>
+        <label>PC_3rd_Gen_Amt</label>
+        <precision>15</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PC_Amt__c</fullName>
+        <externalId>false</externalId>
+        <label>PC Amt</label>
+        <precision>16</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PC_Cnt__c</fullName>
+        <externalId>false</externalId>
+        <label>PC Count</label>
+        <precision>16</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PC_Txt__c</fullName>
+        <externalId>false</externalId>
+        <label>PC Txt</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PC_Up_Down_Ind__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( CC_Amt__c &gt; PC_Amt__c,&apos;UP&apos;,&apos;DOWN&apos;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>PC Up Down Ind</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Row_Label__c</fullName>
+        <externalId>false</externalId>
+        <label>Row Label</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Row_Nbr__c</fullName>
+        <externalId>false</externalId>
+        <label>Row Nbr</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SPPY_Amt__c</fullName>
+        <externalId>false</externalId>
+        <label>SPPY Amt</label>
+        <precision>16</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SPPY_Cnt__c</fullName>
+        <externalId>false</externalId>
+        <label>SPPY Count</label>
+        <precision>16</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SPPY_Txt__c</fullName>
+        <externalId>false</externalId>
+        <label>SPPY Txt</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SPPY_Up_Down_Ind__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF( CC_Amt__c &gt; SPPY_Amt__c,&apos;UP&apos;,&apos;DOWN&apos;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>SPPY Up Down Ind</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>My Business Row</label>
+    <listViews>
+        <fullName>All</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <nameField>
+        <displayFormat>MBR-{0000000}</displayFormat>
+        <label>My Business Row Id</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>My Business Rows</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>Private</sharingModel>
+</CustomObject>

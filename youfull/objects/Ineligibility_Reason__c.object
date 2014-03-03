@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Stores mapping of an Ineligibility Reason code to its description for a given Market in given language</description>
+    <enableActivities>false</enableActivities>
+    <enableEnhancedLookup>false</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <fields>
+        <fullName>Ineligibility_Code__c</fullName>
+        <externalId>false</externalId>
+        <label>Ineligibility Code</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Ineligibility_Reason_In_Eng__c</fullName>
+        <description>Reason in English</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Reason in English</inlineHelpText>
+        <label>Ineligibility Reason In Eng</label>
+        <length>32768</length>
+        <type>LongTextArea</type>
+        <visibleLines>5</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Ineligibility_Reason_Key__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <description>The field is used by CDW for data import</description>
+        <externalId>true</externalId>
+        <inlineHelpText>The field is used by CDW for data import</inlineHelpText>
+        <label>Ineligibility Reason Key</label>
+        <length>255</length>
+        <required>true</required>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>Ineligibility_Reason__c</fullName>
+        <externalId>false</externalId>
+        <label>Ineligibility Reason</label>
+        <length>32768</length>
+        <type>LongTextArea</type>
+        <visibleLines>5</visibleLines>
+    </fields>
+    <fields>
+        <fullName>LANG_CD__c</fullName>
+        <description>Language Code</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Language Code</inlineHelpText>
+        <label>LANG_CD</label>
+        <length>10</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_ID__c</fullName>
+        <externalId>true</externalId>
+        <label>MRKT_ID</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Market__c</fullName>
+        <description>Master-detail lookup to Market</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Master-detail lookup to Market</inlineHelpText>
+        <label>Market</label>
+        <referenceTo>Market__c</referenceTo>
+        <relationshipLabel>Ineligibility Reasons</relationshipLabel>
+        <relationshipName>Ineligibility_Reasons</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>true</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>Order__c</fullName>
+        <description>Relative order in which the reason will be displayed to users</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Relative order in which the reason will be displayed to users</inlineHelpText>
+        <label>Order</label>
+        <precision>6</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Short_Desc_In_Eng__c</fullName>
+        <description>Short Description of the reason in English</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Short Description of the reason in English</inlineHelpText>
+        <label>Short Desc In Eng</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <label>Ineligibility Reason</label>
+    <nameField>
+        <displayFormat>IR-{0}</displayFormat>
+        <label>Ineligibility Reason Name</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Ineligibility Reasons</pluralLabel>
+    <searchLayouts>
+        <customTabListAdditionalFields>Market__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>MRKT_ID__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>LANG_CD__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Ineligibility_Code__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Ineligibility_Reason_Key__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Ineligibility_Reason__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Ineligibility_Reason_In_Eng__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Short_Desc_In_Eng__c</customTabListAdditionalFields>
+        <customTabListAdditionalFields>Order__c</customTabListAdditionalFields>
+        <excludedStandardButtons>New</excludedStandardButtons>
+        <excludedStandardButtons>Accept</excludedStandardButtons>
+        <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
+        <lookupDialogsAdditionalFields>Market__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>MRKT_ID__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>LANG_CD__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Ineligibility_Code__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Ineligibility_Reason_Key__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Ineligibility_Reason__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Ineligibility_Reason_In_Eng__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Short_Desc_In_Eng__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Order__c</lookupDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Market__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>MRKT_ID__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>LANG_CD__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Ineligibility_Code__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Ineligibility_Reason_Key__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Ineligibility_Reason__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Ineligibility_Reason_In_Eng__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Short_Desc_In_Eng__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Order__c</lookupPhoneDialogsAdditionalFields>
+        <searchFilterFields>NAME</searchFilterFields>
+        <searchFilterFields>Market__c</searchFilterFields>
+        <searchFilterFields>MRKT_ID__c</searchFilterFields>
+        <searchFilterFields>LANG_CD__c</searchFilterFields>
+        <searchFilterFields>Ineligibility_Code__c</searchFilterFields>
+        <searchFilterFields>Ineligibility_Reason_Key__c</searchFilterFields>
+        <searchFilterFields>Short_Desc_In_Eng__c</searchFilterFields>
+        <searchFilterFields>Order__c</searchFilterFields>
+        <searchFilterFields>CREATED_DATE</searchFilterFields>
+        <searchFilterFields>LAST_UPDATE</searchFilterFields>
+        <searchResultsAdditionalFields>Market__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>MRKT_ID__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>LANG_CD__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Ineligibility_Code__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Ineligibility_Reason_Key__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Ineligibility_Reason__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Ineligibility_Reason_In_Eng__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Short_Desc_In_Eng__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Order__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ControlledByParent</sharingModel>
+    <startsWith>Vowel</startsWith>
+</CustomObject>

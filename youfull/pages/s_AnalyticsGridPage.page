@@ -1,0 +1,233 @@
+<apex:page sidebar="false" showHeader="false" standardStylesheets="false" >
+    <head>
+        <style>
+            .chartHidden{
+                display: none;
+            }
+            .chartShown{
+                display: block;
+            }
+            
+            .ColVis_Button{
+                height: 100%;
+                min-height: 30px;
+            }
+            
+            th {
+                padding: 0!important;
+            }
+             
+            th > div {
+                margin-left: 5px;
+                margin-right: 10px;
+            }
+            
+            img{
+                max-width:none;
+            }
+            
+            table.dataTable {
+                max-width: none;
+            }
+            
+            table.dataTable tr.odd td.sorting_1{
+                background-color:#FFFFFF;
+            }
+            
+            table.dataTable tr.odd{
+                background-color:#FFFFFF;
+            }
+            
+            table.dataTable tr.even{
+                background-color:#FFFFFF;
+            }
+            
+            table.dataTable tr.even td.sorting_1{
+                background-color:#FFFFFF;
+            }
+            
+            div.dataTables_length select {
+                width: 70px;
+                height: 27px;
+            }
+            
+            th.sorting{
+                color: #FFF;
+                background-color: #888;
+                border-right: 2px solid #DDD;
+            }
+            
+            .sorting_desc, .sorting_asc{
+                color: #FFF;
+                background-color: #555;
+                border-right: 2px solid #DDD;
+            }
+            
+            .dataTables_wrapper{
+                clear: right;
+            }
+            
+            #reportTable_Div{
+                border-bottom: 1px solid #888;
+            }
+            
+            #reportTable{
+                
+            }
+            
+        </style>
+        <apex:includeScript value="{!$Resource.s_jQuery}" />
+        <apex:includeScript value="{!$Resource.s_ForceTK}"/>
+        <apex:includeScript value="https://www.google.com/jsapi" />
+        
+        <apex:includeScript value="{!$Resource.s_dataTable}/js/jquery.dataTables.min.js"/>
+        <apex:stylesheet value="{!$Resource.s_dataTable}/css/jquery.dataTables.css"/>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+        <apex:includeScript value="{!$Resource.s_dataTable}/js/ColVis.js"/>
+        <apex:includeScript value="{!$Resource.s_dataTable}/js/ColReorderWithResize.js"/>
+        <apex:includeScript value="{!$Resource.s_dataTable}/js/FixedColumns.js"/>
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css"/>
+        <apex:stylesheet value="{!$Resource.s_dataTable}/css/ColVis.css"/>
+        <apex:includeScript value="{!$Resource.s_select2}/select2.js"/>
+        <apex:stylesheet value="{!$Resource.s_select2}/select2.css"/>
+    </head>
+    
+    
+    <script>
+        var client;
+        $(function(){
+            client = new forcetk.Client();
+            client.setSessionToken('{!$Api.Session_ID}');
+            
+            client.ajax("/v29.0/analytics/reports", function(response){
+                $("#output").text(JSON.stringify(response, null, '    '));
+                $("#statusText").hide();
+                createReportList(response);
+                
+            },function(jqXHR, textStatus, errorThrown){
+                $("#statusText").text("Error: "+jqXHR.status+" "+jqXHR.statusText);
+                $("#output").text(jqXHR.responseText);
+            });
+            
+            $('select').select2({
+                width: 200
+            });
+        });
+        
+        function createReportList(report){
+            $.each(report, function(index, rp) {
+                $("#selectReport").append('<option value="'+rp.id+'">'+rp.name+'</option>');
+            });
+        }
+        
+        function readReport(reportId){
+            $("#statusText").show();
+            $('#reportTable_Div').empty();
+            if(reportId != ''){
+                $('#reportTable_Div').html('<table id="reportTable" class="table-striped"></table>');
+                client.ajax("/v29.0/analytics/reports/"+reportId+"?includeDetails=true", function(response){
+                    report = response;
+                    
+                    //$("#output").text(JSON.stringify(report, null, '    '));
+                    
+                    if(report.reportMetadata.reportFormat == 'TABULAR'){
+                        $("#statusText").hide();
+                        createTable(report);
+                    }else{
+                        $("#statusText").text(report.reportMetadata.reportFormat+' type reports not supported')
+                        //alert(report.reportMetadata.reportFormat+' type reports not supported')
+                    }
+                    
+                }, function(jqXHR, textStatus, errorThrown){
+                    $("#statusText").text("Error: "+jqXHR.status+" "+jqXHR.statusText);
+                    $("#output").text(jqXHR.responseText);
+                });
+            }
+        }
+        
+        function createTable(report){
+            var tableArray = new Array();
+            var rowArray = new Array();
+            var columnArray = new Array();
+            
+            var colData;
+            var tableOfReport;
+            
+            $.each(report.factMap["T!T"]["rows"], function(index, row){
+                 rowArray = new Array();
+                 $.each(row.dataCells, function(i, cell){
+                     rowArray.push(cell.label); 
+                 })
+                 tableArray.push(rowArray);
+            });
+            
+            $.each(report.reportMetadata.detailColumns, function(index, col){
+                colData = {"sTitle" : report.reportExtendedMetadata.detailColumnInfo[col].label};
+                columnArray.push(colData);
+            });
+            
+            
+            tableOfReport = $('#reportTable').dataTable( {
+                "bProcessing": true,
+                "aaData": tableArray,
+                "sScrollY": "300px",
+                "sScrollX": "100%",
+                "sScrollXInner": "150%",
+                "bScrollCollapse": true,
+                "bDestroy": true,
+                "aoColumns": columnArray,
+                "sDom": 'C<"clear">lfrtip',
+                "fnInitComplete": function() {
+                    this.fnAdjustColumnSizing(true);
+                }
+            });
+            
+            new FixedColumns( tableOfReport );
+            
+            $(window).bind('resize', function () {
+                try{
+                    tableOfReport.fnAdjustColumnSizing();
+                }catch(e){}
+            });
+            
+            $("th").each(function(){
+                $(this).html("<div>"+$(this).html()+"</div>");
+            });
+        }
+    </script>
+    
+    <nav class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Analytics API Grid</a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <div class="navbar-form navbar-right" role="search">
+                <div class="form-group">
+                    <select id="selectReport" onchange="readReport(this.value)">
+                        <option value="">Select</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container">
+        
+        <h2 id="statusText">Loading data...</h2>
+        <div id="reportTable_Div">
+            
+        </div>
+        
+        <!-- 
+        <h1>Raw Response</h1>
+        <pre id="output"></pre>
+        -->
+    </div>
+    
+</apex:page>

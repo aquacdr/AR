@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <fields>
+        <fullName>Geo_Level_1__c</fullName>
+        <externalId>false</externalId>
+        <label>Geo Level 1</label>
+        <referenceTo>Geo_Level_1__c</referenceTo>
+        <relationshipLabel>Geo Level 2</relationshipLabel>
+        <relationshipName>Geo_Level_2</relationshipName>
+        <required>false</required>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Geo_Level_2_Key__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <externalId>true</externalId>
+        <label>Geo Level 2 Key</label>
+        <length>255</length>
+        <required>true</required>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_ID__c</fullName>
+        <externalId>true</externalId>
+        <label>MRKT_ID</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Geo Level 2</label>
+    <nameField>
+        <label>Geo Level 2 Name</label>
+        <type>Text</type>
+    </nameField>
+    <namedFilters>
+        <fullName>Lead_00NF0000008gzQ0MAI</fullName>
+        <active>true</active>
+        <field>Lead.Geo_Level_2__c</field>
+        <filterItems>
+            <field>$Source.Geo_Level_1__c</field>
+            <operation>equals</operation>
+            <valueField>Geo_Level_2__c.Geo_Level_1__r.Id</valueField>
+        </filterItems>
+        <isOptional>false</isOptional>
+        <name>Lead_Area</name>
+        <sourceObject>Lead</sourceObject>
+    </namedFilters>
+    <pluralLabel>Geo Level 2</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>Private</sharingModel>
+</CustomObject>

@@ -1,0 +1,165 @@
+<apex:page standardController="Market_Content__c" extensions="MarketContentController" 
+            action="{!viewContent}" showHeader="false" sidebar="false" standardStylesheets="false">
+    <apex:outputPanel rendered="{!mktContent.Type__c='Splash Page'}">
+    	<title>{!$Label.HOME_PAGE_TITLE}</title>
+        <apex:stylesheet value="{!URLFOR($Resource.ALM_Assetsv2,'css/alm_2.css')}"/>
+        <apex:includeScript value="{!URLFOR($Resource.ALMPlus_Asset,'js/jquery-1.5.1.min.js')}"/>
+    </apex:outputPanel>
+    <style type="text/css">
+      .info_msgs_almp_err{
+        background-image:url({!URLFOR($Resource.ALMPlus_Asset,'images/error_img.png')});
+        background-repeat:no-repeat;
+        background-position:top left;
+        padding: 3px 0px 10px 20px;
+        font-family:arial;
+        font-size:12px;
+        font-weight:normal;
+        display:block;
+        white-space:normal;
+        text-align:left;
+    }
+    .popup_ccntr {
+        width: 880px;
+    }
+    .pop_content{
+        padding: 82px 9px 30px;
+        width: 860px;
+    }
+    .shdow_wrpr{
+        border-width: 0;
+        padding: 0 25px;   
+        background: none;   
+    }
+    .gry_nfo_bx{
+        padding: 25px 10px 10px;
+        width: 91%;
+    }
+    .pop_content .big_pnk_hdr {
+        width: 880px;
+    }
+    .hdrs_help{
+        padding-left: 25px;
+    }
+    </style>
+        <script type="text/javascript">
+            var ALM_PAGE_NAME='';
+            var omarr = ['Help', 'Splash Page', 'Site Maintenance'];
+            if(eval('{!NOT(isError)}') && jQuery.inArray('{!$CurrentPage.Parameters.type}', omarr)>-1){
+                ALM_PAGE_NAME="{!OmniturePageName}";
+            }
+        </script>
+        <apex:outputPanel rendered="{!$CurrentPage.Parameters.type=='Help'}">
+        <script type="text/javascript">
+            jQuery(document).ready(function(){
+                    jQuery('.scroll-pane').jScrollPane();
+               });
+        </script>
+        <div id="outer" class="popup_wrpr">
+                <div class="popup_ccntr">
+                   <a href="#" class="close_btn" onClick="showHelp();" id="help"></a>
+                    <div class="pop_content" style="padding-top:100px;">
+                        <div class="big_pnk_hdr" style="width:875px">
+                            <h1 class="left mar_rht_10">{!$Label.Help_Center}</h1>                        
+                                <ul class="icon_lnks">                            
+                                    <li><!-- Changed by Snehashis on 040713 for hidine Help link a href="#" class="pnk_print" onClick="window.open('{!printpageUrl}');"></a--></li>
+                                    <!--<li><apex:commandLink id="prt" target="_blank" styleClass="pnk_print" action="{!printRedirect}"></apex:commandLink></li>-->
+                                </ul>    
+                        </div>
+                        <div class="cntr">
+                            <h2 class="popup_hdrs hdrs_help left" style="{!IF(isError,'display:none','display:block')}">{!mktContent.Name}: </h2>
+                            <span class="popup_hdrs_help left"> {!$Label.About_this_page}</span>
+                        </div>
+                       <div class="shdow_wrpr">
+                           <div class="gry_nfo_bx">
+                           <div class="scroll-pane" style="height: 372px; overflow: auto;">
+                                <div style="display:inline-block;">
+                              <div class="left help_text_content" style="min-height:350px;"> 
+        <TABLE width="100%">
+            <tr>
+                <td>
+                      <table width="100%">
+                        <tr>
+                            <td>
+                                <!-- Changed by Snehashis on 081613 for hidine Help link apex:outputText style="color:red;" value="We are currently updating this page.  Our apologies for the inconvenience." escape="false" rendered="{!AND(NOT(isError),mktContent.Content_Type__c=='HTML')}"/-->
+                                 <apex:outputText value="{!mktContent.Content__c}" escape="false" rendered="{!AND(NOT(isError),mktContent.Content_Type__c=='HTML')}"/>
+                                <apex:outputPanel rendered="{!isError}">
+                                    <div id="msg_box" class="msg_box">
+                                        <div id="msg_box_inner" class="info_msgs_almp_err" style="color:red;font-weight:bold;">
+                                        &nbsp;&nbsp;{!$Label.Market_Content_Error}
+                                        </div>
+                                    </div>
+                                </apex:outputPanel>
+                            </td>                    
+                        </tr>
+                        </table>
+                </td>
+            </tr>
+        </TABLE>
+        <p class="help_text_italic" style="display:none">{!$Label.How_to_use}</p>
+                                </div> 
+                                </div>
+                               
+                                </div>
+                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </apex:outputPanel>
+          
+          <!-- For Maintenance, Security & Privacy and Condition of Use -->
+          
+          <apex:outputPanel rendered="{!AND($CurrentPage.Parameters.type!='Help',$CurrentPage.Parameters.type!='Splash Page')}">
+           <TABLE width="100%">
+            <tr>
+                <td>
+                      <table width="100%">
+                        <tr>
+                            <td>
+                                <apex:outputText value="{!mktContent.Content__c}" escape="false" rendered="{!AND(NOT(isError),mktContent.Content_Type__c=='HTML')}"/>
+                                <apex:outputPanel rendered="{!isError}">
+                                    <div id="msg_box" class="msg_box">
+                                        <div id="msg_box_inner" class="info_msgs_almp_err" style="color:red;font-weight:bold;">
+                                        &nbsp;&nbsp;{!$Label.Market_Content_Error}
+                                        </div>
+                                    </div>
+                                </apex:outputPanel>
+                            </td>                    
+                        </tr>
+                        </table>
+                </td>
+            </tr>
+        </TABLE>
+         </apex:outputPanel>
+         <!-- For Splash Page -->
+          <apex:outputPanel rendered="{!$CurrentPage.Parameters.type='Splash Page'}"> 
+          <apex:form > 
+           <TABLE width="100%">
+            <tr>
+                <td>
+                      <table width="100%">
+                        <tr>
+                            <td class="rep_detl_hdr" align="right" valign="middle">
+                                <apex:commandLink styleClass="alm_btn" value="{!$Label.Continue}" action="{!gotoHomeTab}" rendered="{!mktContent.Type__c='Splash Page'}"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <apex:outputText value="{!mktContent.Content__c}" escape="false" rendered="{!AND(NOT(isError),mktContent.Content_Type__c=='HTML')}"/>
+                                <apex:outputPanel rendered="{!isError}">
+                                    <div id="msg_box" class="msg_box">
+                                        <div id="msg_box_inner" class="info_msgs">
+                                        {!$Label.Market_Content_Error}
+                                        </div>
+                                    </div>
+                                </apex:outputPanel>
+                            </td>                    
+                        </tr>
+                        </table>
+                </td>
+            </tr>
+        </TABLE>
+        </apex:form>
+        </apex:outputPanel> 
+    <c:OmnitureWebTrack mktName="{!mktContent.Market__r.Name}" mktAcctKey="{!usr.MRKT_ID_ACCT_NR_KEY__c}" userType="{!usrProfile}" userTitle="{!usr.LDRSHP_TITL_LVL_NBR__c}"  rendered="{!globalConfig.Omniture_Tracking_Enabled__c}"/>
+</apex:page>

@@ -1,0 +1,2882 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableEnhancedLookup>false</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>true</enableHistory>
+    <enableReports>true</enableReports>
+    <fields>
+        <fullName>ACT_ACTN1__c</fullName>
+        <externalId>false</externalId>
+        <label>Activity - Action 1</label>
+        <length>500</length>
+        <trackHistory>false</trackHistory>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>ACT_ACTN2__c</fullName>
+        <externalId>false</externalId>
+        <label>Activity - Action 2</label>
+        <length>500</length>
+        <trackHistory>false</trackHistory>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>ACT_ACTN3__c</fullName>
+        <externalId>false</externalId>
+        <label>Activity - Action 3</label>
+        <length>500</length>
+        <trackHistory>false</trackHistory>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>AVG_GENRTN_1_ACT_PCT__c</fullName>
+        <description>This is used in G1 Active Representatives calculation</description>
+        <externalId>false</externalId>
+        <label>Average Activity Rate [%]</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_GENRTN_1_QPA_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Average Qualified Personal Appointment R</label>
+        <precision>15</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_GENRTN_1_RMVL_PCT__c</fullName>
+        <externalId>false</externalId>
+        <label>Average Removal Rate [%]</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_ORD_SIZE_AMT__c</fullName>
+        <externalId>false</externalId>
+        <label>Average Order Size</label>
+        <precision>15</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Acct_Nr__c</fullName>
+        <externalId>false</externalId>
+        <label>Acct_Nr</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ActiveRepCountCC_3__c</fullName>
+        <externalId>false</externalId>
+        <label>ActiveRepCountCC+3</label>
+        <precision>12</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ActiveRepCountCC_4__c</fullName>
+        <externalId>false</externalId>
+        <label>ActiveRepCountCC+4</label>
+        <precision>14</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ActiveRepCountCC_5__c</fullName>
+        <externalId>false</externalId>
+        <label>ActiveRepCountCC+5</label>
+        <precision>14</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ActiveRepCountCC_6__c</fullName>
+        <externalId>false</externalId>
+        <label>ActiveRepCountCC+6</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Average_Order_Size_Final__c</fullName>
+        <externalId>false</externalId>
+        <label>Average Order Size Final</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>BONUS_ERNGS_AMT__c</fullName>
+        <externalId>false</externalId>
+        <formula>( GENRTN_1_QPA_CNT__c *  Business_Plan_Parameter__r.QPA_BONUS_AMT__c ) + 
+(GENRTN_1_TITL_1_STF_CNT__c * Business_Plan_Parameter__r.LVL_1_PRMTN_BONUS_AMT__c) + 
+(GENRTN_1_TITL_2_STF_CNT__c * Business_Plan_Parameter__r.LVL_2_PRMTN_BONUS_AMT__c) + 
+(GENRTN_1_TITL_3_STF_CNT__c * Business_Plan_Parameter__r.LVL_3_PRMTN_BONUS_AMT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Bonus Earnings Current campaign</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>BPar_AVG_GENRTN_1_DISTR_SLS_PCT__c</fullName>
+        <externalId>false</externalId>
+        <label>BPar G1 Average Sales Distribution</label>
+        <precision>15</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>BPar_AVG_GENRTN_1_UNIT_COMM_PCT__c</fullName>
+        <externalId>false</externalId>
+        <label>BPar G1 Average Unit Commission Rates[%]</label>
+        <precision>15</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>BPar_AVG_GENRTN_2_DISTR_SLS_PCT__c</fullName>
+        <externalId>false</externalId>
+        <label>BPar G2 Average Sales Distribution [%]</label>
+        <precision>15</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>BPar_AVG_GENRTN_2_UNIT_COMM_PCT__c</fullName>
+        <externalId>false</externalId>
+        <label>BPar G2 Average Unit Commission Rates[%]</label>
+        <precision>15</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>BPar_AVG_GENRTN_3_DISTR_SLS_PCT__c</fullName>
+        <externalId>false</externalId>
+        <label>BPar G3 Average Sales Distribution [%]</label>
+        <precision>15</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>BPar_AVG_GENRTN_3_UNIT_COMM_PCT__c</fullName>
+        <externalId>false</externalId>
+        <label>BPar G3 Average Unit Commission Rates[%]</label>
+        <precision>15</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Business_Plan_Actual_SPPY__c</fullName>
+        <externalId>false</externalId>
+        <label>Business Plan Actual SPPY</label>
+        <referenceTo>Business_Plan_Actual_SPPY__c</referenceTo>
+        <relationshipLabel>Business Plans</relationshipLabel>
+        <relationshipName>Business_Plans1</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Business_Plan_Parameter__c</fullName>
+        <externalId>false</externalId>
+        <label>Business Plan Parameter</label>
+        <referenceTo>Business_Plan_Parameter__c</referenceTo>
+        <relationshipLabel>Business Plans</relationshipLabel>
+        <relationshipName>Business_Plans</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>CMPGN_NR__c</fullName>
+        <externalId>false</externalId>
+        <label>Creation Campaign</label>
+        <length>10</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Campaign_Numbers__c</fullName>
+        <externalId>false</externalId>
+        <label>Campaign Numbers</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Current_campaign__c</fullName>
+        <externalId>false</externalId>
+        <label>Current campaign</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>EXEC_ERNGS_AMT__c</fullName>
+        <externalId>false</externalId>
+        <formula>PREV_EXEC_ERNGS_AMT__c + 
+((GENRTN_1_TITL_3_STF_CNT__c *  Business_Plan_Parameter__r.AVG_EXEC_TUS__c  *  Business_Plan_Parameter__r.AVG_EXEC_COMMSN_PCT__c/100))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Executive Earning-Current Campign</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FLWUP_MTG_30__c</fullName>
+        <externalId>false</externalId>
+        <label>Follow Up Meetings - 30 days</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>FLWUP_MTG_60__c</fullName>
+        <externalId>false</externalId>
+        <label>Follow Up Meetings - 60 days</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>FLWUP_MTG_90__c</fullName>
+        <externalId>false</externalId>
+        <label>Follow Up Meetings - 90 days</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>G1_Average_Sales_Distribution_BPPar__c</fullName>
+        <externalId>false</externalId>
+        <label>G1 Average Sales Distribution [%] BPPar</label>
+        <precision>15</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>GENRTN_1_ACT_PCT__c</fullName>
+        <externalId>false</externalId>
+        <label>G1 Activity Rate</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>GENRTN_1_APPT_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Personal Appointments - Current Campaign</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>GENRTN_1_QPA_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>GENRTN_1_APPT_CNT__c * 
+(IF(AVG_GENRTN_1_QPA_CNT__c&gt;0,AVG_GENRTN_1_QPA_CNT__c/100,       
+ IF(Business_Plan_Parameter__r.AVG_PRSNL_QLFR_APPT_PCT__c&gt;0,Business_Plan_Parameter__r.AVG_PRSNL_QLFR_APPT_PCT__c/100,0)
+))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Qualified Persnl Appntmnts - Curr Camp</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>GENRTN_1_RMVL_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>PREV_GENRTN_1_STF_CNT__c*
+(IF(AVG_GENRTN_1_RMVL_PCT__c&gt;0, AVG_GENRTN_1_RMVL_PCT__c/100, 
+    IF(Business_Plan_Parameter__r.AVG_RMVL_PCT__c&gt;0,Business_Plan_Parameter__r.AVG_RMVL_PCT__c/100,0)
+))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>G1 Removals - Current campaign</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>GENRTN_1_STF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>PREV_GENRTN_1_STF_CNT__c+GENRTN_1_APPT_CNT__c  - GENRTN_1_RMVL_CNT__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>G1 Representative Count Current Campaign</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>GENRTN_1_TITL_1_STF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>New Gen1 Title1 Ledr Cnt(UL)-Curr Camp</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>GENRTN_1_TITL_2_STF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>New Gen1 Titl2 Ledr Cnt(AUL)-Curr Camp</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>GENRTN_1_TITL_3_STF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>New Gen1 Titl3 Ledr Cnt(EUL)-Curr Camp</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>GENRTN_1_TITL_STF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>PREV_GENRTN_1_TITL_STF_CNT__c + GENRTN_1_TITL_1_STF_CNT__c + GENRTN_1_TITL_2_STF_CNT__c + GENRTN_1_TITL_3_STF_CNT__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>G1 Sales Leaders (UL+) -Current campaign</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>GENTRTN_1_ACTV_REP_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>(PREV_GENRTN_1_STF_CNT__c +  GENRTN_1_APPT_CNT__c -  GENRTN_1_RMVL_CNT__c)*
+(IF(AVG_GENRTN_1_ACT_PCT__c&gt;0,AVG_GENRTN_1_ACT_PCT__c/100,
+IF( Business_Plan_Parameter__r.AVG_ACTVTY_PCT__c&gt;0,Business_Plan_Parameter__r.AVG_ACTVTY_PCT__c/100,0)
+ ))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>G1 Active Reps - Current campaign</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>GRP_UNIT_SLS__c</fullName>
+        <externalId>false</externalId>
+        <formula>PREV_GRP_UNIT_SLS_AMT__c - PREV_PRSNL_SLS_AMT__c + PRSNL_SLS_AMT__c + 
+( 
+(GENTRTN_1_ACTV_REP_CNT__c - PREV_GENTRTN_1_ACTV_REP_CNT__c) * 
+IF(AVG_ORD_SIZE_AMT__c&gt;0,AVG_ORD_SIZE_AMT__c, 
+IF(Business_Plan_Parameter__r.AVG_ORD_SIZE__c&gt;0,Business_Plan_Parameter__r.AVG_ORD_SIZE__c,0) 
+) 
+) + 
+(GENRTN_1_TITL_1_STF_CNT__c * Business_Plan_Parameter__r.AVG_LVL_1_ADDTNL_SLS__c) + 
+(GENRTN_1_TITL_2_STF_CNT__c * Business_Plan_Parameter__r.AVG_LVL_2_ADDTNL_SLS__c) + 
+(GENRTN_1_TITL_3_STF_CNT__c * Business_Plan_Parameter__r.AVG_LVL_3_ADDTNL_SLS__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>TUS - Current Campaign</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>IsDeleted__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>IsDeleted</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Is_BP_Saved__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Is BP Saved</label>
+        <trackHistory>false</trackHistory>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>Key_Learnings__c</fullName>
+        <externalId>false</externalId>
+        <label>Key Learnings</label>
+        <length>500</length>
+        <trackHistory>false</trackHistory>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>LDRSHP_TITL_ACTN1__c</fullName>
+        <externalId>false</externalId>
+        <label>Leadership Title Advancement - Action 1</label>
+        <length>500</length>
+        <trackHistory>false</trackHistory>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>LDRSHP_TITL_ACTN2__c</fullName>
+        <externalId>false</externalId>
+        <label>Leadership Title Advancement - Action 2</label>
+        <length>500</length>
+        <trackHistory>false</trackHistory>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>LDRSHP_TITL_ACTN3__c</fullName>
+        <externalId>false</externalId>
+        <label>Leadership Title Advancement - Action 3</label>
+        <length>500</length>
+        <trackHistory>false</trackHistory>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>LDRSHP_TITL_CND__c</fullName>
+        <externalId>false</externalId>
+        <label>Leadership Title Achievement Candidates</label>
+        <length>500</length>
+        <trackHistory>false</trackHistory>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>LDR_ERNGS_AMT__c</fullName>
+        <externalId>false</externalId>
+        <formula>(GRP_UNIT_SLS__c -  PRSNL_SLS_AMT__c) *
+( 
+  Unit_Earning_Multiplier__c 
+)/100</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Unit Earnings Current campaign</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Last_Updated__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Custom field for BP</inlineHelpText>
+        <label>Last Updated</label>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>LeaderEarningAmtCC_5__c</fullName>
+        <externalId>false</externalId>
+        <label>LeaderEarningAmtCC+5</label>
+        <precision>14</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>LeaderEarningAmtCC_6__c</fullName>
+        <externalId>false</externalId>
+        <label>LeaderEarningAmtCC+6</label>
+        <precision>14</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Long_Term_Dreams__c</fullName>
+        <externalId>false</externalId>
+        <label>Long Term Dreams</label>
+        <length>500</length>
+        <trackHistory>false</trackHistory>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Market_Id__c</fullName>
+        <externalId>false</externalId>
+        <label>Market Id</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Mrkt_Id_Acct_Nr_Key__c</fullName>
+        <description>Mrkt_Id_Acct_Nr_Key</description>
+        <externalId>true</externalId>
+        <inlineHelpText>Mrkt_Id_Acct_Nr_Key</inlineHelpText>
+        <label>Business Plan Key</label>
+        <length>50</length>
+        <required>true</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT1_BONUS_ERNGS_AMT__c</fullName>
+        <externalId>false</externalId>
+        <formula>( NEXT1_GENRTN_1_QPA_CNT__c *  Business_Plan_Parameter__r.QPA_BONUS_AMT__c) + 
+(NEXT1_GENRTN_1_TITL_1_STF_CNT__c * Business_Plan_Parameter__r.LVL_1_PRMTN_BONUS_AMT__c) + 
+(NEXT1_GENRTN_1_TITL_2_STF_CNT__c * Business_Plan_Parameter__r.LVL_2_PRMTN_BONUS_AMT__c) + 
+(NEXT1_GENRTN_1_TITL_3_STF_CNT__c * Business_Plan_Parameter__r.LVL_3_PRMTN_BONUS_AMT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Bonus Earnings Current campaign +1</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT1_EXEC_ERNGS_AMT__c</fullName>
+        <externalId>false</externalId>
+        <formula>EXEC_ERNGS_AMT__c + 
+((NEXT1_GENRTN_1_TITL_3_STF_CNT__c *  Business_Plan_Parameter__r.AVG_EXEC_TUS__c  *  Business_Plan_Parameter__r.AVG_EXEC_COMMSN_PCT__c/100))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Executive Earning-Current Campaign +1</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT1_GENRTN_1_APPT_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Persnl Appntmnts-Current Campaign+1</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT1_GENRTN_1_QPA_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>NEXT1_GENRTN_1_APPT_CNT__c* 
+(IF(AVG_GENRTN_1_QPA_CNT__c&gt;0,AVG_GENRTN_1_QPA_CNT__c/100,       
+ IF(Business_Plan_Parameter__r.AVG_PRSNL_QLFR_APPT_PCT__c&gt;0,Business_Plan_Parameter__r.AVG_PRSNL_QLFR_APPT_PCT__c/100,0)
+))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Qualified Persnl Appntmnts - Curr camp+1</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT1_GENRTN_1_RMVL_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>GENRTN_1_STF_CNT__c *
+(IF(AVG_GENRTN_1_RMVL_PCT__c&gt;0, AVG_GENRTN_1_RMVL_PCT__c/100, 
+    IF(Business_Plan_Parameter__r.AVG_RMVL_PCT__c&gt;0,Business_Plan_Parameter__r.AVG_RMVL_PCT__c/100,0)
+))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>G1 Removals - Current campaign + 1</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT1_GENRTN_1_STF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>GENRTN_1_STF_CNT__c + NEXT1_GENRTN_1_APPT_CNT__c - NEXT1_GENRTN_1_RMVL_CNT__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>G1 Staff count - Current campaign + 1</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT1_GENRTN_1_TITL_1_STF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>New Gen1 Title1 Ledr Cnt(UL)-Curr Camp+1</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT1_GENRTN_1_TITL_2_STF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>New Gen1 Titl2 Ledr Cnt(AUL)-Curr Camp+1</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT1_GENRTN_1_TITL_3_STF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>New Gen1 Titl3 Ledr cnt(EUL)-Curr Camp+1</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT1_GENRTN_1_TITL_STF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>GENRTN_1_TITL_STF_CNT__c + NEXT1_GENRTN_1_TITL_1_STF_CNT__c + NEXT1_GENRTN_1_TITL_2_STF_CNT__c + NEXT1_GENRTN_1_TITL_3_STF_CNT__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>G1 Sales Leaders(UL+)-Current campaign+1</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT1_GENTRTN_1_ACTV_REP_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>(GENRTN_1_STF_CNT__c +   NEXT1_GENRTN_1_APPT_CNT__c -  NEXT1_GENRTN_1_RMVL_CNT__c)*
+(IF(AVG_GENRTN_1_ACT_PCT__c&gt;0,AVG_GENRTN_1_ACT_PCT__c/100,
+IF( Business_Plan_Parameter__r.AVG_ACTVTY_PCT__c&gt;0,Business_Plan_Parameter__r.AVG_ACTVTY_PCT__c/100,0)
+ ))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>G1 Active Reps - Current campaign + 1</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT1_GRP_UNIT_SLS__c</fullName>
+        <externalId>false</externalId>
+        <formula>GRP_UNIT_SLS__c - PRSNL_SLS_AMT__c + NEXT1_PRSNL_SLS_AMT__c + 
+                                ((NEXT1_GENTRTN_1_ACTV_REP_CNT__c - GENTRTN_1_ACTV_REP_CNT__c)* Average_Order_Size_Final__c ) +
+                                (NEXT1_GENRTN_1_TITL_1_STF_CNT__c *  Business_Plan_Parameter__r.AVG_LVL_1_ADDTNL_SLS__c) +
+                                (NEXT1_GENRTN_1_TITL_2_STF_CNT__c *  Business_Plan_Parameter__r.AVG_LVL_2_ADDTNL_SLS__c) +
+                                (NEXT1_GENRTN_1_TITL_3_STF_CNT__c *  Business_Plan_Parameter__r.AVG_LVL_3_ADDTNL_SLS__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>TUS - Current Campaign + 1</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT1_LDR_ERNGS_AMT__c</fullName>
+        <externalId>false</externalId>
+        <formula>(NEXT1_GRP_UNIT_SLS__c -  NEXT1_PRSNL_SLS_AMT__c) * 
+( 
+  Unit_Earning_Multiplier__c 
+)/100</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Unit Earnings Current campaign +1</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT1_PRSNL_DSCNT_AMT__c</fullName>
+        <externalId>false</externalId>
+        <formula>NEXT1_PRSNL_SLS_AMT__c * 
+IF(PREV_AVG_DISCNT_PCT__c&gt;0,PREV_AVG_DISCNT_PCT__c/100,
+     IF( Business_Plan_Parameter__r.AVG_DISCNT_PCT__c&gt;0, Business_Plan_Parameter__r.AVG_DISCNT_PCT__c/100,0)
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Earnings frm Prsnl Sales curr campaign+1</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT1_PRSNL_SLS_AMT__c</fullName>
+        <externalId>false</externalId>
+        <label>Personal volume - Current Campaign + 1</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT1_SPPY_TOTAL_ESTMTD_ERNGS__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Earnings(Prior Yr)-Curr campaign+1</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT1_TOTAL_ESTMTD_ERNGS__c</fullName>
+        <externalId>false</externalId>
+        <formula>NEXT1_PRSNL_DSCNT_AMT__c + NEXT1_LDR_ERNGS_AMT__c + NEXT1_BONUS_ERNGS_AMT__c + NEXT1_EXEC_ERNGS_AMT__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total &amp; Estimated Earnings CC+1</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT2_BONUS_ERNGS_AMT__c</fullName>
+        <externalId>false</externalId>
+        <formula>(NEXT2_GENRTN_1_QPA_CNT__c *  Business_Plan_Parameter__r.QPA_BONUS_AMT__c) + 
+(NEXT2_GENRTN_1_TITL_1_STF_CNT__c * Business_Plan_Parameter__r.LVL_1_PRMTN_BONUS_AMT__c) + 
+(NEXT2_GENRTN_1_TITL_2_STF_CNT__c * Business_Plan_Parameter__r.LVL_2_PRMTN_BONUS_AMT__c) + 
+(NEXT2_GENRTN_1_TITL_3_STF_CNT__c * Business_Plan_Parameter__r.LVL_3_PRMTN_BONUS_AMT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Bonus Earnings Current campaign +2</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT2_EXEC_ERNGS_AMT__c</fullName>
+        <externalId>false</externalId>
+        <formula>NEXT1_EXEC_ERNGS_AMT__c + 
+((NEXT2_GENRTN_1_TITL_3_STF_CNT__c *  Business_Plan_Parameter__r.AVG_EXEC_TUS__c  *  Business_Plan_Parameter__r.AVG_EXEC_COMMSN_PCT__c/100))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Executive Earning-Current Campaign +2</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT2_GENRTN_1_APPT_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Persnl Appntmnts-Current Campaign+2</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT2_GENRTN_1_QPA_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>NEXT2_GENRTN_1_APPT_CNT__c * 
+(IF(AVG_GENRTN_1_QPA_CNT__c&gt;0,AVG_GENRTN_1_QPA_CNT__c/100,       
+ IF(Business_Plan_Parameter__r.AVG_PRSNL_QLFR_APPT_PCT__c&gt;0,Business_Plan_Parameter__r.AVG_PRSNL_QLFR_APPT_PCT__c/100,0)
+))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Qualified Persnl Appntmnts - Curr camp+2</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT2_GENRTN_1_RMVL_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>NEXT1_GENRTN_1_STF_CNT__c * 
+(IF(AVG_GENRTN_1_RMVL_PCT__c&gt;0, AVG_GENRTN_1_RMVL_PCT__c/100, 
+IF(Business_Plan_Parameter__r.AVG_RMVL_PCT__c&gt;0,Business_Plan_Parameter__r.AVG_RMVL_PCT__c/100,0) 
+))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>G1 Removals - Current campaign + 2</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT2_GENRTN_1_STF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>NEXT1_GENRTN_1_STF_CNT__c + NEXT2_GENRTN_1_APPT_CNT__c - NEXT2_GENRTN_1_RMVL_CNT__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>G1 Staff count - Current campaign + 2</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT2_GENRTN_1_TITL_1_STF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>New Gen1 Title1 Ledr Cnt(UL)-Curr Camp+2</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT2_GENRTN_1_TITL_2_STF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>New Gen1 Titl2 Ledr Cnt(AUL)-Curr Camp+2</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT2_GENRTN_1_TITL_3_STF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>New Gen1 Titl3 Ledr cnt(EUL)-Curr Camp+2</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT2_GENRTN_1_TITL_STF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>NEXT1_GENRTN_1_TITL_STF_CNT__c + NEXT2_GENRTN_1_TITL_1_STF_CNT__c + NEXT2_GENRTN_1_TITL_2_STF_CNT__c + NEXT2_GENRTN_1_TITL_3_STF_CNT__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>G1 Sales Leaders(UL+)-Current campaign+2</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT2_GENTRTN_1_ACTV_REP_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>(NEXT1_GENRTN_1_STF_CNT__c +   NEXT2_GENRTN_1_APPT_CNT__c -   NEXT2_GENRTN_1_RMVL_CNT__c )*
+(IF(AVG_GENRTN_1_ACT_PCT__c&gt;0,AVG_GENRTN_1_ACT_PCT__c/100,
+IF( Business_Plan_Parameter__r.AVG_ACTVTY_PCT__c&gt;0,Business_Plan_Parameter__r.AVG_ACTVTY_PCT__c/100,0)
+ ))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>G1 Active Reps - Current campaign + 2</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT2_GRP_UNIT_SLS__c</fullName>
+        <externalId>false</externalId>
+        <formula>TotalUnitSalesCC_1__c - NEXT1_PRSNL_SLS_AMT__c + NEXT2_PRSNL_SLS_AMT__c + 
+                                 ((NEXT2_GENTRTN_1_ACTV_REP_CNT__c - NEXT1_GENTRTN_1_ACTV_REP_CNT__c)* Average_Order_Size_Final__c )+
+                                (NEXT2_GENRTN_1_TITL_1_STF_CNT__c *  Business_Plan_Parameter__r.AVG_LVL_1_ADDTNL_SLS__c) +
+                                (NEXT2_GENRTN_1_TITL_2_STF_CNT__c *  Business_Plan_Parameter__r.AVG_LVL_2_ADDTNL_SLS__c) +
+                                (NEXT2_GENRTN_1_TITL_3_STF_CNT__c *  Business_Plan_Parameter__r.AVG_LVL_3_ADDTNL_SLS__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>TUS - Current Campaign + 2</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT2_LDR_ERNGS_AMT__c</fullName>
+        <externalId>false</externalId>
+        <formula>(TotalUnitSalesCC_2__c -NEXT2_PRSNL_SLS_AMT__c) * 
+( 
+  Unit_Earning_Multiplier__c 
+)/100</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Unit Earnings Current campaign +2</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT2_PRSNL_DSCNT_AMT__c</fullName>
+        <externalId>false</externalId>
+        <formula>NEXT2_PRSNL_SLS_AMT__c * 
+IF(PREV_AVG_DISCNT_PCT__c&gt;0,PREV_AVG_DISCNT_PCT__c/100,
+     IF( Business_Plan_Parameter__r.AVG_DISCNT_PCT__c&gt;0, Business_Plan_Parameter__r.AVG_DISCNT_PCT__c/100,0)
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Earnings frm Prsnl Sales curr campaign+2</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT2_PRSNL_SLS_AMT__c</fullName>
+        <externalId>false</externalId>
+        <label>Personal volume - Current Campaign + 2</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT2_SPPY_TOTAL_ESTMTD_ERNGS__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Earnings(Prior Yr)-Curr campaign+2</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT2_TOTAL_ESTMTD_ERNGS__c</fullName>
+        <externalId>false</externalId>
+        <formula>NEXT2_PRSNL_DSCNT_AMT__c + NEXT2_LDR_ERNGS_AMT__c + NEXT2_BONUS_ERNGS_AMT__c + NEXT2_EXEC_ERNGS_AMT__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total &amp; Estimated Earnings CC+2</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT3_BONUS_ERNGS_AMT__c</fullName>
+        <externalId>false</externalId>
+        <formula>(NEXT3_GENRTN_1_QPA_CNT__c *  Business_Plan_Parameter__r.QPA_BONUS_AMT__c) + 
+(NEXT3_GENRTN_1_TITL_1_STF_CNT__c * Business_Plan_Parameter__r.LVL_1_PRMTN_BONUS_AMT__c) + 
+(NEXT3_GENRTN_1_TITL_2_STF_CNT__c * Business_Plan_Parameter__r.LVL_2_PRMTN_BONUS_AMT__c) + 
+(NEXT3_GENRTN_1_TITL_3_STF_CNT__c * Business_Plan_Parameter__r.LVL_3_PRMTN_BONUS_AMT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Bonus Earnings Current campaign +3</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT3_EXEC_ERNGS_AMT__c</fullName>
+        <externalId>false</externalId>
+        <formula>NEXT2_EXEC_ERNGS_AMT__c + 
+((NEXT3_GENRTN_1_TITL_3_STF_CNT__c *  Business_Plan_Parameter__r.AVG_EXEC_TUS__c  *  Business_Plan_Parameter__r.AVG_EXEC_COMMSN_PCT__c/100))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Executive Earning-Current Campaign +3</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT3_GENRTN_1_APPT_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Persnl Appntmnts-Current Campaign+3</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT3_GENRTN_1_QPA_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>NEXT3_GENRTN_1_APPT_CNT__c * 
+(IF(AVG_GENRTN_1_QPA_CNT__c&gt;0,AVG_GENRTN_1_QPA_CNT__c/100,       
+ IF(Business_Plan_Parameter__r.AVG_PRSNL_QLFR_APPT_PCT__c&gt;0,Business_Plan_Parameter__r.AVG_PRSNL_QLFR_APPT_PCT__c/100,0)
+))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Qualified Persnl Appntmnts - Curr camp+3</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT3_GENRTN_1_RMVL_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>NEXT2_GENRTN_1_STF_CNT__c * 
+(IF(AVG_GENRTN_1_RMVL_PCT__c&gt;0, AVG_GENRTN_1_RMVL_PCT__c/100, 
+IF(Business_Plan_Parameter__r.AVG_RMVL_PCT__c&gt;0,Business_Plan_Parameter__r.AVG_RMVL_PCT__c/100,0) 
+))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>G1 Removals - Current campaign + 3</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT3_GENRTN_1_STF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>NEXT2_GENRTN_1_STF_CNT__c + NEXT3_GENRTN_1_APPT_CNT__c - NEXT3_GENRTN_1_RMVL_CNT__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>G1 Staff count - Current campaign + 3</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT3_GENRTN_1_TITL_1_STF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>New Gen1 Title1 Ledr Cnt(UL)-Curr Camp+3</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT3_GENRTN_1_TITL_2_STF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>New Gen1 Titl2 Ledr Cnt(AUL)-Curr Camp+3</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT3_GENRTN_1_TITL_3_STF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>New Gen1 Titl3 Ledr cnt(EUL)-Curr Camp+3</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT3_GENRTN_1_TITL_STF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>NEXT2_GENRTN_1_TITL_STF_CNT__c + NEXT3_GENRTN_1_TITL_1_STF_CNT__c + NEXT3_GENRTN_1_TITL_2_STF_CNT__c + NEXT3_GENRTN_1_TITL_3_STF_CNT__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>G1 Sales Leaders(UL+)-Current campaign+3</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT3_GENTRTN_1_ACTV_REP_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>(NEXT2_GENRTN_1_STF_CNT__c + NEXT3_GENRTN_1_APPT_CNT__c -  NEXT3_GENRTN_1_RMVL_CNT__c )* 
+(IF(AVG_GENRTN_1_ACT_PCT__c&gt;0,AVG_GENRTN_1_ACT_PCT__c/100, 
+IF( Business_Plan_Parameter__r.AVG_ACTVTY_PCT__c&gt;0,Business_Plan_Parameter__r.AVG_ACTVTY_PCT__c/100,0) 
+))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>G1 Active Reps - Current campaign + 3</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT3_GRP_UNIT_SLS__c</fullName>
+        <externalId>false</externalId>
+        <formula>TotalUnitSalesCC_2__c - NEXT2_PRSNL_SLS_AMT__c   + NEXT3_PRSNL_SLS_AMT__c +
+                                ((  ActiveRepCountCC_3__c - NEXT2_GENTRTN_1_ACTV_REP_CNT__c) * 
+Average_Order_Size_Final__c ) +
+                                (NEXT3_GENRTN_1_TITL_1_STF_CNT__c *  Business_Plan_Parameter__r.AVG_LVL_1_ADDTNL_SLS__c) +
+                                (NEXT3_GENRTN_1_TITL_2_STF_CNT__c *  Business_Plan_Parameter__r.AVG_LVL_2_ADDTNL_SLS__c) +
+                                (NEXT3_GENRTN_1_TITL_3_STF_CNT__c *  Business_Plan_Parameter__r.AVG_LVL_3_ADDTNL_SLS__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>TUS - Current Campaign + 3</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT3_LDR_ERNGS_AMT__c</fullName>
+        <externalId>false</externalId>
+        <formula>(NEXT3_GRP_UNIT_SLS__c -  NEXT3_PRSNL_SLS_AMT__c) * 
+( 
+  Unit_Earning_Multiplier__c 
+)/100</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Unit Earnings Current campaign +3</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT3_PRSNL_DSCNT_AMT__c</fullName>
+        <externalId>false</externalId>
+        <formula>NEXT3_PRSNL_SLS_AMT__c * 
+IF(PREV_AVG_DISCNT_PCT__c&gt;0,PREV_AVG_DISCNT_PCT__c/100,
+     IF( Business_Plan_Parameter__r.AVG_DISCNT_PCT__c&gt;0, Business_Plan_Parameter__r.AVG_DISCNT_PCT__c/100,0)
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Earnings frm Prsnl Sales curr campaign+3</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT3_PRSNL_SLS_AMT__c</fullName>
+        <externalId>false</externalId>
+        <label>Personal volume - Current Campaign + 3</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT3_SPPY_TOTAL_ESTMTD_ERNGS__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Earnings(Prior Yr)-Curr campaign+3</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT3_TOTAL_ESTMTD_ERNGS__c</fullName>
+        <externalId>false</externalId>
+        <formula>NEXT3_PRSNL_DSCNT_AMT__c + NEXT3_LDR_ERNGS_AMT__c + NEXT3_BONUS_ERNGS_AMT__c + NEXT3_EXEC_ERNGS_AMT__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total &amp; Estimated Earnings CC+3</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT4_BONUS_ERNGS_AMT__c</fullName>
+        <externalId>false</externalId>
+        <formula>(NEXT4_GENRTN_1_QPA_CNT__c *  Business_Plan_Parameter__r.QPA_BONUS_AMT__c) + 
+(NEXT4_GENRTN_1_TITL_1_STF_CNT__c * Business_Plan_Parameter__r.LVL_1_PRMTN_BONUS_AMT__c) + 
+(NEXT4_GENRTN_1_TITL_2_STF_CNT__c * Business_Plan_Parameter__r.LVL_2_PRMTN_BONUS_AMT__c) + 
+(NEXT4_GENRTN_1_TITL_3_STF_CNT__c * Business_Plan_Parameter__r.LVL_3_PRMTN_BONUS_AMT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Bonus Earnings Current campaign +4</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT4_EXEC_ERNGS_AMT__c</fullName>
+        <externalId>false</externalId>
+        <formula>NEXT3_EXEC_ERNGS_AMT__c + 
+((NEXT4_GENRTN_1_TITL_3_STF_CNT__c *  Business_Plan_Parameter__r.AVG_EXEC_TUS__c  *  Business_Plan_Parameter__r.AVG_EXEC_COMMSN_PCT__c/100))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Executive Earning-Current Campaign +4</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT4_GENRTN_1_APPT_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Persnl Appntmnts-Current Campaign+4</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT4_GENRTN_1_QPA_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>NEXT4_GENRTN_1_APPT_CNT__c * 
+(IF(AVG_GENRTN_1_QPA_CNT__c&gt;0,AVG_GENRTN_1_QPA_CNT__c/100,       
+ IF(Business_Plan_Parameter__r.AVG_PRSNL_QLFR_APPT_PCT__c&gt;0,Business_Plan_Parameter__r.AVG_PRSNL_QLFR_APPT_PCT__c/100,0)
+))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Qualified Persnl Appntmnts - Curr camp+4</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT4_GENRTN_1_RMVL_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>StaffCount3__c * 
+(IF(AVG_GENRTN_1_RMVL_PCT__c&gt;0, AVG_GENRTN_1_RMVL_PCT__c/100, 
+IF(Business_Plan_Parameter__r.AVG_RMVL_PCT__c&gt;0,Business_Plan_Parameter__r.AVG_RMVL_PCT__c/100,0) 
+))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>G1 Removals - Current campaign + 4</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT4_GENRTN_1_STF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>StaffCount3__c + NEXT4_GENRTN_1_APPT_CNT__c - NEXT4_GENRTN_1_RMVL_CNT__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>G1 Staff count - Current campaign + 4</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT4_GENRTN_1_TITL_1_STF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>New Gen1 Title1 Ledr Cnt(UL)-Curr Camp+4</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT4_GENRTN_1_TITL_2_STF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>New Gen1 Titl2 Ledr Cnt(AUL)-Curr Camp+4</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT4_GENRTN_1_TITL_3_STF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>New Gen1 Titl3 Ledr cnt(EUL)-Curr Camp+4</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT4_GENRTN_1_TITL_STF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>NEXT3_GENRTN_1_TITL_STF_CNT__c + NEXT4_GENRTN_1_TITL_1_STF_CNT__c + NEXT4_GENRTN_1_TITL_2_STF_CNT__c + NEXT4_GENRTN_1_TITL_3_STF_CNT__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>G1 Sales Leaders(UL+)-Current campaign+4</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT4_GENTRTN_1_ACTV_REP_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>(NEXT3_GENRTN_1_STF_CNT__c + NEXT4_GENRTN_1_APPT_CNT__c - NEXT4_GENRTN_1_RMVL_CNT__c )* 
+(IF(AVG_GENRTN_1_ACT_PCT__c&gt;0,AVG_GENRTN_1_ACT_PCT__c/100, 
+IF( Business_Plan_Parameter__r.AVG_ACTVTY_PCT__c&gt;0,Business_Plan_Parameter__r.AVG_ACTVTY_PCT__c/100,0) 
+))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>G1 Active Reps - Current campaign + 4</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT4_GRP_UNIT_SLS__c</fullName>
+        <externalId>false</externalId>
+        <formula>NEXT3_GRP_UNIT_SLS__c -  NEXT3_PRSNL_SLS_AMT__c + NEXT4_PRSNL_SLS_AMT__c + 
+                                ((ActiveRepCountCC_4__c - ActiveRepCountCC_3__c)* Average_Order_Size_Final__c ) +
+                                (NEXT4_GENRTN_1_TITL_1_STF_CNT__c *  Business_Plan_Parameter__r.AVG_LVL_1_ADDTNL_SLS__c) +
+                                (NEXT4_GENRTN_1_TITL_2_STF_CNT__c *  Business_Plan_Parameter__r.AVG_LVL_2_ADDTNL_SLS__c) +
+                                (NEXT4_GENRTN_1_TITL_3_STF_CNT__c *  Business_Plan_Parameter__r.AVG_LVL_3_ADDTNL_SLS__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>TUS - Current Campaign + 4</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT4_LDR_ERNGS_AMT__c</fullName>
+        <externalId>false</externalId>
+        <formula>(NEXT4_GRP_UNIT_SLS__c -  NEXT4_PRSNL_SLS_AMT__c) * 
+( 
+  Unit_Earning_Multiplier__c 
+)/100</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Unit Earnings Current campaign +4</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT4_PRSNL_DSCNT_AMT__c</fullName>
+        <externalId>false</externalId>
+        <formula>NEXT4_PRSNL_SLS_AMT__c * 
+IF(PREV_AVG_DISCNT_PCT__c&gt;0,PREV_AVG_DISCNT_PCT__c/100,
+     IF( Business_Plan_Parameter__r.AVG_DISCNT_PCT__c&gt;0, Business_Plan_Parameter__r.AVG_DISCNT_PCT__c/100,0)
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Earnings frm Prsnl Sales curr campaign+4</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT4_PRSNL_SLS_AMT__c</fullName>
+        <externalId>false</externalId>
+        <label>Personal volume - Current Campaign + 4</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT4_SPPY_TOTAL_ESTMTD_ERNGS__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Earnings(Prior Yr)-Curr campaign+4</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT4_TOTAL_ESTMTD_ERNGS__c</fullName>
+        <externalId>false</externalId>
+        <formula>NEXT4_PRSNL_DSCNT_AMT__c + NEXT4_LDR_ERNGS_AMT__c + NEXT4_BONUS_ERNGS_AMT__c + NEXT4_EXEC_ERNGS_AMT__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total &amp; Estimated Earnings CC+4</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT5_BONUS_ERNGS_AMT__c</fullName>
+        <externalId>false</externalId>
+        <formula>(NEXT5_GENRTN_1_QPA_CNT__c *  Business_Plan_Parameter__r.QPA_BONUS_AMT__c) + 
+(NEXT5_GENRTN_1_TITL_1_STF_CNT__c * Business_Plan_Parameter__r.LVL_1_PRMTN_BONUS_AMT__c) + 
+(NEXT5_GENRTN_1_TITL_2_STF_CNT__c * Business_Plan_Parameter__r.LVL_2_PRMTN_BONUS_AMT__c) + 
+(NEXT5_GENRTN_1_TITL_3_STF_CNT__c * Business_Plan_Parameter__r.LVL_3_PRMTN_BONUS_AMT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Bonus Earnings Current campaign +5</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT5_EXEC_ERNGS_AMT__c</fullName>
+        <externalId>false</externalId>
+        <formula>NEXT4_EXEC_ERNGS_AMT__c + 
+((NEXT5_GENRTN_1_TITL_3_STF_CNT__c *  Business_Plan_Parameter__r.AVG_EXEC_TUS__c  *  Business_Plan_Parameter__r.AVG_EXEC_COMMSN_PCT__c/100))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Executive Earning-Current Campaign +5</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT5_GENRTN_1_APPT_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Persnl Appntmnts-Current Campaign+5</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT5_GENRTN_1_QPA_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>NEXT5_GENRTN_1_APPT_CNT__c * 
+(IF(AVG_GENRTN_1_QPA_CNT__c&gt;0,AVG_GENRTN_1_QPA_CNT__c/100,       
+ IF(Business_Plan_Parameter__r.AVG_PRSNL_QLFR_APPT_PCT__c&gt;0,Business_Plan_Parameter__r.AVG_PRSNL_QLFR_APPT_PCT__c/100,0)
+))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Qualified Persnl Appntmnts - Curr camp+5</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT5_GENRTN_1_RMVL_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>NEXT4_GENRTN_1_STF_CNT__c * 
+(IF(AVG_GENRTN_1_RMVL_PCT__c&gt;0, AVG_GENRTN_1_RMVL_PCT__c/100, 
+IF(Business_Plan_Parameter__r.AVG_RMVL_PCT__c&gt;0,Business_Plan_Parameter__r.AVG_RMVL_PCT__c/100,0) 
+))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>G1 Removals - Current campaign + 5</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT5_GENRTN_1_STF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>NEXT4_GENRTN_1_STF_CNT__c + NEXT5_GENRTN_1_APPT_CNT__c - NEXT5_GENRTN_1_RMVL_CNT__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>G1 Staff count - Current campaign + 5</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT5_GENRTN_1_TITL_1_STF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>New Gen1 Title1 Ledr Cnt(UL)-Curr Camp+5</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT5_GENRTN_1_TITL_2_STF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>New Gen1 Titl2 Ledr Cnt(AUL)-Curr Camp+5</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT5_GENRTN_1_TITL_3_STF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>New Gen1 Titl3 Ledr cnt(EUL)-Curr Camp+5</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT5_GENRTN_1_TITL_STF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>NEXT4_GENRTN_1_TITL_STF_CNT__c + NEXT5_GENRTN_1_TITL_1_STF_CNT__c + NEXT5_GENRTN_1_TITL_2_STF_CNT__c + NEXT5_GENRTN_1_TITL_3_STF_CNT__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>G1 Sales Leaders(UL+)-Current campaign+5</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT5_GENTRTN_1_ACTV_REP_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>(NEXT4_GENRTN_1_STF_CNT__c + NEXT5_GENRTN_1_APPT_CNT__c - NEXT5_GENRTN_1_RMVL_CNT__c )* 
+(IF(AVG_GENRTN_1_ACT_PCT__c&gt;0,AVG_GENRTN_1_ACT_PCT__c/100, 
+IF( Business_Plan_Parameter__r.AVG_ACTVTY_PCT__c&gt;0,Business_Plan_Parameter__r.AVG_ACTVTY_PCT__c/100,0) 
+))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>G1 Active Reps - Current campaign + 5</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT5_GRP_UNIT_SLS__c</fullName>
+        <externalId>false</externalId>
+        <formula>NEXT4_GRP_UNIT_SLS__c - NEXT4_PRSNL_SLS_AMT__c + NEXT5_PRSNL_SLS_AMT__c + 
+                                (( ActiveRepCountCC_5__c -  ActiveRepCountCC_4__c )* Average_Order_Size_Final__c ) +
+                                (NEXT5_GENRTN_1_TITL_1_STF_CNT__c *  Business_Plan_Parameter__r.AVG_LVL_1_ADDTNL_SLS__c) +
+                                (NEXT5_GENRTN_1_TITL_2_STF_CNT__c *  Business_Plan_Parameter__r.AVG_LVL_2_ADDTNL_SLS__c) +
+                                (NEXT5_GENRTN_1_TITL_3_STF_CNT__c *  Business_Plan_Parameter__r.AVG_LVL_3_ADDTNL_SLS__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>TUS - Current Campaign + 5</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT5_LDR_ERNGS_AMT__c</fullName>
+        <externalId>false</externalId>
+        <formula>(NEXT5_GRP_UNIT_SLS__c -  NEXT5_PRSNL_SLS_AMT__c) * 
+( 
+  Unit_Earning_Multiplier__c 
+)/100</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Unit Earnings Current campaign +5</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT5_PRSNL_DSCNT_AMT__c</fullName>
+        <externalId>false</externalId>
+        <formula>NEXT5_PRSNL_SLS_AMT__c * 
+IF(PREV_AVG_DISCNT_PCT__c&gt;0,PREV_AVG_DISCNT_PCT__c/100,
+     IF( Business_Plan_Parameter__r.AVG_DISCNT_PCT__c&gt;0, Business_Plan_Parameter__r.AVG_DISCNT_PCT__c/100,0)
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Earnings frm Prsnl Sales curr campaign+5</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT5_PRSNL_SLS_AMT__c</fullName>
+        <externalId>false</externalId>
+        <label>Personal volume - Current Campaign + 5</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT5_SPPY_TOTAL_ESTMTD_ERNGS__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Earnings(Prior Yr)-Curr campaign+5</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT5_TOTAL_ESTMTD_ERNGS__c</fullName>
+        <externalId>false</externalId>
+        <formula>NEXT5_PRSNL_DSCNT_AMT__c +  LeaderEarningAmtCC_5__c + NEXT5_BONUS_ERNGS_AMT__c + NEXT5_EXEC_ERNGS_AMT__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total &amp; Estimated Earnings CC+5</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT6_BONUS_ERNGS_AMT__c</fullName>
+        <externalId>false</externalId>
+        <formula>(NEXT6_GENRTN_1_QPA_CNT__c *  Business_Plan_Parameter__r.QPA_BONUS_AMT__c) + 
+(NEXT6_GENRTN_1_TITL_1_STF_CNT__c * Business_Plan_Parameter__r.LVL_1_PRMTN_BONUS_AMT__c) + 
+(NEXT6_GENRTN_1_TITL_2_STF_CNT__c * Business_Plan_Parameter__r.LVL_2_PRMTN_BONUS_AMT__c) + 
+(NEXT6_GENRTN_1_TITL_3_STF_CNT__c * Business_Plan_Parameter__r.LVL_3_PRMTN_BONUS_AMT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Bonus Earnings Current campaign +6</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT6_EXEC_ERNGS_AMT__c</fullName>
+        <externalId>false</externalId>
+        <formula>NEXT5_EXEC_ERNGS_AMT__c + 
+((NEXT6_GENRTN_1_TITL_3_STF_CNT__c *  Business_Plan_Parameter__r.AVG_EXEC_TUS__c  *  Business_Plan_Parameter__r.AVG_EXEC_COMMSN_PCT__c/100))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Executive Earning-Current Campaign +6</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT6_GENRTN_1_APPT_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Persnl Appntmnts-Current Campaign+6</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT6_GENRTN_1_QPA_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>NEXT6_GENRTN_1_APPT_CNT__c * 
+(IF(AVG_GENRTN_1_QPA_CNT__c&gt;0,AVG_GENRTN_1_QPA_CNT__c/100,       
+ IF(Business_Plan_Parameter__r.AVG_PRSNL_QLFR_APPT_PCT__c&gt;0,Business_Plan_Parameter__r.AVG_PRSNL_QLFR_APPT_PCT__c/100,0)
+))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Qualified Persnl Appntmnts - Curr camp+6</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT6_GENRTN_1_RMVL_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>NEXT5_GENRTN_1_STF_CNT__c * 
+(IF(AVG_GENRTN_1_RMVL_PCT__c&gt;0, AVG_GENRTN_1_RMVL_PCT__c/100, 
+IF(Business_Plan_Parameter__r.AVG_RMVL_PCT__c&gt;0,Business_Plan_Parameter__r.AVG_RMVL_PCT__c/100,0) 
+))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>G1 Removals - Current campaign + 6</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT6_GENRTN_1_STF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>NEXT5_GENRTN_1_STF_CNT__c + NEXT6_GENRTN_1_APPT_CNT__c - NEXT6_GENRTN_1_RMVL_CNT__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>G1 Staff count - Current campaign + 6</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT6_GENRTN_1_TITL_1_STF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>New Gen1 Title1 Ledr Cnt(UL)-Curr Camp+6</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT6_GENRTN_1_TITL_2_STF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>New Gen1 Titl2 Ledr Cnt(AUL)-Curr Camp+6</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT6_GENRTN_1_TITL_3_STF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>New Gen1 Titl3 Ledr cnt(EUL)-Curr Camp+6</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT6_GENRTN_1_TITL_STF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>NEXT5_GENRTN_1_TITL_STF_CNT__c + NEXT6_GENRTN_1_TITL_1_STF_CNT__c + NEXT6_GENRTN_1_TITL_2_STF_CNT__c + NEXT6_GENRTN_1_TITL_3_STF_CNT__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>G1 Sales Leaders(UL+)-Current campaign+6</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT6_GENTRTN_1_ACTV_REP_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>(NEXT5_GENRTN_1_STF_CNT__c + NEXT6_GENRTN_1_APPT_CNT__c - NEXT6_GENRTN_1_RMVL_CNT__c )* 
+(IF(AVG_GENRTN_1_ACT_PCT__c&gt;0,AVG_GENRTN_1_ACT_PCT__c/100, 
+IF( Business_Plan_Parameter__r.AVG_ACTVTY_PCT__c&gt;0,Business_Plan_Parameter__r.AVG_ACTVTY_PCT__c/100,0) 
+))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>G1 Active Reps - Current campaign + 6</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT6_GRP_UNIT_SLS__c</fullName>
+        <externalId>false</externalId>
+        <formula>NEXT5_GRP_UNIT_SLS__c - NEXT5_PRSNL_SLS_AMT__c + NEXT6_PRSNL_SLS_AMT__c + 
+                                (( ActiveRepCountCC_6__c  -  ActiveRepCountCC_5__c)* Average_Order_Size_Final__c ) +
+                                (NEXT6_GENRTN_1_TITL_1_STF_CNT__c *  Business_Plan_Parameter__r.AVG_LVL_1_ADDTNL_SLS__c) +
+                                (NEXT6_GENRTN_1_TITL_2_STF_CNT__c *  Business_Plan_Parameter__r.AVG_LVL_2_ADDTNL_SLS__c) +
+                                (NEXT6_GENRTN_1_TITL_3_STF_CNT__c *  Business_Plan_Parameter__r.AVG_LVL_3_ADDTNL_SLS__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>TUS - Current Campaign + 6</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT6_LDR_ERNGS_AMT__c</fullName>
+        <externalId>false</externalId>
+        <formula>( ActiveRepCountCC_6__c  -  NEXT6_PRSNL_SLS_AMT__c) * 
+( 
+  Unit_Earning_Multiplier__c 
+)/100</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Unit Earnings Current campaign +6</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT6_PRSNL_DSCNT_AMT__c</fullName>
+        <externalId>false</externalId>
+        <formula>NEXT6_PRSNL_SLS_AMT__c * 
+IF(PREV_AVG_DISCNT_PCT__c&gt;0,PREV_AVG_DISCNT_PCT__c/100,
+     IF( Business_Plan_Parameter__r.AVG_DISCNT_PCT__c&gt;0, Business_Plan_Parameter__r.AVG_DISCNT_PCT__c/100,0)
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Earnings frm Prsnl Sales curr campaign+6</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT6_PRSNL_SLS_AMT__c</fullName>
+        <externalId>false</externalId>
+        <label>Personal volume - Current Campaign + 6</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT6_SPPY_TOTAL_ESTMTD_ERNGS__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Earnings(Prior Yr)-Curr campaign+6</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT6_TOTAL_ESTMTD_ERNGS__c</fullName>
+        <externalId>false</externalId>
+        <formula>NEXT6_PRSNL_DSCNT_AMT__c +  LeaderEarningAmtCC_6__c + NEXT6_BONUS_ERNGS_AMT__c + NEXT6_EXEC_ERNGS_AMT__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total &amp; Estimated Earnings CC+6</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT_1_CMPGN_NR__c</fullName>
+        <externalId>false</externalId>
+        <label>Creation campaign + 1</label>
+        <length>10</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT_1_SPPY_CMPGN_NR__c</fullName>
+        <externalId>false</externalId>
+        <label>SPPY campaign + 1</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT_2_CMPGN_NR__c</fullName>
+        <externalId>false</externalId>
+        <label>Creation campaign + 2</label>
+        <length>10</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT_2_SPPY_CMPGN_NR__c</fullName>
+        <externalId>false</externalId>
+        <label>SPPY campaign + 2</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT_3_CMPGN_NR__c</fullName>
+        <externalId>false</externalId>
+        <label>Creation campaign + 3</label>
+        <length>10</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT_3_SPPY_CMPGN_NR__c</fullName>
+        <externalId>false</externalId>
+        <label>SPPY campaign + 3</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT_4_CMPGN_NR__c</fullName>
+        <externalId>false</externalId>
+        <label>Creation campaign + 4</label>
+        <length>10</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT_4_SPPY_CMPGN_NR__c</fullName>
+        <externalId>false</externalId>
+        <label>SPPY campaign + 4</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT_5_CMPGN_NR__c</fullName>
+        <externalId>false</externalId>
+        <label>Creation campaign + 5</label>
+        <length>10</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT_5_SPPY_CMPGN_NR__c</fullName>
+        <externalId>false</externalId>
+        <label>SPPY campaign + 5</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT_6_CMPGN_NR__c</fullName>
+        <externalId>false</externalId>
+        <label>Creation campaign + 6</label>
+        <length>10</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NEXT_6_SPPY_CMPGN_NR__c</fullName>
+        <externalId>false</externalId>
+        <label>SPPY campaign + 6</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PREV_1_CMPGN_NR__c</fullName>
+        <externalId>false</externalId>
+        <label>Prior campaign</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PREV_AVG_DISCNT_PCT__c</fullName>
+        <externalId>false</externalId>
+        <label>Average Discount Rate [%]-Prev Campaign</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PREV_AVG_GENRTN_1_DISTR_SLS_PCT__c</fullName>
+        <externalId>false</externalId>
+        <label>G1 Average Sales Distribution [%] Prev C</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PREV_AVG_GENRTN_1_UNIT_COMM_PCT__c</fullName>
+        <externalId>false</externalId>
+        <label>G1 Average Unit Commission Rates[%] Prev</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PREV_AVG_GENRTN_2_DISTR_SLS_PCT__c</fullName>
+        <externalId>false</externalId>
+        <label>G2 Average Sales Distribution [%] Prev</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PREV_AVG_GENRTN_2_UNIT_COMM_PCT__c</fullName>
+        <externalId>false</externalId>
+        <label>G2 Average Unit Commission Rates[%] Prev</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PREV_AVG_GENRTN_3_DISTR_SLS_PCT__c</fullName>
+        <externalId>false</externalId>
+        <label>G3 Average Sales Distribution [%] Prev</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PREV_AVG_GENRTN_3_UNIT_COMM_PCT__c</fullName>
+        <externalId>false</externalId>
+        <label>G3 Average Unit Commission Rates[%] Prev</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PREV_EXEC_ERNGS_AMT__c</fullName>
+        <externalId>false</externalId>
+        <label>Executive Earning-Previous Campign</label>
+        <precision>15</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PREV_GENRTN_1_STF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>G1 Staff count - Previous campaign</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PREV_GENRTN_1_TITL_STF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>G1 Sales Leaders(UL+) - Previous Campaig</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PREV_GENTRTN_1_ACTV_REP_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>G1 Active Rep-Previous Campaign</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PREV_GRP_UNIT_SLS_AMT__c</fullName>
+        <externalId>false</externalId>
+        <label>TUS Previous Campaign</label>
+        <precision>15</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PREV_PRSNL_SLS_AMT__c</fullName>
+        <externalId>false</externalId>
+        <label>Previous Camp Personal Sales</label>
+        <precision>15</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PRSNL_DEV_PLN_ACTN1__c</fullName>
+        <externalId>false</externalId>
+        <label>Personal Development Plan - Action 1</label>
+        <length>500</length>
+        <trackHistory>false</trackHistory>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>PRSNL_DEV_PLN_ACTN2__c</fullName>
+        <externalId>false</externalId>
+        <label>Personal Development Plan - Action 2</label>
+        <length>500</length>
+        <trackHistory>false</trackHistory>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>PRSNL_DEV_PLN_ACTN3__c</fullName>
+        <externalId>false</externalId>
+        <label>Personal Development Plan - Action 3</label>
+        <length>500</length>
+        <trackHistory>false</trackHistory>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>PRSNL_DEV_PLN_PLN1__c</fullName>
+        <externalId>false</externalId>
+        <label>Personal Development Plan - Plan 1</label>
+        <length>500</length>
+        <trackHistory>false</trackHistory>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>PRSNL_DEV_PLN_PLN2__c</fullName>
+        <externalId>false</externalId>
+        <label>Personal Development Plan - Plan 2</label>
+        <length>500</length>
+        <trackHistory>false</trackHistory>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>PRSNL_DEV_PLN_PLN3__c</fullName>
+        <externalId>false</externalId>
+        <label>Personal Development Plan - Plan 3</label>
+        <length>500</length>
+        <trackHistory>false</trackHistory>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>PRSNL_DSCNT_AMT__c</fullName>
+        <externalId>false</externalId>
+        <formula>PRSNL_SLS_AMT__c* 
+IF(PREV_AVG_DISCNT_PCT__c&gt;0,PREV_AVG_DISCNT_PCT__c/100,
+     IF( Business_Plan_Parameter__r.AVG_DISCNT_PCT__c&gt;0, Business_Plan_Parameter__r.AVG_DISCNT_PCT__c/100,0)
+)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Earnings frm Prsnl Sales curr campaign</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PRSNL_SLS_AMT__c</fullName>
+        <externalId>false</externalId>
+        <label>Personal volume - Current Campaign</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Personal_Achievement__c</fullName>
+        <externalId>false</externalId>
+        <label>Personal Achievement</label>
+        <length>500</length>
+        <trackHistory>false</trackHistory>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Plan_Status__c</fullName>
+        <externalId>false</externalId>
+        <label>Plan Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>In Progress</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Completed</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Deleted</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <trackHistory>false</trackHistory>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Previous_Avg_Activity_Rate__c</fullName>
+        <externalId>false</externalId>
+        <label>Previous Avg Activity Rate</label>
+        <precision>12</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>RECR_ACTN1__c</fullName>
+        <externalId>false</externalId>
+        <label>Recruiting - Action 1</label>
+        <length>500</length>
+        <trackHistory>false</trackHistory>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>RECR_ACTN2__c</fullName>
+        <externalId>false</externalId>
+        <label>Recruiting - Action 2</label>
+        <length>500</length>
+        <trackHistory>false</trackHistory>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>RECR_ACTN3__c</fullName>
+        <externalId>false</externalId>
+        <label>Recruiting - Action 3</label>
+        <length>500</length>
+        <trackHistory>false</trackHistory>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>RSNG_STR_DEV_ACTN1__c</fullName>
+        <externalId>false</externalId>
+        <label>Rising Stars Development - Action 1</label>
+        <length>500</length>
+        <trackHistory>false</trackHistory>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>RSNG_STR_DEV_ACTN2__c</fullName>
+        <externalId>false</externalId>
+        <label>Rising Stars Development - Action 2</label>
+        <length>500</length>
+        <trackHistory>false</trackHistory>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>RSNG_STR_DEV_ACTN3__c</fullName>
+        <externalId>false</externalId>
+        <label>Rising Stars Development - Action 3</label>
+        <length>500</length>
+        <trackHistory>false</trackHistory>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>RSNG_STR_DEV_CND__c</fullName>
+        <externalId>false</externalId>
+        <label>Rising Stars Candidates</label>
+        <length>500</length>
+        <trackHistory>false</trackHistory>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>SPPY_CMPGN_NR__c</fullName>
+        <externalId>false</externalId>
+        <label>Same Period Prior Year Campaign Code</label>
+        <length>50</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SPPY_TOTAL_ESTMTD_ERNGS__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Earnings(Prior Yr)-Curr campaign</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Short_Term_Goals__c</fullName>
+        <externalId>false</externalId>
+        <label>Short Term Goals</label>
+        <length>500</length>
+        <trackHistory>false</trackHistory>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>StaffCount3__c</fullName>
+        <externalId>false</externalId>
+        <label>StaffCount3</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TOP_SLR_ACTN1__c</fullName>
+        <externalId>false</externalId>
+        <label>Top Seller Title Advancement - Action 1</label>
+        <length>500</length>
+        <trackHistory>false</trackHistory>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>TOP_SLR_ACTN2__c</fullName>
+        <externalId>false</externalId>
+        <label>Top Seller Title Advancement - Action 2</label>
+        <length>500</length>
+        <trackHistory>false</trackHistory>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>TOP_SLR_ACTN3__c</fullName>
+        <externalId>false</externalId>
+        <label>Top Seller Title Advancement - Action 3</label>
+        <length>500</length>
+        <trackHistory>false</trackHistory>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>TOP_SLR_CND__c</fullName>
+        <externalId>false</externalId>
+        <label>Top Seller Candidates</label>
+        <length>500</length>
+        <trackHistory>false</trackHistory>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>TOTAL_ESTMTD_ERNGS__c</fullName>
+        <externalId>false</externalId>
+        <formula>PRSNL_DSCNT_AMT__c + LDR_ERNGS_AMT__c + BONUS_ERNGS_AMT__c + EXEC_ERNGS_AMT__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Total &amp; Estimated Earnings Current Camp</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Title_Nr__c</fullName>
+        <externalId>false</externalId>
+        <label>Title_Nr</label>
+        <length>250</length>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TotalUnitSalesCC_1__c</fullName>
+        <externalId>false</externalId>
+        <label>TotalUnitSalesCC+1</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TotalUnitSalesCC_2__c</fullName>
+        <externalId>false</externalId>
+        <label>TotalUnitSalesCC+2</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Unit_Achievement__c</fullName>
+        <externalId>false</externalId>
+        <label>Unit Achievement</label>
+        <length>500</length>
+        <trackHistory>false</trackHistory>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Unit_Earning_Multiplier__c</fullName>
+        <externalId>false</externalId>
+        <label>Unit Earning Multiplier</label>
+        <precision>17</precision>
+        <required>false</required>
+        <scale>4</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>User__c</fullName>
+        <externalId>false</externalId>
+        <label>User</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Business_Plans1</relationshipName>
+        <required>false</required>
+        <trackHistory>false</trackHistory>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>VAR_BONUS_ERNGS_AMT__c</fullName>
+        <externalId>false</externalId>
+        <label>Bonus Earnings Variance</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>VAR_EXEC_ERNGS_AMT__c</fullName>
+        <externalId>false</externalId>
+        <label>Executive Earnings Variance</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>VAR_GENRTN_1_ACT_PCT__c</fullName>
+        <description>Variance of closed campaigns</description>
+        <externalId>false</externalId>
+        <label>G1 Activity Rate Variance</label>
+        <precision>12</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>VAR_GENRTN_1_APPT_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Personal Appoitments Variance</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>VAR_GENRTN_1_QPA_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Qualified Personal Appoitments Var</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>VAR_GENRTN_1_RMVL_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>G1 Removals Variance</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>VAR_GENRTN_1_STF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>G1 Staff count Variance</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>VAR_GENRTN_1_TITL_1_STF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>New Gen 1 Title 1 Leader Cnt(UL) Var</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>VAR_GENRTN_1_TITL_2_STF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>New Gen1 Titl2 Ledr Cnt(AUL) Var</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>VAR_GENRTN_1_TITL_3_STF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>New Gen 1 Title 3 Leader Count(EUL) Var</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>VAR_GENRTN_1_TITL_STF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>G1 Sales Leaders (UL+) Variance</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>VAR_GENTRTN_1_ACTV_REP_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>G1 Active Reps Variance</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>VAR_GRP_UNIT_SLS__c</fullName>
+        <externalId>false</externalId>
+        <label>TUS Variance</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>VAR_LDR_ERNGS_AMT__c</fullName>
+        <externalId>false</externalId>
+        <label>Unit Earnings Variance</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>VAR_PRSNL_DSCNT_AMT__c</fullName>
+        <externalId>false</externalId>
+        <label>Earnings from Personal Sales Variance</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>VAR_PRSNL_SLS_AMT__c</fullName>
+        <externalId>false</externalId>
+        <label>Personal volume Variance</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>VAR_TOTAL_ESTMTD_ERNGS__c</fullName>
+        <externalId>false</externalId>
+        <label>Total Estimated Earnings Variance</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <trackHistory>false</trackHistory>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <label>Business Plan</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>Market_Id__c</columns>
+        <columns>NAME</columns>
+        <columns>Acct_Nr__c</columns>
+        <columns>IsDeleted__c</columns>
+        <columns>Is_BP_Saved__c</columns>
+        <columns>User__c</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>UPDATEDBY_USER</columns>
+        <columns>OWNER.ALIAS</columns>
+        <columns>OWNER.FIRST_NAME</columns>
+        <columns>OWNER.LAST_NAME</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>PH</fullName>
+        <columns>NAME</columns>
+        <columns>Acct_Nr__c</columns>
+        <columns>IsDeleted__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>Acct_Nr__c</field>
+            <operation>equals</operation>
+            <value>0037000358879</value>
+        </filters>
+        <label>PH</label>
+        <language>en_US</language>
+    </listViews>
+    <nameField>
+        <displayFormat>BP-{0000000}</displayFormat>
+        <label>Business Plan Name</label>
+        <trackHistory>false</trackHistory>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Business Plans</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>Private</sharingModel>
+</CustomObject>

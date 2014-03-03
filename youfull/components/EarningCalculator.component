@@ -1,0 +1,485 @@
+<apex:component controller="EarningCalController">
+<style type="text/css">
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-family: Helvetica,Arial,verdana,sans-serif;
+    vertical-align: baseline;
+}
+.content_cntr {
+    float: left;
+    padding: 15.5px 0 0;
+    width: 100%;
+}
+.single_clmn{
+    width:928px;
+    border:solid 1px #b7b8b8;
+    padding:70px 8px 8px 8px;
+    float:left;
+}
+.big_pnk_hdr {
+    background:url({!URLFOR($Resource.earningIlustrator,'images/pink-hdr-big.gif')}) no-repeat;
+    color: #FFFFFF;
+    float: left;
+    font-size: 2.4em;
+    height:50px;
+    margin: -71px 0 0 -19px;
+    width: 929px;
+    padding:16px 0 0 26px;
+    font-weight:normal;
+}
+.earn_cal_wrpr {
+    float:left;
+   /* padding:20px 7px 3px 7px; */
+    padding:20px 7px 3px;
+    width:98.5%;
+}
+.earn_hdr {
+    float: left;
+    font-size: 1.4em;
+    font-weight: 700;
+    padding: 0 0 19px;
+    width: 100%;
+}
+.shdow_wrpr {
+    background:url({!URLFOR($Resource.earningIlustrator,'images/btm_shdw_lg.png')}) bottom repeat-x;
+    padding:0 0 8px 0;
+    border:solid 1px #f2f2f2;
+    border-width:0 1px 0 2px;
+    float:left;
+    width:100%;
+}
+.ernr_wrp {
+    background:url({!URLFOR($Resource.earningIlustrator,'images/grey_area_bg.gif')}) repeat-y;
+    border:solid 1px #b1b1b1;
+    float: left;
+    width: 100%;
+    /* height: 20px; */
+    
+}
+.est_earning_cnt {
+    float: left;
+    padding: 27px 15px 30px 35px;
+    width: 21%;
+}
+.est_earning_cnt h3 {
+    font-size:1.8em;
+    color:#ED008C;
+    padding:0 0 16px 0;
+    float:left;
+    width:100%;
+    font-weight:700;
+}
+.est_earning_cnt ul {
+    float: left;
+    margin: 0 0 0 10px;
+}
+.est_earning_cnt ul li {
+    border-bottom: 1px solid #E1E1E1;
+    font-size: 2.1em;
+    padding: 6px 10px;
+}
+.est_earning_cnt ul li.last {
+    border: 0 none;
+}
+.est_earning_cnt ul li a {
+    color: #000000;
+    font-weight: 700;
+}
+
+.cntr {
+    float:left;
+    width:100%;
+}
+
+.ear_lvl_wrpr {
+    width:293px;
+    float:left;
+    margin:17px 22px 10px 33px;
+}
+
+.ear_lv_cntr {
+    border:solid 1px #b1b1b1;
+    float:left;
+    width:100%;
+    
+}
+.btm_shdw {
+    background:url({!URLFOR($Resource.earningIlustrator, 'images/btm_shdw_lg.png')}) bottom repeat-x;
+    padding:0 0 8px 0;
+    #height:70px;
+}
+.slct_are_hdr {
+    background:#efedee;
+    padding:16px 10px 7px 15px;
+}
+
+.slct_are_hdr h2 {
+ font-size: 1.7em;
+}
+
+.slct_are_hdr h3 {
+    font-size:1.1em;
+    color:#010101;
+    width:100%;
+    float:left;
+    padding:0 0 5px 0;
+    font-weight:700;
+}
+.slct_are_hdr p {
+    color: #676666;
+    font-size: 1.4em;
+}
+.ear_tab {
+    margin-top: 10px;
+}
+.ear_tab td.lft {
+    color: #010101;
+    font-size: 1.4em;
+    font-weight: 700;
+    padding: 6px 10px 6px 15px;
+}
+.ear_tab td.rht {
+    color: #6A6A6A;
+    font-size: 1.4em;
+    font-weight: 700;
+    padding: 6px 10px 6px 0;
+    width: 20%;
+}
+.res_fnl_cnt {
+    background:url({!URLFOR($Resource.earningIlustrator, 'images/ear_res_wrp.jpg')}) no-repeat scroll 0 0 transparent;
+    float: left;
+    font-size: 1.2em;
+    height: 179px;
+    margin: 17px 0 14px;
+    padding: 30px 23px 23px 50px;
+    width: 223px;
+}
+
+.grh_stmp {
+   /* background:url({!URLFOR($Resource.earningIlustrator, 'images/graph_outline.png')}) no-repeat;*/
+    height: 800px;
+    margin: 0 0 0 23px;
+    /*margin: 20 50 50 23px;*/
+    width: 190px;
+}
+.eum {
+    background:url({!URLFOR($Resource.earningIlustrator, 'images/EUM-icon.gif')}) no-repeat;
+    width:17px;
+    height:26px;
+    display:block;
+    margin:0 0 23px 13px;
+}
+
+.um {
+    background:url({!URLFOR($Resource.earningIlustrator, 'images/UM-icon.gif')})  no-repeat;
+    display: block;
+    float: left;
+    height: 27px;
+    margin: 0 9px 0 0;
+    width: 17px;
+}
+
+.g1 {
+    background:url({!URLFOR($Resource.earningIlustrator, 'images/g1-icon.gif')}) no-repeat;
+    width:10px;
+    height:19px;
+    display:block;
+    margin:0 2px 4px 0;
+    float:left;
+}
+.horz-sprtr {
+    background:url({!URLFOR($Resource.earningIlustrator, 'images/horz-sprtr.gif')}) repeat-x bottom;
+}
+.mar_tp_10 {
+    margin-top:10px;
+}
+.pad_btm_15 {
+    padding-bottom:15px;
+}
+.earning_content {
+    float:left;
+    width:100%;
+    padding:30px 0 10px 0;
+}
+.earning_content h3 {
+    color: #010101;
+    font-size: 1.8em;
+    padding: 5px 0 10px;
+}
+.earning_content p {
+    color: #010101;
+    font-size: 1.2em;
+    line-height: 18px;
+}
+.ear_img_plholder {
+    float:left;
+    margin:0 30px 0 0;
+}
+
+.left {
+    float:left;
+}
+
+.wd_60 {
+    width:60%;
+}
+
+.ear_note {
+    margin: 40px 0 0;
+    width: 96%;
+    float:left;
+}
+.ear_note p {
+    float: left;
+    font-size: 1.1em !important;
+    line-height: 14px !important;
+    width: 99%;
+}
+
+.fill_pnk_75 {
+    background:#dd0d80;
+    bottom: 0;
+    display: block;
+    float: left;
+    height: 112px;
+    left: 0;
+    position: absolute;
+    width: 13px;
+}
+</style>
+<script type="text/javascript">
+    ALM_PAGE_NAME="{!OmniturePageName}";   //added swarnava
+    $j = jQuery.noConflict();
+          // var myObj = new Object();
+           //function to create slider
+           function createSlider(destination, dispOutput,perPend,minVal,maxVal){
+                $j("#"+destination).slider({ //This line creates a slider on the DIV specified, options are passed arguments, comma separated below
+                    range: "min", //This give the slider and top and bottom
+                    min: minVal, //Min value for slider
+                    max: maxVal, //Max value for slider
+                    orientation: 'vertical', // Orientation
+                     value: 0, //Start values for the slider
+                   // animate: true,
+                    slide: function(event, ui){ 
+                      //myObj[destination]=ui.values[0];
+                      changeTitlecolour(ui.value);
+                    }
+                });
+              //  $( "#"+destination ).slider( "option", "animate", true );
+              //  myObj[destination]= 0;
+             
+            }
+            
+         $j(function(){
+            // Retrieving the configured row       
+            var displayRows = '{!rowDisplayed}';
+            var displayTableHeadr  = '{! newRepDisplayed}';
+               
+            msg =    displayRows;          
+            $j("#"+'EarningDetails').html(''+ msg);
+            
+            msg = displayTableHeadr;
+            $j("#"+'LeaderTitle').html(''+msg); 
+                        
+            document.getElementById('pic').src='{!newRepPic}';
+            
+            createSlider('EarningLevels', 'EarningDetails','$',0,{!totalEstimtdErng});
+                  
+        });      
+      
+
+        function changeTitlecolour(pointer){
+      //   alert(' changeTitlecolour pointer >>> '+pointer);
+            EarningCalController.getData(pointer, function(result, event){
+            //msg='<table width="100%" border="0" cellspacing="0" cellpadding="0" class="ear_tab"><tr><td class="lft">Personal Volume:</td>';
+            
+            msgTitle = '';
+            msg = '';
+            msgFinal = '';
+                if (event.status) {
+                
+                   if(result.indexOf("&gt\;") > -1) {
+                    for(var count = 0; count < result.lastIndexOf("&gt\;"); count++){
+                            result = result.replace("&gt\;",">");
+                    }
+                    }
+                   
+                   if(result.indexOf("&lt\;") > -1){
+                    for(var count = 0; count < result.lastIndexOf("&lt\;"); count++){
+                        result = result.replace("&lt\;","<");
+                    }
+                   }
+                   
+                   if(result.indexOf("quot") > -1){
+                    for(var count = 0; count < result.lastIndexOf("&quot\;"); count++){
+                        result = result.replace("&quot\;","\"");
+                    }
+                   }
+                    
+                   msg += result;
+                   msg1 = msg.split('-');
+                   
+                   msgFinal = msg1[0];
+                   msgTitle = msg1[1];
+                  }     
+                      
+                  $j("#"+'EarningDetails').html(''+ msgFinal);
+                       
+                  $j("#"+'LeaderTitle').html(''+ msgTitle);
+                       
+                }, {escape:true}); 
+                
+                
+          //      document.getElementById('test').style.display = 'block';
+          //      document.getElementById('FutureExpensesDisp').style.display = 'block';
+                
+              picStat = true;  
+                
+              changePicture(pointer, picStat);
+                
+            }
+            
+            function changePicture(pointer, isPic){
+            msgTitle = '';
+            EarningCalController.getPicture(pointer, isPic, function(result, event){
+                if (event.status) {
+                     
+                }
+                
+                if(result.indexOf("amp;") > -1){
+                result = result.replace("amp\;","");
+                }
+                document.getElementById('pic').src=result;
+                }, {escape:true}); 
+                   
+            }
+            
+            
+            
+</script>
+<body>
+
+        <h1 class="big_pnk_hdr" style="font-family:Arial,Helvatica;">{!$Label.ErngIllustratr_Main_Hdng}</h1>
+        <div class="earn_cal_wrpr" >
+            <!-- <h4 class="earn_hdr" style="font-family:Arial,Helvatica;">{!$Label.ErngIllustratr_Slider_Instruction}</h4> -->
+            <h4 class="earn_hdr" style="font-family:Arial,Helvatica;">{!$Label.ErngIllustratr_Slider_Instruction}</h4>
+            <div class="shdow_wrpr">
+                <div class="ernr_wrp">
+                  
+                    <!-- Column relates to displaying Estimated Earning - START -->
+                    <!--<div class="est_earning_cnt" style="font-family:Arial,Helvatica;"> -->
+                    <div class="est_earning_cnt">
+                        <font color='#dd0d80'><h3>*{!$Label.ErngIllustratr_EstdEarning_Hdng}</h3></font>
+                        <div class="cntr">
+                            <div id="EarningLevels" style="width:4%;float:left;position: relative; margin: 0 20px 0 0;"/>
+                            <div id="earnlbl">
+                            <apex:repeat value="{!lst_EstimtdErngLevel}" var="earningLevel">
+                                <apex:outputText value="{!earningLevel}" style="margin-left:20px;font-size:2.1em;font-weight:700;padding: 6px 10px;" /><br/>  <!-- font-weight:normal;-->
+                                <!--<apex:outputText value="{!leaderTitle}" style="margin-left:20px" /><br/>-->
+                                <apex:image value="{!URLFOR($Resource.earningIlustrator,'images/line-earning-level.png')}" title="" style="margin-left:20px;width:50%;" rendered="{!earningLevel != '0'}" /><br/>
+                               <!-- <hr width="50%" /> -->
+                           </apex:repeat>
+                           </div>
+                           <script>
+                         /* var hei = $j('#earnlbl').css('height');
+                            alert('mmmmm '+hei);
+                            $j('#EarningLevels').css('height',hei);
+                            var hei1 = $j('#EarningLevels').css('height');
+                             alert('xxxxx '+hei1);*/
+                             
+                              var hei = {!totalEstimtdErngDisplyd};
+                         //     alert(' Total Levels >>>  '+hei);
+                              
+                              var hei1 = hei * 30;
+                              
+                           //  alert(' hei1 >>>  '+hei1);
+                              
+                              $j('#EarningLevels').css('height',hei1);
+                           
+                             
+                            </script>
+                           <!-- <apex:outputText value="0" style="margin-left:30px" /> -->
+                        </div>
+                    </div>
+                    <!-- Column relates to displaying Estimated Earning - END -->
+                    
+                    <!-- Column relates to displaying Detail Earning Info - START -->
+                    <div class="ear_lvl_wrpr">
+                        <!-- <div class="shdow_wrpr" style="font-family:Arial,Helvatica;"> -->
+                        <div class="shdow_wrpr">    
+                            <div class="ear_lv_cntr">
+                                <div class="btm_shdw">
+                                    <div class="slct_are_hdr">
+                                        <!--<h3>New Leadership Representative</h3>
+                                        <p>Requirements:</p> -->
+                                        <span id="LeaderTitle" />
+                                        
+                                    </div>
+                                </div>  
+                                <div class="cntr" id="earningDetail">
+                                <!-- Cut Portions  -->
+                                
+                                    <span id="EarningDetails"  class="ear_tab"/>
+                                
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <!-- Column relates to displaying Detail Earning Info - END -->
+                    <!-- Column relates to displaying Picture - START -->
+                    <script>
+                           var hei = $j('#earnlbl').css('height');
+                        //   alert('mmmmm '+hei);
+                            $j('#earningPicture2').css('height',hei);
+                    </script>
+                    <div id="earningPicture1" class="res_fnl_cnt" style="text-align:center;"> 
+                 <!--       <div id="earningPicture2" class="grh_stmp">     -->                    
+                        <!-- <table border="0" style="width: 233px; float:left; height:179px"> 
+                        <tr>
+                        <th height="179">-->
+                        <!-- <span id="picTitle"></span> -->
+                        <img id="pic" style="float:center" height="190px"/>
+                        <!-- </th>
+                        </tr>
+                        </table>-->
+                    <!--   </div>   -->
+                    </div>     
+                    <!-- Column relates to displaying Picture - END -->
+                </div>
+            </div>  
+                
+            <!--  Horizontal divider line - START -->           
+            <div class="cntr horz-sprtr pad_btm_15 mar_tp_10"></div>
+            <!--  Horizontal divider line - END -->
+            
+            <!--  'Video Image' & 'Please Note' section - START -->
+            <!-- <div class="earning_content" style="font-family:Arial,Helvatica;"> -->
+            <div class="earning_content">
+                <div class="ear_img_plholder">
+                    <!-- apex:image value="{!URLFOR($Resource.earningIlustrator,'images/earn_calc_image.jpg')}" title=""/--> 
+                    <EMBED  ID="YouTubeVideo" SRC="http://www.youtube.com/v/4YiKYo3Dyvs" wmode="opaque" BORDER="0" HEIGHT="205" WIDTH="331" ALT=""  
+                                        PLUGINSPAGE="http://www.macromedia.com/go/getflashplayer" CACHE="TRUE" CONTROLLER="TRUE" 
+                                        TYPE="application/x-shockwave-flash" VOLUME="256" AUTOPLAY="FALSE" LOOP="FALSE">
+                    </EMBED>
+                </div>
+                <div class="left wd_60">
+                    <h3>{!$Label.ErngIllustratr_RepInspire_Hdng}</h3> 
+                    <p>{!$Label.ErngIllustratr_Video_Text}</p>
+                </div>
+                <div class="ear_note">
+                    <span>*</span>
+                    <p>{!$Label.ErngIllustratr_PlsNote}</p>
+                </div>
+            </div>
+            <!--   'Video Image' & 'Please Note' section - END -->
+        </div>  
+</body>
+<c:OmnitureWebTrack mktName="{!market.Omniture_Suite_Name__c}" 
+                        mktAcctKey="{!currUsr.MRKT_ID_ACCT_NR_KEY__c}"
+                        userType="{!currUsr.Profile.Name}"
+                        userTitle="{!currUsr.LDRSHP_TITL_LVL_NBR__c}"        
+                        rendered="{!globalConfig.Omniture_Tracking_Enabled__c}"/>
+</apex:component>

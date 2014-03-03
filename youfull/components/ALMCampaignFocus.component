@@ -1,0 +1,16 @@
+<apex:component controller="Controller_ALMCampaignFocus">
+    <apex:attribute name="sourceParam" description="Source to use" type="string" assignTo="{!source}" required="false" />
+    <link type="text/css" rel="stylesheet" href="/resource/ZM_Resources/css/style.css"/>
+<apex:form >
+    <h2>{!$Label.Campaign_Focus_Label} {!campaignnumber}</h2>
+    <BR></BR>
+    <BR></BR> 
+    <apex:outputpanel id="imgPanel"> 
+        <div id="imgContainer" >
+            <apex:repeat value="{!lstWImageInfo}" var="ImageInfo" id="theRepeat">
+                <apex:image id="theImage1" value="data:image/jpg;base64,{!ImageInfo.imageData}" onclick="javascript:window.open('{!ImageInfo.strURL}');" />&nbsp;&nbsp;
+            </apex:repeat>
+        </div>
+    </apex:outputpanel>
+</apex:form>
+</apex:component>

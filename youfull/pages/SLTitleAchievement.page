@@ -1,0 +1,5 @@
+<apex:page Controller="Controller_SLTitleAchievement" id="page" standardStylesheets="false" showHeader="true" sidebar="true" tabstyle="My_Business_Plan__tab">
+    
+    <c:SLTitleAchievement />
+
+</apex:page>

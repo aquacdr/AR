@@ -1,0 +1,57 @@
+<apex:page showHeader="false" sidebar="false" standardStyleSheets="false" cache="true" controller="NewRepController" contenttype="application/vnd.ms-excel#{!IF(browserType,URLENCODE(strReportName),strReportName)}.xls">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+        <title>ALM Report</title>
+    </head>
+    <table width="100%">
+        <thead>
+           <!-- <tr>
+                <th colspan="{!nColspan}" bgcolor="#cccccc" align="center" contenttype="application/vnd.ms-excel#{!IF(browserType,URLENCODE(strReportName),strReportName)}.xls"><apex:outputText value="{!strBodyReportName}"/></th>
+            </tr>-->
+            <tr>
+                <apex:repeat value="{!listReportData}" var="headerList" first="0" rows="1">
+                    <apex:repeat value="{!headerList}" var="header">
+                        <apex:variable var="cnt" value="{!0}" />
+                        <apex:repeat value="{!header}" var="headerData">
+                            <apex:variable var="isprinted" value="{!0}" />
+                                <apex:repeat value="{!invisibleList}" var="inL">
+                                    <apex:outputPanel layout="none" rendered="{!dataD[cnt].shID == inL }">
+                                        <apex:variable var="isprinted" value="{!isprinted+1}" />
+                                    </apex:outputPanel>
+                                </apex:repeat>
+                                <apex:outputPanel layout="none" rendered="{!isprinted == 0 }">
+                                     <th align="center" style="font-family:Calibri;font-size:15px;" contenttype="application/vnd.ms-excel#{!IF(browserType,URLENCODE(strReportName),strReportName)}.xls"><apex:outputText value="{!headerData}"/></th>
+                                </apex:outputPanel>
+                            <apex:outputPanel layout="none" rendered="{!cnt < dataD.size - 1}">
+                                <apex:variable var="cnt" value="{!cnt+1}"/>
+                            </apex:outputPanel>
+                        </apex:repeat>
+                    </apex:repeat>
+                </apex:repeat>
+            </tr>
+        </thead>
+        <tbody>
+            <apex:repeat value="{!listReportData}" var="listData" first="1">
+                <apex:repeat value="{!listData}" var="DataItem">
+                    <tr>
+                        <apex:variable var="cnt" value="{!0}" />
+                        <apex:repeat value="{!DataItem}" var="bodyData">
+                            <apex:variable var="isprinted" value="{!0}" />
+                                <apex:repeat value="{!invisibleList}" var="inL">
+                                    <apex:outputPanel layout="none" rendered="{!dataD[cnt].shID == inL }">
+                                        <apex:variable var="isprinted" value="{!isprinted+1}" />
+                                    </apex:outputPanel>
+                                </apex:repeat>
+                                <apex:outputPanel layout="none" rendered="{!isprinted == 0 }">
+                                    <td align="{!IF(dataD[cnt].vartype='Text','left','right')}" style="font-family:Calibri;font-size:14px;" contenttype="application/vnd.ms-excel#{!IF(browserType,URLENCODE(strReportName),strReportName)}.xls"><apex:outputText value="{!IF(dataD[cnt].vartype='Number' && ISNUMBER(bodyData),FLOOR(VALUE(bodyData)),bodyData)}"/></td>
+                                </apex:outputPanel><!-- Changed by Swarnava - defect id : 2350 Truncate Number-->
+                            <apex:outputPanel layout="none" rendered="{!cnt < dataD.size - 1}">
+                                <apex:variable var="cnt" value="{!cnt+1}"/>
+                            </apex:outputPanel>
+                        </apex:repeat>            
+                    </tr>
+                </apex:repeat>
+            </apex:repeat>
+        </tbody>
+    </table>
+</apex:page>

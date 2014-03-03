@@ -1,0 +1,80 @@
+<apex:page showheader="false" sidebar="false" cache="false" standardStyleSheets="false" >
+<script type="text/javascript">
+alert('El desarrollo esta en progreso. Por favor revise mas tarde');
+history.back();
+</script>
+<!-- 
+<apex:form >
+<style>
+    .a{
+        color:#000000;
+    }
+</style>
+<script>
+function showOverlay(args) {
+       if(arguments.length == 0) {
+            throw new Error('Expected at least one argument.');
+       }    
+       var type = arguments[0];
+       var px = 0;
+       var py = 0;
+       var winHei = 0;
+       var heiSum = 0;
+       if(type == 'download') {
+               px = jQuery("#global_footer").css('height');
+               qx = jQuery(".footer_lnks").css('height');
+               winHei = jQuery(".footer_area").position().top;
+               heiSum = parseInt(winHei)+parseInt(px)+parseInt(qx);
+               jQuery("#download_main").css('height',heiSum);
+               jQuery("#download_main").attr('class','white_trans');
+               jQuery("#download_main").css('display','block');
+        }else {
+           throw new Error('Invalid type provided.');
+       }
+    }
+
+    function hideOverlay(){
+      jQuery("#email_sel_mask").attr('class','white_trans_closed'); 
+      jQuery("#download_main").css('display', 'none');
+    }
+    //Processing Message Function
+      function displayProcessingMsg(){
+        jQuery("#processing_msgs").css("top",function(){return (jQuery(window).scrollTop()+jQuery(window).height()/2)});
+        var px=jQuery("#global_footer").css('height');
+        var qx=jQuery(".footer_lnks").css('height');
+        var winHei=jQuery(".footer_area").position().top;
+        var heiSum=parseInt(winHei)+parseInt(px)+parseInt(qx);
+        jQuery("#email_sel_mask").css('height',heiSum);
+        if(jQuery("#email_sel_mask").attr('class')=='white_trans_closed'){
+            jQuery("#email_sel_mask").attr('class','white_trans');
+        }else{ 
+            jQuery("#email_sel_mask").attr('class','white_trans_closed');
+        }
+      }
+
+
+    function showHidePersonalMessage(showHide){
+
+    if(showHide=='HIDE'){
+      jQuery("#personal_message").attr('class','white_trans_closed');
+      jQuery("#personal_message").css('visibility','hidden');
+    }
+
+    }
+
+  
+</script>
+<apex:outputText escape="false" value="{!'<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">'}"/>
+<meta http-equiv="X-UA-Compatible" content="IE=8" />
+    <apex:composition template="YOUPageTemplateNoActions">
+        <apex:define name="content">
+            <apex:includeScript value="{!URLFOR($Resource.jQueryEarningIllustratorNew, 'js/jquery-ui-1.7.1.custom.min.js')}"/>
+            <apex:includeScript value="{!URLFOR($Resource.jQueryEarningIllustratorNew, 'js/selectToUISlider.jQuery.js')}"/>
+            <apex:stylesheet value="{!URLFOR($Resource.jQueryEarningIllustratorNew, 'css/redmond/jquery-ui-1.7.1.custom.css')}"/>
+            <apex:stylesheet value="{!URLFOR($Resource.jQueryEarningIllustratorNew, 'css/ui.slider.extras.css')}"/>
+            <c:My_Sales_Leaders_Genealogy strHeaderTitle="{!$Label.My_Executive_Genealogy}" rendered="{!$CurrentPage.parameters.pgId=='11'}"/>
+            <c:My_Sales_Leaders_Genealogy strHeaderTitle="{!$Label.My_Sales_Leaders_Genealogy}" rendered="{!$CurrentPage.parameters.pgId=='18'}"/>
+        </apex:define>
+    </apex:composition>
+</apex:form>-->
+</apex:page>

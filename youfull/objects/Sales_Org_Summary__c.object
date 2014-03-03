@@ -1,0 +1,4765 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableEnhancedLookup>false</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>false</enableReports>
+    <fields>
+        <fullName>ACTVTY_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Activity Count</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ACTVTY_DIV_RNK__c</fullName>
+        <externalId>false</externalId>
+        <label>Activity Division Rank</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ACTVTY_LCA_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Activity Last Analisys</label>
+        <length>32768</length>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>ACTVTY_My_Actions_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Activity My Actions</label>
+        <length>32768</length>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>ACTVTY_PLAN_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Activity Plan</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ACTVTY_RES_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(ACTVTY_PLAN_CNT__c == 0, 0, ACTVTY_CNT__c / ACTVTY_PLAN_CNT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Activity Results</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>1</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>ACTVTY_SPPY_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Activity SPPY Actual</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ACTVTY_VAR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF ( ACTVTY_PLAN_CNT__c = 0,0,ACTVTY_CNT__c / ACTVTY_PLAN_CNT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Activity Attainment</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>1</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>ACTVTY_VAR_DIFF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(ACTVTY_PLAN_CNT__c - ACTVTY_CNT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Activity Variance Difference</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ACTV_REP_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Act. Reps Invoiced</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ACTV_REP_DIV_RNK__c</fullName>
+        <externalId>false</externalId>
+        <label>Act. Reps Division Rank</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ACTV_REP_FRCST_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Active Rep Forecast</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ACTV_REP_FRCST_GOAL__c</fullName>
+        <externalId>false</externalId>
+        <label>Act. Reps % Goal Achieved</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>ACTV_REP_FRCST_INPUT__c</fullName>
+        <externalId>false</externalId>
+        <label>Active Rep Forecast Goal</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ACTV_REP_LCA_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Act. Reps Last Campaign Analysis</label>
+        <length>32768</length>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>ACTV_REP_My_Actions_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Act. Reps My Actions</label>
+        <length>32768</length>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>ACTV_REP_PLAN_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Act. Reps Plan</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ACTV_REP_PLAN_SPPY_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Act. Reps SPPY Plan</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ACTV_REP_RES_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(ACTV_REP_PLAN_CNT__c == 0, 0, ACTV_REP_CNT__c / ACTV_REP_PLAN_CNT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Act. Reps Results</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>1</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>ACTV_REP_SPPY_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Act. Reps PY</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ACTV_REP_VAR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF ( ACTV_REP_PLAN_CNT__c = 0,0,ACTV_REP_CNT__c / ACTV_REP_PLAN_CNT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Act. Reps % Attainment</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>1</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>ACTV_REP_VAR_DIFF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(ACTV_REP_PLAN_CNT__c - ACTV_REP_CNT__c)</formula>
+        <label>Act. Reps Variance Difference</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ADDTNS_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Additions Actual</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ADDTNS_DIV_RNK__c</fullName>
+        <externalId>false</externalId>
+        <label>Additions Division Rank</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ADDTNS_LCA_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Additions Last Analisys</label>
+        <length>32768</length>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>ADDTNS_My_Actions_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Additions My Actions</label>
+        <length>32768</length>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>ADDTNS_PLAN_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Additions Plan</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ADDTNS_RES_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(ADDTNS_PLAN_CNT__c == 0, 0, ADDTNS_CNT__c / ADDTNS_PLAN_CNT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Additions Results</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>1</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>ADDTNS_SPPY_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Additions SPPY Actual</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ADDTNS_VAR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF ( ADDTNS_PLAN_CNT__c = 0,0,ADDTNS_CNT__c / ADDTNS_PLAN_CNT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Additions Attainment</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>1</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>ADDTNS_VAR_DIFF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(ADDTNS_PLAN_CNT__c - ADDTNS_CNT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Additions Variance Difference</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>APPT_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Appointments Actual</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>APPT_DIV_RNK__c</fullName>
+        <externalId>false</externalId>
+        <label>Appointments Division Rank</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>APPT_FRCST_CNT__c</fullName>
+        <description>Forecast activity report. Forecast for appointments</description>
+        <externalId>false</externalId>
+        <label>Appointments Forecast</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>APPT_FRCST_GOAL__c</fullName>
+        <externalId>false</externalId>
+        <label>Appointments % Goal Achieved</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>APPT_FRCST_INPUT__c</fullName>
+        <externalId>false</externalId>
+        <label>Appointments Forecast Goal</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>APPT_LCA_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Appointments Last Campaign Analysis</label>
+        <length>32768</length>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>APPT_My_Actions_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Appointments My Actions</label>
+        <length>32768</length>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>APPT_PLAN_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Appointments Plan</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>APPT_PLAN_SPPY_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Appointments SPPY Plan</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>APPT_RES_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(APPT_PLAN_CNT__c == 0, 0, APPT_CNT__c / APPT_PLAN_CNT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Appointments Results</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>1</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>APPT_SPPY_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Appointments SPPY Actual</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>APPT_VAR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(APPT_PLAN_CNT__c = 0, 0, APPT_CNT__c / APPT_PLAN_CNT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Appointments % Attainment</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>1</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>APPT_VAR_DIFF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(APPT_PLAN_CNT__c - APPT_CNT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Appointments Variance Difference</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_ORD_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Average Order Actual</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_ORD_DIV_RNK__c</fullName>
+        <externalId>false</externalId>
+        <label>Average Order Division Rank</label>
+        <precision>15</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_ORD_LCA_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Average Order Last Analysis</label>
+        <length>32768</length>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>AVG_ORD_My_Actions_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Average Order My Actions</label>
+        <length>32768</length>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>AVG_ORD_PLAN_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Average Order Plan</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_ORD_RES_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(AVG_ORD_PLAN_CNT__c == 0, 0, AVG_ORD_CNT__c / AVG_ORD_PLAN_CNT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Average Order Results</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>1</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>AVG_ORD_SPPY_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Average Order SPPY Actual</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_ORD_VAR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF ( AVG_ORD_PLAN_CNT__c = 0,0,AVG_ORD_CNT__c / AVG_ORD_PLAN_CNT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Average Order Attainment</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>1</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>AVG_ORD_VAR_DIFF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(AVG_ORD_PLAN_CNT__c - AVG_ORD_CNT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Average Order Variance Difference</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Analysis_Done__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Analysis Done</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>FLD_SLS_CMPGN_NR__c</fullName>
+        <externalId>false</externalId>
+        <label>Field Campaign Number</label>
+        <length>6</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>INVC_AWRD_SLS_AMT__c</fullName>
+        <externalId>false</externalId>
+        <label>Invoiced Order Amount</label>
+        <precision>15</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>IS_CURR_CMPGN__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF (MRKT_KEY__r.CMPGN_NR__c = FLD_SLS_CMPGN_NR__c , &apos;True&apos;, &apos;False&apos;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Is Current Campaign</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>IS_NEXT_1_CMPGN__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF (MRKT_KEY__r.NEXT_1_CMPGN_NR__c = FLD_SLS_CMPGN_NR__c , &apos;True&apos;, &apos;False&apos;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Is Next Campaign</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>IS_PREV_1_CMPGN__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF (MRKT_KEY__r.PREV_1_CMPGN_NR__c = FLD_SLS_CMPGN_NR__c , &apos;True&apos;, &apos;False&apos;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Is Prev Campaign</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>IS_PREV_OR_CURR_OR_NEXT_CMPGN__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF ( OR (
+        (MRKT_KEY__r.PREV_1_CMPGN_NR__c = OPERTNL_CMPGN_NR__c), 
+		(MRKT_KEY__r.CMPGN_NR__c = OPERTNL_CMPGN_NR__c), 
+		(MRKT_KEY__r.NEXT_1_CMPGN_NR__c = OPERTNL_CMPGN_NR__c) ), 
+        &apos;True&apos;, &apos;False&apos;)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Is Previous or Current or Next Campaign</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>LOA0_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>LOA0 Actual</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>LOA0_LCA_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>LOA0 Last Campaign Analysis</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>LOA0_My_Actions_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>LOA0 My Actions</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>LOA0_PLAN_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>LOA0 Plan</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>LOA0_RES_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(LOA0_PLAN_CNT__c == 0, 0, LOA0_CNT__c / LOA0_PLAN_CNT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>LOA0 Results</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>1</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>LOA0_VAR_DIFF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(LOA0_PLAN_CNT__c - LOA0_CNT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>LOA0 Variance Difference</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>LOA1_6_NET_SLS_FRCST_GOAL__c</fullName>
+        <externalId>false</externalId>
+        <label>LOA1-6 % Goal Achieved</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>LOA1_6_NET_SLS_FRCST_INPUT__c</fullName>
+        <externalId>false</externalId>
+        <label>LOA1-6 Forecast Goal</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>LOA1_NET_SLS_AMT__c</fullName>
+        <externalId>false</externalId>
+        <label>LOA1 Sales Actual</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>LOA1_NET_SLS_DIV_RNK__c</fullName>
+        <externalId>false</externalId>
+        <label>LOA1 Sales Division Rank</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>LOA1_NET_SLS_FRCST_GOAL__c</fullName>
+        <externalId>false</externalId>
+        <label>LOA1 % Goal Achieved</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>LOA1_NET_SLS_FRCST_INPUT__c</fullName>
+        <externalId>false</externalId>
+        <label>LOA1 Sales Forecast Goal</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>LOA1_NET_SLS_LCA__c</fullName>
+        <externalId>false</externalId>
+        <label>LOA1 Sales Last Campaign Analysis</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>LOA1_NET_SLS_My_Actions__c</fullName>
+        <externalId>false</externalId>
+        <label>LOA1 Sales My Actions</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>LOA1_NET_SLS_PLAN_AMT__c</fullName>
+        <externalId>false</externalId>
+        <label>LOA1 Sales Plan</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>LOA1_NET_SLS_PLAN_SPPY_AMT__c</fullName>
+        <externalId>false</externalId>
+        <label>LOA1 Sales SPPY Plan</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>LOA1_NET_SLS_RES__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(LOA1_NET_SLS_PLAN_AMT__c == 0, 0, LOA1_NET_SLS_AMT__c / LOA1_NET_SLS_PLAN_AMT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>LOA1 Sales Results</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>1</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>LOA1_NET_SLS_SPPY_AMT__c</fullName>
+        <externalId>false</externalId>
+        <label>LOA1 Sales SPPY Actual</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>LOA1_NET_SLS_VAR_DIFF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(LOA1_NET_SLS_PLAN_AMT__c - LOA1_NET_SLS_AMT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>LOA1 Sales Variance Variance Difference</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>LOA1_NET_SLS_VAR__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(LOA1_NET_SLS_PLAN_AMT__c == 0, 0, LOA1_NET_SLS_AMT__c / LOA1_NET_SLS_PLAN_AMT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>LOA1 Sales Variance</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>1</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>LOA_1_6_NET_SLS_AMT__c</fullName>
+        <externalId>false</externalId>
+        <label>LOA1-6 Sales Actual</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>LOA_1_6_NET_SLS_DIV_RNK__c</fullName>
+        <externalId>false</externalId>
+        <label>LOA1-6 Sales Division Rank</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>LOA_1_6_NET_SLS_LCA_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>LOA1-6 Last Campaign Analysis</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>LOA_1_6_NET_SLS_LCA__c</fullName>
+        <externalId>false</externalId>
+        <label>LOA1-6 Sales Last Campaign Analysis</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>LOA_1_6_NET_SLS_My_Actions_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>LOA1-6 My Actions</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>LOA_1_6_NET_SLS_My_Actions__c</fullName>
+        <externalId>false</externalId>
+        <label>LOA1-6 Sales My Actions</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>LOA_1_6_NET_SLS_PLAN_AMT__c</fullName>
+        <externalId>false</externalId>
+        <label>LOA1-6 Sales Plan</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>LOA_1_6_NET_SLS_PLAN_SPPY_AMT__c</fullName>
+        <externalId>false</externalId>
+        <label>LOA1-6 Sales SPPY Plan</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>LOA_1_6_NET_SLS_RES_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(LOA_1_6_NET_SLS_PLAN_AMT__c == 0, 0, LOA_1_6_NET_SLS_AMT__c / LOA_1_6_NET_SLS_PLAN_AMT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>LOA1-6 Net Sales Results</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>1</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>LOA_1_6_NET_SLS_RES__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(LOA_1_6_NET_SLS_PLAN_AMT__c == 0, 0, LOA_1_6_NET_SLS_AMT__c / LOA_1_6_NET_SLS_PLAN_AMT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>LOA1-6 Sales Results</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>1</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>LOA_1_6_NET_SLS_SPPY_AMT__c</fullName>
+        <externalId>false</externalId>
+        <label>LOA1-6 sales sppy Actual</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>LOA_1_6_NET_SLS_VAR_DIFF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(LOA_1_6_NET_SLS_PLAN_AMT__c - LOA_1_6_NET_SLS_AMT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>LOA1-6 Sales Sales Variance</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>LOA_1_6_NET_SLS_VAR__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(LOA_1_6_NET_SLS_PLAN_AMT__c == 0, 0, LOA_1_6_NET_SLS_AMT__c / LOA_1_6_NET_SLS_PLAN_AMT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>LOA1-6 Sales Variance</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>1</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>LOA_NR__c</fullName>
+        <externalId>false</externalId>
+        <label>LOA</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>LST_DT_RSPD__c</fullName>
+        <externalId>false</externalId>
+        <label>Last Date Responded</label>
+        <required>false</required>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>MLPLN_CD__c</fullName>
+        <externalId>false</externalId>
+        <label>Mail Plan</label>
+        <length>15</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_ACCT_KEY__c</fullName>
+        <externalId>true</externalId>
+        <inlineHelpText>MRKT_ACCT_KEY</inlineHelpText>
+        <label>Sales Org Manager Key</label>
+        <length>50</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_ID_LVL_SLS_ORG_CD_KEY__c</fullName>
+        <externalId>false</externalId>
+        <label>Sales Org Key</label>
+        <length>50</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_KEY__c</fullName>
+        <externalId>false</externalId>
+        <label>Market</label>
+        <referenceTo>Market__c</referenceTo>
+        <relationshipLabel>Sales Org Summary</relationshipLabel>
+        <relationshipName>Sales_Org_Summary</relationshipName>
+        <required>false</required>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_1_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Market Tag 1 Actual</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_1_DIV_RNK__c</fullName>
+        <externalId>false</externalId>
+        <label>market tag 1 division rank</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_1_FRCST_CNT__c</fullName>
+        <description>Forecast activity report. Forecast for # of candidates (market tag 1)</description>
+        <externalId>false</externalId>
+        <label># of Candidates Forecast</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_1_FRCST_GOAL__c</fullName>
+        <externalId>false</externalId>
+        <label># of Candidates % Goal Achieved</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_1_FRCST_INPUT__c</fullName>
+        <externalId>false</externalId>
+        <label># of Candidates Forecast Goal</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_1_LCA_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Market Tag 1 Last Campaign Analysis</label>
+        <length>32768</length>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_1_My_Actions_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Market Tag 1 My Actions</label>
+        <length>32768</length>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_1_PLAN_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Market Tag 1 Plan</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_1_PLAN__c</fullName>
+        <externalId>false</externalId>
+        <label>market tag 1 plan (DO NOT USE)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_1_RES_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(MRKT_TAG_1_PLAN_CNT__c == 0, 0, MRKT_TAG_1_CNT__c / MRKT_TAG_1_PLAN_CNT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Market Tag 1 Results</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>1</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_1_SLS_ORG_SUM_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Market Tag Zone 1 Performance</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_1_SPPY_PLAN__c</fullName>
+        <externalId>false</externalId>
+        <label>market tag 1 sppy plan</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_1_SPPY__c</fullName>
+        <externalId>false</externalId>
+        <label>market tag 1 sppy actual</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_1_TAR_LAST_CMPGN_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>market 1 tag title at risk</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_1_VAR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(MRKT_TAG_1_PLAN_CNT__c == 0, 0, MRKT_TAG_1_CNT__c / MRKT_TAG_1_PLAN_CNT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>MarketTag 1 Variance</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>1</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_1_VAR_DIFF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(MRKT_TAG_1_PLAN_CNT__c - MRKT_TAG_1_CNT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>MarketTag 1 Variance Difference</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_1__c</fullName>
+        <externalId>false</externalId>
+        <label>Market tag 1 (DO NOT USE)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_2_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Market Tag 2 Actual</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>1</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_2_DIV_RNK__c</fullName>
+        <externalId>false</externalId>
+        <label>market tag 2 division rank</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_2_FRCST_CNT__c</fullName>
+        <description>Forecast activity report. Forecast for opportunity meeting (market tag 2)</description>
+        <externalId>false</externalId>
+        <label>Opportunity Forecast</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_2_FRCST_GOAL__c</fullName>
+        <externalId>false</externalId>
+        <label>Opportunity % Goal Achieved</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_2_FRCST_INPUT__c</fullName>
+        <externalId>false</externalId>
+        <label>Opportunity Forecast Goal</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_2_LCA_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Market Tag 2 Last Campaign Analysis</label>
+        <length>32768</length>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_2_My_Actions_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Market Tag 2 My Actions</label>
+        <length>32768</length>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_2_PLAN_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Market Tag 2 Plan</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_2_PLAN__c</fullName>
+        <externalId>false</externalId>
+        <label>Market Tag 2 Plan (DO NOT USE)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_2_RES_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(MRKT_TAG_2_PLAN_CNT__c == 0, 0, MRKT_TAG_2_CNT__c / MRKT_TAG_2_PLAN_CNT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Market Tag 2 Results</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>1</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_2_SLS_ORG_SUM_AMT__c</fullName>
+        <externalId>false</externalId>
+        <label>Market Tag Zone 2 Performance</label>
+        <precision>17</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_2_SPPY_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>market tag 2 sppy actual</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_2_SPPY_PLAN__c</fullName>
+        <externalId>false</externalId>
+        <label>market tag 2 sppy plan</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_2_SPPY__c</fullName>
+        <externalId>false</externalId>
+        <label>market tag 2 sppy actual (DO NOT USE)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_2_VAR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(MRKT_TAG_2_PLAN_CNT__c == 0, 0, MRKT_TAG_2_CNT__c / MRKT_TAG_2_PLAN_CNT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>MarketTag 2 Variance</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>1</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_2_VAR_DIFF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(MRKT_TAG_2_PLAN_CNT__c - MRKT_TAG_2_CNT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>MarketTag 2 Variance Difference</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_2__c</fullName>
+        <externalId>false</externalId>
+        <label>Market tag 2(DO NOT USE)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_3_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Market Tag 3 Actual</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>1</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_3_DIV_RNK__c</fullName>
+        <externalId>false</externalId>
+        <label>market tag 3 division rank</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_3_FRCST_GOAL__c</fullName>
+        <externalId>false</externalId>
+        <label>Market Tag 3 % Goal Achieved</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_3_FRCST_INPUT__c</fullName>
+        <externalId>false</externalId>
+        <label>Market Tag 3 Forecast Goal</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_3_LCA_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Market Tag 3 Last Campaign Analysis</label>
+        <length>32768</length>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_3_My_Actions_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Market Tag 3 My Actions</label>
+        <length>32768</length>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_3_PLAN_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Market Tag 3 Plan</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_3_PLAN__c</fullName>
+        <externalId>false</externalId>
+        <label>market tag 3 plan (DO NOT USE)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_3_RES_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(MRKT_TAG_3_PLAN_CNT__c == 0, 0, MRKT_TAG_3_CNT__c / MRKT_TAG_3_PLAN_CNT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Market Tag 3 Results</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>1</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_3_SLS_ORG_SUM_PCT__c</fullName>
+        <externalId>false</externalId>
+        <label>Market Tag Zone 3 Performance</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_3_SPPY_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>market tag 3 sppy actual</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_3_SPPY_PLAN__c</fullName>
+        <externalId>false</externalId>
+        <label>market tag 3 sppy plan</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_3_SPPY__c</fullName>
+        <externalId>false</externalId>
+        <label>market tag 3 sppy actual (DO NOT USE)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_3_VAR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(MRKT_TAG_3_PLAN_CNT__c == 0, 0, MRKT_TAG_3_CNT__c / MRKT_TAG_3_PLAN_CNT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Market Tag 3 Variance</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>1</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_3_VAR_DIFF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(MRKT_TAG_3_PLAN_CNT__c - MRKT_TAG_3_CNT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>MarketTag 3 Variance Difference</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_3__c</fullName>
+        <externalId>false</externalId>
+        <label>Market tag 3 (DO NOT USE)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_4_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Market Tag 4 Actual</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>1</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_4_DIV_RNK__c</fullName>
+        <externalId>false</externalId>
+        <label>market tag 4 division rank</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_4_FRCST_GOAL__c</fullName>
+        <externalId>false</externalId>
+        <label>Market Tag 4 % Goal Achieved</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_4_FRCST_INPUT__c</fullName>
+        <externalId>false</externalId>
+        <label>Market Tag 4 Forecast Goal</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_4_LCA_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Market Tag 4 Last Campaign Analysis</label>
+        <length>32768</length>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_4_My_Actions_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Market Tag 4 My Actions</label>
+        <length>32768</length>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_4_PLAN_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Market Tag 4 Plan</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_4_PLAN__c</fullName>
+        <externalId>false</externalId>
+        <label>market tag 4 plan (DO NOT USE)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_4_RES_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(MRKT_TAG_4_PLAN_CNT__c == 0, 0, MRKT_TAG_4_CNT__c / MRKT_TAG_4_PLAN_CNT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Market Tag 4 Results</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>1</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_4_SPPY_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>market tag 4 sppy actual</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_4_SPPY_PLAN__c</fullName>
+        <externalId>false</externalId>
+        <label>market tag 4 sppy plan</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_4_SPPY__c</fullName>
+        <externalId>false</externalId>
+        <label>market tag 4 sppy actual (DO NOT USE)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_4_VAR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(MRKT_TAG_4_PLAN_CNT__c == 0, 0, MRKT_TAG_4_CNT__c / MRKT_TAG_4_PLAN_CNT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Market Tag 4 Variance</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>1</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_4_VAR_DIFF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(MRKT_TAG_4_PLAN_CNT__c - MRKT_TAG_4_CNT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>MarketTag 4 Variance Difference</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_4__c</fullName>
+        <externalId>false</externalId>
+        <label>Market tag 4 (DO NOT USE)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_TRACKER_1_FRCST_CNT__c</fullName>
+        <description>Forecast activity report. Forecast for # of candidates (market tag 1)</description>
+        <externalId>false</externalId>
+        <label>Market Tag Tracker 1 Goal</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_TRACKER_1_INPUT__c</fullName>
+        <externalId>false</externalId>
+        <label>Market Tag Tracker 1 Forecast Input</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_TRACKER_1_PCT__c</fullName>
+        <externalId>false</externalId>
+        <label>Market Tag Tracker 1 % Achieved</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_TRACKER_1_PLAN__c</fullName>
+        <externalId>false</externalId>
+        <label>Market Tag Tracker 1 Plan</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_TRACKER_2_FRCST_CNT__c</fullName>
+        <description>Forecast activity report. Forecast for opportunity meeting (market tag 2)</description>
+        <externalId>false</externalId>
+        <label>Market Tag Tracker 2 Goal</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_TRACKER_2_INPUT__c</fullName>
+        <externalId>false</externalId>
+        <label>Market Tag Tracker 2 Forecast Input</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_TRACKER_2_PCT__c</fullName>
+        <externalId>false</externalId>
+        <label>Market Tag Tracker 2 % Achieved</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_TRACKER_2_PLAN__c</fullName>
+        <externalId>false</externalId>
+        <label>Market Tag Tracker 2 Plan</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_TRACKER_3_FRCST_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Market Tag Tracker 3 Goal</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_TRACKER_3_INPUT__c</fullName>
+        <externalId>false</externalId>
+        <label>Market Tag Tracker 3 Forecast Input</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_TRACKER_3_PCT__c</fullName>
+        <externalId>false</externalId>
+        <label>Market Tag Tracker 3 % Achieved</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_TRACKER_3_PLAN__c</fullName>
+        <externalId>false</externalId>
+        <label>Market Tag Tracker 3 Plan</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_TRACKER_4_FRCST_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Market Tag Tracker 4 Goal</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_TRACKER_4_INPUT__c</fullName>
+        <externalId>false</externalId>
+        <label>Market Tag Tracker 4 Forecast Input</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_TRACKER_4_PCT__c</fullName>
+        <externalId>false</externalId>
+        <label>Market Tag Tracker 4 % Achieved</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_TRACKER_4_PLAN__c</fullName>
+        <externalId>false</externalId>
+        <label>Market Tag Tracker 4 Plan</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_TRACKER_5_FRCST_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Market Tag Tracker 5 Goal</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_TRACKER_5_INPUT__c</fullName>
+        <externalId>false</externalId>
+        <label>Market Tag Tracker 5 Forecast Input</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_TRACKER_5_PCT__c</fullName>
+        <externalId>false</externalId>
+        <label>Market Tag Tracker 5 % Achieved</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_TRACKER_5_PLAN__c</fullName>
+        <externalId>false</externalId>
+        <label>Market Tag Tracker 5 Plan</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_TRACKER_6_FRCST_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Market Tag Tracker 6 Goal</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_TRACKER_6_INPUT__c</fullName>
+        <externalId>false</externalId>
+        <label>Market Tag  Tracker6 Forecast Input</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_TRACKER_6_PCT__c</fullName>
+        <externalId>false</externalId>
+        <label>Market Tag Tracker 6 % Achieved</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>MRKT_TAG_TRACKER_6_PLAN__c</fullName>
+        <externalId>false</externalId>
+        <label>Market Tag Tracker 6 Plan</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NET_SLS_AMT__c</fullName>
+        <externalId>false</externalId>
+        <label>Net Sales Actual (Do not Use - Delete)</label>
+        <precision>15</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NET_SLS_DIV_RNK__c</fullName>
+        <externalId>false</externalId>
+        <label>Net sales division rank</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NET_SLS_FRCST_GOAL__c</fullName>
+        <externalId>false</externalId>
+        <label>Net Sales % Goal Achieved</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>NET_SLS_FRCST_INPUT__c</fullName>
+        <externalId>false</externalId>
+        <label>Net Sales Forecast Goal</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NET_SLS_INVC_AMT__c</fullName>
+        <externalId>false</externalId>
+        <label>Net sales Invoiced</label>
+        <precision>15</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NET_SLS_LCA_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Net Sales Last Campaign Analysis</label>
+        <length>32768</length>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>NET_SLS_My_Actions_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Net Sales My Actions</label>
+        <length>32768</length>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>NET_SLS_PLAN_AMT__c</fullName>
+        <externalId>false</externalId>
+        <label>Net Sales Plan</label>
+        <precision>15</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NET_SLS_PLAN_SPPY_AMT__c</fullName>
+        <externalId>false</externalId>
+        <label>Net sales sppy plan</label>
+        <precision>15</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NET_SLS_RES_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(NET_SLS_PLAN_AMT__c == 0, 0, TOTAL_NET_SLS_AMT__c / NET_SLS_PLAN_AMT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Net Sales Results</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>1</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>NET_SLS_SMTB_AMT__c</fullName>
+        <externalId>false</externalId>
+        <label>Net sales Submitted</label>
+        <precision>15</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NET_SLS_SPPY_AMT__c</fullName>
+        <externalId>false</externalId>
+        <label>Net Sales PY</label>
+        <precision>15</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NET_SLS_VAR_DIFF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(NET_SLS_PLAN_AMT__c - NET_SLS_AMT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Net sales Variance Difference</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>NET_SLS_VAR__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF ( NET_SLS_PLAN_AMT__c = 0, 0, TOTAL_NET_SLS_AMT__c / NET_SLS_PLAN_AMT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Sales % Attainment</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>1</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>Num_Campaign_Stars__c</fullName>
+        <externalId>false</externalId>
+        <label>Num Campaign Stars</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>OPERTNL_CMPGN_NR__c</fullName>
+        <externalId>false</externalId>
+        <label>Operational Campaign Number</label>
+        <length>6</length>
+        <required>true</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ORD_SUBMTD_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Act. Reps Submitted</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>POT_RMOVL_CNT__c</fullName>
+        <description>Count of representative with X number of campaigns inactive. X is a market parameter in CDW.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Count of representative with X number of campaigns inactive. X is a market parameter in CDW.</inlineHelpText>
+        <label>Potential Removals</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PRSPCTS_FRCST_CNT__c</fullName>
+        <description>Forecast activity report. Forecast for prospect</description>
+        <externalId>false</externalId>
+        <label>Prospects Goal</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PRSPCTS_FRCST_PLAN__c</fullName>
+        <externalId>false</externalId>
+        <label>Prospects Forecast Plan</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PRSPCTS_INPUT__c</fullName>
+        <externalId>false</externalId>
+        <label>Prospects Forecast Input</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PRSPCTS_PCT__c</fullName>
+        <description>Percentage of Prospects Forecast against Goal</description>
+        <externalId>false</externalId>
+        <label>Prospects % Achieved</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>PRSPCT_FRCST_CNT__c</fullName>
+        <description>Forecast activity report. Forecast for prospect</description>
+        <externalId>false</externalId>
+        <label>prospect forecast</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>PRSPCT_FRCST_INPUT__c</fullName>
+        <externalId>false</externalId>
+        <label>Prospect Forecast Goal</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Personal_Info_1__c</fullName>
+        <externalId>false</externalId>
+        <label>Personal Info 1 (DO NOT USE)</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Personal_Info_2__c</fullName>
+        <externalId>false</externalId>
+        <label>Personal Info 2 (DO NOT USE)</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>RMOVL_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Removals Actuals</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>RMOVL_DIV_RNK__c</fullName>
+        <externalId>false</externalId>
+        <label>removals division rank</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>RMOVL_FRCST_GOAL__c</fullName>
+        <externalId>false</externalId>
+        <label>Removal % Goal Achieved</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>RMOVL_FRCST_INPUT__c</fullName>
+        <externalId>false</externalId>
+        <label>Removal Forecast Goal</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>RMOVL_LCA_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Removals Last Campaign Analysis</label>
+        <length>32768</length>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>RMOVL_My_Actions_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Removals My Actions</label>
+        <length>32768</length>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>RMOVL_PLAN_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>removals plan</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>RMOVL_PLAN_SPPY_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>removals sppy plan</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>RMOVL_RES_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(RMOVL_PLAN_CNT__c == 0, 0, RMOVL_CNT__c / RMOVL_PLAN_CNT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Removals Results</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>1</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>RMOVL_SPPY_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>removals sppy actual</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>RMOVL_VAR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(RMOVL_PLAN_CNT__c == 0, 0, RMOVL_CNT__c / RMOVL_PLAN_CNT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Removals Variance</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>1</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>RMOVL_VAR_DIFF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(RMOVL_PLAN_CNT__c  -  RMOVL_CNT__c)</formula>
+        <label>Removals Variance Difference</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>RNSTMT_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Actual Reinstatements</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>RNSTMT_DIV_RNK__c</fullName>
+        <externalId>false</externalId>
+        <label>reinstatements division rank</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>RNSTMT_FRCST_CNT__c</fullName>
+        <description>Forecast activity report. Forecast for reinstatement for campaign</description>
+        <externalId>false</externalId>
+        <label>Reinstatement Forecast</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>RNSTMT_FRCST_GOAL__c</fullName>
+        <externalId>false</externalId>
+        <label>Reinstatement % Goal Achieved</label>
+        <precision>3</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>RNSTMT_FRCST_INPUT__c</fullName>
+        <externalId>false</externalId>
+        <label>Reinstatement Forecast Goal</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>RNSTMT_LCA_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Reinstatements Last Campaign Analysis</label>
+        <length>32768</length>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>RNSTMT_My_Actions_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Reinstatements My Actions</label>
+        <length>32768</length>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>RNSTMT_PLAN_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Reinstatements Plan</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>RNSTMT_PLAN_SPPY_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>reinstatements sppy plan</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>RNSTMT_RES_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(RNSTMT_PLAN_CNT__c == 0, 0, RNSTMT_CNT__c / RNSTMT_PLAN_CNT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Reinstatements Results</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>1</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>RNSTMT_SPPY_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>reinstatements sppy actual</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>RNSTMT_VAR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(RNSTMT_PLAN_CNT__c == 0, 0, RNSTMT_CNT__c / RNSTMT_PLAN_CNT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Reinstatements Variance</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>1</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>RNSTMT_VAR_DIFF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(RNSTMT_PLAN_CNT__c - RNSTMT_CNT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Reinstatements Variance Difference</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>RTURN_NET_SLS_AMT__c</fullName>
+        <externalId>false</externalId>
+        <label>Actual Returns</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>RTURN_NET_SLS_DIV_RNK__c</fullName>
+        <externalId>false</externalId>
+        <label>returned sales division rank</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>RTURN_NET_SLS_FRCST_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Return Net Sales Forecast</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>RTURN_NET_SLS_LCA__c</fullName>
+        <externalId>false</externalId>
+        <label>Returned Sales Last Campaign Analysis</label>
+        <length>32768</length>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>RTURN_NET_SLS_My_Actions__c</fullName>
+        <externalId>false</externalId>
+        <label>Returned Sales My Actions</label>
+        <length>32768</length>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>RTURN_NET_SLS_PLAN_AMT__c</fullName>
+        <externalId>false</externalId>
+        <label>returned sales plan</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>RTURN_NET_SLS_PLAN_SPPY_AMT__c</fullName>
+        <externalId>false</externalId>
+        <label>returned sales sppy plan</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>RTURN_NET_SLS_RES__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(RTURN_NET_SLS_PLAN_AMT__c == 0, 0, RTURN_NET_SLS_AMT__c / RTURN_NET_SLS_PLAN_AMT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Returned Sales Results</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>1</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>RTURN_NET_SLS_RSNG_STR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Return Net Sales Rising Star Count</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>RTURN_NET_SLS_SPPY_AMT__c</fullName>
+        <externalId>false</externalId>
+        <label>returned sales sppy actual</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>RTURN_NET_SLS_TAR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Return Net Sales Count at Risk</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>RTURN_NET_SLS_TAR_LAST_CMPGN_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Return Net Sales Count at Risk Last Camp</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>RTURN_NET_SLS_VAR_DIFF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(RTURN_NET_SLS_PLAN_AMT__c - RTURN_NET_SLS_AMT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Returned Sales Variance Difference</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>RTURN_NET_SLS_VAR__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(RTURN_NET_SLS_PLAN_AMT__c == 0, 0, RTURN_NET_SLS_AMT__c / RTURN_NET_SLS_PLAN_AMT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Returned Sales Variance</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>1</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>SLS_ORG_DESC_TXT__c</fullName>
+        <externalId>false</externalId>
+        <label>Area</label>
+        <length>100</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SLS_ORG_LVL_DESC_TXT__c</fullName>
+        <externalId>false</externalId>
+        <label>Sales Org Type</label>
+        <length>100</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SLS_ORG_PAR__c</fullName>
+        <externalId>false</externalId>
+        <formula>ZONE_MGR__r.DFALT_DIV_NM__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Area Parent</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SLS_ORG_SUMRY_KEY__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <description>Sales Org Summary Key.  Format: MRKT_ID+CMPGN_NR+ORG_TYPE+ORG_NAME</description>
+        <externalId>true</externalId>
+        <label>SLS_ORG_SUMRY_KEY__c</label>
+        <length>100</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>STF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>staff count</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>STF_DIV_RNK__c</fullName>
+        <externalId>false</externalId>
+        <label>End Representative Division Rank</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>STF_FRCST_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>End Representative Forecast</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>STF_FRCST_GOAL__c</fullName>
+        <externalId>false</externalId>
+        <label>End Representative Forecast Goal</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>STF_LCA_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>End Representative LCA</label>
+        <length>32768</length>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>STF_My_Actions_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>End Representative My Actions</label>
+        <length>32768</length>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>STF_PLAN_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>End Representative Plan</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>STF_RES_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(STF_PLAN_CNT__c == 0, 0, STF_CNT__c / STF_PLAN_CNT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>End Representative Results</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>STF_RSNG_STR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>staff count of rising star</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>STF_SPPY_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>End Representative PY Actuals</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>STF_TAR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>staff count at risk</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>STF_TAR_LAST_CMPGN_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>staff count at risk!</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>STF_VAR_DIFF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(STF_PLAN_CNT__c - STF_CNT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>End Representative Variance Difference</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITLD_STF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>count of Unit leader and above actual</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITLD_STF_DIV_RNK__c</fullName>
+        <externalId>false</externalId>
+        <label>count of Unit leader and above DR</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITLD_STF_LCA_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>count of UL above Last Campaign Analysis</label>
+        <length>32768</length>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>TITLD_STF_My_Actions_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>count of UL above My Actions</label>
+        <length>32768</length>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>TITLD_STF_PLAN_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>count of Unit leader and above plan</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITLD_STF_PLAN_SPPY_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>count of Unit leader and above sppy plan</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITLD_STF_RES_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(TITLD_STF_PLAN_CNT__c == 0, 0, TITLD_STF_CNT__c / TITLD_STF_PLAN_CNT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Count of Unit leader and above Results</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>1</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>TITLD_STF_SPPY_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>count of Unit leader sppy actual</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITLD_STF_TAR2_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Titled - count at risk2</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITLD_STF_VAR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(TITLD_STF_PLAN_CNT__c == 0, 0, TITLD_STF_CNT__c / TITLD_STF_PLAN_CNT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Count of Unit leader and above Variance</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>1</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>TITLD_STF_VAR_DIFF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(TITLD_STF_PLAN_CNT__c - TITLD_STF_CNT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Candidates Variance</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_0_STF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>candidates - count</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_0_STF_DIV_RNK__c</fullName>
+        <externalId>false</externalId>
+        <label>candidates - division rank</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_0_STF_LCA_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Candidates Last Campaign Analysis</label>
+        <length>32768</length>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>TITL_0_STF_My_Actions_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Candidates My Actions</label>
+        <length>32768</length>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>TITL_0_STF_PLAN_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label># of Candidates Plan</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_0_STF_PLAN_SPPY_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>candidates - sppy plan</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_0_STF_RES_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(TITL_0_STF_PLAN_CNT__c == 0, 0, TITL_0_STF_CNT__c / TITL_0_STF_PLAN_CNT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Candidate Results</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>1</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>TITL_0_STF_RSNG_STR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>candidates - count of rising star</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_0_STF_SPPY_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>candidates - sppy actual</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_0_STF_TAR2_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Candidates - count at risk2</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_0_STF_TAR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>candidates - count at risk</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_0_STF_TAR_LAST_CMPGN_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>candidates - count at risk!</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_0_STF_VAR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(TITL_0_STF_PLAN_CNT__c == 0, 0, TITL_0_STF_CNT__c / TITL_0_STF_PLAN_CNT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Candidates Variance</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>1</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>TITL_0_TL_STF_BASE_TAR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>TITL_0_TL_STF_BASE_TAR_CNT</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_0_TL_STF_BASE_TAR_LAST_CMPGN_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>TITL_0_TL_STF_BASE_TAR_LAST_CMPGN_CNT</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_0_TL_STF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>TITL_0_TL_STF_CNT</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_0_TL_STF_RSNG_STR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>TITL_0_TL_STF_RSNG_STR_CNT</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_0_TL_STF_TAR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>TITL_0_TL_STF_TAR_CNT</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_0_TL_STF_TAR_LAST_CMPGN_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>TITL_0_TL_STF_TAR_LAST_CMPGN_CNT</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_10_STF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>etc.</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_10_STF_RSNG_STR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>etc.</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_10_STF_TAR2_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Titl 10 - count at risk2</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_10_STF_TAR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>etc.</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_10_STF_TAR_LAST_CMPGN_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>etc.</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_11_STF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>etc.</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_11_STF_RSNG_STR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>etc.</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_11_STF_TAR2_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Titl 11 - count at risk2</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_11_STF_TAR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>etc.</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_11_STF_TAR_LAST_CMPGN_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>etc.</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_12_STF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>etc.</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_12_STF_RSNG_STR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>etc.</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_12_STF_TAR2_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Titl 12 - count at risk2</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_12_STF_TAR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>etc.</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_12_STF_TAR_LAST_CMPGN_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>etc.</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_13_STF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>etc.</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_13_STF_RSNG_STR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>etc.</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_13_STF_TAR2_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Titl 13 - count at risk2</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_13_STF_TAR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>etc.</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_13_STF_TAR_LAST_CMPGN_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>etc.</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_14_STF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>etc.</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_14_STF_RSNG_STR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>etc.</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_14_STF_TAR2_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Titl 14 - count at risk2</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_14_STF_TAR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>etc.</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_14_STF_TAR_LAST_CMPGN_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>etc.</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_15_STF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>etc.</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_15_STF_RSNG_STR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>etc.</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_15_STF_TAR2_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Titl 15 - count at risk2</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_15_STF_TAR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>etc.</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_15_STF_TAR_LAST_CMPGN_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>etc.</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_1_STF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>UL - count of UL</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_1_STF_DIV_RNK__c</fullName>
+        <externalId>false</externalId>
+        <label>UL - Division Rank</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_1_STF_LCA_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>UM Last Campaign Analysis</label>
+        <length>32768</length>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>TITL_1_STF_My_Actions_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>UM My Actions</label>
+        <length>32768</length>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>TITL_1_STF_PLAN_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Title 1 - Plan</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_1_STF_PLAN_SPPY_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Title 1 - SPPY Plan</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_1_STF_RES_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(TITL_1_STF_PLAN_CNT__c == 0, 0, TITL_1_STF_CNT__c / TITL_1_STF_PLAN_CNT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Title 1 Results</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>1</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>TITL_1_STF_RSNG_STR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>UL - count of rising star</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_1_STF_SPPY_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Title 1 - SPPY Actual</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_1_STF_TAR2_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>UL - count of at risk2</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_1_STF_TAR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>UL - count of at risk</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_1_STF_TAR_LAST_CMPGN_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>UL - count of at risk!</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_1_STF_VAR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(TITL_1_STF_PLAN_CNT__c == 0, 0, TITL_1_STF_CNT__c / TITL_1_STF_PLAN_CNT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Title 1 Variance</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>1</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>TITL_1_TL_STF_BASE_TAR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>TITL_1_TL_STF_BASE_TAR_CNT</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_1_TL_STF_BASE_TAR_LAST_CMPGN_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>TITL_1_TL_STF_BASE_TAR_LAST_CMPGN_CNT</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_1_TL_STF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>TITL_1_TL_STF_CNT</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_1_TL_STF_RSNG_STR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>TITL_1_TL_STF_RSNG_STR_CNT</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_1_TL_STF_TAR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>TITL_1_TL_STF_TAR_CNT</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_1_TL_STF_TAR_LAST_CMPGN_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>TITL_1_TL_STF_TAR_LAST_CMPGN_CNT</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_2_STF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>AUL - count</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_2_STF_DIV_RNK__c</fullName>
+        <externalId>false</externalId>
+        <label>Title 2 - Division Rank</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_2_STF_LCA_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>AUM Last Campaign Analysis</label>
+        <length>32768</length>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>TITL_2_STF_My_Actions_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>AUM My Actions</label>
+        <length>32768</length>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>TITL_2_STF_PLAN_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Title 2 - plan</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_2_STF_PLAN_SPPY_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Title 2 - SPPY Plan</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_2_STF_RES_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(TITL_2_STF_PLAN_CNT__c == 0, 0, TITL_2_STF_CNT__c / TITL_2_STF_PLAN_CNT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Title 2 Results</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>1</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>TITL_2_STF_RSNG_STR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>AUL - count of rising star</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_2_STF_SPPY_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Title 2 - SPPY Actual</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_2_STF_TAR2_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>AUL - count of at risk2</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_2_STF_TAR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>AUL - count of at risk</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_2_STF_TAR_LAST_CMPGN_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>AUL - count of at risk!</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_2_STF_VAR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(TITL_2_STF_PLAN_CNT__c == 0, 0, TITL_2_STF_CNT__c / TITL_2_STF_PLAN_CNT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Title 2 Variance</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>1</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>TITL_2_TL_STF_BASE_TAR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>TITL_2_TL_STF_BASE_TAR_CNT</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_2_TL_STF_BASE_TAR_LAST_CMPGN_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>TITL_2_TL_STF_BASE_TAR_LAST_CMPGN_CNT</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_2_TL_STF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>TITL_2_TL_STF_CNT</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_2_TL_STF_RSNG_STR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>TITL_2_TL_STF_RSNG_STR_CNT</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_2_TL_STF_TAR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>TITL_2_TL_STF_TAR_CNT</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_2_TL_STF_TAR_LAST_CMPGN_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>TITL_2_TL_STF_TAR_LAST_CMPGN_CNT</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_3_STF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>EUL - count</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_3_STF_DIV_RNK__c</fullName>
+        <externalId>false</externalId>
+        <label>Title 3 - Division Rank</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_3_STF_LCA_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>EL Last Campaign Analysis</label>
+        <length>32768</length>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>TITL_3_STF_My_Actions_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>EL My Actions</label>
+        <length>32768</length>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>TITL_3_STF_PLAN_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Title 3 - Plan</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_3_STF_PLAN_SPPY_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Title 3 - SPPY Plan</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_3_STF_RES_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(TITL_3_STF_PLAN_CNT__c == 0, 0, TITL_3_STF_CNT__c / TITL_3_STF_PLAN_CNT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Title 3 Results</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>1</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>TITL_3_STF_RSNG_STR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>EUL - count of rising star</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_3_STF_SPPY_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Title 3 - SPPY Actual</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_3_STF_TAR2_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>EUL - count of at risk2</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_3_STF_TAR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>EUL - count of at risk</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_3_STF_TAR_LAST_CMPGN_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>EUL - count of at risk!</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_3_STF_VAR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(TITL_3_STF_PLAN_CNT__c == 0, 0, TITL_3_STF_CNT__c / TITL_3_STF_PLAN_CNT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Title 3 Variance</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>1</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>TITL_3_TL_STF_BASE_TAR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>EL TL Base at Risk</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_3_TL_STF_BASE_TAR_LAST_CMPGN_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>EL TL Base at Risk!</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_3_TL_STF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>EL TL count</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_3_TL_STF_RSNG_STR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>EL TL Rising Star</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_3_TL_STF_TAR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>EL TL At Risk</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_3_TL_STF_TAR_LAST_CMPGN_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>EL TL At Risk!</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_4_STF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>etc.</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_4_STF_DIV_RNK__c</fullName>
+        <externalId>false</externalId>
+        <label>Title 4 - Division Rank</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_4_STF_LCA_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>SEL+ Last Campaign Analysis</label>
+        <length>32768</length>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>TITL_4_STF_My_Actions_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>SEL+ My Actions</label>
+        <length>32768</length>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>TITL_4_STF_PLAN_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Title 4 - Plan</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_4_STF_PLAN_SPPY_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Title 4 - SPPY Plan</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_4_STF_RES_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(TITL_4_STF_PLAN_CNT__c == 0, 0, TITL_4_STF_CNT__c / TITL_4_STF_PLAN_CNT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Title 4 Results</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>1</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>TITL_4_STF_RSNG_STR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>etc.</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_4_STF_SPPY_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Title 4 - SPPY Actual</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_4_STF_TAR2_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>SEL1 - count of at risk2</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_4_STF_TAR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>etc.</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_4_STF_TAR_LAST_CMPGN_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>etc.</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_4_STF_VAR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(TITL_4_STF_PLAN_CNT__c == 0, 0, TITL_4_STF_CNT__c / TITL_4_STF_PLAN_CNT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Title 4 Variance</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>1</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>TITL_4_TL_STF_BASE_TAR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>SEL TL Base at Risk</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_4_TL_STF_BASE_TAR_LAST_CMPGN_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>SEL TL Base at Risk!</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_4_TL_STF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>SEL TL count</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_4_TL_STF_RSNG_STR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>SEL TL Rising Star</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_4_TL_STF_TAR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>SEL TL At Risk</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_4_TL_STF_TAR_LAST_CMPGN_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>SEL TL At Risk!</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_5_STF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>SEL1 - count</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_5_STF_RSNG_STR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>etc.</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_5_STF_TAR2_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>SEL2 - count of at risk2</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_5_STF_TAR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>etc.</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_5_STF_TAR_LAST_CMPGN_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>etc.</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_6_STF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>SEL2 - count</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_6_STF_RSNG_STR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>etc.</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_6_STF_TAR2_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>SEL3 - count of at risk2</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_6_STF_TAR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>etc.</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_6_STF_TAR_LAST_CMPGN_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>etc.</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_7_STF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>SEL3 - count</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_7_STF_RSNG_STR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>etc.</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_7_STF_TAR2_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>SEL4 - count of at risk2</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_7_STF_TAR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>etc.</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_7_STF_TAR_LAST_CMPGN_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>etc.</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_8_STF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>SEL4 - count</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_8_STF_RSNG_STR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>etc.</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_8_STF_TAR2_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Titl 8 - count at risk2</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_8_STF_TAR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>etc.</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_8_STF_TAR_LAST_CMPGN_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>etc.</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_9_STF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>SEL5 - count</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_9_STF_RSNG_STR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>etc.</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_9_STF_TAR2_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Titl 9 - count at risk2</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_9_STF_TAR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>etc.</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TITL_9_STF_TAR_LAST_CMPGN_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>etc.</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TOP_SLR_LVL_1_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Seller level 1 - count</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TOP_SLR_LVL_1_FAST_TRACK_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Seller level 1 - fast track</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TOP_SLR_LVL_1_TAR2_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Seller level 1 - at risk2</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TOP_SLR_LVL_1_TAR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Seller level 1 - at risk</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TOP_SLR_LVL_2_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Seller level 2 - count</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TOP_SLR_LVL_2_FAST_TRACK_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Seller level 2 - fast track</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TOP_SLR_LVL_2_TAR2_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Seller level 2 - at risk2</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TOP_SLR_LVL_2_TAR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Seller level 2 - at risk</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TOP_SLR_LVL_3_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Seller level 3 - count</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TOP_SLR_LVL_3_FAST_TRACK_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Seller level 3 - fast track</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TOP_SLR_LVL_3_TAR2_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Seller level 3 - at risk2</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TOP_SLR_LVL_3_TAR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Seller level 3 - at risk</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TOP_SLR_LVL_4_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Seller level 4 - count</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TOP_SLR_LVL_4_FAST_TRACK_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Seller level 4 - fast track</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TOP_SLR_LVL_4_TAR2_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Seller level 4 - at risk2</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TOP_SLR_LVL_4_TAR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Seller level 4 - at risk</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TOTAL_ACTV_REP_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>ACTV_REP_CNT__c + ORD_SUBMTD_CNT__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Act. Reps Actual</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TOTAL_NET_SLS_AMT__c</fullName>
+        <externalId>false</externalId>
+        <formula>NET_SLS_INVC_AMT__c +  NET_SLS_SMTB_AMT__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Net Sales Actual</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>UPR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>Actual UPR</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>UPR_DIV_RNK_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>UPR division rank</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>UPR_LCA_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>UPR Last Campaign Analysis</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>UPR_My_Actions_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>UPR My Actions</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>UPR_My_Actions_CNT_del__c</fullName>
+        <externalId>false</externalId>
+        <label>UPR (unit per rep) My Actions</label>
+        <length>32768</length>
+        <type>LongTextArea</type>
+        <visibleLines>3</visibleLines>
+    </fields>
+    <fields>
+        <fullName>UPR_PLAN_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>UPR (unit per rep) plan</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>UPR_PLAN_SPPY_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>UPR (unit per rep) sppy plan</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>UPR_RES_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(UPR_PLAN_CNT__c == 0, 0, UPR_CNT__c / UPR_PLAN_CNT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>UPR (unit per rep) actual Results</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>1</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>UPR_SPPY_CNT__c</fullName>
+        <externalId>false</externalId>
+        <label>UPR (unit per rep) sppy actual</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>UPR_VAR_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>IF(UPR_PLAN_CNT__c == 0, 0, UPR_CNT__c / UPR_PLAN_CNT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>UPR (unit per rep) actual Variance</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>1</scale>
+        <type>Percent</type>
+    </fields>
+    <fields>
+        <fullName>UPR_VAR_DIFF_CNT__c</fullName>
+        <externalId>false</externalId>
+        <formula>TEXT(UPR_PLAN_CNT__c - UPR_CNT__c)</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>UPR (unit per rep)  Variance Difference</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ZONE_MGR__c</fullName>
+        <externalId>false</externalId>
+        <label>Zone Manager</label>
+        <referenceTo>User</referenceTo>
+        <relationshipLabel>Zone Summary</relationshipLabel>
+        <relationshipName>Zone_Summary</relationshipName>
+        <required>false</required>
+        <type>Lookup</type>
+    </fields>
+    <label>Sales Org Summary</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>NAME</columns>
+        <columns>SLS_ORG_SUMRY_KEY__c</columns>
+        <columns>SLS_ORG_LVL_DESC_TXT__c</columns>
+        <columns>MRKT_ID_LVL_SLS_ORG_CD_KEY__c</columns>
+        <columns>SLS_ORG_DESC_TXT__c</columns>
+        <columns>MRKT_ACCT_KEY__c</columns>
+        <columns>ZONE_MGR__c</columns>
+        <columns>OPERTNL_CMPGN_NR__c</columns>
+        <columns>FLD_SLS_CMPGN_NR__c</columns>
+        <columns>MRKT_KEY__c</columns>
+        <columns>Analysis_Done__c</columns>
+        <columns>Num_Campaign_Stars__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>OWNER.ALIAS</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>MRKT_ID_LVL_SLS_ORG_CD_KEY__c</field>
+            <operation>equals</operation>
+            <value>7319694999</value>
+        </filters>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>All1</fullName>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+    </listViews>
+    <listViews>
+        <fullName>All_with_data</fullName>
+        <columns>NAME</columns>
+        <columns>SLS_ORG_SUMRY_KEY__c</columns>
+        <columns>SLS_ORG_LVL_DESC_TXT__c</columns>
+        <columns>MRKT_ID_LVL_SLS_ORG_CD_KEY__c</columns>
+        <columns>SLS_ORG_DESC_TXT__c</columns>
+        <columns>MRKT_ACCT_KEY__c</columns>
+        <columns>ZONE_MGR__c</columns>
+        <columns>OPERTNL_CMPGN_NR__c</columns>
+        <columns>FLD_SLS_CMPGN_NR__c</columns>
+        <columns>MRKT_KEY__c</columns>
+        <columns>Analysis_Done__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>OWNER.ALIAS</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>FLD_SLS_CMPGN_NR__c</field>
+            <operation>equals</operation>
+            <value>201313</value>
+        </filters>
+        <label>All, with data</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Core_Market_Dumy_Data</fullName>
+        <columns>NAME</columns>
+        <columns>MRKT_KEY__c</columns>
+        <columns>MRKT_ID_LVL_SLS_ORG_CD_KEY__c</columns>
+        <columns>SLS_ORG_LVL_DESC_TXT__c</columns>
+        <columns>SLS_ORG_DESC_TXT__c</columns>
+        <columns>ZONE_MGR__c</columns>
+        <columns>OPERTNL_CMPGN_NR__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>MRKT_KEY__c</field>
+            <operation>equals</operation>
+            <value>999</value>
+        </filters>
+        <label>Core Market Dumy Data</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>DEMO</fullName>
+        <columns>NAME</columns>
+        <columns>SLS_ORG_SUMRY_KEY__c</columns>
+        <columns>SLS_ORG_LVL_DESC_TXT__c</columns>
+        <columns>MRKT_ID_LVL_SLS_ORG_CD_KEY__c</columns>
+        <columns>SLS_ORG_DESC_TXT__c</columns>
+        <columns>MRKT_ACCT_KEY__c</columns>
+        <columns>ZONE_MGR__c</columns>
+        <columns>OPERTNL_CMPGN_NR__c</columns>
+        <columns>FLD_SLS_CMPGN_NR__c</columns>
+        <columns>MRKT_KEY__c</columns>
+        <columns>Analysis_Done__c</columns>
+        <columns>Num_Campaign_Stars__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>OWNER.ALIAS</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>MRKT_ID_LVL_SLS_ORG_CD_KEY__c</field>
+            <operation>startsWith</operation>
+            <value>999</value>
+        </filters>
+        <label>DEMO</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>MX</fullName>
+        <columns>NAME</columns>
+        <columns>SLS_ORG_SUMRY_KEY__c</columns>
+        <columns>SLS_ORG_LVL_DESC_TXT__c</columns>
+        <columns>MRKT_ID_LVL_SLS_ORG_CD_KEY__c</columns>
+        <columns>SLS_ORG_DESC_TXT__c</columns>
+        <columns>MRKT_ACCT_KEY__c</columns>
+        <columns>ZONE_MGR__c</columns>
+        <columns>OPERTNL_CMPGN_NR__c</columns>
+        <columns>FLD_SLS_CMPGN_NR__c</columns>
+        <columns>MRKT_KEY__c</columns>
+        <columns>Analysis_Done__c</columns>
+        <columns>Num_Campaign_Stars__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>OWNER.ALIAS</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>MRKT_ID_LVL_SLS_ORG_CD_KEY__c</field>
+            <operation>startsWith</operation>
+            <value>55</value>
+        </filters>
+        <label>MX</label>
+        <language>en_US</language>
+    </listViews>
+    <listViews>
+        <fullName>Metro_South_Believers_20x</fullName>
+        <columns>NAME</columns>
+        <columns>SLS_ORG_DESC_TXT__c</columns>
+        <columns>ZONE_MGR__c</columns>
+        <columns>NET_SLS_INVC_AMT__c</columns>
+        <columns>NET_SLS_SMTB_AMT__c</columns>
+        <columns>TOTAL_NET_SLS_AMT__c</columns>
+        <columns>FLD_SLS_CMPGN_NR__c</columns>
+        <columns>OPERTNL_CMPGN_NR__c</columns>
+        <columns>IS_CURR_CMPGN__c</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>SLS_ORG_DESC_TXT__c</field>
+            <operation>contains</operation>
+            <value>201,202,203,204,205,206,207,208,METRO SOUTH BELIEVERS</value>
+        </filters>
+        <filters>
+            <field>IS_CURR_CMPGN__c</field>
+            <operation>equals</operation>
+            <value>TRUE</value>
+        </filters>
+        <label>Metro South Believers - 20x</label>
+        <language>en_PH</language>
+    </listViews>
+    <listViews>
+        <fullName>UK</fullName>
+        <columns>NAME</columns>
+        <columns>SLS_ORG_SUMRY_KEY__c</columns>
+        <columns>SLS_ORG_LVL_DESC_TXT__c</columns>
+        <columns>MRKT_ID_LVL_SLS_ORG_CD_KEY__c</columns>
+        <columns>SLS_ORG_DESC_TXT__c</columns>
+        <columns>MRKT_ACCT_KEY__c</columns>
+        <columns>ZONE_MGR__c</columns>
+        <columns>OPERTNL_CMPGN_NR__c</columns>
+        <columns>FLD_SLS_CMPGN_NR__c</columns>
+        <columns>MRKT_KEY__c</columns>
+        <columns>Analysis_Done__c</columns>
+        <columns>Num_Campaign_Stars__c</columns>
+        <columns>LAST_UPDATE</columns>
+        <columns>CREATED_DATE</columns>
+        <columns>OWNER.ALIAS</columns>
+        <filterScope>Everything</filterScope>
+        <filters>
+            <field>MRKT_ID_LVL_SLS_ORG_CD_KEY__c</field>
+            <operation>startsWith</operation>
+            <value>73</value>
+        </filters>
+        <filters>
+            <field>SLS_ORG_LVL_DESC_TXT__c</field>
+            <operation>equals</operation>
+            <value>Z</value>
+        </filters>
+        <label>UK</label>
+        <language>en_US</language>
+    </listViews>
+    <nameField>
+        <label>Sales Org Summary Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Sales Org Summaries</pluralLabel>
+    <searchLayouts>
+        <searchResultsAdditionalFields>SLS_ORG_LVL_DESC_TXT__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>MRKT_ID_LVL_SLS_ORG_CD_KEY__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>FLD_SLS_CMPGN_NR__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>Private</sharingModel>
+</CustomObject>

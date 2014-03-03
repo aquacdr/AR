@@ -1,0 +1,30 @@
+<apex:page showheader="true" sidebar="true" controller="ZM_ReportCenter_v2Controller" id="thePage">
+<apex:sectionHeader title="POC for Analytics API" subTitle="Displays report data that comes back from running the report via Analytics api into the apex:datatable"
+description="Shows a POC, Currently supports parsing of tabular reports only" /> 
+<apex:pageMessages />
+
+<apex:form >
+
+<!-- Get all Reports Section -->
+<apex:pageBlock title="Get Report Data">
+
+  <apex:pageBlockButtons >
+    <apex:commandButton value="Get Report" action="{!showReportData}" rerender="repData" />    
+  </apex:pageBlockButtons>
+
+  <apex:pageBlockSection columns="1">   
+    <apex:pageBlockSectionItem >
+      <apex:outputLabel >Report Name</apex:outputLabel>
+      <apex:selectList size="1" value="{!selectedReportID}">
+        <apex:selectOptions value="{!allReports}"/>
+      </apex:selectList>
+     </apex:pageBlockSectionItem>
+  </apex:pageBlockSection>
+  
+</apex:pageBlock>
+
+<apex:outputPanel id="repData">
+<c:JQGridComponent reportId="{!selectedReportID}" />
+</apex:outputPanel>
+</apex:form>
+</apex:page>

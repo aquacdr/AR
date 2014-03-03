@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Maps Geo-Level 1/2/3/4 to a Zone (Sales Organization object)</description>
+    <enableActivities>false</enableActivities>
+    <enableEnhancedLookup>false</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <fields>
+        <fullName>Geo_Level_1__c</fullName>
+        <description>Region for Russia</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Region for Russia</inlineHelpText>
+        <label>Geo Level 1</label>
+        <referenceTo>Geo_Level_1__c</referenceTo>
+        <relationshipLabel>Geo to Zone Mapping</relationshipLabel>
+        <relationshipName>Geo_to_Zone_Mapping</relationshipName>
+        <required>false</required>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Geo_Level_2__c</fullName>
+        <description>Area for Russia</description>
+        <externalId>false</externalId>
+        <label>Geo Level 2</label>
+        <referenceTo>Geo_Level_2__c</referenceTo>
+        <relationshipLabel>Geo to Zone Mapping</relationshipLabel>
+        <relationshipName>Geo_to_Zone_Mapping</relationshipName>
+        <required>false</required>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Geo_Level_3__c</fullName>
+        <description>City for Russia</description>
+        <externalId>false</externalId>
+        <label>Geo Level 3</label>
+        <referenceTo>Geo_Level_3__c</referenceTo>
+        <relationshipLabel>Geo to Zone Mapping</relationshipLabel>
+        <relationshipName>Geo_to_Zone_Mapping</relationshipName>
+        <required>false</required>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Geo_Level_4__c</fullName>
+        <externalId>false</externalId>
+        <label>Geo Level 4</label>
+        <referenceTo>Geo_Level_4__c</referenceTo>
+        <relationshipLabel>Geo to Zone Mapping</relationshipLabel>
+        <relationshipName>Geo_to_Zone_Mapping</relationshipName>
+        <required>false</required>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Geo_to_Zone_Mapping_Key__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <externalId>true</externalId>
+        <label>Geo to Zone Mapping Key</label>
+        <length>255</length>
+        <required>true</required>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_ID__c</fullName>
+        <externalId>true</externalId>
+        <label>MRKT_ID</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SLS_ZONE_CD__c</fullName>
+        <description>Zone Code</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Zone Code</inlineHelpText>
+        <label>SLS_ZONE_CD</label>
+        <length>100</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Geo to Zone Mapping</label>
+    <listViews>
+        <fullName>All_Geo_to_Zone_Mappings</fullName>
+        <columns>NAME</columns>
+        <filterScope>Everything</filterScope>
+        <label>All Geo to Zone Mappings</label>
+        <language>en_US</language>
+    </listViews>
+    <nameField>
+        <displayFormat>GZ-{0}</displayFormat>
+        <label>Geo to Zone Mapping Name</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Geo to Zone Mapping</pluralLabel>
+    <searchLayouts>
+        <excludedStandardButtons>New</excludedStandardButtons>
+        <excludedStandardButtons>Accept</excludedStandardButtons>
+        <excludedStandardButtons>ChangeOwner</excludedStandardButtons>
+        <lookupDialogsAdditionalFields>Geo_to_Zone_Mapping_Key__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>MRKT_ID__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>SLS_ZONE_CD__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Geo_Level_1__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Geo_Level_2__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Geo_Level_3__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>Geo_Level_4__c</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>CREATEDBY_USER</lookupDialogsAdditionalFields>
+        <lookupDialogsAdditionalFields>UPDATEDBY_USER</lookupDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Geo_to_Zone_Mapping_Key__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>MRKT_ID__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>SLS_ZONE_CD__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Geo_Level_1__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Geo_Level_2__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Geo_Level_3__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>Geo_Level_4__c</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>CREATEDBY_USER</lookupPhoneDialogsAdditionalFields>
+        <lookupPhoneDialogsAdditionalFields>UPDATEDBY_USER</lookupPhoneDialogsAdditionalFields>
+        <searchFilterFields>NAME</searchFilterFields>
+        <searchFilterFields>Geo_to_Zone_Mapping_Key__c</searchFilterFields>
+        <searchFilterFields>MRKT_ID__c</searchFilterFields>
+        <searchFilterFields>SLS_ZONE_CD__c</searchFilterFields>
+        <searchFilterFields>Geo_Level_1__c</searchFilterFields>
+        <searchFilterFields>Geo_Level_2__c</searchFilterFields>
+        <searchFilterFields>Geo_Level_3__c</searchFilterFields>
+        <searchFilterFields>Geo_Level_4__c</searchFilterFields>
+        <searchFilterFields>CREATEDBY_USER</searchFilterFields>
+        <searchFilterFields>UPDATEDBY_USER</searchFilterFields>
+    </searchLayouts>
+    <sharingModel>Private</sharingModel>
+</CustomObject>

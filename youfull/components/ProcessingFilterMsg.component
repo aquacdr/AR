@@ -1,0 +1,11 @@
+<apex:component >
+    <table width="100%" border="0" cellpadding="0" cellspacing="1">
+    <tr align="center" >
+    <!--  <td><apex:image value="{!URLFOR($Resource.ALM_Assetsv2,'images/processing.gif')}"/></td>-->
+    </tr>
+    <tr align="center"><td style="text-decoration: none;color: rgb(51, 51, 51);font-size: 2em;font-weight:bold;Padding-top:300px">{!$Label.RefreshFilter}</td></tr>
+    <!-- <tr align="center" class="kpi_row_odd" >
+    <td class="kpi_cell">{!$Label.Processing_Status_Message}</td>
+    </tr> -->
+    </table>
+</apex:component>

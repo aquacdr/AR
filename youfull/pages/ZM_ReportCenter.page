@@ -1,0 +1,293 @@
+<apex:page showheader="true" sidebar="true" controller="ZM_Controller_ReportCenter" id="thePage">
+<!--<script type="text/javascript" src="{!URLFOR($Resource.Omniture_JS)}"></script>-->
+<script>
+
+    // Omniture Integration method invoked
+    ALM_PAGE_NAME="{!OmniturePageName}"; 
+    // EoC
+    
+    var s_account= "{!omniSuitName}" ;  /*  Added on 3rd Oct 2013 */
+
+/*
+   function init() {
+        var doRedirect = "{!redirectOnly}"; 
+        if (doRedirect == "true") {
+            redirect();
+        }
+    }
+*/  
+     function callOmniture_ReportCenter(p_Name){
+        
+        /*var s=s_gi('avonalmphzd');
+        s.prop8 = p_Name;
+        s.pageName = p_Name+'_{!userProfile}';
+        s.tl(this,'o', p_Name);
+        */
+        
+        /* var s_account= "{!omniSuitName}" ;   avonalmphzdtest -   Blocked on 3rd Oct 2013 */
+        s.pageName= p_Name+'_{!userProfile}';
+        s.server="";
+        s.channel="";
+        s.pageType="";
+        s.prop1="";
+        s.prop2="";
+        s.prop3="";
+        s.prop4="";
+        s.prop5="";
+        s.prop15= "{!omniSuitName}" ;  / * avonalmphzdtest */
+        s.prop24 = '{!userProfile}';
+        s.prop25 = '{!userProfile}';
+        /* Conversion Variables */
+        s.campaign="";
+        s.state="";
+        s.zip="";
+        s.events="";
+        s.products="";
+        s.purchaseID="";
+        s.eVar1="";
+        s.eVar2="";
+        s.eVar3="";
+        s.eVar4="";
+        s.eVar5="";
+        
+        /************* DO NOT ALTER ANYTHING BELOW THIS LINE ! **************/
+        var s_code=s.t();if(s_code)document.write(s_code)
+        //if(navigator.appVersion.indexOf('MSIE')>=0)document.write(unescape('%3C')+'\!-'+'-')
+
+        return false;
+        
+    }
+    
+  
+    function redirectToStandardReport() {
+    
+    try{
+    
+        
+       
+        var reportSelId = "{!$Component.thePage.theForm.standardBlock.standardSection.standardItem1.selectStandardReport}";
+        var zoneSelId = "{!$Component.thePage.theForm.personalBlock.personalSection.personalItem2.selectPersonalCampaign}";//selectedStdZone
+        
+        var selectedZoneId = document.getElementById("{!$Component.thePage.theForm.standardBlock.standardSection.standardItem11.selectedStdZone}");
+       
+        var campaignSelId = "{!$Component.thePage.theForm.standardBlock.standardSection.standardItem2.selectStandardCampaign}";
+        var redirectURL = getReportURL(reportSelId, zoneSelId, campaignSelId); 
+       // window.location = redirectURL; 
+       var reportSel = document.getElementById(reportSelId);
+        var zoneSel = document.getElementById(zoneSelId);
+        
+        var selectedZone = '';
+        if(selectedZoneId != null) selectedZoneId[selectedZoneId.selectedIndex].value;
+        var campaignSel = document.getElementById(campaignSelId); 
+        var report = reportSel[reportSel.selectedIndex].value;
+        var zone = "{!selectedZone}";
+        if (selectedZoneId != null) {
+            selectedZone = selectedZoneId[selectedZoneId.selectedIndex].value;
+        } else {
+            selectedZone = "{!selectedZone}";
+        }
+        var campaign = campaignSel[campaignSel.selectedIndex].value;
+       //alert(report+"?pv0="+campaign+"&pv1="+selectedZone);
+       window.location = report+"?pv0="+campaign+"&pv1="+selectedZone;
+     //  alert( reportSel[reportSel.selectedIndex].text);
+     
+      // Added By Cognizant - For Omniture Reporting
+     
+      if(reportSel[reportSel.selectedIndex].text!=null && reportSel[reportSel.selectedIndex].text!='' && reportSel[reportSel.selectedIndex].text!=undefined){
+        callOmniture_ReportCenter(reportSel[reportSel.selectedIndex].text);
+      }
+      
+       
+      }
+      catch(Err)
+      {
+         alert(Err.message);
+      }
+    }
+    
+   
+    function redirectToPersonalReport() {
+        
+        var reportSelId = "{!$Component.thePage.theForm.personalBlock.personalSection.personalItem1.selectPersonalReport}";
+        var zoneSelId = "{!$Component.thePage.theForm.personalBlock.personalSection.personalItem2.selectPersonalCampaign}";
+        var campaignSelId = "{!$Component.thePage.theForm.personalBlock.personalSection.personalItem2.selectPersonalCampaign}";
+        var redirectURL = getReportURL(reportSelId, zoneSelId, campaignSelId);
+        window.location = redirectURL;
+    }
+    
+    function getReportURL(reportSelId, zoneSelId, campaignSelId) {
+    
+        var templateReportURL = "{!templateReportURL}";
+        var reportSel = document.getElementById(reportSelId);
+        var zoneSel = document.getElementById(zoneSelId);
+        var campaignSel = document.getElementById(campaignSelId); 
+        var report = reportSel[reportSel.selectedIndex].value;
+        var zone = "{!selectedZone}";
+        if (zoneSel != null) {
+            zone = zoneSel[zoneSel.selectedIndex].value;
+        }
+        var campaign = campaignSel[campaignSel.selectedIndex].value;
+        var reportURL = templateReportURL.replace('$REPORT',report).replace('%ZONE',zone).replace('$CAMPAIGN',campaign);
+        return reportURL;
+    }
+
+    function test() {
+        alert('in test');
+    }
+        
+    function openOfflineReport() {
+        var reportSel = document.getElementById("{!$Component.thePage.theForm.offlineBlock.offlineSection.offlineItem1.selectOfflineReport}");
+        var campaignSel = document.getElementById("{!$Component.thePage.theForm.offlineBlock.offlineSection.offlineItem3.selectOfflineCampaign}");
+        var zoneSel = document.getElementById("{!$Component.thePage.theForm.offlineBlock.offlineSection.offlineItem2.selectZone}");
+        var reportValues = reportSel[reportSel.selectedIndex].value.split(':');
+        var reportId = reportValues[0];
+        var fileTemplate = reportValues[1];
+        var campaign = campaignSel[campaignSel.selectedIndex].value;
+        var zone = "{!selectedZone}";
+        if (zoneSel != null) {
+            zone = zoneSel[zoneSel.selectedIndex].value;
+        }
+        var filename = fileTemplate.replace('$ZONE',zone).replace('$CAMPAIGN',campaign);
+        //alert('in openOfflineReport and filename = ' + filename);
+      
+      // Added By Cognizant - Uncomment this section if Omniture Required for Offline Reports
+      /*  if(reportSel[reportSel.selectedIndex].text!=null && reportSel[reportSel.selectedIndex].text!='' && reportSel[reportSel.selectedIndex].text!=undefined){
+            callOmniture_ReportCenter(reportSel[reportSel.selectedIndex].text);
+        }*/
+        getRemoteAttachmentURLAndOpenInWindow(reportId, filename);
+    }
+    
+    function getRemoteAttachmentURLAndOpenInWindow(reportId, filename) {
+        //alert('in getRemoteAttachmentURLAndOpenInWindow and filename = ' + filename);
+        Visualforce.remoting.Manager.invokeAction(
+            '{!$RemoteAction.ZM_Controller_ReportCenter.getAttachmentURL}', 
+            reportId, filename, 
+            function(result, event) {
+                if (event.status) {
+                    if (result == "") {
+                        alert('{!$Label.ZM_Selected_report_does_not_exist}');
+                    } else {
+                        // alert('Success! result: ' + result);
+                        window.location.href = result;                      
+                    }
+                } else if (event.type === 'exception') {
+                    alert('Error: ' + event.message);
+                } else {
+                    alert('Error: ' + event.message);
+                }
+            }, 
+            {escape: true}
+        );
+    }
+    
+    //window.onload = init;
+</script>
+
+<!--  Added on 3rd Oct 2013 START  -->
+<script type="text/javascript" src="{!URLFOR($Resource.Omniture_JS)}"></script>
+<!--  Added on 3rd Oct 2013 END  -->
+
+<apex:sectionHeader title="{!$Label.Report_Center}"/>
+<apex:form id="theForm">
+<!--:::{!zoneList.size}:::-->
+<apex:inputHidden id="hiddenRedirectOnly" value="{!redirectOnly}"/>
+<apex:inputHidden id="hiddenTemplateReportURL" value="{!templateReportURL}"/>
+<!--<apex:inputHidden id="hiddenAttachmentURL" value=""/>-->
+<input id="hiddenAttachmentURL" type="hidden" name="hiddenAttachmentURL" value="" />
+
+<apex:PanelGrid id="pagePanel" width="70%">
+
+<apex:pageblock title="{!$Label.ZM_Report_Center_Standard_Reports}" id="standardBlock">          
+  <apex:pageBlockSection columns="4" Id="standardSection">
+    <apex:pageBlockSectionItem Id="standardItem1">
+        <apex:outputLabel value="{!$Label.ZM_Report_Center_Select_Report}"/>
+        <apex:selectList id="selectStandardReport" size="1" value="{!selectedStandardReport}"> 
+            <apex:selectOptions value="{!standardReportList}"/>
+        </apex:selectList> 
+    </apex:pageBlockSectionItem>
+    
+    <apex:pageBlockSectionItem rendered="{!zoneList.size>1}" id="standardItem11">
+        <apex:outputLabel value="{!$Label.ZM_Report_Center_Select_Zone}"/>
+        <apex:selectList id="selectedStdZone" size="1" value="{!selectedStdZone}"> 
+            <apex:selectOptions value="{!zoneList}"/>
+        </apex:selectList> 
+    </apex:pageBlockSectionItem>
+    
+    <apex:pageBlockSectionItem Id="standardItem2">
+        <apex:outputLabel value="{!$Label.ZM_Report_Center_Select_Campaign}"/>
+        <apex:selectList id="selectStandardCampaign" size="1" value="{!selectedStandardCampaign}"> 
+            <apex:selectOptions value="{!campaignList}"/>
+        </apex:selectList> 
+    </apex:pageBlockSectionItem>
+
+    <apex:pageBlockSectionItem Id="standardItem3">    
+        <apex:commandButton value="{!$Label.Go}" action="{!doNothing}" onclick="redirectToStandardReport(); return false;"/><!--  --> 
+    </apex:pageBlockSectionItem>
+    
+  </apex:pageblockSection>
+</apex:pageblock>
+
+<apex:pageblock title="{!$Label.ZM_Report_Center_Personal_Reports}" id="personalBlock" rendered="{!showPersonalReport}">
+  <apex:pageBlockSection columns="3" id="personalSection">
+    <apex:pageBlockSectionItem id="personalItem1">
+        <apex:outputLabel value="{!$Label.ZM_Report_Center_Select_Report}"/>
+        <apex:selectList id="selectPersonalReport" size="1" value="{!selectedPersonalReport}"> 
+            <apex:selectOptions value="{!personalReportList}"/>
+        </apex:selectList> 
+    </apex:pageBlockSectionItem>
+    
+    <apex:pageBlockSectionItem id="personalItem2">
+        <apex:outputLabel value="{!$Label.ZM_Report_Center_Select_Campaign}"/>
+        <apex:selectList id="selectPersonalCampaign" size="1" value="{!selectedPersonalCampaign}"> 
+            <apex:selectOptions value="{!campaignList}"/>
+        </apex:selectList> 
+    </apex:pageBlockSectionItem>
+
+    <apex:pageBlockSectionItem id="personalItem3" dataStyle="padding-right: 90px;">    
+        <apex:commandButton value="{!$Label.Go}" action="{!doNothing}" onclick="redirectToPersonalReport(); return false;"/> 
+    </apex:pageBlockSectionItem>
+    
+  </apex:pageblockSection>
+</apex:pageblock>
+  
+<apex:pageblock title="{!$Label.ZM_Report_Center_Offline_Reports}" id="offlineBlock">
+
+  <apex:pageBlockSection columns="{!if(multipleZones,4,3)}" id="offlineSection">
+    <apex:pageBlockSectionItem id="offlineItem1">
+        <apex:outputLabel value="{!$Label.ZM_Report_Center_Select_Report}"/>
+        <apex:selectList id="selectOfflineReport" size="1" value="{!selectedOfflineReport}"> 
+            <apex:selectOptions value="{!offlineReportList}"/>
+        </apex:selectList> 
+    </apex:pageBlockSectionItem>
+
+    <apex:pageBlockSectionItem rendered="{!zoneList.size>1}" id="offlineItem2">
+        <apex:outputLabel value="{!$Label.ZM_Report_Center_Select_Zone}"/>
+        <apex:selectList id="selectZone" size="1" value="{!selectedZone}"> 
+            <apex:selectOptions value="{!zoneList}"/>
+        </apex:selectList> 
+    </apex:pageBlockSectionItem>
+    
+    <apex:pageBlockSectionItem id="offlineItem3">
+        <apex:outputLabel value="{!$Label.ZM_Report_Center_Select_Campaign}"/>
+        <apex:selectList id="selectOfflineCampaign" size="1" value="{!selectedOfflineCampaign}"> 
+            <apex:selectOptions value="{!campaignList}"/>
+        </apex:selectList> 
+    </apex:pageBlockSectionItem>
+
+    <apex:pageBlockSectionItem id="offlineItem4" dataStyle="padding-right: 90px;">    
+        <apex:commandButton value="{!$Label.Go}" action="{!doNothing}" oncomplete="openOfflineReport();" /> 
+    </apex:pageBlockSectionItem>
+    
+  </apex:pageblockSection>
+</apex:pageblock>
+
+</apex:PanelGrid>
+</apex:form>
+
+<!-- Omniture Integration Starts -->
+<apex:outputPanel id="renderOmniture">
+    <apex:include pageName="ZMDMOmnitureTrack"/>
+</apex:outputPanel>
+<!-- Omniture Integration Ends -->
+
+</apex:page>

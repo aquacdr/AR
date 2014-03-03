@@ -1,0 +1,141 @@
+<apex:page showHeader="false" sidebar="false" standardStyleSheets="false" language="{!$CurrentPage.parameters.langcd}" controller="MyTeamReportPageController">
+
+    <apex:form >
+        <apex:composition template="YOUPageTemplateNoActions">
+        <apex:define name="content">
+            <apex:includeScript value="{!URLFOR($Resource.MTRUtility)}"/>
+            <apex:includeScript value="{!URLFOR($Resource.MTRWriteItems)}"/>
+            <apex:includeScript value="{!URLFOR($Resource.MTRDataTable)}"/>
+            <apex:includeScript value="{!URLFOR($Resource.MTRHSGChildTable)}"/>
+            <apex:includeScript value="{!URLFOR($Resource.MTRMasterHSGTable)}"/>
+            <apex:includeScript value="{!URLFOR($Resource.MyTeamJS)}"/>
+            <apex:includeScript value="{!URLFOR($Resource.NRR, 'js/jquery.jscrollpane.min.js')}"/>
+            <apex:includeScript value="{!$Resource.NumberFormatter}" />
+            <apex:stylesheet value="{!URLFOR($Resource.NRR,'css/jquery.jscrollpane_vert.css')}" />
+            <apex:stylesheet value="{!URLFOR($Resource.MyTeam)}" />
+            <script>
+              // added by Nalin for Filter Procecssing Message
+              function processFilterImageVisible(visible) {
+
+  				if(visible)
+  				{
+  				 showFilterOverlay('processing');
+  				}
+  				else
+  				{
+  				 hideFilterOverlay();
+  				}
+ 			  }
+ 			  
+ 			  function hideFilterOverlay()
+ 			  {
+	
+	  			jQuery("#email_sel_mask_fltr").attr('class','white_trans_closed');
+	  			jQuery("#processing_msg").toggle(true);				        
+	  			jQuery("#download_main").toggle(false);
+	  
+              }
+                
+function showFilterOverlay(/* args */) {
+  
+  	   if(arguments.length == 0) {
+  	   		throw new Error('Expected at least one argument.');
+  	   }	
+  		
+  	   var type = arguments[0];
+  	   var px = 0;
+  	   var py = 0;
+  	   var winHei = 0;
+  	   var heiSum = 0;
+  	
+  	   if(type == 'email') {
+	        
+        	jQuery("#personal_message").attr('class','white_trans');
+        	jQuery("#personal_message").css('display','block');
+         	jQuery("#personal_message").css('visibility','visible');
+         	
+         	sendMyEmail(arguments[1]);
+	   }
+	   else {
+  		
+	       jQuery("#download_main").toggle(false);
+	       
+	       px = jQuery("#global_footer").css('height');
+           qx = jQuery(".footer_lnks").css('height');
+           winHei = jQuery(".footer_area").position().top;
+           heiSum = parseInt(winHei)+parseInt(px)+parseInt(qx);
+           
+           jQuery("#email_sel_mask_fltr").css('height',heiSum);
+	       
+	       if(type == 'download') {
+	       		var attachmentId = arguments[1];
+	       		if(attachmentId != 'NONE'){
+	       			jQuery('#downloadattachmentlink').attr("href", "/servlet/servlet.FileDownload?file=" + attachmentId);
+					jQuery('#downloadlink').hide();
+	       		}
+	       		else{
+	       			jQuery('#downloadattachmentlink').hide();
+	       		}
+	        	jQuery("#download_main").toggle(true);
+	        	//jQuery("#email_sel_mask").attr('class','white_trans'); //SA
+	        	jQuery("#processing_fltr_msg").toggle(false);				        
+	        	
+	        }
+	        else if(type == 'processing') {
+	        	//jQuery("#email_sel_mask").attr('class','white_trans'); //SA	        
+	        }
+	        else {
+	        	throw new Error('Invalid type provided.');
+	        }
+	   
+	        jQuery("#email_sel_mask_fltr").attr('class','white_trans'); //SA        
+	   }
+  }              
+ 			   
+            </script>
+            
+            <c:MyTeamReport ReportType="TitleAdvancement" />
+            <apex:actionFunction name="viewRepDetail" action="{!callRepDetails}" rerender="repDetail" oncomplete="javascript:displayit();" status="counterStatus">
+                <apex:param name="repDetailAcctNbr" assignTo="{!repDetailAcctNbr}" value="{!repDetailAcctNbr}"/>
+            </apex:actionFunction>
+            <apex:actionStatus id="counterStatus"  onstart="showProcessingMsg();" onstop="showProcessingMsg();"/>
+            
+            <div id="email_sel_mask2" class="white_trans_closed">
+                <apex:outputPanel id="repDetail" layout="none">
+                    <c:CoachingRecord repacctnbr="{!repDetailAcctNbr}" rendered="{!repDetailAcctNbr!=null}"/>
+                </apex:outputPanel>                
+            </div>
+            
+            <div id="email_sel_mask_fltr" class="white_trans_closed">
+                 <c:ProcessingFilterMsg />
+            </div>
+            
+            <!-- added by amartya 05-nov-2012 for summaryoverlay start -->
+            <div id="summary_overlay"  class="white_trans_soverlay_closed">
+                <apex:outputPanel id="summaryoverlay" layout="none">
+                    <c:SummaryOverlay camp_number="{!$CurrentPage.parameters.CmpgnSeltd}" SiteHeaderController="{!siteh}" id="summoverlay" />
+                </apex:outputPanel>
+            </div> 
+            <!-- added by amartya 05-nov-2012 for summaryoverlay end --> 
+                
+        </apex:define>
+        <apex:define name="additionalOverlays">
+            <c:DownloadOverlay />   
+        </apex:define>      
+        </apex:composition>
+
+
+<!-- ADDED BY Vijay Mittal FOR SEARCH COMPONENT POPUP WINODOW -->
+<apex:actionFunction name="showSearchResults" action="{!saveSearchText}" rerender="searchPanelBox" oncomplete="javascript:toggleSearchBoxDisplay();" status="counterStatus">
+        <apex:param name="searchText" assignTo="{!searchText}" value="{!searchText}"/>
+</apex:actionFunction>
+
+    <div id="search_dialog_box" class="white_trans_closed">
+        <apex:outputPanel id="searchPanelBox" layout="block" rendered="{!isLeader}">
+            <c:Search keywordParam="{!searchText}" rendered="{!isLeader}"/>
+        </apex:outputPanel>
+    </div>
+<!-- CHNAGES BY Vijay Mittal ENDS HERE     -->
+
+    </apex:form>
+</apex:page>

@@ -1,0 +1,18 @@
+<apex:page standardController="Contact" extensions="Controller_SLCoachingRecordHome">
+  <apex:outputText rendered="{!!showTabs}"> that states contact is not a downline rep</apex:outputText>
+  <apex:tabPanel rendered="{!showTabs}" switchType="client" selectedTab="tabCoachingRecord" id="theTabPanel">
+      <apex:tab name="tabDashboard" label="Dashboard">
+          <apex:include pageName="SLCoachingRecord"/>
+      </apex:tab>
+      <apex:tab name="tabReportCenter" label="Report Center">
+          <apex:include pageName="SLCoachingRecord"/>
+      </apex:tab>
+      <apex:tab name="tabCoachingRecord" label="Coaching Record">          
+           <apex:include pageName="SLCoachingRecord"/>
+      </apex:tab>
+      <apex:tab name="tabBusinessPlan" label="Business Plan">
+          <apex:include pageName="SLContactBusinessPlan"/>
+      </apex:tab>
+  </apex:tabPanel>
+  
+</apex:page>

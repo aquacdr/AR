@@ -1,0 +1,16 @@
+<apex:component layout="none">
+
+	<apex:attribute name="RowType" description="Description here." type="String" required="true"></apex:attribute>
+	<apex:attribute name="Genealogy" description="Description here." type="GenealogyWrapper" required="true"></apex:attribute>
+	<apex:attribute name="PrintColumnList" description="Description here." type="MTRPrintColumn[]" required="true"></apex:attribute>
+
+ 	<apex:repeat value="{!PrintColumnList}" var="printColumn">
+ 		
+ 		<apex:variable var="varColumnData" value="{!Genealogy[printColumn.ColumnValue]}"></apex:variable>
+		<c:MTRPrintCell id="PrintCell" RowType="{!RowType}"  Genealogy="{!Genealogy}" PrintColumn="{!printColumn}" ColumnData="{!varColumnData}" />
+			
+   </apex:repeat>
+   
+
+   
+</apex:component>

@@ -1,0 +1,487 @@
+<!-- 
+Date            Who                     Line#                                                       Modification
+========================================================================================================================================================
+05-16-2012  Snehashis                    all                              							Created.
+ -->
+ 
+
+<apex:component controller="ActionItemsController">
+    <apex:attribute name="repAcctNbr" assignTo="{!repAcctNbr}" description="Rep Acct Nbr for the Logged In User" type="string" required="false" />
+    <apex:attribute name="itemsToDisplay" type="Integer" assignTo="{!itemsToDisplay}" required="true" description="Nbr Of Items to Display" />
+    <apex:attribute name="isSideBar" assignTo="{!isSideBar}" description="Side Bar Mode" type="String" required="false" />
+    <apex:attribute name="combObject" assignTo="{!combObjLst}" description="Combined Object" type="SObject[]" required="false" />
+    <apex:attribute name="actionitem" assignTo="{!mkt_actionitem}" description="Market Action Item" type="Market_Action_Items__c[]" required="false" />
+    <apex:attribute name="cmpTxt" assignTo="{!cmpTxt}" description="Campaign Indicator" type="string" required="false" />
+    
+    <!-- Added by Snehashis to use in DisplayWidgetController -->
+    <apex:attribute name="market" assignTo="{!market}" description="Market Object of current user" type="Market__c" required="false" />
+    <apex:attribute name="currUser" assignTo="{!currUser}" description="Current user" type="User" required="false" />
+    <apex:attribute name="IsWidget" assignTo="{!displayMode}" description="Display Mode" type="Boolean" required="false" />
+    <apex:attribute name="width" description="Width" type="Integer" required="false"  default="215"/>
+    <apex:attribute name="leadObject" assignTo="{!leadObjs}" description="Lead Object" type="SObject[]" required="false" />
+    
+    <script>
+ 	//Method added by Raktim on 9th Apr, 2013
+    function callOmniture_ActionItem(){
+        
+        var s=s_gi('{!market.Omniture_Suite_Name__c}');
+        s.pageName = 'Action Items';
+        s.prop8 = 'Action Items';
+        s.tl(this,'o', 'Action Items');
+        //alert(' Hi ');
+        return false;
+        
+    }//End of Method
+    </script> 
+    
+   
+     <!--Action Item Config-->
+     <apex:outputPanel rendered="{!isSideBar=='1'}">
+     	<apex:outputText value="{!Initialize}"/>
+       <!--Action Item Config for Mailplan and Non Mailplan Markets-->
+     <div class="act_cntr horz-sprtr">
+       <h2 class="header_med magenta">{!$Label.Leadership_Action_Items}: </h2>
+       <apex:outputPanel rendered="{!AND(OR(NOT(IsWidget),AND(IsWidget,isOrderEnabled)),(cmpTxt != 'Next'))}">
+       <h3>{!$Label.Coaching_Others}</h3>
+       <apex:repeat value="{!coachActionItems}" var="item">
+       <apex:outputPanel rendered="{!item.aicategory='Title Lost'}">
+       <p><apex:outputText value="{!$Label.Title_Lost}"/>:
+       <a href="{!item.reportUrl}" onclick="callOmniture_ActionItem();"><apex:outputField value="{!item.counts.CC_Cnt__c}"/></a></p></apex:outputPanel>
+       <apex:outputPanel rendered="{!item.aicategory='Title Promoted'}">
+       <p><apex:outputText value="{!$Label.Title_Status_Promoted}"/>:
+       <a href="{!item.reportUrl}" onclick="callOmniture_ActionItem();"><apex:outputField value="{!item.counts.CC_Cnt__c}"/></a></p></apex:outputPanel>
+       <apex:outputPanel rendered="{!item.aicategory='Title at Risk'}">
+       <p><apex:outputText value="{!$Label.Title_at_Risk}"/>:
+       <a href="{!item.reportUrl}" onclick="callOmniture_ActionItem();"><apex:outputField value="{!item.counts.CC_Cnt__c}"/></a></p></apex:outputPanel>
+       <apex:outputPanel rendered="{!item.aicategory='Rising Stars'}">
+       <p><apex:outputText value="{!$Label.Rising_Stars}"/>:
+       <a href="{!item.reportUrl}" onclick="callOmniture_ActionItem();"><apex:outputField value="{!item.counts.CC_Cnt__c}"/></a></p></apex:outputPanel>
+       <apex:outputPanel rendered="{!item.aicategory='LLOA 1 to 6'}">
+       <p><apex:outputText value="{!$Label.LLOA_1_6}"/>:
+       <a href="{!item.reportUrl}" onclick="callOmniture_ActionItem();"><apex:outputField value="{!item.counts.CC_Cnt__c}"/></a></p></apex:outputPanel>
+       </apex:repeat>
+       </apex:outputPanel>
+       
+       <apex:outputPanel rendered="{!OR(NOT(IsWidget),AND(IsWidget,isSalesEnabled))}">
+       <h3 style="padding-top:18px;">{!$Label.Managing_Numbers}</h3>
+       <apex:repeat value="{!mngNbrActionItems}" var="item">
+       <apex:outputPanel rendered="{!item.aicategory='Orders Not submitted'}">
+       <p><apex:outputText value="{!$Label.Orders_Not_Submitted}"/>:
+       <a href="{!item.reportUrl}" onclick="callOmniture_ActionItem();"><apex:outputField value="{!item.counts.CC_Cnt__c}"/></a></p></apex:outputPanel>
+       <apex:outputPanel rendered="{!item.aicategory='Orders under minimum to earn'}">
+       <p><apex:outputText value="{!$Label.Orders_Under_Minimum}"/>:
+       <a href="{!item.reportUrl}" onclick="callOmniture_ActionItem();"><apex:outputField value="{!item.counts.CC_Cnt__c}"/></a></p></apex:outputPanel>
+       <apex:outputPanel rendered="{!item.aicategory='Pending Orders'}">
+       <p><apex:outputText value="{!$Label.Pending_Orders}"/>:
+       <a href="{!item.reportUrl}" onclick="callOmniture_ActionItem();"><apex:outputField value="{!item.counts.CC_Amt__c}"/></a></p></apex:outputPanel>
+       <apex:outputPanel rendered="{!item.aicategory='Team sales below minimum'}">
+       <p><apex:outputText value="{!$Label.Team_sales_below_minimum}"/>:
+       <a href="{!item.reportUrl}" onclick="callOmniture_ActionItem();"><apex:outputField value="{!item.counts.CC_Cnt__c}"/></a></p></apex:outputPanel>
+       <apex:outputPanel rendered="{!item.aicategory='Orders Received Billed and Invoiced'}">
+       <p><apex:outputText value="{!$Label.Rpt_Orders_received}"/>:
+       <a href="{!item.reportUrl}" onclick="callOmniture_ActionItem();"><apex:outputField value="{!item.counts.CC_Cnt__c}"/></a></p></apex:outputPanel>
+       <apex:outputPanel rendered="{!item.aicategory='Orders Received In Process'}">
+       <p><apex:outputText value="{!$Label.Orders_Received_In_Process}"/>:
+       <a href="{!item.reportUrl}" onclick="callOmniture_ActionItem();"><apex:outputField value="{!item.counts.CC_Cnt__c}"/></a></p></apex:outputPanel>
+       <apex:outputPanel rendered="{!item.aicategory='Team sales above minimum'}">
+       <p><apex:outputText value="{!$Label.Team_sales_above_minimum}"/>:
+       <a href="{!item.reportUrl}" onclick="callOmniture_ActionItem();"><apex:outputField value="{!item.counts.CC_Cnt__c}"/></a></p></apex:outputPanel>
+       <apex:outputPanel rendered="{!item.aicategory='Return Sales'}">
+       <p><apex:outputText value="{!$Label.Return_net_sales}"/>:
+       <a href="{!item.reportUrl}" onclick="callOmniture_ActionItem();"><apex:outputField value="{!item.counts.CC_Cnt__c}"/></a></p></apex:outputPanel>
+       <apex:outputPanel rendered="{!item.aicategory='Balance due'}">
+       <p><apex:outputText value="{!$Label.Balance_Due}"/>:
+       <a href="{!item.reportUrl}" onclick="callOmniture_ActionItem();"><apex:outputField value="{!item.counts.CC_Cnt__c}"/></a></p></apex:outputPanel>
+       <apex:outputPanel rendered="{!item.aicategory='Past due'}">
+       <p><apex:outputText value="{!$Label.Past_Due}"/>:
+       <a href="{!item.reportUrl}" onclick="callOmniture_ActionItem();"><apex:outputField value="{!item.counts.CC_Cnt__c}"/></a></p></apex:outputPanel>
+       <apex:outputPanel rendered="{!item.aicategory='Orders Over Minimum to earn'}">
+       <p><apex:outputText value="{!$Label.Orders_Above_Minimum}"/>:
+       <a href="{!item.reportUrl}" onclick="callOmniture_ActionItem();"><apex:outputField value="{!item.counts.CC_Cnt__c}"/></a></p></apex:outputPanel>
+       <apex:outputPanel rendered="{!item.aicategory='Featured Product no activity'}">
+       <p><apex:outputText value="{!$Label.Featured_Product_no_activity}"/>:
+       <a href="{!item.reportUrl}" onclick="callOmniture_ActionItem();"><apex:outputField value="{!item.counts.CC_Cnt__c}"/></a></p></apex:outputPanel>
+       <apex:outputPanel rendered="{!item.aicategory='New and In-Progress Leads'}">
+       <p><apex:outputText value="{!$Label.New_Inprogress_Leads}"/>:
+       <a href="{!item.reportUrl}" onclick="callOmniture_ActionItem();"><apex:outputField value="{!item.counts.CC_Cnt__c}"/></a></p></apex:outputPanel>
+       <apex:outputPanel rendered="{!item.aicategory='Reps with Overdue'}">
+       <p><apex:outputText value="{!$Label.Reps_with_Overdue}"/>:
+       <a href="{!item.reportUrl}" onclick="callOmniture_ActionItem();"><apex:outputField value="{!item.counts.CC_Cnt__c}"/></a></p></apex:outputPanel>
+       </apex:repeat>
+       </apex:outputPanel>
+        <apex:outputPanel rendered="{!OR(NOT(IsWidget),AND(IsWidget,isBusinessEnabled))}">
+       <h3 style="padding-top:18px;">{!$Label.Managing_Personal_Reps}</h3>
+       <apex:repeat value="{!mngPrsRepActionItems}" var="item">
+       <apex:outputPanel rendered="{!item.aicategory='Downline PSQ not achieved'}">
+       <p class="{!IF(item.oddRow,'aln_18','')}"><apex:outputText value="{!$Label.Downline_PSQ_not_achieved}" />:
+       <a href="{!item.reportUrl}" onclick="callOmniture_ActionItem();"><apex:outputField value="{!item.counts.CC_Cnt__c}"/></a></p></apex:outputPanel>
+       <apex:outputPanel rendered="{!item.aicategory='Inactive'}">
+       <p class="{!IF(item.oddRow,'aln_18','')}"><apex:outputText value="{!$Label.Inactive}"/>:
+       <a href="{!item.reportUrl}" onclick="callOmniture_ActionItem();"><apex:outputField value="{!item.counts.CC_Cnt__c}"/></a></p></apex:outputPanel>
+       <apex:outputPanel rendered="{!item.aicategory='New Repr LOA 0'}">
+       <p class="{!IF(item.oddRow,'aln_18','')}"><apex:outputText value="{!$Label.New_Repr_LOA_0}"/>:
+       <a href="{!item.reportUrl}" onclick="callOmniture_ActionItem();"><apex:outputField value="{!item.counts.CC_Cnt__c}"/></a></p></apex:outputPanel>
+       <apex:outputPanel rendered="{!item.aicategory='LOA 0-6'}">
+       <p class="{!IF(item.oddRow,'aln_18','')}"><apex:outputText value="{!$Label.New_Rep}"/>:
+       <a href="{!item.reportUrl}" onclick="callOmniture_ActionItem();"><apex:outputField value="{!item.counts.CC_Cnt__c}"/></a></p></apex:outputPanel>
+       <apex:outputPanel rendered="{!item.aicategory='G1 Appointments'}">
+       <p class="{!IF(item.oddRow,'aln_18','')}"><apex:outputText value="{!$Label.G1_Appointments}"/>:
+       <a href="{!item.reportUrl}" onclick="callOmniture_ActionItem();"><apex:outputField value="{!item.counts.CC_Cnt__c}"/></a></p></apex:outputPanel>
+       <apex:outputPanel rendered="{!item.aicategory='Inherited'}">
+       <p class="{!IF(item.oddRow,'aln_18','')}"><apex:outputText value="{!$Label.Inherited}"/>:
+       <a href="{!item.reportUrl}" onclick="callOmniture_ActionItem();"><apex:outputField value="{!item.counts.CC_Cnt__c}"/></a></p></apex:outputPanel>
+       <apex:outputPanel rendered="{!item.aicategory='Avon Anniversary'}">
+       <p class="{!IF(item.oddRow,'aln_18','')}"><apex:outputText value="{!$Label.Avon_Anniversary}"/>:
+       <a href="{!item.reportUrl}" onclick="callOmniture_ActionItem();"><apex:outputField value="{!item.counts.CC_Cnt__c}"/></a></p></apex:outputPanel>
+       <apex:outputPanel rendered="{!item.aicategory='Birthday'}">
+       <p class="{!IF(item.oddRow,'aln_18','')}"><apex:outputText value="{!$Label.LBirthday}"/>:
+       <a href="{!item.reportUrl}" onclick="callOmniture_ActionItem();"><apex:outputField value="{!item.counts.CC_Cnt__c}"/></a></p></apex:outputPanel>
+       <apex:outputPanel rendered="{!item.aicategory='New Repr LOA 0'}">
+       <p class="{!IF(item.oddRow,'aln_18','')}"><apex:outputText value="{!$Label.LOA_0}"/>:
+       <a href="{!item.reportUrl}" onclick="callOmniture_ActionItem();"><apex:outputField value="{!item.counts.CC_Cnt__c}"/></a></p></apex:outputPanel>
+       <apex:outputPanel rendered="{!item.aicategory='G1 Candidates'}">
+       <p class="{!IF(item.oddRow,'aln_18','')}"><apex:outputText value="{!$Label.Candidates}"/>:
+       <a href="{!item.reportUrl}" onclick="callOmniture_ActionItem();"><apex:outputField value="{!item.counts.CC_Cnt__c}"/></a></p></apex:outputPanel>
+       </apex:repeat>
+        </apex:outputPanel>
+     </div>
+     <!-- Action Item Config ends -->
+    </apex:outputPanel>
+    <apex:outputPanel rendered="{!isSideBar=='2'}">
+      <!--Action Item Config for Non Mailplan markets-->
+      <apex:outputText value="{!Initialize}"/>
+    <div class="cmp_rl_cnt">
+                 <div class="act_sprt">
+                    <h3>{!$Label.Coaching_Others}</h3>
+                    <table width="85%" border="0" cellspacing="0" cellpadding="0">
+                      <apex:repeat value="{!coachActionItems}" var="item">
+                      <tr>
+                       <td>
+       						<apex:outputText value="{!$Label.Title_Lost}" rendered="{!item.aicategory='Title Lost'}"/>
+       						<apex:outputText value="{!$Label.Title_Status_Promoted}" rendered="{!item.aicategory='Title Promoted'}"/>
+       						<apex:outputText value="{!$Label.Title_at_Risk}" rendered="{!item.aicategory='Title at Risk'}"/>
+       						<apex:outputText value="{!$Label.LLOA_1_6}" rendered="{!item.aicategory='LLOA 1 to 6'}"/>
+       						<apex:outputText value="{!$Label.Rising_Stars}" rendered="{!item.aicategory='Rising Stars'}"/>
+       				   :</td>
+       				   <td class="rl_rt"><a href="{!item.reportUrl}" class="rl_rt" style="float:right;font-size:11px;" onclick="callOmniture_ActionItem();"><apex:outputField value="{!item.counts.CC_Cnt__c}"/></a></td></tr>
+       				</apex:repeat>
+       				 </table>
+                        </div>
+                     <div class="act_sprt">   
+                       <h3>{!$Label.Managing_Numbers}</h3>
+                    <table width="85%" border="0" cellspacing="0" cellpadding="0">
+                     <apex:repeat value="{!mngNbrActionItems}" var="item">
+                     <tr><td>
+       						<apex:outputText value="{!$Label.Orders_Not_Submitted}" rendered="{!item.aicategory='Orders Not submitted'}"/>
+    						<apex:outputText value="{!$Label.Orders_Under_Minimum}" rendered="{!item.aicategory='Orders under minimum to earn'}"/>
+       						<apex:outputText value="{!$Label.Pending_Orders}" rendered="{!item.aicategory='Pending Orders'}"/>
+      						<apex:outputText value="{!$Label.Team_sales_below_minimum}" rendered="{!item.aicategory='Team sales below minimum'}"/>
+       						<apex:outputText value="{!$Label.Rpt_Orders_received}" rendered="{!item.aicategory='Orders Received Billed and Invoiced'}"/>
+       						<apex:outputText value="{!$Label.Orders_Received_In_Process}" rendered="{!item.aicategory='Orders Received In Process'}"/>
+       						<apex:outputText value="{!$Label.Team_sales_above_minimum}" rendered="{!item.aicategory='Team sales above minimum'}"/>
+       						<apex:outputText value="{!$Label.Return_net_sales}" rendered="{!item.aicategory='Return Sales'}"/>
+      						<apex:outputText value="{!$Label.Balance_Due}" rendered="{!item.aicategory='Balance due'}"/>
+       						<apex:outputText value="{!$Label.Past_Due}" rendered="{!item.aicategory='Past due'}"/>
+      						<apex:outputText value="{!$Label.Orders_Above_Minimum}" rendered="{!item.aicategory='Orders Over Minimum to earn'}"/>
+       						<apex:outputText value="{!$Label.Featured_Product_no_activity}" rendered="{!item.aicategory='Featured Product no activity'}"/>
+       						<apex:outputText value="{!$Label.New_Inprogress_Leads}" rendered="{!item.aicategory='New and In-Progress Leads'}"/>
+       						<apex:outputText value="{!$Label.Reps_with_Overdue}" rendered="{!item.aicategory='Reps with Overdue'}"/>
+       						:</td>
+       						<td class="rl_rt"><a href="{!item.reportUrl}" class="rl_rt" style="float:right;font-size:11px;">
+       							<apex:outputField value="{!item.counts.CC_Cnt__c}" rendered="{!item.aicategory!='Pending Orders'}"/>
+       							<apex:outputField value="{!item.counts.CC_Amt__c}" rendered="{!item.aicategory='Pending Orders'}"/>
+       							</a></td>
+       				</tr>
+       				</apex:repeat>
+                          </table>
+                       </div>
+                       <div class="cntr">
+                       <h3>{!$Label.Managing_Personal_Reps}</h3>
+                    <table width="85%" border="0" cellspacing="0" cellpadding="0">
+                    <apex:repeat value="{!mngPrsRepActionItems}" var="item">
+                    <tr><td>
+       					<apex:outputText value="{!$Label.Downline_PSQ_not_achieved}" rendered="{!item.aicategory='Downline PSQ not achieved'}"/>
+       					<apex:outputText value="{!$Label.Inactive}" rendered="{!item.aicategory='Inactive'}"/>
+      					<apex:outputText value="{!$Label.New_Repr_LOA_0}" rendered="{!item.aicategory='New Repr LOA 0'}"/>
+		       			<apex:outputText value="{!$Label.New_Rep}" rendered="{!item.aicategory='LOA 0-6'}"/>
+      					<apex:outputText value="{!$Label.G1_Appointments}" rendered="{!item.aicategory='G1 Appointments'}"/>
+       					<apex:outputText value="{!$Label.Featured_Product_no_activity}" rendered="{!item.aicategory='Inherited'}"/>
+       					<apex:outputText value="{!$Label.Avon_Anniversary}" rendered="{!item.aicategory='Avon Anniversary'}"/>
+      					<apex:outputText value="{!$Label.LBirthday}" rendered="{!item.aicategory='Birthday'}"/>
+      					<apex:outputText value="{!$Label.LOA_0}" rendered="{!item.aicategory='New Repr LOA 0'}"/>
+      					<apex:outputText value="{!$Label.Candidates}" rendered="{!item.aicategory='G1 Candidates'}"/>      						
+      					:</td>
+      					<td class="rl_rt"><a href="{!item.reportUrl}" class="rl_rt" style="float:right;font-size:11px;" onclick="callOmniture_ActionItem();"><apex:outputField value="{!item.counts.CC_Cnt__c}"/></a></td>
+      					</tr>
+       				</apex:repeat>
+                       </table>
+                       </div>
+                </div>
+    </apex:outputPanel>
+    <apex:outputPanel rendered="{!isSideBar=='3'}" layout="none"> 
+      <!--Action Item Config for DisplayWidgets-->
+      <apex:outputText value="{!Initialize}"/>
+    <table border="0" cellpadding="0" cellspacing="0" width="{!width}"
+        class="aitem_tbl aitem_tbl_nobtmbdr">
+        <apex:outputPanel rendered="{!AND(IsWidget,isOrderEnabled)}">
+        <tr>
+            <td class="aitem_header" colspan="2" width="100%">{!$Label.Coaching_Others}</td>
+        </tr>
+        <apex:repeat value="{!coachActionItems}" var="item">
+            <tr class="{!IF(item.oddRow,'aitem_odd','aitem_even')}">
+                <td class="aitem_txt">
+                   			<apex:outputText value="{!$Label.Title_Lost}" rendered="{!item.aicategory='Title Lost'}"/>
+       						<apex:outputText value="{!$Label.Title_Status_Promoted}" rendered="{!item.aicategory='Title Promoted'}"/>
+       						<apex:outputText value="{!$Label.Title_at_Risk}" rendered="{!item.aicategory='Title at Risk'}"/>
+       						<apex:outputText value="{!$Label.Rising_Stars}" rendered="{!item.aicategory='Rising Stars'}"/>
+       						<apex:outputText value="{!$Label.LLOA_1_6}" rendered="{!item.aicategory='LLOA 1 to 6'}"/>
+       			</td>
+                    <td class="aitem_data">
+                    <a target="_blank" href="{!URLFOR($Page.WidgetRedirPage)}?mktcd={!$CurrentPage.parameters.mktcd}&acctnbr={!$CurrentPage.parameters.acctNbr}&key={!$CurrentPage.parameters.key}&usrId={!currUser.Id}&rptId={!URLENCODE(item.reportUrl)}"><apex:outputField value="{!item.counts.CC_Cnt__c}"/></a>
+                    </td>
+            </tr>
+        </apex:repeat>
+           <tr>
+            <td class="aitem_separator" colspan="2" height="5" width="100%"></td>
+        </tr>
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{!AND(IsWidget,isSalesEnabled)}">
+        <tr>
+            <td class="aitem_header" colspan="2" width="100%">{!$Label.Managing_Numbers}</td>
+        </tr>
+         <apex:repeat value="{!mngNbrActionItems}" var="item">
+            <tr class="{!IF(item.oddRow,'aitem_odd','aitem_even')}">
+                <td class="aitem_txt">
+                  			<apex:outputText value="{!$Label.Orders_Not_Submitted}" rendered="{!item.aicategory='Orders Not submitted'}"/>
+    						<apex:outputText value="{!$Label.Orders_Under_Minimum}" rendered="{!item.aicategory='Orders under minimum to earn'}"/>
+       						<apex:outputText value="{!$Label.Pending_Orders}" rendered="{!item.aicategory='Pending Orders'}"/>
+      						<apex:outputText value="{!$Label.Team_sales_below_minimum}" rendered="{!item.aicategory='Team sales below minimum'}"/>
+       						<apex:outputText value="{!$Label.Rpt_Orders_received}" rendered="{!item.aicategory='Orders Received Billed and Invoiced'}"/>
+       						<apex:outputText value="{!$Label.Orders_Received_In_Process}" rendered="{!item.aicategory='Orders Received In Process'}"/>
+       						<apex:outputText value="{!$Label.Team_sales_above_minimum}" rendered="{!item.aicategory='Team sales above minimum'}"/>
+       						<apex:outputText value="{!$Label.Return_net_sales}" rendered="{!item.aicategory='Return Sales'}"/>
+      						<apex:outputText value="{!$Label.Balance_Due}" rendered="{!item.aicategory='Balance due'}"/>
+       						<apex:outputText value="{!$Label.Past_Due}" rendered="{!item.aicategory='Past due'}"/>
+      						<apex:outputText value="{!$Label.Orders_Above_Minimum}" rendered="{!item.aicategory='Orders Over Minimum to earn'}"/>
+       						<apex:outputText value="{!$Label.Featured_Product_no_activity}" rendered="{!item.aicategory='Featured Product no activity'}"/>
+       						<apex:outputText value="{!$Label.New_Inprogress_Leads}" rendered="{!item.aicategory='New and In-Progress Leads'}"/>
+       						<apex:outputText value="{!$Label.Reps_with_Overdue}" rendered="{!item.aicategory='Reps with Overdue'}"/>
+       			</td>
+                <td class="aitem_data">
+                    <a target="_blank" href="{!URLFOR($Page.WidgetRedirPage)}?mktcd={!$CurrentPage.parameters.mktcd}&acctnbr={!$CurrentPage.parameters.acctNbr}&key={!$CurrentPage.parameters.key}&usrId={!currUser.Id}&rptId={!URLENCODE(item.reportUrl)}">
+                    <apex:outputField value="{!item.counts.CC_Cnt__c}" rendered="{!item.aicategory!='Pending Orders'}"/>
+       				<apex:outputField value="{!item.counts.CC_Amt__c}" rendered="{!item.aicategory='Pending Orders'}"/></a>
+                </td>
+            </tr>
+        </apex:repeat>
+           <tr>
+            <td class="aitem_separator" colspan="2" height="5" width="100%"></td>
+        </tr>
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{!AND(IsWidget,isBusinessEnabled)}">
+        <tr>
+            <td class="aitem_header" colspan="2" width="100%">{!$Label.Managing_Personal_Reps}</td>
+        </tr>
+         <apex:repeat value="{!mngPrsRepActionItems}" var="item">
+            <tr class="{!IF(item.oddRow,'aitem_odd','aitem_even')}">
+                <td class="aitem_txt">
+                 	<apex:outputText value="{!$Label.Downline_PSQ_not_achieved}" rendered="{!item.aicategory='Downline PSQ not achieved'}"/>
+       					<apex:outputText value="{!$Label.Inactive}" rendered="{!item.aicategory='Inactive'}"/>
+      					<apex:outputText value="{!$Label.New_Repr_LOA_0}" rendered="{!item.aicategory='New Repr LOA 0'}"/>
+		       			<apex:outputText value="{!$Label.New_Rep}" rendered="{!item.aicategory='LOA 0-6'}"/>
+      					<apex:outputText value="{!$Label.G1_Appointments}" rendered="{!item.aicategory='G1 Appointments'}"/>
+       					<apex:outputText value="{!$Label.Featured_Product_no_activity}" rendered="{!item.aicategory='Inherited'}"/>
+       					<apex:outputText value="{!$Label.Avon_Anniversary}" rendered="{!item.aicategory='Avon Anniversary'}"/>
+      					<apex:outputText value="{!$Label.LBirthday}" rendered="{!item.aicategory='Birthday'}"/>
+      					<apex:outputText value="{!$Label.LOA_0}" rendered="{!item.aicategory='New Repr LOA 0'}"/>
+      					<apex:outputText value="{!$Label.G1_Candidate}" rendered="{!item.aicategory='G1 Candidates'}"/>      						
+      			</td>
+                 <apex:outputPanel rendered="{!NOT(item.aicategory='New and In Progress Leads')}">
+                    <td class="aitem_data">
+                    <a target="_blank" href="{!URLFOR($Page.WidgetRedirPage)}?mktcd={!$CurrentPage.parameters.mktcd}&acctnbr={!$CurrentPage.parameters.acctNbr}&key={!$CurrentPage.parameters.key}&usrId={!currUser.Id}&rptId={!URLENCODE(item.reportUrl)}"><apex:outputField value="{!item.counts.CC_Cnt__c}"/></a>
+                    </td>
+                 </apex:outputPanel>
+                 <apex:outputPanel rendered="{!item.aicategory='New and In Progress Leads'}">
+                    <td class="aitem_data">
+                    <a target="_blank" href="{!URLFOR($Page.WidgetRedirPage)}?mktcd={!$CurrentPage.parameters.mktcd}&acctnbr={!$CurrentPage.parameters.acctNbr}&key={!$CurrentPage.parameters.key}&usrId={!currUser.Id}&rptId=&pgId=40"><apex:outputField value="{!item.counts.CC_Cnt__c}"/></a>
+                    </td>
+                 </apex:outputPanel>
+                 </tr>
+        </apex:repeat>
+        </apex:outputPanel>
+    </table>
+    </apex:outputPanel>
+       <!-- Added by Snehashis for Mailplan Top Navigation-->
+	<apex:outputPanel rendered="{!isSideBar=='4'}">
+		<span>
+	    	<div class="cmp_rl_cnt" style="width : 398px">
+	    		<table>
+	    			<tr>
+	    				<td style="width:50%;padding-left:5px">
+				    		<h4>
+				    			<span style="color:#ED008C;font-size:12px;font-family:Helvetica,arial;font-weight:bold;">
+				    				{!market.CMPGN_NR__c}<hr color="#ED008C" width="88%" align="left" size="1"/>
+			    				</span>
+			    			</h4>
+			               	
+			               	{!CCCmpgnActionItems}
+			                 <div class="cntr">
+			                    <h3 style="color:#666666;font-size:12px;font-family:Helvetica,arial;font-weight:bold;">{!$Label.Coaching_Others}</h3>
+			                    <table width="88%" border="0" cellspacing="0" cellpadding="0" id="coachCC">
+			                      <apex:repeat value="{!coachActionItems}" var="item">
+			                      <tr style="height:18px;">
+			                       <td style="color:#666666;font-size:12px;font-family:Helvetica,arial;padding-top:0px;padding-bottom:0px;">
+			       						<apex:outputText value="{!$Label.Title_Lost}" rendered="{!item.aicategory='Title Lost'}"/>
+			       						<apex:outputText value="{!$Label.Title_Status_Promoted}" rendered="{!item.aicategory='Title Promoted'}"/>
+			       						<apex:outputText value="{!$Label.Title_at_Risk}" rendered="{!item.aicategory='Title at Risk'}"/>
+			       						<apex:outputText value="{!$Label.LLOA_1_6}" rendered="{!item.aicategory='LLOA 1 to 6'}"/>
+			       						<apex:outputText value="{!$Label.Rising_Stars}" rendered="{!item.aicategory='Rising Stars'}"/>
+			       				    :&nbsp;
+									<a href="{!item.reportUrl}" class="rl_rt" style="float:none;display:inline;color:#EC008C;font-size:12px;font-family:Helvetica,arial;text-decoration:underline;padding-top:0px;padding-bottom:0px;margin-bottom:-3px;" onclick="callOmniture_ActionItem();"><apex:outputField value="{!item.counts.CC_Cnt__c}"/></a></td></tr>
+			      				   </apex:repeat>
+			      				   
+				       				<tr style="height:15px;"><td></td></tr>
+			     				 </table>
+			                 </div>
+			                 <div class="cntr">   
+		                        <h3 style="color:#666666;font-size:12px;font-family:Helvetica,arial;font-weight:bold;">{!$Label.Managing_Numbers}</h3>
+			                    <table width="88%" border="0" cellspacing="0" cellpadding="0" id="mngNbrCC">
+				                     <apex:repeat value="{!mngNbrActionItems}" var="item">
+				                     <tr style="height:18px;">
+				                     	<td style="color:#666666;font-size:12px;font-family:Helvetica,arial;padding-top:0px;padding-bottom:0px;">
+				       						<apex:outputText value="{!$Label.Orders_Not_Submitted}" rendered="{!item.aicategory='Orders Not submitted'}"/>
+				    						<apex:outputText value="{!$Label.Orders_Under_Minimum}" rendered="{!item.aicategory='Orders under minimum to earn'}"/>
+				       						<apex:outputText value="{!$Label.Pending_Orders}" rendered="{!item.aicategory='Pending Orders'}"/>
+				      						<apex:outputText value="{!$Label.Team_sales_below_minimum}" rendered="{!item.aicategory='Team sales below minimum'}"/>
+				       						<apex:outputText value="{!$Label.Rpt_Orders_received}" rendered="{!item.aicategory='Orders Received Billed and Invoiced'}"/>
+				       						<apex:outputText value="{!$Label.Orders_Received_In_Process}" rendered="{!item.aicategory='Orders Received In Process'}"/>
+				       						<apex:outputText value="{!$Label.Team_sales_above_minimum}" rendered="{!item.aicategory='Team sales above minimum'}"/>
+				       						<apex:outputText value="{!$Label.Return_net_sales}" rendered="{!item.aicategory='Return Sales'}"/>
+				      						<apex:outputText value="{!$Label.Balance_Due}" rendered="{!item.aicategory='Balance due'}"/>
+				       						<apex:outputText value="{!$Label.Past_Due}" rendered="{!item.aicategory='Past due'}"/>
+				      						<apex:outputText value="{!$Label.Orders_Above_Minimum}" rendered="{!item.aicategory='Orders Over Minimum to earn'}"/>
+				       						<apex:outputText value="{!$Label.Featured_Product_no_activity}" rendered="{!item.aicategory='Featured Product no activity'}"/>
+				       						<apex:outputText value="{!$Label.New_Inprogress_Leads}" rendered="{!item.aicategory='New and In-Progress Leads'}"/>
+				       						<apex:outputText value="{!$Label.Reps_with_Overdue}" rendered="{!item.aicategory='Reps with Overdue'}"/>
+				       						:&nbsp;
+				       						<a href="{!item.reportUrl}" class="rl_rt" style="float:none;display:inline;color:#EC008C;font-size:12px;font-family:Helvetica,arial;text-decoration:underline;padding-top:0px;padding-bottom:0px;margin-bottom:-3px;">
+				       							<apex:outputField value="{!item.counts.CC_Cnt__c}" rendered="{!item.aicategory!='Pending Orders'}"/>
+				       							<apex:outputField value="{!item.counts.CC_Amt__c}" rendered="{!item.aicategory='Pending Orders'}"/>
+				       							</a></td>
+				       				</tr>
+				       				</apex:repeat>
+				       				<tr style="height:15px;"><td></td></tr>
+			                     </table>
+			                </div>
+			                <div class="cntr">
+			                    <h3 style="color:#666666;font-size:12px;font-family:Helvetica,arial;font-weight:bold;">{!$Label.Managing_Personal_Reps}</h3>
+			                    <table width="88%" border="0" cellspacing="0" cellpadding="0" id="mngPRCC">
+				                    <apex:repeat value="{!mngPrsRepActionItems}" var="item">
+				                    	<tr style="height:18px;">
+				                    		<td style="color:#666666;font-size:12px;font-family:Helvetica,arial;padding-top:0px;padding-bottom:0px;">
+					       					<apex:outputText value="{!$Label.Downline_PSQ_not_achieved}" rendered="{!item.aicategory='Downline PSQ not achieved'}"/>
+					       					<apex:outputText value="{!$Label.Inactive}" rendered="{!item.aicategory='Inactive'}"/>
+					      					<apex:outputText value="{!$Label.New_Repr_LOA_0}" rendered="{!item.aicategory='New Repr LOA 0'}"/>
+							       			<apex:outputText value="{!$Label.New_Rep}" rendered="{!item.aicategory='LOA 0-6'}"/>
+					      					<apex:outputText value="{!$Label.G1_Appointments}" rendered="{!item.aicategory='G1 Appointments'}"/>
+					       					<apex:outputText value="{!$Label.Featured_Product_no_activity}" rendered="{!item.aicategory='Inherited'}"/>
+					       					<apex:outputText value="{!$Label.Avon_Anniversary}" rendered="{!item.aicategory='Avon Anniversary'}"/>
+					      					<apex:outputText value="{!$Label.LBirthday}" rendered="{!item.aicategory='Birthday'}"/>
+					      					<apex:outputText value="{!$Label.LOA_0}" rendered="{!item.aicategory='New Repr LOA 0'}"/>
+					      					<apex:outputText value="{!$Label.Candidates}" rendered="{!item.aicategory='G1 Candidates'}"/>      						
+					      					:&nbsp;
+					      					<a href="{!item.reportUrl}" class="rl_rt" style="float:none;display:inline;color:#EC008C;font-size:12px;font-family:Helvetica,arial;text-decoration:underline;padding-top:0px;padding-bottom:0px;margin-bottom:-3px;" onclick="callOmniture_ActionItem();"><apex:outputField value="{!item.counts.CC_Cnt__c}"/></a></td>
+				      					</tr>
+				       				</apex:repeat>
+				       				
+			                   </table>
+			                </div>
+		                </td>
+		                
+		                <td style="width:50%;padding-left:20px;">
+			                <h4>
+			                	<span style="color:#ED008C;font-size:12px;font-family:Helvetica,arial;font-weight:bold;">
+			                		{!market.NEXT_1_CMPGN_NR__c}<hr color="#ED008C" width="95%" align="left" size="1"/>
+		                		</span>
+	                		</h4>
+			               	{!NCCmpgnActionItems}
+			             
+			             <!-- @T-219281 : Commented by barkha -->
+			             <!--  <div class="cntr">
+			                    <h3 style="color:#666666;font-size:12px;font-family:Helvetica,arial;font-weight:bold;">{!$Label.Coaching_Others}</h3>
+			                    <table width="95%" border="0" cellspacing="0" cellpadding="0" id="coachNC">
+			                      <apex:repeat value="{!coachNCActionItems}" var="item">
+			                      <tr style="height:18px;">
+			                       <td style="color:#666666;font-size:12px;font-family:Helvetica,arial;padding-top:0px;padding-bottom:0px;">
+			       						<apex:outputText value="{!$Label.Title_Lost}" rendered="{!item.aicategory='Title Lost'}"/>
+			       						<apex:outputText value="{!$Label.Title_Status_Promoted}" rendered="{!item.aicategory='Title Promoted'}"/>
+			       						<apex:outputText value="{!$Label.Title_at_Risk}" rendered="{!item.aicategory='Title at Risk'}"/>
+			       						<apex:outputText value="{!$Label.LLOA_1_6}" rendered="{!item.aicategory='LLOA 1 to 6'}"/>
+			       						<apex:outputText value="{!$Label.Rising_Stars}" rendered="{!item.aicategory='Rising Stars'}"/>
+			       				   :&nbsp;
+			       				   <a href="{!item.reportUrl}" class="rl_rt" style="float:none;display:inline;color:#EC008C;font-size:12px;font-family:Helvetica,arial;text-decoration:underline;padding-top:0px;padding-bottom:0px;margin-bottom:-3px;" onclick="callOmniture_ActionItem();"><apex:outputField value="{!item.counts.CC_Cnt__c}"/></a></td></tr>
+			      				   </apex:repeat>
+			      				   <tr style="height:15px;"><td></td></tr>
+			     				 </table>
+			                 </div> -->    
+			                 
+			                 <div class="cntr">   
+		                        <h3 style="color:#666666;font-size:12px;font-family:Helvetica,arial;font-weight:bold;">{!$Label.Managing_Numbers}</h3>
+			                    <table width="95%" border="0" cellspacing="0" cellpadding="0" id="mngNbrCC">
+				                     <apex:repeat value="{!mngNbrNCActionItems}" var="item">
+				                     <tr style="height:18px;">
+				                     	<td style="color:#666666;font-size:12px;font-family:Helvetica,arial;padding-top:0px;padding-bottom:0px;">
+				       						<apex:outputText value="{!$Label.Orders_Not_Submitted}" rendered="{!item.aicategory='Orders Not submitted'}"/>
+				    						<apex:outputText value="{!$Label.Orders_Under_Minimum}" rendered="{!item.aicategory='Orders under minimum to earn'}"/>
+				       						<apex:outputText value="{!$Label.Pending_Orders}" rendered="{!item.aicategory='Pending Orders'}"/>
+				      						<apex:outputText value="{!$Label.Team_sales_below_minimum}" rendered="{!item.aicategory='Team sales below minimum'}"/>
+				       						<apex:outputText value="{!$Label.Rpt_Orders_received}" rendered="{!item.aicategory='Orders Received Billed and Invoiced'}"/>
+				       						<apex:outputText value="{!$Label.Orders_Received_In_Process}" rendered="{!item.aicategory='Orders Received In Process'}"/>
+				       						<apex:outputText value="{!$Label.Team_sales_above_minimum}" rendered="{!item.aicategory='Team sales above minimum'}"/>
+				       						<apex:outputText value="{!$Label.Return_net_sales}" rendered="{!item.aicategory='Return Sales'}"/>
+				      						<apex:outputText value="{!$Label.Balance_Due}" rendered="{!item.aicategory='Balance due'}"/>
+				       						<apex:outputText value="{!$Label.Past_Due}" rendered="{!item.aicategory='Past due'}"/>
+				      						<apex:outputText value="{!$Label.Orders_Above_Minimum}" rendered="{!item.aicategory='Orders Over Minimum to earn'}"/>
+				       						<apex:outputText value="{!$Label.Featured_Product_no_activity}" rendered="{!item.aicategory='Featured Product no activity'}"/>
+				       						<apex:outputText value="{!$Label.New_Inprogress_Leads}" rendered="{!item.aicategory='New and In-Progress Leads'}"/>
+				       						<apex:outputText value="{!$Label.Reps_with_Overdue}" rendered="{!item.aicategory='Reps with Overdue'}"/>
+				       						:&nbsp;
+				       						<a href="{!item.reportUrl}" class="rl_rt" style="float:none;display:inline;color:#EC008C;font-size:12px;font-family:Helvetica,arial;text-decoration:underline;padding-top:0px;padding-bottom:0px;margin-bottom:-3px;">
+				       							<apex:outputField value="{!item.counts.CC_Cnt__c}" rendered="{!item.aicategory!='Pending Orders'}"/>
+				       							<apex:outputField value="{!item.counts.CC_Amt__c}" rendered="{!item.aicategory='Pending Orders'}"/>
+				       							</a></td>
+				       				</tr>
+				       				</apex:repeat>
+				       				<tr style="height:15px;"><td></td></tr>
+			                     </table>
+			                </div>
+			                <div class="cntr">
+			                    <h3 style="color:#666666;font-size:12px;font-family:Helvetica,arial;font-weight:bold;">{!$Label.Managing_Personal_Reps}</h3>
+			                    <table width="95%" border="0" cellspacing="0" cellpadding="0" id="mngPRCC">
+				                    <apex:repeat value="{!mngPrsRepNCActionItems}" var="item">
+				                    	<tr style="height:18px;">
+				                    		<td style="color:#666666;font-size:12px;font-family:Helvetica,arial;padding-top:0px;padding-bottom:0px;">
+					       					<apex:outputText value="{!$Label.Downline_PSQ_not_achieved}" rendered="{!item.aicategory='Downline PSQ not achieved'}"/>
+					       					<apex:outputText value="{!$Label.Inactive}" rendered="{!item.aicategory='Inactive'}"/>
+					      					<apex:outputText value="{!$Label.New_Repr_LOA_0}" rendered="{!item.aicategory='New Repr LOA 0'}"/>
+							       			<apex:outputText value="{!$Label.New_Rep}" rendered="{!item.aicategory='LOA 0-6'}"/>
+					      					<apex:outputText value="{!$Label.G1_Appointments}" rendered="{!item.aicategory='G1 Appointments'}"/>
+					       					<apex:outputText value="{!$Label.Featured_Product_no_activity}" rendered="{!item.aicategory='Inherited'}"/>
+					       					<apex:outputText value="{!$Label.Avon_Anniversary}" rendered="{!item.aicategory='Avon Anniversary'}"/>
+					      					<apex:outputText value="{!$Label.LBirthday}" rendered="{!item.aicategory='Birthday'}"/>
+					      					<apex:outputText value="{!$Label.LOA_0}" rendered="{!item.aicategory='New Repr LOA 0'}"/>
+					      					<apex:outputText value="{!$Label.Candidates}" rendered="{!item.aicategory='G1 Candidates'}"/>      						
+					      					:&nbsp;
+					      					<a href="{!item.reportUrl}" class="rl_rt" style="float:none;display:inline;color:#EC008C;font-size:12px;font-family:Helvetica,arial;text-decoration:underline;padding-top:0px;padding-bottom:0px;margin-bottom:-3px;" onclick="callOmniture_ActionItem();"><apex:outputField value="{!item.counts.CC_Cnt__c}"/></a></td>
+				      					</tr>
+				       				</apex:repeat>
+				       				
+			                   </table>
+			                </div>
+		                </td>
+	                </tr>
+                </table>
+	    	</div>
+    	</span>
+</apex:outputPanel>
+</apex:component>

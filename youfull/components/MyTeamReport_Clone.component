@@ -1,0 +1,2691 @@
+<apex:component controller="MyTeamReportCmpController" allowDml="true">
+
+    <apex:attribute name="ReportType" description="Description here." type="String" required="true" assignTo="{!ReportType}"></apex:attribute>
+    <apex:attribute name="OnSimpleGenerationRowCallback" description="Description here." type="String" required="false" assignTo="{!OnSimpleGenerationRowCallback}"></apex:attribute>
+    <apex:attribute name="IsTList" description="Description here." type="Boolean" required="false" default="false" assignTo="{!IsTList}"></apex:attribute>
+
+    {!LoadController}
+    
+    <noscript> 
+        <meta http-equiv="Refresh" content="0; URL=/apex/ErrorPage?nojs=1" /> 
+    </noscript>
+    
+    <script src="/soap/ajax/15.0/connection.js" type="text/javascript"></script>
+    <script src="/soap/ajax/15.0/apex.js" type="text/javascript"></script>
+    
+<style type="text/css">
+    .gen_row_0 { background-color: #FFFFFF; }
+    .gen_row_1 { background-color: #ECEBEB; } /* old #E0E0E0 change by AG */
+    .gen_row_2 { background-color: #72c7f0; }
+    .gen_row_3 { background-color: #9addff; }
+    .gen_row_4 { background-color: #c1e4ff; }
+    .gen_row_5 { background-color: #cdfffe; }
+    .gen_row_6 { background-color: #e6fbfb; }
+    .gen_row_10 { background-color: #f2fcd7; }
+    .gen_row_11 { background-color: #e7f9b6; }
+    .gen_row_12 { background-color: #d8f58a; }
+    .gen_row_13 { background-color: #c9f15a; }
+    .gen_row_14 { background-color: #b8ed28; }
+    .gen_row_15 { background-color: #fc9c04; }
+    .gen_row_15 { background-color: #fdb33e; }
+    .gen_row_16 { background-color: #fdc977; }
+    .gen_row_17 { background-color: #fdddab; }
+    .gen_row_18 { background-color: #fcecd3; }
+    .gen_row_19 { background-color: #f5d1fc; }
+    .gen_row_20 { background-color: #e1c4ff; }
+    .gen_row_21 { background-color: #e3b4f9; }
+    .gen_row_22 { background-color: #e193f4; }
+    .gen_row_23 { background-color: #de70ee; }
+        
+    .big_pnk_hdr {
+        width: 915px;
+        margin: -71px 0 0 -11px;
+        //font-size: 2.3em;
+    }
+    
+    .single_clmn {
+        padding: 70px 0px 0px 0px; /* 70px 0px 8px 0px; */
+    }
+
+    
+    #header { position:relative; }
+    .breadcrumb_imper { position: absolute;top: 20px; }
+    
+    .divScroll {  
+        overflow: auto;
+        padding-right: 5px;
+    }
+    
+    .showTableBorder {
+        padding-top: 5px;
+    }
+    
+    .bigShowTableBorder {
+        padding-top: 10px;
+    }
+
+    Table.masterTable {
+        width: 928px;
+        table-layout: fixed;
+    }
+    
+    .masterTable td {
+        vertical-align: top;
+    }
+    
+    Table.childTable {
+        cellpadding: 1;
+        cellspacing: 1;
+        padding: 0px;
+        border-spacing: 0px;
+        margin-top: -5px; /*must be 1 + negative of #showhide padding-top */
+        font-size: 12px;
+    }
+    
+    .childTable td {
+        cursor: default;
+        border-right: 1px solid #fff;
+        border-bottom: 1px solid #fff;
+        /* padding: 5px; */
+        padding:2px 5px;
+        height: 28px; /* change by amartya */
+        vertical-align: middle;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+    
+    .childTable td a {
+        color:  #000000;    
+    }
+    
+    .header td {
+        cursor: pointer;
+        background-color: #f6f5f5;
+        color: #999999; /* change by amartya old #666 */
+        text-align: center;
+        vertical-align: bottom;
+        font-size: 11px;
+        font-weight: normal;
+        border-top: 1px solid #999999;
+        border-bottom: 1px solid #999999;
+        border-right: 1px solid #CCCCCC;
+        height: 27px; /*Change by amartya height: 52px;*/
+    }
+    
+    .subHeader td {
+        background: #e9e9e9;
+        font-size: 11px;
+        border-top: 1px solid #999999;
+        border-right: 1px solid #CCCCCC;
+        height: 19px; /*change by amartya height: 30px; */
+        border-bottom: 1px solid #999999;
+        color:#666666 !important; /* added by amartya */
+    }
+    
+    /* added by amartya */
+    .subHeader a {
+    color:#666666 !important;
+    }
+    
+    .headerLeftBorder {
+        border-left: 1px solid #999999;
+    }
+    
+    .round_go {
+        margin: 0 5px 0 4px;
+       // -webkit-margin-top:-8px;
+    }
+    
+    .mtr_err_message {
+        font-family: helvetica;
+        font-size: 12px;
+        font-weight: bold;
+        color: #e00b0b;
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+    
+    .bottom_spacer {
+        clear: both;
+       /* height: 50px; */
+    }
+    
+     .headerCheckboxSmall
+    {
+      /* Double-sized Checkboxes */
+      -ms-transform: scale(.8)!important; /* IE */
+      -moz-transform: scale(.8)!important; /* FF */
+      -webkit-transform: scale(.8)!important; /* Safari and Chrome */
+      -o-transform: scale(.8)!important; /* Opera */
+      padding: 0px;
+    }
+    
+</style>
+    
+<script language="JavaScript">
+ console.log('start part 1 ');
+  //added by swarnava for Dynamic Height and adjusting V scrollbar:Start
+   function DynamicHeight(){
+    var lasta,lastc;
+    jQuery(".cellText").find("a").each(function(){
+    var a=jQuery(this).closest("tr").attr("id");
+    //console.log("id->"+a);
+    var b=a.split('_');
+    b[4]=parseInt(b[4])+1;
+    var c=b.join();
+    c=c.replace(/,/g,'_');
+    //console.log("converted->"+c);
+    var txt=jQuery(this).text();
+    //console.log('text->'+txt); 
+    if(!isEmpty(txt)){lasta=a;lastc=c;}    
+    var numline=(!isEmpty(txt))?jQuery(this).get(0).getClientRects().length:1;
+    var actualheight=29+(numline-1)*17;   
+    //console.log('actualheight->'+actualheight);
+    var styletext='height:'+actualheight+'px;';
+    if(numline>1)
+    {jQuery('#'+a).attr('style',styletext);
+    jQuery('#'+c).attr('style',styletext);}
+    }
+    ); 
+    if(jQuery('#'+lasta).height()==0)
+     {jQuery('#'+lasta).height(36);jQuery('#'+lastc).height(36);}
+     else 
+     {jQuery('#'+lasta).height(jQuery('#'+lasta).height()+10);jQuery('#'+lastc).height(jQuery('#'+lastc).height()+10);} 
+    m_genTable.ApplyScrollbarStyles();
+    {jQuery('#'+lasta).height(jQuery('#'+lasta).height()-10);jQuery('#'+lastc).height(jQuery('#'+lastc).height()-10);}
+    }
+    //added by swarnava for Dynamic Height and adjusting V scrollbar:End
+    var lock=false; //varriable added by swarnava for coaching record opening issue while impersonation in IE8
+    var $ = jQuery.noConflict();
+    
+    var BRANCH_ROW_INDEX = 0;
+    
+    var m_ReportTitle = '{!ReportTitle}';
+    var m_ReportType = '{!ReportType}';
+    var m_IsTList = {!IsTList};
+    
+    var m_allColumnName = '{!AllLabel}';
+    var m_genColumnName = '{!GenerationLabel}';
+    var m_firstLastColumnName = '{!FirstLastNameLabel}';
+    var m_lastFirstColumnName = '{!LastFirstNameLabel}';
+    
+    // This line is blocked for removal of TeamList Column from MTO / TA by Raktim on 10th Apr 2013
+    // This line is unblocked on 16th Apr 2013
+    // This line is blocked on 29th Apr 2013
+    //var m_tListColumnName = '{!TListLabel}';
+
+    var m_adjustedAllColumnName = m_allColumnName.toLowerCase();
+    var m_adjustedGenColumnName = m_genColumnName.toLowerCase();
+    var m_adjustedFirstLastColumnName = m_firstLastColumnName.toLowerCase();
+    var m_adjustedLastFirstColumnName = m_lastFirstColumnName.toLowerCase();
+    
+    // This line is blocked for removal of TeamList Column from MTO / TA by Raktim on 10th Apr 2013
+    // This line is unblocked on 16th Apr 2013
+    // This line is blocked on 29th Apr 2013
+    //var m_adjustedTListColumnName = m_tListColumnName.toLowerCase();
+    
+    var m_MaxPageLimitReached = false;
+
+    var m_genTable = new MasterHSGTable();
+    
+    m_genTable.AddClass('masterTable');
+    m_genTable.AddFrozenTableClass('childTable');
+    m_genTable.AddScrollableTableClass('childTable');
+    
+    
+    /*************************/
+    
+    var m_T_Array = new Array();
+  
+    var m_T_ColumnOrderArray = new Array();
+    var m_PS_ColumnOrderArray = new Array();
+    
+    var m_T_ColumnInfoArray = new Array();
+    var m_PS_ColumnInfoArray = new Array();
+    
+    var m_T_ColumnAPINameArray = new Array();
+    var m_PS_ColumnAPINameArray = new Array();
+    
+    var m_T_ColumnInfoExArray = new Array();
+    var m_PS_ColumnInfoExArray = new Array();
+    
+    var m_CloneColumnInfoObject = null;
+    var m_CloneColumnOrderArray = null;
+    
+    var m_NameSortCell = null;
+    
+    var m_MarketId = '{!AvonMarketId}';
+    
+    var m_YOUDateFormat = '{!YOUDateFormat}';
+    
+    var m_SearchType = '{!AF_SearchType}';
+    var m_SortBy = '{!SearchType.SortBy}';
+    var m_IsAscending = '{!SearchType.IsAscending}';
+    var m_ReverseNameSortColumnName = '{!SearchType.ReverseNameSortColumnName}';
+    
+    var m_FilterObject = new Object();
+    var m_TSObject = new Object();
+    
+    m_FilterObject.CampaignId = '{!FilterSearchType.CampaignId}';
+    m_FilterObject.Who = '{!FilterSearchType.Who}';
+    m_FilterObject.What = '{!FilterSearchType.What}';
+    
+    m_TSObject.TextSearch = '{!TextSearchType.TextSearch}';
+    m_TSObject.TSCriteria = '{!TextSearchType.TSCriteria}';
+    
+    var m_IsDrillable = true;
+    var m_IsSortable = true;
+    
+    var m_HTTPBaseSalesforceUrl = '{!HTTPBaseSalesforceUrl}';
+    
+    var m_AllowFreeEmailsFor = '{!AllowFreeEmailsFor}';
+    var m_EmailAllowed = {!EmailAllowed};
+    
+    var m_DownloadType = '';
+    var m_DownloadInfo = jQuery.parseJSON('{!DownloadInfoJSON}');
+    
+    var m_LoadingPagedData = false;
+    var m_IsExpanding = false;
+    
+    var m_CSSRowIndexer = 0;
+    var m_InitialRowCounter = 0;
+    
+    var m_toggle = null;
+    var m_tableRowId = '';
+    var m_parentId = '-1';
+    var m_generation = 0;
+    
+ 
+</script>
+
+<script language="JavaScript">
+ 
+  //console.log(' ALM_PAGE_NAME '+ALM_PAGE_NAME);
+  
+  var actionItm = '{!$CurrentPage.parameters.pageName}';
+  //console.log(' actionItm :::  '+actionItm);
+  
+  if(isEmpty(actionItm))  
+    ALM_PAGE_NAME="{!OmniturePageName}"; //added by swarnava for Omniture page name
+  else if(actionItm=='Action_Items')
+    ALM_PAGE_NAME='Action Items';
+  //console.log(' ALM_PAGE_NAME :::  '+ALM_PAGE_NAME);
+    
+  //Generation Table Callback.  Defines column structure for entire table
+  var createColumnCallback = function(genTable, columnDisplayType) {
+    
+     var columnOrderArray = new Array();
+     var columnInfo = null;
+     
+     for(var n = 0; n <= m_T_ColumnOrderArray.length -1; n++) {
+      //    alert('.. Column Name -> '+m_T_ColumnOrderArray[n]);
+        columnInfo = GetColumnInfo(m_T_ColumnInfoArray, m_T_ColumnOrderArray[n]);
+        
+        if(columnInfo == null) {
+        
+            if(columnDisplayType == 'Frozen') {
+                columnOrderArray.push(m_T_ColumnOrderArray[n]);
+            }
+        }
+        else if(columnInfo.ColumnDisplayType == columnDisplayType) {
+            columnOrderArray.push(m_T_ColumnOrderArray[n]);
+        }
+     }
+     
+     return columnOrderArray;
+  }
+  
+  //Generation Table Callback.  Defines header row where we can put sort links
+  var createHeaderRowCallback = function(genTable, headerType, dRow) {
+
+    var sortArray = null;
+    var sortCell = null;
+    var columnInfo = null;
+    var columnInfoPS = null;
+    var adjustedColumnOrder = '';
+    var fullName = '';
+    var fullyQualifiedName = '';
+    var linkName = '';
+    
+    var acctKey = '{!$CurrentPage.parameters.acctKey}';
+    var isImpersonating = (acctKey.length > 0);
+    
+    for(var n = 0; n <= m_T_ColumnOrderArray.length -1; n++) {
+        
+        columnInfo = GetColumnInfo(m_T_ColumnInfoArray, m_T_ColumnOrderArray[n]);
+        
+        adjustedColumnOrder = m_T_ColumnOrderArray[n].toLowerCase();
+        
+        if(columnInfo == null || (!m_IsSortable && columnInfo != null)) {
+        
+            if(columnInfo == null) {
+                fullName = GetHardcodedColumnFullName(m_T_ColumnOrderArray[n]);
+            }
+            else if(!m_IsSortable && columnInfo != null) {
+                fullName = columnInfo.FullName;
+            }
+            
+            if(headerType == 'Header') {
+            
+                if(!IsMyTeamReportCompatible(m_ReportType) && adjustedColumnOrder == m_adjustedGenColumnName) {
+                
+                     sortCell = new SortDataCell(m_T_ColumnOrderArray[n], fullName, 'Genealogy_Level__c', sortCallback, 'ascend_arrow', 'descend_arrow', 'inactive_arrow');
+              
+                     dRow.PutColumn(m_T_ColumnOrderArray[n], sortCell);
+                }
+                else {
+                    dRow.PutColumn(m_T_ColumnOrderArray[n], new FastWriteDataCell('<br>' + m_T_ColumnOrderArray[n], fullName,(columnInfo!=null)?columnInfo.is_Hover_Enabled:null));
+                }
+            }
+            else if(headerType == 'SubHeader') {
+                dRow.PutColumn(m_T_ColumnOrderArray[n], new FastWriteDataCell('&nbsp;'));
+            }
+        }
+        else {
+        
+            if(headerType == 'Header') {
+            
+                fullyQualifiedName = ''
+                
+                sortArray = new Array();
+                
+                AppendSortArray(sortArray, columnInfo.FullyQualifiedName.split(','));
+                
+                columnInfoPS = GetColumnInfo(m_PS_ColumnInfoArray, m_T_ColumnOrderArray[n]);
+                
+                if(columnInfoPS != null) {
+                
+                    AppendSortArray(sortArray, columnInfoPS.FullyQualifiedName.split(','));
+                }
+                
+                for(var i = 0; i <= sortArray.length - 1; i++) {
+                
+                    if(fullyQualifiedName.length == 0) {
+                        fullyQualifiedName = sortArray[i];
+                    }
+                    else {
+                        fullyQualifiedName += ', ' + sortArray[i];
+                    }
+                }
+                
+                sortCell = new SortDataCell(columnInfo.Name, columnInfo.FullName, fullyQualifiedName, sortCallback, 'ascend_arrow', 'descend_arrow', 'inactive_arrow');
+                
+                if(columnInfo.Name ==  m_firstLastColumnName 
+                    || columnInfo.Name ==  m_lastFirstColumnName) {
+                    m_NameSortCell = sortCell;
+                }
+                
+                dRow.PutColumn(m_T_ColumnOrderArray[n], sortCell);
+            }
+            else if(headerType == 'SubHeader') {
+             
+               dRow.PutColumn(columnInfo.Name, new FastWriteDataCell('&nbsp;'));
+            }
+            
+            if(columnInfo.Visibility == 'Default Hidden') {
+                //alert(' Column Name :::  '+columnInfo.Name);
+                
+                dRow.GetColumn(columnInfo.Name).SetVisible(false);
+            }
+        }
+        
+       
+        if(headerType == 'SubHeader' && columnInfo != null) {
+            
+             if(columnInfo.Name ==  m_firstLastColumnName 
+                 || columnInfo.Name ==  m_lastFirstColumnName) {
+                 
+                 if(columnInfo.Name == m_firstLastColumnName) {
+                     linkName = m_lastFirstColumnName;
+                 }
+                 else if(columnInfo.Name == m_lastFirstColumnName) {
+                     linkName = m_firstLastColumnName;
+                 }
+                 
+                 dRow.PutColumn(columnInfo.Name, new FastWriteDataCell('{!$Label.Sort_None}: <a href="javascript:void(0)" onclick="doNameToggleSort_Click(&quot;' + linkName + '&quot;); return false;">' + linkName + '</a>'));
+             }
+         }
+          
+    
+     }
+     
+     if(headerType == 'Header') {
+        dRow.PutColumn(m_allColumnName, new FastWriteDataCell(m_allColumnName, m_allColumnName,(columnInfo!=null)?columnInfo.is_Hover_Enabled:null));
+     }
+     else if(headerType == 'SubHeader' && isImpersonating == false) {
+        dRow.PutColumn(m_allColumnName, new CheckboxDataCell(true, m_allColumnName, false, ''));
+     }
+     // change by amartya
+     //dRow.GetColumn(m_allColumnName).AddClass('headerLeftBorder');
+     
+     if(headerType == 'Header') {
+        dRow.AddClass('header');
+     }
+     else if(headerType == 'SubHeader') {
+        dRow.AddClass('subHeader');
+     }
+  }
+  
+  var otherReports_GenerateRowCallback = function(genTable, dRow, data) {
+   
+    var rowInfoObject = new Object();
+    var columnInfo = null;
+    var excludeKeys = null;
+    var overwriteValues = null;
+    var appendValues = null;
+    var value = null;
+    var value2 = null;
+    var acctKey = '{!$CurrentPage.parameters.acctKey}';
+    var oldStyle = '';
+    var link = '';
+    var adjustedColumnOrder = '';
+    var columnName = '';
+    var generation = 0;
+    var cssIndex = 0;
+    var isMerged = (dRow.RowType == ROW_TYPE_MERGED);
+    var isMainAccount = (data.ACCT_NR__c == '{!AccountNum}');
+    var isImpersonating = (acctKey.length > 0);
+    var market_Curr_Camp;//added by swarnava
+    var campno;//added by swarnava
+    var mailplan_to_show;//added by swarnava
+
+    if(m_CloneColumnInfoObject == null) {
+    
+        m_CloneColumnInfoObject = new Object();
+        
+        for(var n = 0; n <= m_T_ColumnOrderArray.length -1; n++) {
+            
+            columnInfo = GetColumnInfo(m_T_ColumnInfoArray, m_T_ColumnOrderArray[n]);
+            
+            if(columnInfo == null) {
+                m_CloneColumnInfoObject[m_T_ColumnOrderArray[n]] = null;
+            }
+            else {
+                m_CloneColumnInfoObject[m_T_ColumnOrderArray[n]] = jQuery.extend(true, {}, columnInfo);
+            }
+        }   
+    }
+    
+    if(m_CloneColumnOrderArray == null) {
+    
+        m_CloneColumnOrderArray = m_T_ColumnOrderArray.slice(0);
+    }
+    
+    rowInfoObject.MarketId = m_MarketId;
+    rowInfoObject.MainAccountNumber = '{!AccountNum}';
+    rowInfoObject.Gen1EmailConfigEnabled = (m_AllowFreeEmailsFor == 'G1' && data.Genealogy_Level__c != '1');
+    rowInfoObject.YOUDateFormat = m_YOUDateFormat;
+    rowInfoObject.ColumnInfoObject = m_CloneColumnInfoObject;
+    rowInfoObject.ColumnOrderArray = m_CloneColumnOrderArray;
+    rowInfoObject.Style = '';
+    rowInfoObject.ImpersonationColumnName = '';
+    rowInfoObject.EmailColumnName = '';
+    
+    oldStyle = dRow.GetClass();
+        
+    OnSimpleGenerationRowCallback(genTable, dRow, data, rowInfoObject);
+    
+    if(dRow.GetClass() != oldStyle) {
+        throw new Error('MyTeamReport::SimpleGenerateRowCallback Exception Error=The Class attribute for this row cannot be modified directly in this context.  Please use the RowInfoObject Style property.');
+    }
+    
+    if(!isEmpty(rowInfoObject.EmailColumnName)) {
+    
+        value = data[rowInfoObject.EmailColumnName];
+        //console.log('value  '+value);
+        
+        if(!isMainAccount && m_EmailAllowed && !isImpersonating && (m_AllowFreeEmailsFor == 'All' || !rowInfoObject.Gen1EmailConfigEnabled)) {
+        
+            value2 = m_MarketId + data.ACCT_NR__c;
+                    
+            dRow.PutColumn(rowInfoObject.EmailColumnName, new FastWriteDataCell('<a href="javascript:void(0);" onclick="showOverlay(&quot;email&quot;, &quot;' + value2 + '&quot;); return false;">' + value + '</a>', value));
+        }
+        else {
+        
+            //dRow.PutColumn(rowInfoObject.EmailColumnName, new FastWriteDataCell(value, value,(columnInfo!=null)?columnInfo.is_Hover_Enabled:null));
+        }
+    }
+    
+    if(!isEmpty(rowInfoObject.ImpersonationColumnName)) {
+    
+        value = data[rowInfoObject.ImpersonationColumnName];
+        
+        if(isMainAccount || isEmpty(data.BadgeTitleNumber) || (isInteger(data.BadgeTitleNumber) && parseInt(data.BadgeTitleNumber) <= 0)) {
+            dRow.PutColumn(rowInfoObject.ImpersonationColumnName, new FastWriteDataCell('<a href="javascript:void(0)" onclick="viewRepDetail(&quot;' + data.ACCT_NR__c + '&quot;);">' + value + '</a>', value,(columnInfo!=null)?columnInfo.is_Hover_Enabled:null));
+        }
+        else {
+        
+            link = '/apex/youhome?pgId=1&acctkey=' + data.ACCT_NR__c;
+            dRow.PutColumn(rowInfoObject.ImpersonationColumnName, new FastWriteDataCell('<a href="'+ link +'">' + value + '</a>', value,(columnInfo!=null)?columnInfo.is_Hover_Enabled:null));
+        }
+    }
+    //alert(' m_CSSRowIndexer First '+m_CSSRowIndexer+'... '+cssIndex);
+    cssIndex = m_CSSRowIndexer % 2;
+    m_CSSRowIndexer++;
+    /*if(m_CSSRowIndexer==1 && "{!ReportType}"=='MyTeamOrder') {
+    m_CSSRowIndexer++;//changed for css
+    }*/
+   //alert(' m_CSSRowIndexer 2nd '+m_CSSRowIndexer+'... '+cssIndex);
+    
+    dRow.AddClass('gen_row_' + cssIndex);
+    
+    if(!isEmpty(rowInfoObject.Style)) {
+        dRow.AddClass(rowInfoObject.Style);
+    }
+    
+    m_InitialRowCounter++;
+    
+  }
+  
+  function OnSimpleGenerationRowCallback(genTable, dRow, data, rowInfoObject) {
+    
+    {!OnSimpleGenerationRowCallback}
+  }
+   
+  //Generation Table Callback.  Defines data rows.
+  var generateRowCallback = function(genTable, dRow, data) {
+                        
+    var columnInfo = null;
+    var columnOrderArray = m_T_ColumnOrderArray;
+    var columnInfoArray = null;
+    var excludeKeys = null;
+    var overwriteValues = null;
+    var appendValues = null;
+    var dateValue = null;
+    var value = null;
+    var value2 = null;
+    var acctKey = '{!$CurrentPage.parameters.acctKey}';
+    var link = '';
+    var adjustedColumnOrder = '';
+    var columnName = '';
+    var generation = 0;
+    var cssIndex = 0;
+    var extraData = (dRow.RowType == ROW_TYPE_PERSONAL);
+    //var extraData = (dRow.RowType == ROW_TYPE_MERGED);
+    var isMerged = (dRow.RowType == ROW_TYPE_MERGED);
+    var isMainAccount = (data.ACCT_NR__c == '{!AccountNum}');
+    var gen1EmailConfigEnabled = false;
+    var isImpersonating = (acctKey.length > 0);
+    var isDrillable = false;
+    var isCurrency = false;
+    sforce.connection.sessionId = '{!$Api.Session_ID}';
+    
+    var acctKey = '{!$CurrentPage.parameters.acctKey}';
+    var isImpersonating = (acctKey.length > 0);
+    
+    var show_drillable = (m_FilterObject.What.toLowerCase().indexOf("all") >= 0);
+        
+    if(!extraData) {
+        columnInfoArray = m_T_ColumnInfoArray;
+    }
+    else {
+        columnInfoArray = m_PS_ColumnInfoArray;
+    }
+    
+    if(m_LoadingPagedData) {
+    
+        if(!extraData) {
+            dRow.UniqueSuffix = 'TopLevel_T';
+        }
+        else {
+            dRow.UniqueSuffix = 'TopLevel_PS';
+        }
+    }
+    else {
+    
+        if(!extraData) {
+            dRow.UniqueSuffix = 'LowLevel_T';
+        }
+        else {
+            dRow.UniqueSuffix = 'LowLevel_PS';
+        }   
+    }
+    
+    for(var n = 0; n <= columnOrderArray.length -1; n++) {
+        
+        columnInfo = GetColumnInfo(columnInfoArray, columnOrderArray[n]);
+        
+        adjustedColumnOrder = columnOrderArray[n].toLowerCase();
+        
+        if(columnInfo == null) {
+            
+            if(adjustedColumnOrder == m_adjustedAllColumnName) {
+                
+                 //============================
+                 //Generation Number Creator
+                 //Go ahead and create a Generation Number that will be used for Checkbox Column Configurability, and later for
+                 //the actual Generation Number Column
+                 
+                 if(isMainAccount) {
+                    generation = 0;
+                 }
+                 else {
+                    
+                    if(m_IsExpanding) {
+                        generation = m_generation;
+                    }
+                    else if(m_SearchType == 'Regular') {
+                        generation = 1;
+                    }
+                    else if(m_SearchType == 'TextSearch' || m_SearchType == 'Filter'){
+                        generation = parseInt(data.Genealogy_Level__c);
+                    }
+                    //console.log(generation);
+                 }
+                 //============================
+                 
+                 gen1EmailConfigEnabled = (m_AllowFreeEmailsFor == 'G1' && generation != 1);
+                    
+                 if(extraData || isMainAccount || gen1EmailConfigEnabled || isImpersonating) {
+                    dRow.PutColumn(columnOrderArray[n], new FastWriteDataCell('&nbsp;'));
+                    
+                 }
+                 else {
+                 
+                    dRow.PutColumn(columnOrderArray[n], new CheckboxDataCell(false, columnOrderArray[n]));
+                 }
+            }
+            else if(adjustedColumnOrder == m_adjustedGenColumnName) {
+                
+                if(extraData) {
+                    dRow.PutColumn(columnOrderArray[n], new FastWriteDataCell('&nbsp;'))
+                }
+                else {
+                
+                    if(isMainAccount || dRow.RowType == ROW_TYPE_MERGED|| show_drillable == false) {
+                        isDrillable = false;
+                    }
+                    else {
+                        isDrillable = m_IsDrillable;
+                    }
+                    //alert(isDrillable);
+                    dRow.PutColumn(columnOrderArray[n], new GenerationDataCell(generation, isDrillable, cellExpandCallback, cellHideCallback, 'expanded_arrow', 'collapsed_arrow'));
+                }
+            }
+            
+            // Following lines are blocked for removal of TeamList Column from MTO / TA by Raktim on 10th Apr 2013 Started
+            // Following lines are unblocked on 16th Apr 2013
+            // Following lines are blocked on 29th Apr 2013
+            /*
+            else if(adjustedColumnOrder == m_adjustedTListColumnName) {
+                // Modified by Raktim, for Issue of viewing 'T-List' 
+                // in case of Candidate - 'View Full Report' from 'G1 Candidates' dashboard on 28th Mar, 2013 - Start 
+                if(extraData || (data.BadgeTitleNumber == '-2' && m_ReportType != 'TitleAdvancement')) {  // || data.AllDownlineCountTotal == 0
+                    dRow.PutColumn(columnOrderArray[n], new FastWriteDataCell('&nbsp;'))
+                }
+                // EoC
+                else {
+                    
+                    if(m_ReportType == 'MyTeamReport' || m_ReportType == 'TitleAdvancement') {
+                        link = '/apex/TList?accountId=' + m_MarketId + data.ACCT_NR__c;
+                    }
+                    else if(m_ReportType == 'MyTeamOrder') {
+                        link = '/apex/TListOrders?accountId=' + m_MarketId + data.ACCT_NR__c;
+                    }
+                    
+                    value = '{!$Label.Rep_List}';
+                    
+                    dRow.PutColumn(columnOrderArray[n], new FastWriteDataCell('<a href="'+ link +'" target="_blank">' + value + '</a>', value,(columnInfo!=null)?columnInfo.is_Hover_Enabled:null));
+                }
+            }*/
+            // End of Change            
+            else {
+                
+                if(extraData) {
+                
+                    dRow.PutColumn(columnOrderArray[n], new FastWriteDataCell('&nbsp;'));
+                }
+            }
+        }
+        else {
+
+            value = data[columnOrderArray[n]];
+            columnName = '';
+         
+            if(value == null) {
+            
+                dRow.PutColumn(columnOrderArray[n], new FastWriteDataCell('&nbsp;'));   
+            }
+            else {
+                if(columnInfo.FullyQualifiedName=='MailPlan_Order_Oppty__r.CURRNT_CMPGN_MAIL_RMN_DAY_CNT__c' /*&& parseInt(value)<0*/)
+                {//value='';  
+                campno=campno.substring(campno.indexOf('_')+1);              
+                //console.log('campno-'+campno);
+                market_Curr_Camp="{!currcampaign}";       //added by swarnava
+                if(isEmpty(campno)||market_Curr_Camp==campno)
+                mailplan_to_show=true;
+                else
+                mailplan_to_show=false;
+                //console.log(mailplan_to_show);
+                }
+                
+                if(columnInfo.FullyQualifiedName.indexOf('MRKT_ACCT_KEY__r.FirstName') > -1 || columnInfo.FullyQualifiedName.indexOf('MRKT_ACCT_KEY__r.LastName') > -1) {
+                    
+                    if(extraData) {
+                    
+                        dRow.PutColumn(columnOrderArray[n], new FastWriteDataCell(value));
+                    }
+                    else {
+                
+                        if(isMainAccount || isEmpty(data.BadgeTitleNumber) || (isInteger(data.BadgeTitleNumber) && parseInt(data.BadgeTitleNumber) <= 0)) {
+                            dRow.PutColumn(columnOrderArray[n], new FastWriteDataCell('<a href="javascript:void(0)" onclick="viewRepDetail(&quot;' + data.ACCT_NR__c + '&quot;); return false;">' + value + '</a>', value,(columnInfo!=null)?columnInfo.is_Hover_Enabled:null));
+                        }
+                        else {
+                            
+                            link = '/apex/youhome?pgId=1&acctkey=' + data.ACCT_NR__c;
+                            dRow.PutColumn(columnOrderArray[n], new FastWriteDataCell('<a href="'+ link +'">' + value + '</a>', value,(columnInfo!=null)?columnInfo.is_Hover_Enabled:null));
+                        }
+                    }   
+                }
+                else if(columnInfo.FullyQualifiedName.indexOf('MRKT_ACCT_KEY__r.Email') > -1 && !isMainAccount && m_EmailAllowed && !isImpersonating && (m_AllowFreeEmailsFor == 'All' || !gen1EmailConfigEnabled)) {
+                
+                    value2 = m_MarketId + data.ACCT_NR__c;
+                    
+                    dRow.PutColumn(columnOrderArray[n], new FastWriteDataCell('<a href="javascript:void(0);" onclick="showOverlay(&quot;email&quot;, &quot;' + value2 + '&quot;); return false;">' + value + '</a>', value,(columnInfo!=null)?columnInfo.is_Hover_Enabled:null));
+                }
+                else {
+                   
+                   // Changed by Raktim on 6th Sept, 2013 - Comma Separation be based on Custom Setting - START
+                
+                    /*
+                    var mapCommaSeperator = new Object();
+                    mapCommaSeperator['tr_TR'] = '.';
+                    mapCommaSeperator['en_US'] = ',';
+                    mapCommaSeperator['en_PH'] = ',';
+                    mapCommaSeperator['en_CA'] = ',';
+                    mapCommaSeperator['fr_CA'] = ',';
+                    mapCommaSeperator['es_MX'] = ',';
+                    mapCommaSeperator['es'] = ',';
+                    
+                    function getCommaSeperator(k){
+                        return mapCommaSeperator[k];
+                    }
+                    */
+                    
+                   var commaSeperator =  '{!commaSepartr}'  ;    //getCommaSeperator('{!currUsrLocale}') '{!commaSepartr}'
+                   
+                   // Changed by Raktim on 6th Sept, 2013 - Comma Separation be based on Custom Setting - END
+                    
+                    isCurrency = (columnInfo.ColumnType == 'Currency');
+                    
+                    if(columnInfo.ColumnType == 'Number' || isCurrency){
+                            
+                        var parts = value.toString().split('.');
+                        var partsAdjusted = '';
+                
+                        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, commaSeperator);
+                  
+                        if(parts.length > 1){
+                            partsAdjusted = parts[1] === '00' || (parts[1].length == 1 && parts[1] === '0') ? parts[0] : parts.join('.');
+                        }
+                        else
+                        {
+                            partsAdjusted = parts[0];
+                        }
+                        
+                        value = partsAdjusted;
+                        
+                        //Added by Samudra on 28th Mar,2013
+                        //Modified by Supriyo Sep 20, 2013
+                        /*if(value.indexOf('-') > -1){
+                                value = value.substring(value.lastIndexOf('-')+1, value.length) ;
+                        }*/
+                        if(value=='-0') {	
+                        	value='0';
+                        }
+                        //Added by Samudra on 28th Mar,2013
+                        
+                        if( columnInfo.ColumnType == 'Number' ){
+                            if(value.indexOf('.') > -1){
+                                value = value.substring(0, value.lastIndexOf('.')) ;
+                            }
+                        } 
+                        
+                    }
+                    
+                    if((columnInfo.ColumnType == 'Number' || isCurrency) && !isNaN(value) && !isEmpty(value)) {
+                        //var formattedData = sforce.apex.execute( "MyTeamUtil", "decFormatter", {typ: "Number", data : value});
+                        //alert(' COMMA SEPARATOR AGAIN ' + commaSeperator);
+                       // if(columnInfo.FullyQualifiedName!='MailPlan_Order_Oppty__r.CURRNT_CMPGN_MAIL_RMN_DAY_CNT__c' || mailplan_to_show)                       
+                        dRow.PutColumn(columnOrderArray[n], new NumericDataCell(value, isCurrency,(columnInfo!=null)?columnInfo.is_Hover_Enabled:null));
+                        //alert('Hi');
+                    }
+                    else if((columnInfo.ColumnType == 'Number' || isCurrency) && !isEmpty(value)) {
+                        dRow.PutColumn(columnOrderArray[n], new FastWriteDataCell(value, value,(columnInfo!=null)?columnInfo.is_Hover_Enabled:null, true));
+                    }
+                    else if(columnInfo.ColumnType == 'Date') {  
+                 
+                        dateValue = new Date(value);
+                        
+                        if(isDate(dateValue)) {
+                        
+                            value2 = formatDate(dateValue, m_YOUDateFormat);
+                        
+                            dRow.PutColumn(columnOrderArray[n], new FastWriteDataCell(value2, value2,(columnInfo!=null)?columnInfo.is_Hover_Enabled:null));
+                        }
+                        else {
+                            dRow.PutColumn(columnOrderArray[n], new FastWriteDataCell(value, value,(columnInfo!=null)?columnInfo.is_Hover_Enabled:null));
+                        }
+                    }
+                    else {
+                        dRow.PutColumn(columnOrderArray[n], new FastWriteDataCell(value, value,(columnInfo!=null)?columnInfo.is_Hover_Enabled:null));
+                    }
+                    
+                }
+                
+            }
+        }
+                
+     }
+     
+     if(m_LoadingPagedData) {
+            
+        if(isMainAccount && extraData) {
+            dRow.SetVisible(false);
+            
+        }
+        if(!extraData) {
+            cssIndex = m_CSSRowIndexer % 2;
+            m_CSSRowIndexer++;
+            /*if(m_CSSRowIndexer==2 && "{!ReportType}"=='MyTeamOrder'){
+                m_CSSRowIndexer++;//changed for css
+            }*/
+        }
+        else {
+            cssIndex = (m_CSSRowIndexer - 1) % 2;
+            /*m_CSSRowIndexer++; //Commented by Rupayan, 3/8/13
+            if(m_CSSRowIndexer==2 && "{!ReportType}"=='MyTeamOrder'){
+                m_CSSRowIndexer++;//changed for css
+            }*/
+        }
+        
+        m_InitialRowCounter++;
+     }
+     else if(m_IsExpanding) {
+      
+        cssIndex = GetCSSIndexByGeneration(2, 22, generation);
+     }
+      
+     dRow.AddClass('gen_row_' + cssIndex);
+  }
+ 
+  //Generation Table Callback.  Defines how table should handle row expansion.
+  var expandRowCallback = function(genTable, tableRowId, parentId) {
+ 
+     m_tableRowId = tableRowId;
+     m_parentId = parentId;
+     
+     processImageVisible(true);
+     
+     ExpandGenealogy(parentId);
+  }
+  
+  var pagedGenealogyCallback = function(result) {
+    
+    var T_Array = null;
+    var rowTotal = 0;
+    
+    try {
+      
+        if(result.LastErrorId != '-1') {
+            window.location = '/apex/ErrorPage?errId=' + result.LastErrorId;
+            return;
+        }
+        //alert(result.IsDrillable);
+        
+        if(result.Records != null && result.Records.GenTeamList != null) {
+          T_Array = result.Records.GenTeamList;
+        }
+        
+        m_CloneColumnInfoObject = null;
+        m_CloneColumnOrderArray = null;
+        
+        if(result.CampaignTypeChanged) {
+            //alert('... Hi ...');
+            UpdateColumnOrders(false, result.CampaignTypeChanged);
+        }
+
+        m_IsDrillable = result.IsDrillable;
+        m_IsSortable = result.IsSortable;
+        
+        m_LoadingPagedData = true;
+        
+        m_InitialRowCounter = 0;
+        m_CSSRowIndexer = 0;
+        
+        if(m_ReportType == 'TitleAdvancement' || m_ReportType == 'My Team') {
+            m_genTable.HasChildrenField = 'Gen_1_Total_Titled_Leader_Candidates__c';
+            g_hasChildrenField = 'Gen_1_Total_Titled_Leader_Candidates__c';
+        }
+        else if(m_MaxPageLimitReached  == true) {
+            m_genTable.HasChildrenField = 'GENRTN_1_TITL_STF_CNT__c';
+            g_hasChildrenField = 'GENRTN_1_TITL_STF_CNT__c';
+        }
+        else {
+            m_genTable.HasChildrenField = 'AllDownlineCountTotal';
+            g_hasChildrenField = 'AllDownlineCountTotal';
+        }
+        
+        m_genTable.ElementId = 'tableDiv';
+        m_genTable.MainDataArray = T_Array;
+        m_genTable.FilterMode = true;
+        m_genTable.CreateColumnsCallback = createColumnCallback;
+        m_genTable.CreateHeaderRowCallback = createHeaderRowCallback;
+        
+        if(IsMyTeamReportCompatible(m_ReportType)) {
+            m_genTable.ExpandColumnName = m_genColumnName;
+            m_genTable.GenerateRowCallback = generateRowCallback;
+        }
+        else {
+            m_genTable.ExpandColumnName = ''; //Important
+            m_genTable.GenerateRowCallback = otherReports_GenerateRowCallback;
+        }
+        
+        m_genTable.ExpandRowCallback = expandRowCallback;
+        m_genTable.VisibilityChangeCallback = visibilityChangeCallback;
+        
+        m_genTable.DataBind();
+        
+        rowTotal = T_Array.length;
+        if(m_ReportType == 'MyTeamOrder') {
+            
+            MakeBranchRowAdjustments();
+            
+            if(m_SearchType == 'TextSearch' && m_TSObject.TSCriteria == 'Branch') {
+                ShowBranchRow(true);
+            }
+            else {
+                ShowBranchRow(false);
+            }
+            
+            rowTotal--;
+        }
+        
+        HideDefaultColumns();
+        
+        CalculateTableWidthAll();
+        
+        m_genTable.ApplyScrollbarStyles();
+        
+        
+        
+        m_LoadingPagedData = false;
+        
+        $('#filterErrorDiv').hide();
+        $('#noMatchesErrorDiv').hide();
+        
+        if((m_SearchType == 'Filter' || !isEmpty(m_ReverseNameSortColumnName)) && !isEmpty(result.DefaultSortColumn)) {
+    
+            m_genTable.DefaultSortConfig(result.DefaultSortColumn, result.SortIsAscending);
+            
+            var activeSortCell = m_genTable.GetActiveSortCell();
+            
+            if(activeSortCell != null) {
+                m_SortBy = activeSortCell.SortField;
+            }
+        }
+        
+        if('{!ReportType}'=='TitleAdvancement')
+        {
+            if(m_SearchType == 'Filter' && rowTotal <= 1) {
+                $('#filterErrorDiv').show();
+            }
+            else if(m_SearchType == 'TextSearch' && rowTotal <=1) {
+                $('#noMatchesErrorDiv').show();
+            }
+        }
+        else if('{!ReportType}'=='MyTeamOrder')
+        {
+            if(m_SearchType == 'Filter' && rowTotal ==0) {
+                $('#filterErrorDiv').show();
+            }
+            else if(m_SearchType == 'TextSearch' && rowTotal ==0) {
+                $('#noMatchesErrorDiv').show();
+            }
+        }
+        
+        m_ReverseNameSortColumnName = '';
+
+        $('#lnkFirst').attr('class', 'disabled_nav_arrow first_gray');
+        $('#lnkPrevious').attr('class', 'disabled_nav_arrow previous_gray');
+        $('#lnkNext').attr('class', 'disabled_nav_arrow next_gray');
+        $('#lnkLast').attr('class', 'disabled_nav_arrow last_gray');
+        
+        $('#lnkFirst').attr('onClick', 'return false;');
+        $('#lnkPrevious').attr('onClick', 'return false;');
+        $('#lnkNext').attr('onClick', 'return false;');
+        $('#lnkLast').attr('onClick', 'return false;');
+        
+        if(result.HasPrevious) {
+            $('#lnkFirst').attr('class', 'enabled_nav_arrow first_pink');
+            $('#lnkFirst').attr('onClick', 'navigation_Click("First"); return false;');
+            $('#lnkPrevious').attr('class', 'enabled_nav_arrow previous_pink');
+            $('#lnkPrevious').attr('onClick', 'navigation_Click("Previous"); return false;');
+        }
+        
+        if(result.HasNext) {
+            $('#lnkNext').attr('class', 'enabled_nav_arrow next_pink');
+            $('#lnkNext').attr('onClick', 'navigation_Click("Next"); return false;');
+            $('#lnkLast').attr('class', 'enabled_nav_arrow last_pink');
+            $('#lnkLast').attr('onClick', 'navigation_Click("Last"); return false;');
+        }
+        
+        var pageTotal = result.PageTotal;
+        
+        if(pageTotal == 0) {
+            pageTotal = result.PageNumber;
+        }
+        
+        $('#pagerInfo').html(result.PageNumber + ' of ' + pageTotal);
+        
+        $('#showhideform').html(GenerateColumnVisibilityMenu());
+        
+        $('#pgNo').html(result.PageNumber); 
+        
+        if(pageTotal == 1) {
+            $('#pagerDiv').hide();
+        }
+        else {
+            $('#pagerDiv').show();
+        }
+                        
+            if(result.PageNumber-4 > 0){            
+                newPgNoPrev4 = result.PageNumber-4;         
+                $('#lnkPrev4').show();          
+                $('#lnkPrev4').html(result.PageNumber-4);           
+                $('#lnkPrev4').attr('onClick', 'navigationNo_Click(newPgNoPrev4); return false;');          
+            }           
+            else{           
+                $('#lnkPrev4').hide();          
+            }           
+                        
+            if(result.PageNumber-3 > 0){            
+                newPgNoPrev3 = result.PageNumber-3;         
+                $('#lnkPrev3').show();          
+                $('#lnkPrev3').html(result.PageNumber-3);           
+                $('#lnkPrev3').attr('onClick', 'navigationNo_Click(newPgNoPrev3); return false;');          
+            }           
+            else{           
+                $('#lnkPrev3').hide();          
+            }           
+                        
+            if(result.PageNumber-2 > 0){            
+                newPgNoPrev2 = result.PageNumber-2;         
+                $('#lnkPrev2').show();          
+                $('#lnkPrev2').html(result.PageNumber-2);           
+                $('#lnkPrev2').attr('onClick', 'navigationNo_Click(newPgNoPrev2); return false;');          
+            }           
+            else{           
+                $('#lnkPrev2').hide();          
+            }           
+                        
+            if(result.PageNumber-1 > 0){            
+                newPgNoPrev1 = result.PageNumber-1;         
+                $('#lnkPrev1').show();          
+                $('#lnkPrev1').html(result.PageNumber-1);           
+                $('#lnkPrev1').attr('onClick', 'navigationNo_Click(newPgNoPrev1); return false;');          
+            }           
+            else{           
+                $('#lnkPrev1').hide();          
+            }           
+                        
+            if(result.PageNumber+1 <= pageTotal){           
+                newPgNoNext1 = result.PageNumber+1;         
+                $('#lnkNext1').show();          
+                $('#lnkNext1').html(newPgNoNext1);          
+                $('#lnkNext1').attr('onClick', 'navigationNo_Click(newPgNoNext1); return false;');          
+            }           
+            else{           
+                $('#lnkNext1').hide();          
+            }           
+                        
+            if(result.PageNumber+2 <= pageTotal){           
+                newPgNoNext2 = result.PageNumber+2;         
+                $('#lnkNext2').show();          
+                $('#lnkNext2').html(newPgNoNext2);          
+                $('#lnkNext2').attr('onClick', 'navigationNo_Click(newPgNoNext2); return false;');          
+            }           
+            else{           
+                $('#lnkNext2').hide();          
+            }           
+                        
+            if(result.PageNumber+3 <= pageTotal){           
+                newPgNoNext3 = result.PageNumber+3;         
+                $('#lnkNext3').show();          
+                $('#lnkNext3').html(newPgNoNext3);          
+                $('#lnkNext3').attr('onClick', 'navigationNo_Click(newPgNoNext3); return false;');          
+            }           
+            else{           
+                $('#lnkNext3').hide();          
+            }           
+                        
+            if(result.PageNumber+4 <= pageTotal){           
+                newPgNoNext4 = result.PageNumber+4;         
+                $('#lnkNext4').show();          
+                $('#lnkNext4').html(newPgNoNext4);          
+                $('#lnkNext4').attr('onClick', 'navigationNo_Click(newPgNoNext4); return false;');          
+            }           
+            else{           
+                $('#lnkNext4').hide();          
+            }
+        
+        processImageVisible(false);
+    
+    }
+    catch(err) {
+    
+        alert('Error'+err);
+    }
+    
+    
+    m_T_Array.length = 0;
+    //added by swarnava for Dynamic Height and adjusting V scrollbar:Start
+    DynamicHeight();
+    //added by swarnava for Dynamic Height and adjusting V scrollbar:End
+  }
+  
+  var expandGenealogyCallback = function(result) {
+  
+    try {
+    
+        var T_Array = new Array();
+        var dRow = null;
+        var rowIndex = -1;
+        var addChildren = false;
+        
+        if(result.GenTeamList != null) {
+            
+            T_Array = result.GenTeamList;
+        }
+        
+        m_IsExpanding = true;
+        
+        
+        if(m_tableRowId!='undefined' && m_tableRowId!=null && m_tableRowId!=''){
+            rowIndex = m_genTable.GetRowIndexById(m_tableRowId.replace('PS','T'));
+   
+        } 
+        
+        //alert(rowIndex);
+        
+        if(rowIndex > -1) {
+            
+            dRow = m_genTable.GetRow(rowIndex);
+            
+            m_generation = dRow.GetColumn(m_genColumnName).GetData();
+            m_generation++;
+        }
+       //alert('m_tableRowId --> '+m_tableRowId+' '+m_parentId);
+        addChildren = m_genTable.AddChildrenRows(m_tableRowId, m_parentId, T_Array);
+        
+        if(!addChildren && dRow != null) {
+            dRow.RejectLastToggle();
+        }
+        
+        CalculateTableWidthAll();
+        
+        m_genTable.ApplyScrollbarStyles()
+        
+        processImageVisible(false);
+        
+        m_IsExpanding = false;
+    }
+    catch(err) {
+    
+        if(!addChildren && dRow != null) {
+            dRow.RejectLastToggle();
+        }
+        
+        alert('Error msg:'+err.message);
+    }
+    
+    
+    m_T_Array.length = 0;
+    //added by swarnava for Dynamic Height and adjusting V scrollbar:Start
+    DynamicHeight();
+    //added by swarnava for Dynamic Height and adjusting V scrollbar:End
+  }
+  
+  var visibilityChangeCallback = function(genTable, dRow, visible, extraData) {
+  
+    if(!visible) {
+        
+        var checkBoxDataCell = dRow.GetColumn(m_allColumnName);
+        
+        if(checkBoxDataCell instanceof CheckboxDataCell) {
+            checkBoxDataCell.SetChecked(false);
+        }
+    }
+  }
+  
+  var sortCallback = function(sortCell) {
+  
+    SortTable(sortCell.SortField, sortCell.IsAscending(), '');
+  }
+  
+  var doNameToggleSort_Click = function(reverseName) {
+  
+    if(m_NameSortCell == null) {
+        throw new Error('Could not find NameSortCell.');
+    }
+  
+    var arData = m_NameSortCell.SortField.split(',');
+    var newSortField = m_NameSortCell.SortField;
+    
+    if(arData.length >= 2) {
+        newSortField = arData[1] + ', ' + arData[0]; 
+    }
+    
+    SortTable(newSortField, m_NameSortCell.IsAscending(), reverseName);
+  }
+  
+  var cellExpandCallback = function(genCell) {
+    
+    var dRow = null;
+    var rowIndex = m_genTable.GetRowIndexById(genCell.TableRowId);
+    var a = genCell.ExpandRowCallback;
+    //console.log('indexrow-->'+rowIndex);
+    var RowParentt = genCell.RowParent;
+    var RowParenttt='';
+    for(var key in RowParentt)
+    {
+        if(key=='RecordId'){
+            
+            RowParenttt= RowParentt[key];
+        }
+    }
+    
+    if((rowIndex - 1) >= 0) {
+    
+        dRow = m_genTable.GetRow(rowIndex - 1);
+      
+        if(!dRow.HasClass('highlight_row')){
+            dRow.AddClass('highlight_row');
+        }
+        
+        dRow = m_genTable.GetRow(rowIndex);
+        if(!dRow.HasClass('highlight_row')){
+            dRow.AddClass('highlight_row');
+        }
+    }
+    m_genTable.DoDrillDown(true, genCell.TableRowId, genCell.ParentId);
+    m_genTable.ApplyScrollbarStyles();//adjusting V Scrollbar
+  }
+
+  var cellHideCallback = function(genCell) {
+
+    var dRow = null;
+    var rowIndex = m_genTable.GetRowIndexById(genCell.TableRowId);
+    if((rowIndex - 1) >= 0) {  
+       
+        dRow = m_genTable.GetRow(rowIndex - 1);
+        
+        if(dRow.HasClass('highlight_row')){
+            dRow.RemoveClass('highlight_row');
+        }
+        
+        dRow = m_genTable.GetRow(rowIndex);
+        
+        if(dRow.HasClass('highlight_row')){
+            dRow.RemoveClass('highlight_row');
+        }
+    }
+
+    m_genTable.DoDrillDown(false, genCell.TableRowId, genCell.ParentId);
+  }
+  
+  var multiEmail_Click = function() {
+  
+    //No email functionality in impersonation mode
+    var acctKey = '{!$CurrentPage.parameters.acctKey}';
+    
+    if(!m_EmailAllowed || acctKey.length > 0) {
+        return;
+    }
+    
+    
+    var dRow = null;
+    var checkBoxDataCell = null;
+    var data = null;
+    var contactIdList = '';
+    
+    for(var n = 0; n <= m_genTable.RowCount() - 1; n++) {
+    
+        dRow = m_genTable.GetRow(n);
+
+        if(dRow.RowType == ROW_TYPE_TEAM || dRow.RowType == ROW_TYPE_MERGED) {
+            
+            checkBoxDataCell = dRow.GetColumn(m_allColumnName);
+            
+            if(checkBoxDataCell != null && checkBoxDataCell instanceof CheckboxDataCell && checkBoxDataCell.GetChecked()) {
+            
+                data = dRow.GetItemObject();
+                
+                if(contactIdList.length == 0) {
+                    contactIdList = m_MarketId + data.ACCT_NR__c;
+                }
+                else {
+                    contactIdList += ', ' + m_MarketId + data.ACCT_NR__c;
+                }   
+            }
+        }
+    }
+    
+    if(contactIdList.length == 0) {
+        /** Changed by Raktim on 17 May, 2013 START **/
+        //alert('{!$Label.Email_Select_One_Record}');
+        openEmailMessage();
+        /** Changed by Raktim on 17 May, 2013 END **/
+    }
+    else {
+        showOverlay('email', contactIdList);
+    }
+    
+  }
+  
+  /** New Method of EmailMessage
+    * overlay opening, on 17 May, 2013 by Raktim
+    *
+    **/
+  function openEmailMessage()
+  {                    
+      var tp=jQuery(window).scrollTop()+jQuery(window).height()/2-250;
+      var c= (jQuery("#global_footer").offset().top) * 2;
+      jQuery("#emailmsgwrapper").css("padding-top",tp);
+      jQuery("#emailmsgwrapper").css("height",c);
+       if(jQuery("#email_msg").attr('class')=='white_trans_emailmsgoverlay'){
+               jQuery("#email_msg").attr('class','white_trans_emailmsgoverlay_closed');
+               jQuery("#emailmsgwrapper").css('height',jQuery("#email_sel_mask").css('height'));
+           }else{
+               jQuery("#email_msg").attr('class','white_trans_emailmsgoverlay');
+           }
+         
+  } // End of Method
+  
+  function printPage() {
+  
+    //alert('print page parent')
+    processImageVisible(false);
+    
+    window.frames['downloadReportFrame'].focus(); 
+    window.frames['downloadReportFrame'].print(); 
+  }
+  
+  var downloadWYSIWYG_Click = function() {
+    
+    // Added by Raktim on 8th Apr, 2013
+    var s=s_gi('{!Omniture_Suite_Name}');
+    var repName = '{!ReportType}';
+    s.prop8 = 'DLR: '+repName;
+    s.pageName='Download Link Report';//added by swarnava
+    s.tl(this,'o', 'Download Link Report');
+    //EoC    
+    
+    var iFrame = getElement('downloadReportFrame');
+    
+    m_DownloadType = 'WYSIWYG';
+    
+    processImageVisible(true);
+      
+    iFrame.src = '/apex/GenerateMTRExcel';
+  }
+  
+  var downloadAll_Click = function() {
+  
+    var iFrame = getElement('downloadReportFrame');
+    
+    m_DownloadType = 'All';
+    //alert(m_DownloadType);
+    processImageVisible(true);
+    
+    //iFrame.src = '/apex/GenerateMTRExcel';
+    provideAccountAccess();
+  }
+  
+  var downloadReport = function() {
+    
+    
+    // Added by Raktim on 8th Apr, 2013
+    var s=s_gi('{!Omniture_Suite_Name}');
+    var repName = '{!ReportType}';
+    s.prop8 = 'DLR: '+repName;
+    s.pageName='Download Link Report';
+    s.tl(this,'o', 'Download Link Report');
+    //EoC
+    
+    var iFrame = getElement('downloadReportFrame');
+    m_DownloadType = 'All';
+   
+    // Here, call the remote action method to udpate the gen level, and on success change the iframe
+     
+    Visualforce.remoting.Manager.invokeAction(
+        '{!$RemoteAction.MyTeamReportCmpController.updateUserGenIndex}', '{!almRepIndicator}' , v, '{!AvonMarketId}', '{!AccountNum}',
+        function(result, event){
+        
+            if('{!ReportType}'=='TitleAdvancement' )
+            {
+                // System.debug('Report URL is: /{!MTReportURL}?' + reportParameters);
+                iFrame.src = '/{!MTReportURL}?pv0={!AvonMarketId}&pv1='+v+'&pv2={!AccountNum}&pv3={!RootUplineAccountNum}&pv4={!LeaderLeftId}&pv5={!LeaderRightId}&export=1&enc=UTF-8&xf=xls';
+            }
+
+            else if('{!ReportType}'=='MyTeamOrder')
+            {            	
+            	  // System.debug('Report URL is: /{!MTOReportURL}?' + reportParameters);
+				  iFrame.src = '/{!MTOReportURL}?pv0={!AvonMarketId}&pv1='+v+'&pv2={!AccountNum}&pv3={!RootUplineAccountNum}&pv4={!LeaderLeftId}&pv5={!LeaderRightId}&export=1&enc=UTF-8&xf=xls';
+            }
+          
+            hideOverlay();
+        }
+    );
+    
+   }
+  
+  var printWYSIWYG_Click = function() {
+  
+    // Added by Raktim on 8th Apr, 2013
+    var s=s_gi('{!Omniture_Suite_Name}');
+    var repName = '{!ReportType}';
+     //alert('==report name====' + repName);
+   
+    s.prop8 = 'prt:'+repName;
+    s.pageName='Print Report';
+    s.tl(this,'o', 'Print Report');
+    //EoC
+        
+    var iFrame = getElement('downloadReportFrame');
+    
+    m_DownloadType = 'WYSIWYG';
+  
+    processImageVisible(true);
+
+    iFrame.src = '/apex/GenerateMTRExcel?print=1';    
+  }
+  
+  function StartDownload() {
+ 
+    var iFrame = getElement('downloadReportFrame');
+    
+    PrepareDownload(m_DownloadType);
+    
+    iFrame.contentWindow.downloadExcel(m_DownloadInfo, m_DownloadType);
+    
+  }
+  
+  function CompleteDownload() {
+ 
+    //alert('complete download')
+    var iFrame = getElement('downloadReportFrame');
+  
+    processImageVisible(false);
+  
+    iFrame.contentWindow.completeExcelDownload();
+    
+  }
+  
+  function GenerateFullReportName() {
+  
+    var fullReportName = '';
+    
+    if(m_SearchType == 'TextSearch') {
+        fullReportName = m_ReportTitle + ' - ' + getTS_SearchTypeText() + ' - ' + m_TSObject.TextSearch;
+    }
+    else if(m_SearchType == 'Filter') {
+    
+        if(IsMyTeamReportCompatible(m_ReportType)) {
+            fullReportName = m_ReportTitle + ' - ' + getFilterDropdownText('Campaign') + ' - ' + getFilterDropdownText('Who')  + ' - ' + getFilterDropdownText('What');
+        }
+        else {
+            fullReportName = m_ReportTitle + ' - ' + getFilterDropdownText('Campaign');
+        }
+    }
+    
+    return fullReportName;
+  }
+  
+  function PrepareDownload(downloadType) {
+    
+    var dRow = null;
+    var miniGenealogy = null;
+    var allCell = null;
+    var genCell = null;
+    var columnName = '';
+    
+    m_DownloadInfo.ReportDownloadName = GenerateFullReportName();
+    
+    m_DownloadInfo.CampaignId = m_FilterObject.CampaignId;
+    
+    if(m_SearchType == 'TextSearch' && m_TSObject.TSCriteria == 'Branch') {
+    
+        m_DownloadInfo.BranchCode = m_TSObject.TextSearch;
+    }
+    else {
+        m_DownloadInfo.BranchCode = '';
+    }
+    
+    m_DownloadInfo.MiniGenealogyList = new Array();
+    m_DownloadInfo.VisibleColumnNames = new Array();
+
+    if(downloadType == 'WYSIWYG') {
+
+        for(var n = 0; n <= m_genTable.RowCount() - 1; n++) {
+        
+            dRow = m_genTable.GetRow(n);
+            
+            var data = dRow.GetItemObject();
+            
+            if(dRow.RecordId != '{!AccountNum}' 
+                    && (dRow.RowType == ROW_TYPE_TEAM || dRow.RowType == ROW_TYPE_MERGED) 
+                    &&  dRow.GetVisible() && !dRow.IsHiddenDueToParent() ) {
+                
+                genCell = dRow.GetColumn(m_genColumnName);
+                
+                if(genCell != null) {
+         
+                    if(IsMyTeamReportCompatible(m_ReportType) && genCell instanceof GenerationDataCell) {
+    
+                        miniGenealogy = new Object();
+                        miniGenealogy.AccountId = dRow.RecordId;
+                        miniGenealogy.Generation = genCell.InnerText;
+                        miniGenealogy.IsExpanded = genCell.IsExpanded();
+                        //alert(genCell.InnerText);
+                        m_DownloadInfo.MiniGenealogyList.push(miniGenealogy);
+                        
+                      //console.log('Name: ' + dRow.GetColumn('Last, First Name').InnerText);
+                    }
+                    else {
+
+                        miniGenealogy = new Object();
+                        miniGenealogy.AccountId = dRow.RecordId;
+                        miniGenealogy.Generation = genCell.InnerText;
+                        miniGenealogy.IsExpanded = false;
+                     
+                        m_DownloadInfo.MiniGenealogyList.push(miniGenealogy);                   
+                    }
+                }
+            }
+       
+        }
+    }
+    
+    for(var n = 0; n <= m_genTable.ColumnCount() - 1; n++) {
+    
+        columnName = m_genTable.GetColumnHeader(n);
+        
+        // The condition (&& columnName != m_tListColumnName) is changed for removal of TeamList column from TA / MTO report by Raktim on 10thApr, 2013
+        // The removed condition is put again on 16th Apr 2013
+        // That very condition is removed on 29th Apr 2013
+        if(columnName != m_allColumnName && m_genTable.GetColumnVisible(columnName)) {  // && columnName != m_tListColumnName
+            m_DownloadInfo.VisibleColumnNames.push(columnName);
+        }
+    }
+    
+  }
+  
+  var navigation_Click = function(pageAction) {
+   
+    processImageVisible(true);
+    DoGenealogyPageAction(pageAction);
+  }
+  
+  var navigationNo_Click = function(pageAction) {
+   
+    processImageVisible(true);
+    DoGenealogyPageNumberAction(pageAction);
+  }
+ 
+  function UpdateFullReportTitle() {
+  
+    var fullReportName = GenerateFullReportName();
+    var adjustedFullReportName = fullReportName;
+    var lengthLimit = 50;
+    
+    if(adjustedFullReportName.length > lengthLimit) {
+        adjustedFullReportName = adjustedFullReportName.substring(0, lengthLimit) + '...';
+    }
+    
+    $('#spanHeader').attr('title', fullReportName);
+    $('#spanHeader').text(adjustedFullReportName);
+  }
+  
+  function IsMyTeamReportCompatible(reportType) {
+
+    var isSupported = false;
+        
+    if(reportType == 'MyTeamReport') {
+        isSupported = true;
+    }
+    else if(reportType == 'MyTeamOrder') {
+        isSupported = true;
+    }
+    else if(reportType == 'TitleAdvancement') {
+        isSupported = true;
+    }
+            
+    return isSupported;         
+  }
+    
+  function GetColumnInfo(columnInfoArray, columnName) {
+  
+    var columnInfo = null;
+    
+    columnName = columnName.toLowerCase();
+    
+    for(var n = 0; n <= columnInfoArray.length -1; n++) {
+
+        if(columnName == columnInfoArray[n].Name.toLowerCase()) {
+            columnInfo = columnInfoArray[n];
+        }
+    }   
+  
+    return columnInfo;
+  }
+  
+  function GetColumnInfoByFullyQualifedName(columnInfoArray, fullyQualifiedName) {
+  
+    var columnInfo = null;
+    
+    fullyQualifiedName = fullyQualifiedName.toLowerCase();
+    
+    for(var n = 0; n <= columnInfoArray.length -1; n++) {
+
+        if(fullyQualifiedName == columnInfoArray[n].FullyQualifiedName.toLowerCase()) {
+            columnInfo = columnInfoArray[n];
+        }
+    }   
+  
+    return columnInfo; 
+  }
+
+
+  function CreateUniqueColumnInfo() {
+  
+    m_T_ColumnAPINameArray.length = 0;
+    m_T_ColumnInfoExArray.length = 0;
+    
+    m_PS_ColumnAPINameArray.length = 0;
+    m_PS_ColumnInfoExArray.length = 0;
+    
+    var reportColumnArray = null;
+    
+    for(var n = 0; n <= m_T_ColumnInfoArray.length - 1; n++) {
+    
+        reportColumnArray = m_T_ColumnInfoArray[n].FullyQualifiedName.split(',');
+        
+        for(var i = 0; i <= reportColumnArray.length - 1; i++) {
+        
+            m_T_ColumnAPINameArray.push(trim(reportColumnArray[i]));
+            m_T_ColumnInfoExArray.push({"Name" : m_T_ColumnInfoArray[n].Name, "FullName" : m_T_ColumnInfoArray[n].FullName, "ColumnType" : m_T_ColumnInfoArray[n].ColumnType, "ColumnDisplayType" : m_T_ColumnInfoArray[n].ColumnDisplayType, "ColumnGroupName" : m_T_ColumnInfoArray[n].ColumnGroupName, "FullyQualifiedName" : trim(reportColumnArray[i]), "Visibility" : m_T_ColumnInfoArray[n].Visibility, "Width" : m_T_ColumnInfoArray[n].Width});
+        }
+    } 
+
+    for(var n = 0; n <= m_PS_ColumnInfoArray.length - 1; n++) {
+    
+        reportColumnArray = m_PS_ColumnInfoArray[n].FullyQualifiedName.split(',');
+        
+        for(var i = 0; i <= reportColumnArray.length - 1; i++) {
+        
+            m_PS_ColumnAPINameArray.push(trim(reportColumnArray[i]));
+            m_PS_ColumnInfoExArray.push({"Name" : m_PS_ColumnInfoArray[n].Name, "FullName" : m_PS_ColumnInfoArray[n].FullName, "ColumnType" : m_PS_ColumnInfoArray[n].ColumnType, "ColumnDisplayType" : m_PS_ColumnInfoArray[n].ColumnDisplayType, "ColumnGroupName" : m_PS_ColumnInfoArray[n].ColumnGroupName, "FullyQualifiedName" : trim(reportColumnArray[i]), "Visibility" : m_PS_ColumnInfoArray[n].Visibility, "Width" : m_PS_ColumnInfoArray[n].Width});
+        }
+    }
+    
+  }
+  
+  function GetHardcodedColumnFullName(columnName) {
+    
+    var fullName = '';
+    
+    if(columnName == m_allColumnName) {
+        fullName = m_allColumnName;
+    }
+    else if(columnName == m_genColumnName) {
+        fullName = '{!$Label.Generation}';
+    }
+    
+    // Following lines are blocked for removal of TeamList column from TA / MTO reports by Raktim on 10thApr, 2013 started
+    // Following lines are unblocked on 16th Apr 2013
+    // Following lines are blocked on 29th Apr 2013
+    /*
+    else if(columnName == m_tListColumnName) {
+        fullName = m_tListColumnName;
+    }
+    */
+    // End of Change
+    
+    return fullName; 
+  }
+  
+  function TrimNumberFields(T_Array) {
+
+    var numColumnInfoArray = new Array();
+    var columnInfo = null;
+    var genealogy = null;
+    var numberValue;
+    
+    for(var n = 0; n <= m_T_ColumnOrderArray.length -1; n++) {
+        
+        columnInfo = GetColumnInfo(m_T_ColumnInfoArray, m_T_ColumnOrderArray[n]);
+        
+        if(columnInfo != null && columnInfo.ColumnType == 'Number') {
+            numColumnInfoArray.push(columnInfo.Name);
+        }
+    }
+    
+    for(var n = 0; n <= T_Array.length -1; n++) {
+ 
+        genealogy = T_Array[n];
+
+        genealogy['Genealogy_Level__c'] = trimDecimal(genealogy['Genealogy_Level__c']); 
+        genealogy[m_genColumnName] = trimDecimal(genealogy[m_genColumnName]);
+    
+        for(var i = 0; i <= numColumnInfoArray.length -1; i++) {
+            
+            numberValue = genealogy[numColumnInfoArray[i]];
+            
+            if(isInteger(numberValue)) {
+                genealogy[numColumnInfoArray[i]] = trimDecimal(genealogy[numColumnInfoArray[i]]);
+            }
+        }       
+        
+    } 
+  
+  }
+  
+  function AppendSortArray(sortArray, newSortArray) {
+  
+    for(var n = 0; n <= newSortArray.length - 1; n++) {
+  
+        if(!arrayContains(sortArray, newSortArray[n], false)) {
+            sortArray.push(newSortArray[n]);
+        }
+    }
+  
+  }
+  //Changed by Rupayan Basu, 12/11/2012 
+  //Fix for Rising Stars Report Grace Title/Paid Title column issue
+  
+  function UpdateColumnOrders(nameSwitch, badgeTitleSwitch) {
+ 
+    var columnInfo = null;
+    var columnInfoB = null;
+    
+    for(var n = 0; n <= m_T_ColumnOrderArray.length -1; n++) {
+        
+        if(nameSwitch) {
+       
+            if(m_T_ColumnOrderArray[n] == m_firstLastColumnName) {
+                m_T_ColumnOrderArray[n] = m_lastFirstColumnName;
+            }
+            else if(m_T_ColumnOrderArray[n] == m_lastFirstColumnName) {
+                m_T_ColumnOrderArray[n] = m_firstLastColumnName;
+            }
+        }
+        
+        if(badgeTitleSwitch) {
+            
+            columnInfo = GetColumnInfo(m_T_ColumnInfoExArray, m_T_ColumnOrderArray[n]);
+            
+            if(columnInfo != null && columnInfo.FullyQualifiedName != null) {
+            
+                if(columnInfo.FullyQualifiedName.indexOf('LDRSHP_TITL_LVL_NR__c') > -1) {
+                    //Field changed from PD_TITL_LVL_NR__c to LDRSHP_TITL_LVL_NR__c
+                    columnInfoB = GetColumnInfoByFullyQualifedName(m_T_ColumnInfoExArray, 'LDRSHP_TITL_LVL_NR__c');
+                    //columnInfoB = GetColumnInfoByFullyQualifedName(m_T_ColumnInfoExArray, 'PD_TITL_LVL_NR__c');
+                    m_T_ColumnOrderArray[n] = columnInfoB.Name;
+                    
+                }
+                else if(columnInfo.FullyQualifiedName.indexOf('PD_TITL_LVL_NR__c') > -1) {
+                    //Field changed from LDRSHP_TITL_LVL_NR__c to PD_TITL_LVL_NR__c
+                    columnInfoB = GetColumnInfoByFullyQualifedName(m_T_ColumnInfoExArray, 'PD_TITL_LVL_NR__c');
+                    //columnInfoB = GetColumnInfoByFullyQualifedName(m_T_ColumnInfoExArray, 'LDRSHP_TITL_LVL_NR__c');
+                    m_T_ColumnOrderArray[n] = columnInfoB.Name;
+                    
+                }
+            }
+        }
+     }
+  
+     for(var n = 0; n <= m_PS_ColumnOrderArray.length -1; n++) {
+        
+        if(nameSwitch) {
+        
+            if(m_PS_ColumnOrderArray[n] == m_firstLastColumnName) {
+                m_PS_ColumnOrderArray[n] = m_lastFirstColumnName;
+            }
+            else if(m_PS_ColumnOrderArray[n] == m_lastFirstColumnName) {
+                m_PS_ColumnOrderArray[n] = m_firstLastColumnName;
+            }
+        }
+        
+        if(badgeTitleSwitch) {
+            
+            columnInfo = GetColumnInfo(m_PS_ColumnInfoExArray, m_PS_ColumnOrderArray[n]);
+        
+            if(columnInfo != null && columnInfo.FullyQualifiedName != null) {
+            
+                if(columnInfo.FullyQualifiedName.indexOf('LDRSHP_TITL_LVL_NR__c') > -1) {
+                    //Field changed from PD_TITL_LVL_NR__c to LDRSHP_TITL_LVL_NR__c
+                    columnInfoB = GetColumnInfoByFullyQualifedName(m_PS_ColumnInfoExArray, 'LDRSHP_TITL_LVL_NR__c');
+                    //columnInfoB = GetColumnInfoByFullyQualifedName(m_PS_ColumnInfoExArray, 'PD_TITL_LVL_NR__c');
+                    m_PS_ColumnOrderArray[n] = columnInfoB.Name;
+                    
+                }
+                else if(columnInfo.FullyQualifiedName.indexOf('PD_TITL_LVL_NR__c') > -1) {
+                    //Field changed from LDRSHP_TITL_LVL_NR__c to PD_TITL_LVL_NR__c
+                   columnInfoB = GetColumnInfoByFullyQualifedName(m_PS_ColumnInfoExArray, 'PD_TITL_LVL_NR__c');
+                   // columnInfoB = GetColumnInfoByFullyQualifedName(m_PS_ColumnInfoExArray, 'LDRSHP_TITL_LVL_NR__c');
+                    m_PS_ColumnOrderArray[n] = columnInfoB.Name;
+                    
+                }
+            }
+        }
+     }
+  }
+  
+  //Sorts table
+  function SortTable(sortBy, isAscending, reverseName) {
+    
+    m_SortBy = sortBy;
+    m_IsAscending = isAscending;
+    m_ReverseNameSortColumnName = reverseName;
+    
+    var searchObject = null;
+    
+    if(m_SearchType == 'TextSearch') {
+        searchObject = m_TSObject;
+    }
+    else if(m_SearchType == 'Filter') {
+        searchObject = m_FilterObject;
+    }
+    
+    if(!isEmpty(reverseName)) {
+        LoadGenealogyBySearchType(m_SearchType, searchObject, true);
+    }
+    else {
+        LoadGenealogyBySearchType(m_SearchType, searchObject, false);
+    }
+ 
+  }
+  
+  function ShowBranchRow(visible) {
+
+    if(m_genTable.RowCount() >= 5) {
+        m_genTable.GetRow(2).SetVisible(!visible);
+        m_genTable.GetRow(3).SetVisible(!visible);               
+        m_genTable.GetRow(BRANCH_ROW_INDEX).SetVisible(true);
+    }
+  }
+  
+  function MakeBranchRowAdjustments() {
+  
+    if(m_genTable.RowCount() >= 5) {
+    
+        var columnName = GetContactFirstNameColumnName();
+        
+        if(!isEmpty(columnName)) {
+        
+            var nameCell = m_genTable.GetItemIndex(BRANCH_ROW_INDEX, columnName);
+            nameCell.InnerText = nameCell.Title;
+            
+            nameCell.GetRenderedElement();
+        }
+    }
+  }
+  
+  function GetContactFirstNameColumnName() {
+  
+    var columnName = '';
+    
+    for(var n = 0; n <= m_T_ColumnOrderArray.length - 1; n++) {
+    
+        columnInfo = GetColumnInfo(m_T_ColumnInfoArray, m_T_ColumnOrderArray[n]);
+        
+        if(columnInfo != null && (columnInfo.FullyQualifiedName.indexOf('MRKT_ACCT_KEY__r.FirstName') > -1)) {
+        
+            columnName = columnInfo.Name;
+            break;
+        }
+    }
+  
+    return columnName;
+  }
+  
+  function HideDefaultColumns() {
+  
+    var columnInfo = null;
+    
+    for(var n = 0; n <= m_T_ColumnOrderArray.length - 1; n++) {
+    
+        columnInfo = GetColumnInfo(m_T_ColumnInfoArray, m_T_ColumnOrderArray[n]);
+        
+        if(columnInfo != null && columnInfo.Visibility == 'Default Hidden') {
+            
+            m_genTable.SetColumnVisible(m_T_ColumnOrderArray[n], false);
+        }
+    }
+    
+  }
+  
+  function ChangeColumnVisibility(columnName, visible) {
+  
+    var columnInfo = null;
+    
+    if(!startsWith(columnName, 'group::')) {
+        m_genTable.SetColumnVisible(columnName, visible);
+    }
+    else {
+    
+        columnName = columnName.replace('group::', '');
+        
+        for(var n = 0; n <= m_T_ColumnInfoArray.length - 1; n++) {
+        
+            columnInfo = m_T_ColumnInfoArray[n];
+            
+            if(columnInfo.ColumnDisplayType == 'Scrollable' && columnInfo.ColumnGroupName == columnName && columnInfo.Visibility == 'Default Shown') { // Condition added by amartya (columnInfo.Visibility == 'Default Shown')
+                //alert(columnInfo.Visibility);
+                m_genTable.SetColumnVisible(columnInfo.Name, visible);
+            }
+        }
+    }
+    
+    CalculateTableWidth('Scrollable');
+  }
+  
+  function GenerateColumnVisibilityMenu() {
+  
+    var columnGroupArray = new Array();
+    var columnInfo = null;
+    var output = '';
+    var checkBoxOutput = '';
+    var idOutput = '';
+    var valueOutput = '';
+    var checkedOutput = '';
+    var valueName = '';
+    var menuItemName = '';
+    var canAddMenuItem = true;
+    var isGroup = false;
+    var isChecked = false;
+    
+    for(var n = 0; n <= m_T_ColumnOrderArray.length - 1; n++) {
+    
+        columnInfo = GetColumnInfo(m_T_ColumnInfoArray, m_T_ColumnOrderArray[n]);
+        
+        if(columnInfo != null && columnInfo.ColumnDisplayType == 'Scrollable' && (columnInfo.Visibility == 'Default Shown' || columnInfo.Visibility == 'Default Hidden')) {
+        
+            canAddMenuItem = true;
+            isGroup = false;
+            
+            if(!isEmpty(columnInfo.ColumnGroupName)) {
+                //alert(columnInfo.ColumnGroupName);
+                if(arrayContains(columnGroupArray, columnInfo.ColumnGroupName, true)) {
+                    menuItemName = '';
+                    canAddMenuItem = false;
+                }
+                else {
+                    menuItemName = columnInfo.ColumnGroupName;
+                    valueName = columnInfo.ColumnGroupName;
+                    isGroup = true;
+                    columnGroupArray.push(menuItemName);
+                }
+            }
+            else {
+                menuItemName = columnInfo.FullName;
+                valueName = columnInfo.Name;
+            }
+                
+            if(canAddMenuItem) {
+            
+                idOutput = 'chk' + menuItemName;
+                
+                if(isGroup) {
+                    valueOutput = 'group::' + valueName;
+                }
+                else {
+                    valueOutput = valueName;
+                }
+                
+                if(m_genTable.ColumnSettingsExist(columnInfo.Name)) {
+                    isChecked = m_genTable.GetColumnVisible(columnInfo.Name);
+                }
+                else {
+                    isChecked = (columnInfo.Visibility == 'Default Shown');
+                }
+                
+                if(isChecked) {
+                    checkedOutput = "Checked";
+                }
+                else {
+                    checkedOutput = "";
+                }
+                
+                checkBoxOutput = '<input type="checkbox" id="' + idOutput + '" name="chkColumnVisible" value="' + valueOutput + '" onclick="ChangeColumnVisibility(this.value, this.checked);" ' + checkedOutput +'><div class="column_visibility_item" title="' + menuItemName + '"><label for="' + idOutput + '" title="' + menuItemName + '">'+ menuItemName +'</label></div>';
+                if(output.length == 0) {
+                    output = checkBoxOutput;
+                }
+                else {
+                    output += '<br />' + checkBoxOutput;
+                }
+            
+            }
+        }
+    
+    }
+    
+    return output;
+  }
+ 
+  function CalculateTableWidthAll() {
+  
+    CalculateTableWidth('Frozen');
+    CalculateTableWidth('Scrollable');
+  }
+  
+  function CalculateTableWidth(columnDisplayType) {
+  
+    var columnInfo = null;
+    var adjustedColumnOrder = '';
+    var totalWidth = 0;
+    var width = 0;
+    var allColumnWidth = 35;
+    var genColumnWidth = 28;
+    var tListColumnWidth = 60;
+    
+    for(var n = 0; n <= m_T_ColumnOrderArray.length -1; n++) {
+      
+        columnInfo = GetColumnInfo(m_T_ColumnInfoArray, m_T_ColumnOrderArray[n]);
+        
+        if(columnInfo == null) {
+        
+            adjustedColumnOrder = m_T_ColumnOrderArray[n].toLowerCase();
+            
+            if(columnDisplayType == 'Frozen') {
+            
+                width = 0;
+                
+                if(adjustedColumnOrder == m_adjustedAllColumnName) {
+                    width = allColumnWidth;
+                }
+                else if(adjustedColumnOrder == m_adjustedGenColumnName) {
+                    width = genColumnWidth;
+                }
+                
+                // Following lines are blocked for removal of TeamList column from TA / MTO reports by Raktim on 10thApr, 2013 started
+                // Following lines are unblocked on 16th Apr 2013
+                // Following lines are blocked on 29th Apr 2013
+                /*
+                else if(adjustedColumnOrder == m_adjustedTListColumnName) {
+                    width = tListColumnWidth;
+                }
+                */
+                // End of Change
+                
+                m_genTable.SetColumnWidth(m_T_ColumnOrderArray[n], width);
+                totalWidth += width;
+            }
+        }
+        else if(columnInfo != null && columnInfo.ColumnDisplayType == columnDisplayType && m_genTable.GetColumnVisible(columnInfo.Name)) {
+        
+            m_genTable.SetColumnWidth(columnInfo.Name, columnInfo.Width);
+            totalWidth += columnInfo.Width;
+        }
+     }
+    
+    if(columnDisplayType == 'Frozen') {
+        m_genTable.SetFrozenTableStyle('width: ' + totalWidth + 'px; table-layout: fixed;');
+    }
+    else if(columnDisplayType == 'Scrollable') {
+        m_genTable.SetScrollableTableStyle('width: ' + totalWidth + 'px; table-layout: fixed;');
+    }
+    
+    m_genTable.FixDimensions();
+    
+  }
+  
+  //Load Genealogy by specified Search Type and Filter Object, if applicable
+  function LoadGenealogyBySearchType(searchType, searchObject, refreshMetadata) {
+  
+    if(searchType == 'TextSearch' && isEmpty(searchObject)) {
+        throw new Error('Search Type: TextSearch must have searchObject specified.');
+    }
+    else if(searchType == 'Filter' && isEmpty(searchObject)) {
+        throw new Error('Search Type: Filter must have searchObject specified.');
+    }
+    
+    processImageVisible(true);
+    
+    if(searchType == 'Regular') {
+        //alert (' ... REGULAR ');
+        GetPagedGenealogy('{!AccountNum}', 1, m_SortBy, m_IsAscending, m_ReverseNameSortColumnName, refreshMetadata);
+    }
+    else if(searchType == 'TextSearch') {
+        //alert (' ... TextSearch ');
+        GetPagedGenealogyBySearchText('{!AccountNum}', 1, searchObject.TextSearch, searchObject.TSCriteria, m_SortBy, m_IsAscending, m_ReverseNameSortColumnName, refreshMetadata);
+    }
+    else if(searchType == 'Filter') {
+        /*alert(' ... searchObject.CampaignId '+searchObject.CampaignId);
+        alert(' ... searchObject.Who '+searchObject.Who);
+        alert(' ... searchObject.What '+searchObject.What);
+        alert (' ... Filter ');*/
+        campno=searchObject.CampaignId;//added by swarnava for MailPlan Column show/hide
+        GetPagedGenealogyByFilter('{!AccountNum}', 1, searchObject.CampaignId, searchObject.Who, searchObject.What, m_SortBy, m_IsAscending, m_ReverseNameSortColumnName, refreshMetadata);
+    }
+  }
+  
+  //Color generating algorithm
+  function GetCSSIndexByGeneration(startOverIndex, totalCSS, generation) {
+  
+    var offset = 0;
+    var cssIndex = startOverIndex;
+ 
+    if(generation < totalCSS) {
+        cssIndex = generation;
+    }
+    else {
+        offset = Math.ceil(generation/totalCSS);
+        cssIndex = (totalCSS - ((totalCSS * offset) - generation)) + startOverIndex;
+    }
+    
+    return cssIndex;
+  }
+
+  function reInterpretGenealogyObject(objGenealogy) {
+  
+    objGenealogy.AllDownlineCountTotal = parseFloat(objGenealogy.AllDownlineCountTotal);
+    objGenealogy.ALL_DWNLN_CNT__c = parseFloat(objGenealogy.ALL_DWNLN_CNT__c);
+    objGenealogy.ALL_DOWNLN_CNT_WITH_REMV__c = parseFloat(objGenealogy.ALL_DOWNLN_CNT_WITH_REMV__c);
+    
+    if(propertyExists(objGenealogy.GENRTN_1_TITL_STF_CNT__c)) {
+        objGenealogy.GENRTN_1_TITL_STF_CNT__c = parseFloat(objGenealogy.GENRTN_1_TITL_STF_CNT__c);
+    }
+    
+    if(propertyExists(objGenealogy.Gen_1_Total_Titled_Leader_Candidates__c)) {
+        objGenealogy.Gen_1_Total_Titled_Leader_Candidates__c = parseFloat(objGenealogy.Gen_1_Total_Titled_Leader_Candidates__c);
+    }
+    
+    objGenealogy.Genealogy_Level__c = parseFloat(objGenealogy.Genealogy_Level__c);
+    
+    return objGenealogy;
+  }
+  
+  function getJSONGenealogyResults(expanding) {
+    
+    var txtJSONResults = getElement('{!$Component.txtJSONResults}');
+    var jsonData = jQuery.parseJSON($(txtJSONResults).val());
+    
+    $(txtJSONResults).val('');
+    
+    if(!expanding && propertyExists(jsonData.Records) && propertyExists(jsonData.Records.GenTeamList)) {
+        jsonData.Records.GenTeamList = m_T_Array;
+    }
+    else if(propertyExists(jsonData.GenTeamList)) {
+        jsonData.GenTeamList = m_T_Array;
+    }
+    
+    $(txtJSONResults).val(JSON.stringify(jsonData));
+    //console.log('txtJSONResults --> '+expanding+' '+JSON.stringify(jsonData));
+    
+    return jsonData;
+  }
+  
+  function forceFancyDropdownRefresh(fancyDropDownId, lengthLimit) {
+  
+    var fancyDropdown = getElement(fancyDropDownId); 
+    var regularDropdown = getElement(fancyDropDownId.replace('fdd_', '').replace('_text', ''));
+    var selectedText = $(regularDropdown).find('option:selected').text();
+    
+    if(selectedText.length > lengthLimit) {
+        selectedText = selectedText.substring(0, lengthLimit) + '...';
+    }
+    
+    $(fancyDropdown).text(selectedText);
+    $(fancyDropdown).attr('title', selectedText);
+  }
+
+  function createFancyDropdown(regularDropdownId, dropDownWidth, cssClass, lengthLimit) {
+
+    var regularDropdown = getElement(regularDropdownId);
+    var fancyDropdown = null;
+    var fancyDropdownId = 'fdd_' + regularDropdownId;
+    
+    $(regularDropdown).css({'z-index':2,'opacity':0,'-khtml-appearance':'none'});
+    
+    $(regularDropdown).width(dropDownWidth);
+    
+    $(regularDropdown).after('<div id="' + fancyDropdownId  + '"></div>');
+  
+    fancyDropdown = getElement(fancyDropdownId);
+    
+    $(fancyDropdown).addClass(cssClass);
+    
+    $(fancyDropdown).width(dropDownWidth);
+    
+    forceFancyDropdownRefresh(fancyDropdownId, lengthLimit);
+    
+    $(regularDropdown).change(function() {
+    
+        forceFancyDropdownRefresh(fancyDropdownId, lengthLimit);
+        
+    });
+  }
+  
+function onSelectValue(selectedVal) {    //function changed by swarnava for coaching record opening issue while impersonation in IE8
+    var urlVal = selectedVal;
+    //console.log('inside onselectvalue with->'+selectedVal);
+    if(urlVal=='0');//do nothing added by swarnava for Other report fix
+    else if(urlVal.indexOf("javascript")>-1) {
+        //var tokens = selectedVal.split(":");
+        //showCoachingPage();  
+         if(lock==false)
+         lock=true;
+         else lock=false;
+        // console.log(lock);  
+       // console.log(urlVal.split(":")[1]); 
+        if(lock==true)              
+        eval(urlVal.split(":")[1]);
+        
+    }
+    else {
+        window.location.href = urlVal;
+    }
+           
+  }
+  
+  function getAttachmentId() {
+    var attachmentElement = getElement('{!$Component.attachmentId}');
+    var attachmentId = $(attachmentElement).val();     
+
+   // return attachmentId;
+   return 'NONE';//changed by swarnava for Download All
+  }
+  
+</script>
+
+<style>
+    div.row {
+        clear: both;
+        padding-top: 0px;
+    }
+    div.row span.label {
+        float: left;
+        width: 150px;
+        text-align: right;
+    }
+    div.row span.formelement {
+        float: right;
+        width: 250px;
+        text-align: left;
+    }
+    div.spacer {
+        clear: both;
+        padding: 0px;
+    }
+    .select_campaign {
+        position: absolute;
+        bottom:0;
+        float:left;
+        left:0;
+        top:0;
+        height:26px;
+        line-height:26px;
+        text-indent:10px;
+        background:url("{!URLFOR($Resource.MTRImages,'dropdown_campaign.gif')}") no-repeat top left;
+        cursor:default;
+        z-index:1;
+        font-size:11px;
+    }
+    .select_large {
+        position: absolute;
+        bottom:0;
+        float:left;
+        left:0;
+        top:0;
+        height:26px;
+        line-height:26px;
+        text-indent:10px;
+        background:url("{!URLFOR($Resource.MTRImages,'dropdown_large.gif')}") no-repeat top left;
+        cursor:default;
+        z-index:1;
+        font-size:11px;
+    }
+    .blacktext {
+        color:#000000;
+    }
+    
+
+#frozenDiv .jspVerticalBar, #headerFrozenDiv .jspVerticalBar, #headerScrollableDiv .jspVerticalBar {
+    display: none;
+}
+
+#frozenDiv .jspPane, #headerScrollableDiv .jspPane {
+    margin-left: 0px !important;
+    width: 100% !important;
+}
+
+#headerScrollableDiv .jspHorizontalBar, #frozenDiv .jspHorizontalBar {
+    display: none;
+}
+
+.jspHorizontalBar
+{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 928px !important;
+    height: 24px;
+    border-top: 1px solid #c3c3c3;
+    border-bottom: 1px solid #c3c3c3;
+    background-color: #fff; 
+}
+    
+</style>
+
+<apex:actionRegion >
+
+    <apex:outputPanel id="jsonResultsPanel">    
+        <apex:inputHidden id="txtJSONResults" value="{!JSONResults}" />
+        <!-- inputHidden inputText -->
+        <script language="JavaScript">
+        
+            m_MaxPageLimitReached = {!PagedTeamSOQLBuilder.MaxPageLimitReached};
+            
+            {!IF(AF_RefreshMetadata, 'm_T_ColumnOrderArray.length = 0; m_PS_ColumnOrderArray.length = 0;', '')}
+            {!IF(AF_RefreshMetadata, 'm_T_ColumnInfoArray.length = 0; m_PS_ColumnInfoArray.length = 0;', '')}
+ 
+            //Team - Column Order List
+            <apex:repeat value="{!T_ColumnOrderList}" var="columnOrder">
+                m_T_ColumnOrderArray.push('{!columnOrder}');
+                //console.log('{!columnOrder}');
+            </apex:repeat>
+            
+            //Personal Sales - Column Order List
+            //<apex:repeat value="{!PS_ColumnOrderList}" var="columnOrder">
+            //    m_PS_ColumnOrderArray.push('{!columnOrder}');
+            //</apex:repeat>
+                
+            //Team - Column Info List
+            <apex:repeat value="{!T_ColumnInfoMap}" var="CIM">
+                <apex:repeat value="{!T_ColumnInfoMap[CIM]}" var="columnInfo">
+                    m_T_ColumnInfoArray.push({"Name" : "{!columnInfo.Name}", "FullName" : "{!columnInfo.FullName}", "ColumnType" : "{!columnInfo.ColumnType}", "ColumnDisplayType" : "{!columnInfo.ColumnDisplayType}", "ColumnGroupName" : "{!columnInfo.ColumnGroupName}", "FullyQualifiedName" : "{!columnInfo.FullyQualifiedName}", "Visibility" : "{!columnInfo.Visibility}", "Width" : {!columnInfo.Width}, "is_Hover_Enabled" : {!columnInfo.is_Hover_Enabled}});
+                    //console.log('{!columnInfo.Name}' + '{!columnInfo.FullName}' + '{!columnInfo.FullyQualifiedName}');
+                </apex:repeat>
+            </apex:repeat>
+            
+            //Personal Sales - Column Info List
+            //<apex:repeat value="{!PS_ColumnInfoMap}" var="CIM">
+            //    <apex:repeat value="{!PS_ColumnInfoMap[CIM]}" var="columnInfo">
+            //        m_PS_ColumnInfoArray.push({"Name" : "{!columnInfo.Name}", "FullName" : "{!columnInfo.FullName}", "ColumnType" : "{!columnInfo.ColumnType}", "ColumnDisplayType" : "{!columnInfo.ColumnDisplayType}", "ColumnGroupName" : "{!columnInfo.ColumnGroupName}", "FullyQualifiedName" : "{!columnInfo.FullyQualifiedName}", "Visibility" : "{!columnInfo.Visibility}", "Width" : {!columnInfo.Width}, "is_Hover_Enabled" : {!columnInfo.is_Hover_Enabled}});
+            //    </apex:repeat>
+            //</apex:repeat>
+            
+            {!IF(AF_RefreshMetadata, 'CreateUniqueColumnInfo();', '')}
+    
+            m_T_Array.length = 0;
+        
+            var objGenealogyJS = null;
+    
+            <apex:repeat value="{!GenealogyWrapperList}" var="genealogy">    
+            //   console.log('data {!genealogy.RowType}');
+               objGenealogyJS = new Object();
+                
+               <apex:repeat value="{!CASE(genealogy.RowType, 'Team', TeamPrintColumnList, 'Personal', PersonalPrintColumnList, 'Merged', MergePrintColumnList, 'Branch', BranchPrintColumnList, MergePrintColumnList)}" var="printColumn">
+
+                 //console.log('Col Name ---- {!printColumn.ColumnName} ---- Print Column Value ---- {!printColumn.ColumnValue} COLUMN VALUE ---- {!genealogy[printColumn.ColumnValue]}');
+                 if('{!printColumn.ColumnName}' == 'Genealogy_Level__c'){
+                 // console.log('------------------------' + '{!genealogy.levelRelative}' + ' ' + '{!genealogy[printColumn.ColumnValue]}');
+                    objGenealogyJS['{!printColumn.ColumnName}'] = '{!genealogy.levelRelative}';
+                 }
+                 else{
+                 objGenealogyJS['{!printColumn.ColumnName}'] = '{!genealogy[printColumn.ColumnValue]}';
+                 }
+                 
+               </apex:repeat>
+                
+                m_T_Array.push(reInterpretGenealogyObject(objGenealogyJS));
+                
+            </apex:repeat>
+            
+            
+            TrimNumberFields(m_T_Array);
+            
+        </script>
+        
+    </apex:outputPanel>
+    <apex:outputPanel id="attachmentPanel" >
+        <apex:inputHidden id="attachmentId" value="{!attachmentId}" />    
+    </apex:outputPanel>
+
+    <apex:actionFunction name="GetPagedGenealogy" action="{!GetPagedGenealogy}" rerender="jsonResultsPanel" oncomplete="pagedGenealogyCallback(getJSONGenealogyResults(false));">
+        <apex:param name="AccountNum" assignTo="{!RegularSearchType.AccountNumber}" value="" />
+        <apex:param name="PageNumber" assignTo="{!PagedTeamSOQLBuilder.PageNumber}" value="" />
+        <apex:param name="SortBy" assignTo="{!RegularSearchType.SortBy}" value="" />
+        <apex:param name="IsAscending" assignTo="{!RegularSearchType.IsAscending}" value="" />
+        <apex:param name="ReverseNameSortColumnName" assignTo="{!RegularSearchType.ReverseNameSortColumnName}" value="" />
+        <apex:param name="RefreshMetadata" assignTo="{!AF_RefreshMetadata}" value="false" />
+        <apex:param name="SearchType" assignTo="{!AF_SearchType}" value="Regular" />
+    </apex:actionFunction>
+
+    <apex:actionFunction name="GetPagedGenealogyBySearchText" action="{!GetPagedGenealogy}" rerender="jsonResultsPanel" oncomplete="pagedGenealogyCallback(getJSONGenealogyResults(false));">
+        <apex:param name="AccountNum" assignTo="{!TextSearchType.AccountNumber}" value="" />
+        <apex:param name="PageNumber" assignTo="{!PagedTeamSOQLBuilder.PageNumber}" value="" />
+        <apex:param name="TextSearch" assignTo="{!TextSearchType.TextSearch}" value="" />
+        <apex:param name="Criteria" assignTo="{!TextSearchType.TSCriteria}" value="" />
+        <apex:param name="SortBy" assignTo="{!TextSearchType.SortBy}" value="" />
+        <apex:param name="IsAscending" assignTo="{!TextSearchType.IsAscending}" value="" />
+        <apex:param name="ReverseNameSortColumnName" assignTo="{!TextSearchType.ReverseNameSortColumnName}" value="" />
+        <apex:param name="RefreshMetadata" assignTo="{!AF_RefreshMetadata}" value="false" />
+        <apex:param name="SearchType" assignTo="{!AF_SearchType}" value="TextSearch" />
+    </apex:actionFunction>
+
+    <apex:actionFunction name="GetPagedGenealogyByFilter" action="{!GetPagedGenealogy}" rerender="jsonResultsPanel,summaryoverlay,campaignrefresh,attachmentPanel" oncomplete="pagedGenealogyCallback(getJSONGenealogyResults(false));">
+        <apex:param name="AccountNum" assignTo="{!FilterSearchType.AccountNumber}" value="" />
+        <apex:param name="PageNumber" assignTo="{!PagedTeamSOQLBuilder.PageNumber}" value="" />
+        <apex:param name="CampaignId" assignTo="{!FilterSearchType.CampaignId}" value="" />
+        <apex:param name="Who" assignTo="{!FilterSearchType.Who}" value="" />
+        <apex:param name="What" assignTo="{!FilterSearchType.What}" value="" />
+        <apex:param name="SortBy" assignTo="{!FilterSearchType.SortBy}" value="" />
+        <apex:param name="IsAscending" assignTo="{!FilterSearchType.IsAscending}" value="" />
+        <apex:param name="ReverseNameSortColumnName" assignTo="{!FilterSearchType.ReverseNameSortColumnName}" value="" />
+        <apex:param name="RefreshMetadata" assignTo="{!AF_RefreshMetadata}" value="false" />
+        <apex:param name="SearchType" assignTo="{!AF_SearchType}" value="Filter" />
+    </apex:actionFunction>
+    
+    <apex:actionFunction name="DoGenealogyPageAction" action="{!DoGenealogyPageAction}" rerender="jsonResultsPanel" oncomplete="pagedGenealogyCallback(getJSONGenealogyResults(false));">
+        <apex:param name="PageAction" assignTo="{!AF_PageAction}" value="" />
+    </apex:actionFunction>  
+    
+    <apex:actionFunction name="DoGenealogyPageNumberAction" action="{!DoGenealogyPageNumberAction}" rerender="jsonResultsPanel" oncomplete="pagedGenealogyCallback(getJSONGenealogyResults(false));">
+        <apex:param name="PageAction" assignTo="{!AF_PageAction}" value="" />
+    </apex:actionFunction>  
+    
+    <apex:actionFunction name="ExpandGenealogy" action="{!ExpandGenealogy}" rerender="jsonResultsPanel" oncomplete="expandGenealogyCallback(getJSONGenealogyResults(true));">
+        <apex:param name="AccountNum" assignTo="{!AF_AccountNum}" value="" />
+    </apex:actionFunction>
+    
+    <apex:actionFunction name="getAttachmentIdForDownload" action="{!computeAttachmentId}" rerender="attachmentPanel" onComplete="showProcessingMsg(); showOverlay('download', getAttachmentId());" />
+    
+    <apex:actionFunction name="provideAccountAccess" action="{!provideAccountAccess}" onComplete="downloadReport();"/>
+    <!-- <apex:actionFunction name="revokeAccountAccess" action="{!revokeAccountAccess}" onComplete="hideOverlay();"/> -->
+    
+    <apex:actionFunction name="refreshNrtTimestamp" rerender="nrtTimestanp"/>
+
+</apex:actionRegion>
+<!-- Line below commented by Prakash on 10/3 to incorporate Morgan's HTML changes. New version is next line to the commented one -->
+ <!--  <h1 class="big_pnk_hdr"><span id="spanHeader" style="padding-left: 20px;">{!ReportTitle} </span>   -->
+  <h1 class="big_pnk_hdr"><span id="spanHeader" style="display:inline-block;height:20px;margin:5px 10px 0 0;">{!ReportTitle} </span>   
+
+    <span class="frm_cntr" style="padding-left:0px;">
+      <!-- 
+        <apex:selectList id="lstMyTeamType" size="1" styleClass="myselect" style="width:242px;">
+            <apex:selectOption itemValue="Report" itemLabel="Report"/>
+            <apex:selectOption itemValue="Order" itemLabel="Order"/>
+        </apex:selectList>
+
+    <c:DropDownComponent mktId="62" impersonate="false" userTitleNbr="1" pfID="Avon Leader"/> -->
+    <c:ReportLinksSelectList selectOptions="{!reportLinks}" elementId="lstMyTeamType" elementName="lstMyTeamType" className="myselect" size="1" style="width:242px; height:15px !important" onchange="onSelectValue(this.value);" rendered="{!ISBLANK($CurrentPage.parameters.acctKey)}"/>
+          
+    </span>
+    <!-- Added by Prakash on 10/03 to incorporate Morgan's HTML recommendations.: START -->
+    
+    <apex:outputPanel id="nrtTimestanp" styleclass="frm_cntr" style="width:800px; text-align:right; padding-bottom:40px; font-size:10pt;" 
+  	                  rendered="{!AND(ReportType='MyTeamOrder', nrtEnabled)}">{!NrtTimeStamp}</apex:outputPanel>
+	<apex:outputPanel styleclass="frm_cntr" style="width:800px; text-align:right; padding-bottom:40px; font-size:10pt;" rendered="{!ReportType='TitleAdvancement'}">{!BatchTimeStamp}</apex:outputPanel> 
+    <!-- Added by Prakash on 10/03 to incorporate Morgan's HTML recommendations.: END -->
+    
+    <ul class="icon_lnks">
+          <!-- added by amartya 05-nov-2012 start -->
+          <apex:outputpanel rendered="{!ReportType='MyTeamReport' || ReportType='MyTeamOrder' || ReportType='Rising_Stars'|| ReportType='TitleAdvancement'}">
+            <li><a href="javascript:void(0)" onclick="hideSOverlayPage();" class="pnk_srch" alt="{!$Label.Key_Data_Summary}" title="{!$Label.Key_Data_Summary}"></a></li>
+          </apex:outputpanel>
+          <li><a href="javascript:void(0)" onclick="multiEmail_Click(); return false;" class="pnk_mail" title="{!$Label.eMail2}"></a></li>
+          <li><a href="javascript:void(0)" onclick="showProcessingMsg(); getAttachmentIdForDownload(); return false;" class="pnk_down" title="{!$Label.Download}"></a></li>
+          <li><a href="javascript:void(0)" onclick="printWYSIWYG_Click(); return false;"  class="pnk_print" title="{!$Label.Print_Page}"></a></li>
+    </ul>
+    <!-- Line below commented by Prakash on 10/03 to incorporate Morgan's HTML recommendations. -->
+     
+  	<!-- <apex:outputPanel id="nrtTimestanp" styleclass="frm_cntr" style="width:800px; text-align:right; padding-bottom:40px; font-size:10pt;" 
+  	                  rendered="{!AND(ReportType='MyTeamOrder', nrtEnabled)}">{!NrtTimeStamp}</apex:outputPanel>
+	<apex:outputPanel styleclass="frm_cntr" style="width:800px; text-align:right; padding-bottom:40px; font-size:10pt;" rendered="{!ReportType='TitleAdvancement'}">{!BatchTimeStamp}</apex:outputPanel>  --> 
+    
+</h1>
+
+
+<apex:messages />
+
+
+<c:MTRImpersonationHeader JQueryParentId=".content_cntr" FullName="{!OriginalUserTeam['MRKT_ACCT_KEY__r.FirstName']+' '+OriginalUserTeam['MRKT_ACCT_KEY__r.LastName']}" rendered="{!NOT(ISBLANK($CurrentPage.parameters.acctKey))}" selectOptions="{!reportLinks}" />
+
+<c:PersonalMessage />
+
+<c:NRT_NewOrderMessage_Clone rendered="{! AND(NOT(ReportType='MyTeamOrder'),  nrtEnabled)}" /><br/><br/>
+
+<div>
+    <div style="float: left;">
+        <!-- Changed by Raktim on 9th Apr, 2013 - two new attributes are added here -->
+        <c:GenealogyFilter_Clone CampaignFilterOnly="{!NOT(IsMyTeamReportType)}" AccountNum="{!AccountNum}" OmniSuitName="{!Omniture_Suite_Name}" ReportTypeName="{!ReportType}" ReportConfigId="{!ReportConfigId}" SFDC_MarketId="{!SFDC_MarketId}" LangCD="{!LangCD}" NumberOfHistoricalCampaigns="{!TeamSOQLBuilder.HistoricalCampaignTotal}" FutureCampaign="{!TeamSOQLBuilder.MarketFutureCampaign}" CurrentCampaign="{!TeamSOQLBuilder.MarketCurrentCampaign}" SelectedCampaignId="{!IF(IsMailPlan&&$CurrentPage.parameters.campaignId==null,IF(toland,$CurrentPage.parameters.mpCampaign,currcampaign),$CurrentPage.parameters.campaignId)}" Who="{!$CurrentPage.parameters.who}" What="{!$CurrentPage.parameters.what}" OnSubmit="m_SearchType = 'Filter'; m_FilterObject = filterObject; LoadGenealogyBySearchType(m_SearchType, m_FilterObject, true); try { updateTextSearchUI(); } catch(err) {  }"  IsMailPlanMarket="{!isMailPlan}" />
+    </div>
+    <!-- Commented line below and add Morgan's recommended change on 10/03 -->
+     <!-- <div style="width:280px; float:right; padding-top:15px;">   -->
+          <div style="width:280px; float:right;">  
+        <!--<c:MTRTextSearch rendered="{!IsMyTeamReportType}" AccountNum="{!AccountNum}" MarketId="{!AvonMarketId}" TextSearch="{!NULLVALUE($CurrentPage.parameters.textsearch, $Label.Search_Title_Adv)}" TSCriteria="{!NULLVALUE($CurrentPage.parameters.tscriteria, '')}" CampaignId="{!NULLVALUE($CurrentPage.parameters.campaignId, TEXT(TeamSOQLBuilder.MarketCurrentCampaign))}" OnSubmit="m_SearchType = 'TextSearch'; m_TSObject = txtSearchObject; LoadGenealogyBySearchType(m_SearchType, m_TSObject, true);" OnBeginRequest="campaignObject.value = m_FilterObject.CampaignId; processImageVisible(true);" OnEndRequest="processImageVisible(false);" IsBranchEnable="{!Is_Brach_Enable}"/>-->
+        <c:MTRTextSearch_Clone rendered="{!IsMyTeamReportType}" AccountNum="{!AccountNum}" MarketId="{!AvonMarketId}" TextSearch="{!NULLVALUE($CurrentPage.parameters.textsearch, $Label.Search_Last_Name)}" TSCriteria="{!NULLVALUE($CurrentPage.parameters.tscriteria, '')}" CampaignId="{!NULLVALUE($CurrentPage.parameters.campaignId, TEXT(TeamSOQLBuilder.MarketCurrentCampaign))}" OnSubmit="m_SearchType = 'TextSearch'; m_TSObject = txtSearchObject; LoadGenealogyBySearchType(m_SearchType, m_TSObject, true);" OnBeginRequest="campaignObject.value = m_FilterObject.CampaignId; processImageVisible(true);" OnEndRequest="processImageVisible(false);" IsBranchEnable="{!Is_Brach_Enable}"/>
+    </div>
+</div>
+<div class="spacer"></div>
+<div>
+    <div id="showhide">{!$Label.Show_Hide_Columns}</div>
+    <div id="showhideform" style="border: 1px grey solid;" class="hidemenu"></div>
+    
+    <div id="tableDiv">
+    </div>
+    
+    <div id="filterErrorDiv" align="center" class="mtr_err_message" style="display:none">
+        {!$Label.No_Filter_Data_Found}
+    </div>
+    <div id="noMatchesErrorDiv" align="center" class="mtr_err_message" style="display:none">
+        {!$Label.No_Matches_Found}
+    </div>
+    <div id="pagerDiv" align="center">
+        <a id="lnkFirst" href="javascript:void(0)"></a>
+        <a id="lnkPrevious" href="javascript:void(0)"></a>
+        <span id="pagerInfo" class="pagerInfo"></span>
+        
+        <a id="lnkPrev4" href="javascript:void(0)" class="pagerInfo"></a>
+        <a id="lnkPrev3" href="javascript:void(0)" class="pagerInfo"></a>
+        <a id="lnkPrev2" href="javascript:void(0)" class="pagerInfo"></a>
+        <a id="lnkPrev1" href="javascript:void(0)" class="pagerInfo"></a>
+        
+        <span id="pgNo" class="pagerInfo"></span>
+        
+        <a id="lnkNext1" href="javascript:void(0)" class="pagerInfo"></a>
+        <a id="lnkNext2" href="javascript:void(0)" class="pagerInfo"></a>
+        <a id="lnkNext3" href="javascript:void(0)" class="pagerInfo"></a>
+        <a id="lnkNext4" href="javascript:void(0)" class="pagerInfo"></a>
+        
+        <a id="lnkNext" href="javascript:void(0)"></a>
+        <a id="lnkLast" href="javascript:void(0)"></a>
+    </div> 
+
+    <div class="bottom_spacer">
+    </div>
+
+    <div style="overflow:hidden;width:0px;height:0px;">
+        <iframe id="downloadReportFrame" name="downloadReportFrame" src=""></iframe>
+    </div>
+
+</div>
+    <apex:outputPanel id="campaignrefresh">
+        <script language="JavaScript"> 
+         v="{!$CurrentPage.parameters.CmpgnSeltd}";
+        //console.log('v='+v);
+        </script>
+      </apex:outputPanel>
+<script language="JavaScript"> 
+console.log('start part 3 ');          
+$(document).ready(function() {
+    
+    createFancyDropdown('lstMyTeamType', 181, 'select_large blacktext', 20);
+    
+    $('#showhideform').mouseleave(function() {
+        $('#showhideform').removeClass('showmenu');
+        $('#showhideform').addClass('hidemenu');
+    });
+    
+    $('#showhide').click(function() {
+       
+        if($('#showhideform').hasClass('hidemenu')){
+            $('#showhideform').removeClass('hidemenu');
+            $('#showhideform').addClass('showmenu');
+        }
+        else{
+            $('#showhideform').removeClass('showmenu');
+            $('#showhideform').addClass('hidemenu');
+        }
+    });
+    
+    
+        
+    if(m_SearchType == 'Regular') {
+        LoadGenealogyBySearchType(m_SearchType, null, true);
+    }
+    else if(m_SearchType == 'TextSearch') {
+        doTextSearch();
+    }
+    else if(m_SearchType == 'Filter') {
+                
+        doFilterSearch();
+        
+    }
+    
+    
+    //added by swarnava for Vertical Scrollbar Adjusting after collapsing arrow:Start
+    jQuery("a").live('click',function(){
+        if(jQuery(this).attr('class')=='collapsed_arrow')
+            m_genTable.ApplyScrollbarStyles();});
+    //added by swarnava for Vertical Scrollbar Adjusting after collapsing arrow:End
+});
+
+
+
+
+
+
+
+console.log('end part 3 ');
+</script>
+
+<!--  Added by Raktim for Aler / Error Message Change on 17 May, 2013 START  -->
+    <div id="email_msg"  class="white_trans_emailmsgoverlay_closed">
+                <apex:outputPanel id="emailmsgoverlay" layout="none">
+                    <c:EmailMessage_Clone id="emlmsgoverlay" />
+                </apex:outputPanel>
+   </div> 
+<!--  Added by Raktim for Aler / Error Message Change on 17 May, 2013 END  -->
+
+<!-- Omniture Component added by swarnava-->
+<c:OmnitureWebTrack mktName="{!Omniture_Suite_Name}" 
+                        mktAcctKey="{!MRKT_ID_ACCT_NR_KEY}"
+                        userType="{!loggedProfileName}"
+                        userTitle="{!loggeduserTitleLevelNbr}"        
+                        rendered="{!globalConfig.Omniture_Tracking_Enabled__c}"/>
+
+</apex:component>

@@ -1,0 +1,210 @@
+<apex:page sidebar="false" showHeader="false"
+	controller="TitleAchievementController" language="{!userLang}"  
+	standardStyleSheets="false"> <!-- language property modified by Raktim on 7th Oct Impersonation Issue -->
+
+	<style>
+.TAouterBox2 { /*height: 170px;*/
+	height: 150px;
+	/*width: 100%;*/
+	 width: 317px;
+	 margin-top: -3px;
+}
+</style>
+	<div>
+
+		<div class="cmpouterBoxGen">
+			<div class="cmpinnerBox" style="float: left;">
+				<div class="cmpcntr innerSep">
+					<div class="cmpheader" style="z-index: -1;">{!$Label.Personal_Volume}</div>
+					<apex:outputPanel rendered="{!prsnlVlm_hasData}">
+						<c:BarIndicator id="TABarInd1" compId="TABarInd1" height="56"
+							width="135" darkColorVal="{!prsnlVlm_battery.invoiced}"
+							lightColorVal="{!prsnlVlm_battery.submitted}"
+							linePoint="{!prsnlVlm_battery.goal}"
+							maxVal="{!prsnlVlm_battery.rightBorder}"
+							scaleInterPoint="{!prsnlVlm_battery.halfTarget}"
+							themeColor="{!prsnlVlm_battery.color}" />
+						<p class="cmpgraph_sml_hdr">
+							{!$Label.Goal}:&nbsp;
+							<apex:outputText value="{!prsnlVlm_titleGoal}" escape="false" />
+						</p>
+						<p
+							class="{!IF(prsnlVlm_battery.color='green','cmpgreen_dot','cmppnk_dot')} cmpgrey3 cmpsml_p_cnt">
+							{!$Label.Invoiced}: <span><apex:outputText value="{!prsnlVlm_invoiced}" escape="false" /></span>
+						</p>
+						<!-- <p class="cmplgreen_dot cmpgrey3 cmpsml_p_cnt" style="float:left;background:none;">{!$Label.Submitted}: <span><apex:outputText value="{!prsnlVlm_submitted}" escape="false" /></span></p> -->
+					</apex:outputPanel>
+					<apex:outputPanel rendered="{!NOT(prsnlVlm_hasData)}">
+						<div width="100%" align="center">
+							<h4 class="cmprep_hdr">{!$Label.No_Information_Available}</h4>
+						</div>
+					</apex:outputPanel>
+				</div>
+
+				<!--  This section is blocked as per CR : 2359 START -->
+				<!--      
+<apex:outputPanel rendered="{!prsnlVlm_hasData}">
+    <div class="cmpcntrbottom">
+        <apex:outputPanel rendered="{!IF(prsnlVlm_CMneededToReach<>'',True,False)}">
+            <p class="cmppnk_star cmpgrey3 cmpsml_p_cnt" style="float:left"><span><apex:outputText value="{!prsnlVlm_CMneededToReach}" escape="false" /></span></p>
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{!IF(prsnlVlm_CMviewMyOrdersUrl<>'',True,False)}">
+            <p class="cmpbig_gry_arw cmpsml_p_cnt" style="float:left">
+            <a class="cmpgrey3" href="{!prsnlVlm_CMviewMyOrdersUrl}"><apex:outputText value="{!prsnlVlm_CMviewMyOrdersText}" escape="false" /></a>
+            </p>
+        </apex:outputPanel>
+    </div>
+</apex:outputPanel>
+-->
+				<!--  This section is blocked as per CR : 2359 END -->
+			</div>
+
+
+			<div class="cmpinnerBox" style="float: right;">
+				<div class="cmpcntr innerSep">
+					<div class="cmpheader" style="z-index: -1;">{!$Label.G1_Actives}</div>
+					<apex:outputPanel rendered="{!g1Actvs_hasData}">
+						<!--change by swarnava for Transition Leader-->
+						<c:BarIndicator id="TABarInd2" compId="TABarInd2" height="56"
+							width="135" darkColorVal="{!g1Actvs_battery.invoiced}"
+							lightColorVal="0" linePoint="{!g1Actvs_battery.goal}"
+							maxVal="{!g1Actvs_battery.rightBorder}"
+							scaleInterPoint="{!g1Actvs_battery.halfTarget}"
+							themeColor="{!g1Actvs_battery.color}"
+							lowlinePoint="{!lowlineIndG1Active}" IsTL="{!isTL}" />
+						<apex:outputPanel rendered="{!isTL}">
+							<p class="cmpgraph_sml_hdr">{!$Label.Base}:
+								{!G1ActiveBaseCnt} &nbsp;&nbsp;&nbsp;{!$Label.Goal}:
+								{!g1Actvs_goal}</p>
+						</apex:outputPanel>
+						<apex:outputPanel rendered="{!!isTL}">
+							<p class="cmpgraph_sml_hdr">{!$Label.Goal}: {!g1Actvs_goal}</p>
+						</apex:outputPanel>
+						<p
+							class="{!IF(g1Actvs_battery.color='green','cmpgreen_dot','cmppnk_dot')} cmpgrey3 cmpsml_p_cnt">
+							{!$Label.Actives}: <span><apex:outputText value="{!g1Actvs_actives}" escape="false" /></span>
+						</p>
+						<apex:outputPanel rendered="{!g1Actvs_hasData}">
+							<!-- div class="cmpcntrbottom"-->
+							<apex:outputPanel rendered="{!IF(g1Actvs_titledLegs<>'',True,False)}">
+								<!-- Modified by Supriyo on March 5, 2013 : Removed star -->
+								<p class="cmplgreen_dot cmpgrey3 cmpsml_p_cnt"
+									style="float: left; background: none;">
+									<apex:outputText value="{!g1Actvs_titledLegs}" escape="false" />
+								</p>
+							</apex:outputPanel>
+							<!--  This section is blocked as per CR : 2359 START -->
+							<!--     
+                    <apex:outputPanel rendered="{!IF(g1Actvs_CMneededToAchieve<>'',True,False)}">
+                        <p class="cmppnk_star  cmpgrey3 cmpsml_p_cnt" style="float:left"><apex:outputText value="{!g1Actvs_CMneededToAchieve}" escape="false" /> </p>
+                    </apex:outputPanel>
+                    -->
+							<!--  This section is blocked as per CR : 2359 END
+            </div> -->
+						</apex:outputPanel>
+					</apex:outputPanel>
+					<apex:outputPanel rendered="{!NOT(g1Actvs_hasData)}">
+						<div width="100%" align="center">
+							<h4 class="cmprep_hdr">{!$Label.No_Information_Available}</h4>
+						</div>
+					</apex:outputPanel>
+				</div>
+
+			</div>
+		</div>
+
+		<div class="cmpbtm_bx_gry TAouterBox2">
+			<!-- Added by Supriyo 13 March, 2013: UI Style change -->
+			<div style="height: 8px; width: 100%"></div>
+			<!-- Supriyo change end -->
+			<div class="cmpcntr">
+				<!-- Modified by Supriyo 13 March, 2013: removed class cmphorz-sprtr -->
+				<!-- Div HTML in the below line was modified ( cmpwd_60 - cmpwd_40) by Prakash on 09/17 to incorporate Morgan's HTML changes for the NRT pop up -->
+				<div class="cmpleft cmpwd_40">
+					<strong class="cmpsml_blk_hdr">{!teamSales_blockName}</strong>
+					<apex:outputPanel rendered="{!teamSales_hasData}">
+						<c:BarIndicator id="TABarInd3" compId="TABarInd3" height="56"
+							width="160" darkColorVal="{!teamSales_battery.invoiced}"
+							lightColorVal="{!teamSales_battery.submitted}"
+							linePoint="{!teamSales_battery.goal}"
+							maxVal="{!teamSales_battery.rightBorder}"
+							scaleInterPoint="{!teamSales_battery.halfTarget}"
+							themeColor="{!teamSales_battery.color}" />
+
+						<strong class="cmpsml_blk_hdr">
+							<!-- <apex:outputText value="{!teamSales_teamSales}" escape="false" /> -->
+						</strong>
+					</apex:outputPanel>
+
+				</div>
+				<apex:outputPanel rendered="{!teamSales_hasData}">
+					<div class="cmpright cmpwd_40 cmpmar_tp_20"
+						style="width: 145px !important;  margin:30px 0 0 10px">
+						<p class="cmpgraph_sml_hdr">
+							{!$Label.Goal}:&nbsp;
+							<apex:outputText value="{!teamSales_goal}" escape="false" />
+						</p>
+						<p
+							class="{!IF(teamSales_battery.color='green','cmpgreen_dot','cmppnk_dot')} cmpgrey3 cmpsml_p_cnt">
+							{!$Label.Invoiced}: <span><apex:outputText value="{!teamSales_invoiced}" escape="false" /></span>
+						</p>
+						<apex:outputPanel rendered="{!Exec_Ttl_num!=0}">
+							<p class="cmplgreen_dot cmpgrey3 cmpsml_p_cnt"
+								style="float: left; background: none;">
+								<span><apex:outputText value="{!teamSales_teamSales}"
+										escape="false" /></span>
+							</p>
+						</apex:outputPanel>
+						<!--Added by swarnava for CORE-->
+						<!-- <p class="{!IF(teamSales_battery.color='green','cmplgreen_dot','cmplpnk_dot')} cmpgrey3 cmpsml_p_cnt">{!$Label.Submitted}: <span><apex:outputText value="{!teamSales_submitted}" escape="false" /></span></p> -->
+					</div>
+
+				</apex:outputPanel>
+
+				<apex:outputPanel rendered="{!NOT(teamSales_hasData)}">
+					<div width="100%" align="center">
+						<h4 class="cmprep_hdr">{!$Label.No_Information_Available}</h4>
+					</div>
+				</apex:outputPanel>
+
+    </div>
+    
+    
+  
+    
+    <div style = "display:inline-block; width:357px; height:43px; border-bottom: 1px solid #ccc; border: none\9;margin:-6px 0 0 -20px; text-align:center; background:#ffffff url({!URLFOR($Resource.NRT_Images,'images/white_gradient.png')}) repeat-x; float: left;border-bottom: none\9; ">
+	   <div style="vertical-align:middle;line-height:40px">
+				 
+				<!--a style="position:relative;top:2px;vertical-align:middle;margin:5px;text-decoration:underline;font-size:1.3em" class="selected" href="#" 
+				    onclick="javascript:showNrtPage();"
+					id="j_id0:j_id1:j_id2:j_id304:0:j_id305:comp:j_id313:j_id314:j_id324"
+					name="j_id0:j_id1:j_id2:j_id304:0:j_id305:comp:j_id313:j_id314:j_id324">View Recent Order Totals</a-->
+			 
+			 	<c:NRT_Overlay_Summary rendered="{!currMarket.NRT_Enabled__c}"/>
+			 
+				
+        </div>
+  
+       </div>
+ 
+
+ </div>
+ 
+ 
+
+			<!--  This section is blocked as per CR : 2359 START -->
+			<!--      
+<apex:outputPanel rendered="{!AND(teamSales_hasData,IF(teamSales_CMmoreToReach<>'',True,False))}">
+    <div class="cmprate_cnt" style="width:100%">
+      <p class="cmppnk_star cmpleft cmpgrey3 cmpsml_p_cnt"><apex:outputText value="{!teamSales_CMmoreToReach}" escape="false" /></p>  
+    </div>
+</apex:outputPanel>
+-->
+			<!--  This section is blocked as per CR : 2359 START <apex:form ><c:NRT_Overlay_Summary /></apex:form>-->
+</div>
+			
+
+	<!--  p_CampaignId="201414"  p_MarketId="55"-->
+
+
+</apex:page>

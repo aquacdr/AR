@@ -1,0 +1,25 @@
+<apex:page showHeader="false" sideBar="false" standardStylesheets="true" controller="Controller_ZMHomepageQuicklinks">
+<style>
+  body{background:none;}
+  ul{margin-left:-40px; font-size:8pt;}
+</style>
+<script  type="text/javascript">
+    
+    if('{!hasSeenLegalMessage}'=='false')  
+        var x = parent.location.replace('{!$Page.ZM_LegalNotice}'); 
+</script>
+    <!--{!$Label.My_Links}--> 
+    <ul>
+      <apex:repeat value="{!ReportLinks}" var="r">
+         <li><a target="_parent" href="{!r.Report_URL__c}" title="{!r.QuickLinkHoverText__c}">{!r.Report_Label__c}</a>            
+            </li>
+         
+      </apex:repeat>
+    </ul>
+    <!--{!$Label.Avon_Links}
+    <ul>
+        <li><a href="{!market.Security_and_Privacy_URL__c}" target="_blank">{!$Label.Security_and_Privacy}</a></li>
+        <li><a href="{!market.Conditions_Of_Use_URL__c}" target="_blank">{!$Label.Conditions_of_Use}</a></li>
+    </ul>-->
+
+</apex:page>

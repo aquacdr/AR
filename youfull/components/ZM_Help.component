@@ -1,0 +1,13 @@
+<apex:component >
+<div class="bPageTitle">
+	<div class="ptBody">
+		<div class="links">
+			<a title="Help for this Page (New Window)" href="javascript:openPopupFocusEscapePounds(%27http://www.google.com%27, %27Help%27, 1024, 768, %27width=1024,height=768,resizable=yes,toolbar=yes,status=yes,scrollbars=yes,menubar=yes,directories=no,location=yes,dependant=no%27, false, false);">
+				<span class="helpLink">Help for this Page</span>
+				<img class="helpIcon" alt="" src="/s.gif"/>
+			</a>
+		</div>
+	</div>	
+	
+</div>
+</apex:component>

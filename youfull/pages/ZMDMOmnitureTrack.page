@@ -1,0 +1,22 @@
+<apex:page showHeader="false" sideBar="flase" standardStylesheets="true" controller="ZM_HomepageQuicklinksCtl">
+<style>
+  body{background:none;}
+  ul{margin-left:-40px; font-size:8pt;}
+</style>
+<script  type="text/javascript">
+    var s_Profile ='{!currentUser.Profile.Name}';
+    if(s_Profile.indexOf("Zone Manager")>=0 && (ALM_PAGE_NAME=='' || ALM_PAGE_NAME==undefined || ALM_PAGE_NAME==null)){
+        ALM_PAGE_NAME="Home_ZM";
+        }else if(s_Profile.indexOf("Division Manager")>=0 && (ALM_PAGE_NAME=='' || ALM_PAGE_NAME==undefined || ALM_PAGE_NAME==null)){
+            ALM_PAGE_NAME="Home_DM";
+        }
+   /* if('{!hasSeenLegalMessage}'=='false')  
+        var x = parent.location.replace('{!$Page.ZM_LegalNotice}'); */
+
+</script>
+<!-- 'Mgr_Omniture_Suite_Name__c' is used in following lines. Modified by Raktim on 8th Oct 2013 -->
+ <c:OmnitureWebTrack mktName="{!market.Mgr_Omniture_Suite_Name__c}"  
+                        mktAcctKey="{!currentUser.MRKT_ID_ACCT_NR_KEY__c}"
+                        userType="{!currentUser.Profile.Name}"
+                        rendered="true"/>
+</apex:page>

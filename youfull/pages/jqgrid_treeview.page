@@ -1,0 +1,99 @@
+<apex:page controller="jqgrid_treeview_controller">
+   	<apex:stylesheet value="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/overcast/jquery-ui.css"/>  
+    <apex:stylesheet value="{!URLFOR($Resource.JQGridLatest, 'css/ui.jqgrid.css')}" />  
+    <apex:stylesheet value="{!URLFOR($Resource.JQGridLatest, 'plugins/ui.multiselect.css')}" />    
+     
+    <apex:includeScript value="{!URLFOR($Resource.JQGridLatest, 'js/jquery.min.js')}"/> 
+    <apex:includeScript value="{!URLFOR($Resource.JQGridLatest, 'js/jquery.jqGrid.min.js')}"/>
+         
+    <script type="text/javascript" src="{!URLFOR($Resource.JQGridLatest, 'js/jquery-ui-1.8.2.custom.min.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.JQGridLatest, 'src/grid.jqueryui.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.JQGridLatest, 'plugins/jquery.searchFilter.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.JQGridLatest, 'plugins/ui.multiselect.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.JQGridLatest, 'plugins/grid.setcolumns.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.JQGridLatest, 'src/i18n/grid.locale-en.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.JQGridLatest, 'js/jquery.jqGrid.min.js')}"></script>
+ 
+
+	<div id="containerDiv">
+	<table id="list47"></table>
+	<div id="plist47"></div>
+	</div>
+	
+	<style type="text/css">        
+        .ui-jqgrid .ui-widget-header {
+            border: 1px solid #FA3FD5;
+            background: #FA3FD5 url($Resource.Pink_Background) 50% 50% repeat-x;
+            color: #f6f6f6;            
+        }
+        .ui-jqgrid-sortable{
+            color:#EB0396;
+            fontWeight:bold;
+            text-overflow: ellipsis;-o-text-overflow: ellipsis;
+        }
+        .ui-jqgrid tr.jqgrow td { text-overflow: ellipsis;-o-text-overflow: ellipsis; }
+        .ui-jqgrid tr.jqgroup td {background-color:#fff;color:#000;}
+        .ui-jqgrid tr:nth-child(even).jqgrow td {background-color:#fff;color:#000;}
+        .ui-jqgrid tr:nth-child(odd).jqgrow td {background-color:pink;color:#000;}        
+    </style> 
+    
+	<script>
+	var jsonData = jQuery.parseJSON('{!JSONResults}');
+    console.log(jsonData);
+    var jsonInputStr = JSON.stringify(jsonData)
+    console.log('txtJSONResults -->  '+jsonInputStr);
+	var topicStr = "{\"response\" :" + jsonInputStr + "}";
+	console.log('txtJSONResults -->  '+topicStr);	
+   
+	//$('<table id="list2"></table>').appendTo('#topics');
+
+	grid = jQuery("#list47");
+	grid.jqGrid({
+	    datastr: topicStr,
+	    datatype: "jsonstring",
+	    height: "auto",
+	    loadui: "disable",
+	    colNames: ["Generation",
+	    		   "Full Name",
+	    		   "Sponser"
+	    		   ],
+	    colModel: [
+	    	{name: "ALM_Rep_Performance_1__c.Relative_Gen_Index__c", width:250, resizable: true},
+	        {name: "ALM_Rep_Performance_1__c.MRKT_ACCT_KEY__c.Name", width:250, resizable: true},
+	        {name: "ALM_Rep_Performance_1__c.UPLN_ACCT_KEY__c.Name", width:250, resizable: true}	        
+	    ],
+	    treeGrid: true,
+	    treeGridModel: "adjacency",
+	    emptyrecords: "Nothing to display",
+	    resizable: true,
+        shrinkToFit: false,
+	    caption: "jqGrid Demos",
+	    ExpandColumn: "ALM_Rep_Performance_1__c.Relative_Gen_Index__c",
+	    rowNum: 2,
+	    rowList:[2,5,10],	
+	    toppager: true,	        
+	    pager: '#plist47',        
+	    ExpandColClick: true,
+	    //treeIcons: {leaf:'ui-icon-document-b'},
+	    jsonReader: {
+	        repeatitems: false,
+	        root: "response"
+	    }
+	});
+	
+	grid.jqGrid('navGrid','#plist47',{add:false,edit:false,del:false,search:true,refresh:true}); 
+    grid.jqGrid('navButtonAdd','#plist47',{
+        caption: "Columns",
+        title: "Reorder Columns",
+        onClickButton : function (){
+            grid.jqGrid('columnChooser');
+        }
+    });
+            
+	$(window).bind('resize', function() {
+	   grid.setGridWidth(Math.floor(($(window).width())-50), false);
+	}).trigger('resize');
+	
+	grid.trigger("reloadGrid");
+	</script>
+</apex:page>

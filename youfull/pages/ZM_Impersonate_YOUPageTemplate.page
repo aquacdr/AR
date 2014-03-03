@@ -1,0 +1,172 @@
+<apex:page showHeader="false" sidebar="false" standardStyleSheets="false" cache="false"
+            controller="SiteHeaderController" action="{!init}" language="{!$CurrentPage.parameters.langcd}">
+    <head>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+        <title>{!$Label.You_Page_Title}</title>
+        <apex:includeScript value="{!URLFOR($Resource.ALMPlus_Asset,'js/jquery-1.5.1.min.js')}"/>
+        <apex:includeScript value="{!URLFOR($Resource.ALM_Assetsv2,'js/jquery.maskedinput.js')}"/>
+        <apex:includeScript value="{!URLFOR($Resource.ALM_Assetsv2,'js/superfish.js')}"/>
+        <apex:stylesheet value="{!URLFOR($Resource.ALMYouAssets,'css/YOU_style.css')}"/>
+        <apex:stylesheet value="{!URLFOR($Resource.ALMYouAssets,'css/tutorsty.css')}"/>
+        <apex:stylesheet value="{!URLFOR($Resource.ALMYouAssets,'css/flexcrollstyles-vert.css')}"/>
+        <apex:includeScript value="{!URLFOR($Resource.ALMYouAssets,'css/flexcroll-vert.js')}"/>
+        <apex:includeScript value="{!URLFOR($Resource.NRR, 'js/jquery.jscrollpane.min.js')}"/>
+        <apex:includeScript value="{!URLFOR($Resource.NRR, 'js/jquery.mousewheel.js')}"/>    
+        <apex:stylesheet value="{!URLFOR($Resource.NRR,'css/jquery.jscrollpane_vert.css')}" />
+        
+        <style>
+            .jspDrag {
+                left : 5px;
+            }
+           .jspTrack {
+                height : 362px;
+            }
+        </style>   
+        <script type="text/javascript"> 
+          $.noConflict();
+          // Code that uses other library's $ can follow here.
+        </script>
+        <script type="text/javascript">
+        //Variable Declaration
+          var ALM_PAGE_NAME='';
+          var dashBoardHei='';
+          var persMsgDiv=jQuery("#personal_message");
+        /*  jQuery(document).ready(function(){        //for tracking user click
+          jQuery(document).click(function(e){
+          if(jQuery("#email_sel_mask").attr('class')=='white_trans_closed')
+          POS_Y=e.pageY-250;
+          }); 
+          }) */
+   
+   /*       commented Code for Lead implementation
+            var showSts = function(){
+            jQuery(".sts_opns").toggle();
+          } */
+          
+          //Functions
+          var showHelp = function(){
+            var pgId='{!$CurrentPage.parameters.pgId}';
+            //if(pgId!=null & pgId.length>0){
+              //  var topPos = (jQuery(window).height()/2)-(jQuery('#alm_help_container').height()/2);
+               // var leftPos = (jQuery(window).width()/2)-(jQuery('#alm_help_container').width()/2);
+                if(jQuery("#alm_help_container").attr('class')=='white_trans_closed'){
+                    jQuery("#alm_help_container").attr('class','white_trans');
+                    jQuery("#alm_help_container").load("{!URLFOR($Page.ShowMarketDocument)}?type=Help&pgId="+'{!$CurrentPage.parameters.pgId}');
+                      jQuery("#mycustomscroll-help_vscrollerbase").css('visibility','visible');
+                      jQuery("#mycustomscroll-help_vscrollerbar").css('visibility','visible');  
+                 }else{
+                     jQuery("#alm_help_container").attr('class','white_trans_closed');
+                     jQuery("#mycustomscroll-help_vscrollerbase").css('visibility','hidden');
+                      jQuery("#mycustomscroll-help_vscrollerbar").css('visibility','hidden');
+                 }           
+          }
+        
+          jQuery(document).ready(
+            function(){
+                jQuery('#actionItems').load('/apex/MyActionItems?sidebar=1&langcd={!$CurrentPage.parameters.langcd}');
+                jQuery('#topactionItems').load('/apex/MyActionItems?sidebar=2&langcd={!$CurrentPage.parameters.langcd}');
+            //jQuery("#prf_sts").click(showSts);
+              jQuery("#page_help").click(showHelp);
+
+            jQuery(persMsgDiv).css('display','none');
+            jQuery(persMsgDiv).css('visibility','hidden');
+            
+           /*  setting overlay background */ 
+           var px=jQuery("#global_footer").css('height');
+           var qx=jQuery(".footer_lnks").css('height');
+           var winHei=jQuery(".footer_area").position().top;
+           var heiSum=parseInt(winHei)+parseInt(px)+parseInt(qx);
+           dashBoardHei=heiSum;
+           jQuery("#email_sel_mask").css('height',heiSum);
+           jQuery("#alm_help_container").css('height',heiSum);
+           jQuery("#personal_message").css('height',heiSum); 
+           //alert(jQuery("#personal_message").css('height'));
+           //alert('px-->'+px+'qx-->'+qx+'winHei-->'+winHei+'heiSum-->'+heiSum)
+           if(typeof fixStyling =='function'){
+                fixStyling();
+            };
+           }); /* end of document.ready */
+           
+           function showProcessingMsg(){
+              // jQuery("#processing_msg").css("top",function(){return (POS_Y+175)});
+              
+              
+              /*
+                if(jQuery("#email_sel_mask").attr('class')=='white_trans_closed'){
+                    jQuery("#email_sel_mask").attr('class','white_trans');
+                }else{ 
+                    jQuery("#email_sel_mask").attr('class','white_trans_closed');
+                }
+              */
+              if(jQuery("#ProcessingMsgDiv").attr('class')=='white_trans_closed'){
+                  jQuery("#ProcessingMsgDiv").attr('class','white_trans');
+                  jQuery("#ProcessingMsgDiv").css("height",function(){return (jQuery(document).height())});
+                  jQuery("#progressMsgDivInner").css("top",function(){return (jQuery(window).scrollTop()+jQuery(window).height()/2)});
+              }else{ 
+                  jQuery("#ProcessingMsgDiv").attr('class','white_trans_closed');
+              }
+              
+          }
+           function displayit(){
+               /* var px=document.getElementById('global_footer').offsetWidth+parseInt(jQuery(".footer_area").css("margin-top"));               
+                var qx=window.innerHeight;               
+                if(POS_Y>36)
+                    {
+                    if((px - POS_Y)>414)
+                        jQuery(".popup_ccntr").css("top",POS_Y);
+                    else
+                        jQuery(".popup_ccntr").css("top",function(){return px-qx/2});
+                }*/
+                if(jQuery("#email_sel_mask2").attr('class')=='white_trans_closed'){
+                jQuery("#email_sel_mask2").attr('class','white_trans');
+                }else{
+                jQuery("#email_sel_mask2").attr('class','white_trans_closed');
+                }
+            } 
+           function hideCoachingPage(){
+            if(jQuery("#email_sel_mask2").attr('class')=='white_trans'){
+                    jQuery("#email_sel_mask2").attr('class','white_trans_closed');
+                }else{
+                    jQuery("#email_sel_mask2").attr('class','white_trans');
+                }
+           }
+          </script>
+     </head>
+     <body style="margin:0px;font-size:62.5%;">
+
+		<!--Column area starts-->
+		<div>
+			<apex:insert name="content"/>
+		</div>
+		<!--Column area ends-->
+
+		<!-- @TODO: insert Leads related changes here -->
+		<!--Footer area starts-->
+		<div class="footer_area" id="global_footer">
+			<c:Footer privacyURL="{!market.Security_and_Privacy_URL__c}" conditionsURL="{!market.Conditions_Of_Use_URL__c}"/>
+		</div>
+		<!--Footer area ends--> 
+         
+        <!-- ALM Help Container starts-->
+        <div id="alm_help_container" class="white_trans_closed">
+        </div>
+        <!-- Help container ends -->
+        
+        <div id="personal_message"></div>
+		<apex:insert name="contentHidden"/>
+       
+        <!-- BELOW DIV IS USED TO SHOW PROGRESS MESSAGE ONLY -->
+        <div id="ProcessingMsgDiv" class="white_trans_closed">
+            <div id="progressMsgDivInner" style="left:40%;position:absolute;top:15%;">
+                <c:ProcessingMsg />
+            </div>
+        </div>
+        <!-- PROGRESS MESSAGE ENDS -->
+        
+        <div id="email_sel_mask" class="white_trans_closed">
+            <div id="coach_main">
+            </div>
+        </div>
+        
+	</body>
+</apex:page>

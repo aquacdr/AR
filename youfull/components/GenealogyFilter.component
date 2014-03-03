@@ -1,0 +1,292 @@
+<apex:component controller="GenealogyFilterController" allowDML="true">
+    
+    <apex:attribute name="CampaignFilterOnly" description="Description here." type="Boolean" required="false" assignTo="{!InternalCampaignFilterOnly}"></apex:attribute>
+    <apex:attribute name="AccountNum" description="Description here." type="String" required="true" assignTo="{!AccountNum}"></apex:attribute>
+    <apex:attribute name="ReportConfigId" description="Description here." type="Id" required="true" assignTo="{!ReportConfigId}"></apex:attribute>
+    <apex:attribute name="SFDC_MarketId" description="Description here." type="Id" required="true" assignTo="{!SFDC_MarketId}"></apex:attribute>
+    <apex:attribute name="LangCD" description="Description here." type="String" required="true" assignTo="{!LangCD}"></apex:attribute>
+    <apex:attribute name="NumberOfHistoricalCampaigns" description="Description here." type="Integer" required="false" assignTo="{!NumberOfHistoricalCampaigns}"></apex:attribute>
+    <apex:attribute name="FutureCampaign" description="Description here." type="Integer" required="false" assignTo="{!FutureCampaign}"></apex:attribute>
+    <apex:attribute name="CurrentCampaign" description="Description here." type="Integer" required="false" assignTo="{!CurrentCampaign}"></apex:attribute>
+    <apex:attribute name="SelectedCampaignId" description="Description here." type="String" required="false" assignTo="{!InternalSelectedCampaignId}"></apex:attribute>
+    <apex:attribute name="Who" description="Description here." type="String" required="false" assignTo="{!InternalWho}"></apex:attribute>
+    <apex:attribute name="What" description="Description here." type="String" required="false" assignTo="{!InternalWhat}"></apex:attribute>
+    <apex:attribute name="OmniSuitName" description="Description here." type="String" required="false" assignTo="{!Omniture_Suite_Name}"></apex:attribute>
+    <apex:attribute name="IsMailPlanMarket" description="Description here." type="boolean" required="false" assignTo="{!isMailPlan}"></apex:attribute>
+    
+    <!-- Added by Raktim on 9th Apr, 2013 -->
+    <apex:attribute name="ReportTypeName" description="Description here." type="String" required="false" assignTo="{!ReportType}"></apex:attribute>
+    <apex:attribute name="OnSubmit" description="Description here." type="String" required="false" assignTo="{!OnSubmit}"></apex:attribute>
+    <!-- End of Addition --> 
+
+    {!LoadController}
+    
+<script language="JavaScript">
+    var lock=false;
+    var isIE=(navigator.appVersion.indexOf('MSIE')>-1)?true:false;
+    var m_CampaignFilterOnly = {!CampaignFilterOnly};
+    
+    function getJSONFilterResults() {
+     
+        var txtJSONResults = getElement('{!$Component.txtJSONResults}');
+        var jsonData = jQuery.parseJSON($(txtJSONResults).val());
+    
+       $(txtJSONResults).val('');
+    
+        return jsonData;
+    }
+    
+    function filterRefreshCallback(result) {
+        //console.log('isIE --> '+isIE);
+        //console.log('lock --> '+lock);
+        if(lock==false){
+            lock=true;
+        try {            
+           // console.log('inside filterrefreshcallback');
+            var lstWho = getElement('{!$Component.lstWho}');
+            var lstWhat = getElement('{!$Component.lstWhat}');
+            
+           // console.log('lstWho --> '+$(lstWho).val());
+        //console.log('lstWhat --> '+$(lstWhat).val());
+            
+            if(result == null) {
+                $(lstWho).find('option').remove();
+            }
+            if(result.WhoList == null || result.WhoList.length == 0) {
+            
+                $(lstWho).find('option').remove();
+            }
+            else {
+                populateFilterList(lstWho, result.WhoList);
+            }
+            
+            if(result.WhatList == null || result.WhatList.length == 0) {
+            
+                $(lstWhat).find('option').remove();
+            }
+            else {
+                populateFilterList(lstWhat, result.WhatList);
+            }
+            
+            //selectDefaults();
+            
+            forceFancyDropdownRefresh('fdd_' + lstWho.id, 20);
+            forceFancyDropdownRefresh('fdd_' + lstWhat.id, 20);
+        }
+        catch(err) {
+            alert(err.message);
+        }
+        
+        processFilterImageVisible(false);
+        lock=false;//this should be executed for all browser:Changed by swarnava for bug 2729
+        }
+        else if(isIE==true && lock==true)
+        lock=false;
+    }
+    
+    function selectDefaults() {
+        console.log('in selectDefaults');
+        var lstWho = getElement('{!$Component.lstWho}');
+        var lstWhat = getElement('{!$Component.lstWhat}');
+        var gen1Value = 'all';
+        var allValue = 'all';   
+        
+        console.log('lstWho --> '+$(lstWho).val());
+        console.log('lstWhat --> '+$(lstWhat).val());
+
+        if($(lstWho).find('option').length > 0) {
+            $(lstWho).val(gen1Value);
+        }
+        
+        if($(lstWhat).find('option').length > 0) {
+            $(lstWhat).val(allValue);
+        }
+    }
+    
+    function getFilterDropdownText(filterType) {
+    
+         var lstFilter = null;
+         
+        if(filterType == 'Campaign') {
+            lstFilter = getElement('{!$Component.lstCampaign}');
+        }
+        else if(filterType == 'Who') {
+            lstFilter = getElement('{!$Component.lstWho}');
+        }
+        else if(filterType == 'What') {
+            lstFilter = getElement('{!$Component.lstWhat}');
+        }
+        else {
+            throw new Error('An incorrect Filter Type was specified.');
+        }
+        
+        return $(lstFilter).find('option:selected').text();
+    }
+    
+    function populateFilterList(lstFilter, selectOptionList) {
+    
+        $(lstFilter).find('option').remove();
+        
+        for(var n = 0; n <= selectOptionList.length - 1; n++) {
+    
+            lstFilter.add(new Option(selectOptionList[n].Label, selectOptionList[n].Value));
+        }
+    }
+
+    function OnFilterSubmit(filterObject) {
+    
+        {!OnSubmit}
+    }
+    
+    var lnkFilterClick = function() {
+        
+        var filterObject = new Object();
+        var lstCampaign = getElement('{!$Component.lstCampaign}');
+        var lstWho = getElement('{!$Component.lstWho}');
+        var lstWhat = getElement('{!$Component.lstWhat}');
+        var message = '';
+        var isValid = true;
+        
+        /*
+        if($(lstCampaign).find('option').length == 0 || trim($(lstCampaign).val()).length == 0) {
+            message = 'Please select a valid Campaign.';
+            isValid = false;
+        }
+        else if(!m_CampaignFilterOnly && ($(lstWho).find('option').length == 0 || trim($(lstWho).val()).length == 0)) {
+            message = 'Please select a valid value for Who Filter.';
+            isValid = false;
+        }
+        else if(!m_CampaignFilterOnly && ($(lstWhat).find('option').length == 0 || trim($(lstWhat).val()).length == 0)) {
+            message = 'Please select a valid value for What Filter.';
+            isValid = false;
+        }
+        */
+        
+        var whoValue = $(lstWho).val();
+        var whatValue = $(lstWhat).val();
+        
+        /*
+        if(!m_CampaignFilterOnly && whatValue == 'all' && (whoValue == 'All_Badge_Titles' || whoValue == 'All_Paid_Titles')) {
+            message = '{!$Label.Filter_Combo_Not_Allowed}';
+            isValid = false;
+        }
+        */
+        
+        if(!isValid) {
+            alert(message);
+            return;
+        }
+                
+        filterObject.CampaignId = $(lstCampaign).val();
+        
+        if(m_CampaignFilterOnly) {
+            filterObject.Who = '';
+            filterObject.What = '';
+        }
+        else {
+            filterObject.Who = $(lstWho).val();
+            filterObject.What = $(lstWhat).val();
+        }
+        
+        OnFilterSubmit(filterObject);
+    }
+    
+    function doFilterSearch() {     
+        
+        lnkFilterClick();
+    }
+    
+    //Method added by Raktim on 9th Apr, 2013
+    function callOmniture_Filtr(){
+        
+        var s=s_gi('{!Omniture_Suite_Name}');
+        var repName = '{!ReportType}';
+        s.prop8 = 'filter:'+repName;
+        s.pageName = 'Filter Report';
+        s.tl(this,'o', 'Filter Report');
+        
+        return false;
+        
+    }//End of Method
+    
+</script>
+
+<style>
+    div.row span.filterLabel {
+        float: left;
+        width: 50px;
+        text-align: left;
+    }
+    div.row span.filterList {
+        float: left;
+        text-align: left;
+        padding-right: 7px; /*change by amartya old 14px*/
+    }
+    .frm_cntr_campaign { 
+        position: relative; 
+        //width: 105px;
+        padding-bottom: 0px; /*change by amartya old 5px*/
+    }
+    .frm_cntr_large { 
+        position: relative; 
+        //width: 181px; 
+        padding-bottom: 0px; /*change by amartya old 5px*/
+    }
+</style>
+
+<apex:actionRegion >
+
+    <apex:outputPanel id="jsonResultsPanel">    
+        <apex:inputHidden id="txtJSONResults" value="{!JSONResults}" />
+    </apex:outputPanel>
+    
+        <apex:actionFunction name="RefreshFilters" action="{!RefreshFilters}" rerender="jsonResultsPanel" oncomplete="filterRefreshCallback(getJSONFilterResults());">
+            <apex:param name="SelectedCampaignId" assignTo="{!InternalSelectedCampaignId}" value="" />
+            <apex:param name="SelectedCampaignText" assignTo="{!selectedCmpgnNumber}" value="" />
+        </apex:actionFunction>
+
+</apex:actionRegion>
+<!-- Line below commented by Prakash to incorporate changes suggested by Morgan on 10/03 -->
+  <!--  <div style=" padding-top: 15px; "> -->
+      <div style="display:inline-block;width:630px;float:left;">
+            <div class="row">
+                <span class="filterLabel" style="font-size: 12px; padding-left: 35px; padding-top: 6px">
+                    {!$Label.Filter}:
+                </span>
+                <span class="frm_cntr_campaign filterList">
+                    <apex:selectList id="lstCampaign" size="1" styleClass="myselect" value="{!InternalSelectedCampaignId}" onchange="if(m_CampaignFilterOnly) { return false; } processFilterImageVisible(true); RefreshFilters($(this).val(),$(this).find(':selected').text()); refreshNrtTimestamp();">
+                        <apex:selectOptions value="{!CampaignList}"/>
+                    </apex:selectList>
+                    &nbsp;
+                </span>
+                <span class="frm_cntr_large filterList" style="{!IF(CampaignFilterOnly, 'display: none;', 'display: block;')}">
+                    <apex:selectList id="lstWho" size="1" styleClass="myselect" value="{!InternalWho}">
+                        <apex:selectOptions value="{!WhoList}"/>
+                    </apex:selectList>
+                    &nbsp;
+                </span>
+                <span class="frm_cntr_large filterList" style="{!IF(CampaignFilterOnly, 'display: none;', 'display: block;')}">
+                    <apex:selectList id="lstWhat" size="1" styleClass="myselect" value="{!InternalWhat}">
+                        <apex:selectOptions value="{!WhatList}"/>
+                    </apex:selectList>
+                </span>
+                <span style="padding-left: 14px;"/>
+                <!-- Style added to span below based on recommendations from Morgan on 10/03 -->
+                <!-- <span>  -->
+                 <span style="display:inline-block;height:24px;margin-top:2px">  
+                    <!--  callOmniture_Filtr method is invoked. Changed by Raktim on 9th Apr, 2013 -->
+                    <a id="lnkFilter" href="javascript:void(0)" onclick="callOmniture_Filtr(); lnkFilterClick(); refreshNrtTimestamp(); return false;" class="round_go"></a>
+                </span>
+            </div>
+        </div>
+
+      <script language="JavaScript">
+
+           $(document).ready(function() {
+        
+               createFancyDropdown('{!$Component.lstCampaign}', 105, 'select_campaign', 7);
+               createFancyDropdown('{!$Component.lstWho}', 181, 'select_large', 20);
+               createFancyDropdown('{!$Component.lstWhat}', 181, 'select_large', 20);
+           });
+      </script>
+</apex:component>

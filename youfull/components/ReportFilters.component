@@ -1,0 +1,28 @@
+<apex:component Controller="ReportFiltersController" id="reportFilterComponent">
+<apex:attribute name="reportFilters" assignTo="{!filters}" description="List of report filters" type="ReportFilter[]" required="false" />  
+<apex:attribute name="currentMarket" assignTo="{!market}" description="Current User's Market" type="Market__c" required="false" />
+<apex:attribute name="reportList" assignTo="{!reportOptions}" description="List of reports" type="System.SelectOption[]" required="false" /> 
+<apex:attribute name="selectedReport"  assignTo="{!selectedReportOption}" description="Report which is selected" type="String" required="false" />   
+	<apex:pageBlockSection columns="2"  collapsible="true" title="Select Filters"  id="filterBlockSection">	    
+    	<apex:pageBlockSectionItem Id="reportList">
+       		<apex:outputLabel value="Select Data"/>     		
+       		<apex:selectList id="selectReport" size="1" value="{!selectedReport}" onchange="populateFilters(this.value);"> 
+            <apex:selectOptions value="{!reportList}"/>
+        	</apex:selectList> 
+    	</apex:pageBlockSectionItem>
+        <apex:repeat value="{!filters}"  var="filterWrapper">           
+             <apex:pageBlockSectionItem Id="filterWrapperItem" rendered="{!filterWrapper.showFilter}">
+                <apex:outputLabel value="{!filterWrapper.label}" rendered="{!filterWrapper.label != 'Campaign Number'}"/>
+                <apex:outputPanel >
+                    <apex:inputText value="{!filterWrapper.value}" rendered="{!filterWrapper.label != 'Campaign Number' && filterWrapper.label != 'Level Title Number' && filterWrapper.label != 'Generation'}"/> 
+                    <apex:selectList multiselect="true" id="titleId" size="1" value="{!filterWrapper.value}" rendered="{!filterWrapper.label == 'Level Title Number'}"> 
+                        <apex:selectOptions value="{!TitleList}"/>
+                    </apex:selectList>      
+                    <apex:selectList multiselect="true" id="Generation" size="1" value="{!filterWrapper.value}" rendered="{!filterWrapper.label == 'Generation'}"> 
+                        <apex:selectOptions value="{!generationList}"/>
+                    </apex:selectList>                                      
+                </apex:outputPanel>
+                </apex:pageBlockSectionItem>
+        </apex:repeat>
+	</apex:pageBlockSection>
+</apex:component>

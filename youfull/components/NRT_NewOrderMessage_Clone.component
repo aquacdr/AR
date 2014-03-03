@@ -1,0 +1,22 @@
+<apex:component >
+<apex:attribute type="String" name="p_context" required="false" description="The Context of the message" />
+<script Language="JavaScript">
+  function goMTO()
+  {
+     var impersonation = '{!$CurrentPage.parameters.acctKey}';
+     var url = '/apex/MyTeamOrdersReport?pgId=3';
+     if(impersonation != '')
+     {
+        url += '&acctKey='+impersonation;
+     }
+     
+     window.location = url;
+     
+     
+  }
+
+</script>
+
+<apex:outputPanel layout="block" styleclass="blue_NRT_box" style="font-size:10px;">
+    <apex:outputText escape="false" value="{!$Label.NRT_New_Order_Message}"/></apex:outputPanel>
+</apex:component>

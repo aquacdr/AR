@@ -1,0 +1,15 @@
+<apex:page action="{!storeUserInfo}" showHeader="false" sidebar="false" controller="DisplayWidgetsController" standardStyleSheets="false" cache="false" >
+   <script type="text/javascript">
+        var ALM_PAGE_NAME="GI3 Widget";
+    </script>
+    <c:OmnitureWebTrack mktName="{!market.Omniture_Suite_Name__c}" 
+                        mktAcctKey="{!currUsr.MRKT_ID_ACCT_NR_KEY__c}" 
+                        rendered="{!globalConfig.Omniture_Tracking_Enabled__c}"/>
+    <apex:form >
+        <script type="text/javascript">
+            var redirectUrl = '{!URLFOR($Page.ActivateUser)}?mktcd={!$CurrentPage.parameters.mktCd}&acctnbr={!$CurrentPage.parameters.acctnbr}&key={!$CurrentPage.parameters.key}';
+            //window.location='{!$Site.CurrentSiteUrl}'+redirectUrl.substring(1);
+            window.location=redirectUrl;
+        </script>
+    </apex:form>
+</apex:page>

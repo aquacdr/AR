@@ -1,0 +1,34 @@
+<apex:component id="emailComp">
+	<script>
+		function validateData(){
+			var subjectId = "{!$Component.emailComp.pbBlock.pbSection.subItem.subject}";
+			var bodyId = "{!$Component.emailComp.pbBlock.pbSection.bodyItem.body}";
+			var subjectValue = document.getElementById(subjectId).value;
+			var bodyValue = document.getElementById(bodyId).value;
+			if(subjectValue == '' && bodyValue == '')
+				alert('Please provide subject and body for email.');
+			else if(subjectValue == '')
+				alert('Please provide subject for email.');
+			else if(bodyValue == '')
+				alert('Please provide body for email.');
+			else
+				sendEmail(subjectValue, bodyValue);
+		}
+	</script>
+	<apex:pageBlock id="pbBlock">
+	 <apex:pageBlockSection title="Send Your Message" columns="1" id="pbSection">
+	     <apex:pageBlockSectionItem id="subItem">
+	         <apex:outputLabel value="Subject" for="subject" />
+	         <apex:inputText id="subject" size="50"/>
+	     </apex:pageBlockSectionItem> 
+	     <apex:pageBlockSectionItem id="bodyItem" >
+	         <apex:outputLabel value="Email Body" for="body" />
+	         <apex:inputTextarea id="body" cols="60" rows="10"/>
+	     </apex:pageBlockSectionItem>                             
+	 </apex:pageBlockSection>
+	 <apex:pageBlockButtons location="Bottom">
+	 	   <apex:commandButton value="Email" onClick="validateData();return false;" /> 
+	     <apex:commandButton value="Cancel" onClick="hideEmailPopUp();return false;" /> 
+	 </apex:pageBlockButtons>
+	</apex:pageBlock>
+</apex:component>

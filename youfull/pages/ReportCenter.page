@@ -1,0 +1,435 @@
+<apex:page controller="ReportCenterController" showHeader="false" sidebar="false" standardStyleSheets="false">
+   
+   <header>
+   <meta http-equiv="X-UA-Compatible" content="IE=IE8" />
+   </header>
+    <title>{!$Label.You_Page_Title}</title>
+    <apex:form id="NRR">
+    <apex:composition template="YOUPageTemplateNoActions">
+    <apex:define name="content">
+    <apex:stylesheet value="{!URLFOR($Resource.NRR,'css/jquery.jscrollpane_vert.css')}" />
+    <apex:stylesheet value="{!URLFOR($Resource.ReportCenter,'style.css')}"/>
+    <apex:includeScript value="{!$Resource.NumberFormatter}" />
+    <!-- <script src="https://code.jquery.com/jquery-1.9.1.js"></script>
+	<script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script> -->
+    <!--<script type='text/javascript' src='https://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js'></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/jquery-ui.min.js"></script>-->
+    <style>
+    .myselect {
+        font-size: 11px;
+        height: 26px !important;
+        line-height: 26px;
+    }
+    .styled select {
+       background: transparent;
+       width: 122px;   
+       font-size: 14px;
+       padding-left:4px;
+       /*padding-top:2px;*/
+       padding-bottom:2px;       
+       border: 0px solid #ccc;
+       height: 34px;
+        -webkit-appearance: none;
+    } 
+    
+    @-moz-document url-prefix() { 
+    	.styled select { padding-top:2px; }  
+    }
+
+    div.row span.filterList {
+	    float: left;
+	    text-align: left;
+	    padding-right: 10px;
+    }
+	.frm_cntr_large {
+		//padding-bottom: 5px;
+		position: relative;
+		width: 181px;
+	}
+    .styled{
+       width: 105px;
+       height: 34px;
+       overflow: hidden;
+       background: url("{!URLFOR($Resource.MTRImages,'dropdown_campaign.gif')}") no-repeat top left;       
+    }
+    
+    .styled_ord{
+       width: 125px;
+       height: 34px;
+       overflow: hidden;
+       background: url("{!URLFOR($Resource.MTRImages,'dropdown_large.gif')}") no-repeat top left;
+    }
+    
+    .txtLabel{
+        font-size: 14px;
+        font-weight: 500;
+    }
+    .myselect_ord {
+        font-size: 11px;
+        height: 26px !important;
+        line-height: 26px;
+        background: url("{!URLFOR($Resource.MTRImages,'dropdown_large.gif')}") no-repeat top left;
+        position:absolute;
+    
+    }
+    .myselect_ord_im {
+        font-size: 11px;
+        height: 26px !important;
+        line-height: 26px;
+        background: url("{!URLFOR($Resource.MTRImages,'dropdown_large.gif')}") no-repeat top left;
+        position:absolute;
+    }
+    
+    .myselect_camp {
+        font-size: 11px;
+        height: 26px !important;
+        line-height: 26px;
+        background: url("{!URLFOR($Resource.MTRImages,'dropdown_campaign.gif')}") no-repeat top left;
+        position:relative;
+        width:105px;
+    
+    }
+    .select_large {
+        position: absolute;
+        bottom:0;
+        float:left;
+        left:0;
+        top:0;
+        height:26px;
+        line-height:26px;
+        text-indent:10px;
+        background:url("{!URLFOR($Resource.MTRImages,'dropdown_large.gif')}") no-repeat top left;
+        cursor:default;
+        z-index:1;
+        font-size:11px;
+    }
+      .select_small {
+        position: absolute;
+        bottom:0;
+        float:left;
+        left:0;
+        top:0;
+        height:26px;
+        line-height:26px;
+        text-indent:10px;
+        background:url("{!URLFOR($Resource.MTRImages,'dropdown_campaign.gif')}") no-repeat top left;
+        cursor:default;
+        z-index:1;
+        font-size:11px;
+    }
+    .blacktext {
+        color:#000000;
+    }
+    #reportheader {
+        width: 946px;
+        height: 79px;
+        background: url("{!URLFOR($Resource.MTRImages,'header_background.png')}");
+    }
+    .frm_cntr_im {
+	    padding-bottom: 5px;
+	    position: relative;
+	    width: 242px;
+	    right:220px;
+	}   
+	.rpc_dotted{
+	    height:40px;
+	}
+	 
+    </style>
+    
+    <script type="text/javascript">
+        ALM_PAGE_NAME="{!OmniturePageName}";
+        var isIE=(navigator.appVersion.indexOf('MSIE')>-1)?true:false;
+        var lock=false;
+        jQuery(document).ready(function(){
+	        var isImpersonatedAccount ='{!$CurrentPage.Parameters.acctkey}';
+	        if(isImpersonatedAccount!=null && isImpersonatedAccount!='')
+	        jQuery('#lstReportType').hide();
+	        if(parseInt("{!lst_AddReports.size}")<1)
+	        jQuery(".rpc_wrapper").html('<p style="font-family:arial;color:red;font-size:20px;margin-left:290px">No Report Available Currently</p>');
+        });
+        
+        jQuery(document).ready(function() { 
+        jQuery = jQuery.noConflict();
+        if (!jQuery.browser.opera){
+        
+                    var i=0;
+                    
+                    var isImpersonated = {!s_IsImpersonated};
+                    var listReports = '{!lst_ReportLinks}';
+                    if(isImpersonated){
+                        var impersonationHeader =   '<div id="reportheader">'+
+                                                        '<div class="breadcrumb_imper">'+
+                                                            '<h2 class="brd_hdr">{!s_Impersonated_UserName}</h2>'+
+                                                                '<div style="float:right">'+ 
+                                                                    '<span class="frm_cntr_im">'+
+                                                                    '<select id="lstReportType_impersonation" name="lstReportType_impersonation" class="myselect_ord_im" title="{!$Label.Report_Center}" size="1" style="width:181px;" onchange="ReportRedirect(this.value);return false;">'+
+                                                                        '<option value="0">{!$Label.Other_Reports}</option>'+
+                                                                        '<option value="/apex/YouHome?pgId=1">{!$Label.ALM_Home}</option>'+
+                                                                        '<option value="CR">{!$Label.Coaching_Record}</option>'+
+                                                                        '<apex:repeat value="{!lst_ReportLinks}" var="l">'+
+                                                                            '<option value="{!IF(AND(LEN(l.Report_URL__c)>0,NOT(ISBLANK(l.Report_URL__c)),NOT(ISNULL(l.Report_URL__c))),l.Report_URL__c,"/apex/YouHome?pgId=1")}" id="{!l.Report_Type__c}">{!$Label[l.Report_Type__c]}</option>'+    
+                                                                        '</apex:repeat>'+
+                                                                    '</select>'+
+                                                                    '</span>'+
+                                                                '</div>'+
+                                                        '</div>'+
+                                                        '</div>';
+                                                                                        
+                    var theValue='New_Rep';
+                    jQuery('#cnt_cntr').prepend((impersonationHeader));
+                    jQuery("#Report_Center").attr('selected',true);
+                    
+                    }
+        
+                    // select element styling
+                    jQuery(".myselect_ord,.myselect_ord_im").each(function(){
+                        var title = jQuery(this).attr('title');
+                        var ids=jQuery(this).attr('id');
+                        var divids='';
+                        if(ids!=null && ids!=''){
+                            divids=ids+'_im';
+                        }
+                        else{
+                            divids=i+'_im';
+                            i=i+1;
+                        }
+                        if(jQuery('option:selected', this).val() != '') 
+                            title = jQuery('option:selected',this).text();
+                            //logically adding class
+                           // if(jQuery(this).attr('id')=='lstReportType'){
+                                jQuery(this).css({'z-index':10,'opacity':0,'-khtml-appearance':'none'})
+                                    .after('<div class="select_large blacktext" style="width:181px" id='+divids+' >' +title + '</div>')
+                                    .change(function(){
+                                        val = jQuery('option:selected',this).text();
+                                        jQuery(this).next().text(val);
+                                        })
+
+                    });
+                    
+                    if({!s_IsImpersonated}){
+                            jQuery('#lstReportType_im').hide();
+                        }
+                    
+                };
+        
+        //end
+        
+  
+
+    });
+        
+        function ReportRedirect(page){
+        var isImpersonatedAccount ='{!$CurrentPage.Parameters.acctkey}';
+        if(page=='0');
+        else if(isImpersonatedAccount!=null && isImpersonatedAccount!='' && page!='CR'){
+            window.parent.location.href=page+'&acctkey='+isImpersonatedAccount;
+        }
+        else if(isImpersonatedAccount!=null && isImpersonatedAccount!='' && page=='CR'){
+            viewRepDetail('{!$CurrentPage.Parameters.acctkey}');
+        }
+        else{
+            window.parent.location.href=page;
+        }
+    } 
+    jQuery(document).ready(function(){
+    jQuery(".myselect_camp").each(function(){
+                        var title = jQuery(this).attr('title');
+                        var ids=jQuery(this).attr('id');
+                        var divids='';
+                        if(ids!=null && ids!=''){
+                            divids=ids+'_im';
+                        }
+                        else{
+                            divids=i+'_im';
+                            i=i+1;
+                        }
+                        if(jQuery('option:selected', this).val() != '') 
+                            title = jQuery('option:selected',this).text();
+                            //logically adding class
+                           
+                                jQuery(this).css({'z-index':10,'opacity':0,'-khtml-appearance':'none'})
+                                    .after('<div class="select_small blacktext" style="width:105px" id='+divids+' >' +title + '</div>')
+                                    .change(function(){
+                                        val = jQuery('option:selected',this).text();
+                                        jQuery(this).next().text(val);
+                                        })
+
+                    });
+                    
+    });
+    
+    
+    //Method added by Raktim on 9th Apr, 2013
+    function callOmniture_RepCenter(reportName){
+        
+        var s=s_gi('{!market.Omniture_Suite_Name__c}');
+        s.prop8 = 'Report Type:'+reportName;
+        s.pageName=reportName;
+        s.prop15='{!market.Omniture_Suite_Name__c}';
+        s.tl(this,'o', 'Report Type:'+reportName);
+        
+        return false;
+        
+    }//End of Method
+       
+    </script>
+    <body>
+    <div>
+         <h1 class="big_pnk_hdr" ><span id="spanHeader" style="display:inline-block;height:20px;margin:5px 10px 0 0;">{!$Label.Report_Center} &nbsp;</span>
+     <span class="frm_cntr">
+        <select id="lstReportType" name="lstReportType" class="myselect_ord"  style="width:181px;" title="{!$Label.Report_Center}" size="1" onchange="ReportRedirect(this.value);return false;">
+                 // Added by Raktim - defect id : 2400
+                <option value="">{!$Label.Other_Reports}</option>
+                // End of Addition
+                <apex:outputPanel rendered="{!IF(s_IsImpersonated,true,false)}">
+                        <option value='/apex/YouHome?pgId=1'>{!$Label.ALM_Home}</option>
+                        <option value="CR">{!$Label.Coaching_Record}</option>
+                </apex:outputPanel>
+                <apex:repeat value="{!lst_ReportLinks}" var="l">
+                    <apex:outputPanel rendered="{!IF(NOT(CONTAINS($Label[l.Report_Type__c],$Label.Report_Center)),true,false)}">
+                        <option value="{!IF(AND(LEN(l.Report_URL__c)>0,NOT(ISBLANK(l.Report_URL__c)),NOT(ISNULL(l.Report_URL__c))),l.Report_URL__c,'/apex/YouHome?pgId=1')}">{!$Label[l.Report_Type__c]}</option>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!IF(CONTAINS($Label[l.Report_Type__c],$Label.Report_Center),true,false)}" >
+                        <option selected="selected" value="{!IF(AND(LEN(l.Report_URL__c)>0,NOT(ISBLANK(l.Report_URL__c)),NOT(ISNULL(l.Report_URL__c))),l.Report_URL__c,'/apex/YouHome?pgId=1')}">{!$Label[l.Report_Type__c]}</option>
+                    </apex:outputPanel>
+            </apex:repeat>
+        </select>
+    </span>
+    
+    </h1>
+    </div>
+    
+    
+    <apex:variable value="{!0}" var="reptno"/>
+   <div class="rpc_wrapper" style="padding-top:0px\0/;padding-bottom:90px;">
+        <div class="rpc_list_wrpr" style="width:395px">
+        <apex:repeat value="{!lst_AddReports}" rows="{!CEILING(lst_AddReports.size/2)}" var="reptlist">
+            <table class="rpc_dotted" style="width: 428px;"> 
+                <tbody>
+                    <tr>
+                        <td style="width:210px;padding:15px 0 0 10px;height:26px;line-height:26px;vertical-align:middle\0/;;">
+                            <span class="filterLabel" style="font-size: 16px;font-weight:200;text-align: center;">
+                                {!$Label[reptlist.s_Report_Name]}
+                            </span>
+                        </td>
+                        <td style="width:100px;height:26px;padding:15px 0 0 10px;vertical-align:top\0/;">
+                            <span class="frm_cntr_large filterList">
+                                
+                                    <!-- <select id="{!reptno}" class="myselect_camp" style="z-index: 10; opacity: 0;" onchange="if(!isIE||(lock==false)) RefreshFunction(this.value,this.id);if(lock==false) lock=true;else if(lock==true) lock=false;"> -->
+                                    <select id="{!reptno}" class="myselect_camp" style="z-index: 10; opacity: 0;" onchange="RefreshFunction(this.value,this.id);">
+                                        <apex:repeat value="{!reptlist.lst_Campaign}" var="campaign">
+                                    		<option value="{!campaign}">{!campaign}</option>
+                                    	</apex:repeat>
+                                    </select> 
+                            </span>
+                        </td>
+                        
+                        <td style="width:140px; vertical-align:middle\0/;" align="right">
+                            <apex:outputPanel id="mainDivReRender">
+                                <apex:outputPanel id="maindiv1" rendered="{!LEN(reptlist.s_Active_Link)>0 && reptlist.s_Active_Link<>null}">
+                                    <span valign="top" style="vertical-align:middlevertical-align:middle\0/;font-size:12px;padding-left:20px;">
+                                        <!-- callOmniture_RepCenter is used by Raktim on 9th Apr, 2013  -->
+                                        {<a href="{!IF(LEN(reptlist.s_Active_Link)>0,'/servlet/servlet.FileDownload?file='+reptlist.s_Active_Link,'javascript:void(0)')}" target="{!reptlist.s_Report_Target}" onClick="callOmniture_RepCenter('{!$Label[reptlist.s_Report_Name]}');">{!$Label.Download}</a>}
+                                    </span>
+                                </apex:outputPanel> 
+                                <apex:outputPanel id="maindivNoLink" rendered="{!LEN(reptlist.s_Active_Link)==0 || reptlist.s_Active_Link ==null}">
+                                    <span valign="top" style="vertical-align:middlevertical-align:middle\0/;font-size:12px;padding-left:20px">
+                                        { {!$Label.Not_Available_for_Download} }
+                                    </span>
+                                </apex:outputPanel> 
+                            </apex:outputPanel>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <apex:variable value="{!reptno+1}" var="reptno"/>
+            <br/> 
+ 
+    </apex:repeat>
+
+    </div>
+    <div class="dotted_divider">&nbsp;</div> 
+    <div class="rpc_list_wr_rht">
+        
+      <apex:repeat value="{!lst_AddReports}" first="{!CEILING(lst_AddReports.size/2)}" var="reptlist">
+            
+                <table class="rpc_dotted" style="width: 428px;"> 
+                <tbody>
+                    <tr>
+                        <td style="width:210px;padding:15px 0 0 10px;height:26px;line-height:26px;vertical-align:middle\0/;">
+                            <span class="filterLabel" style="font-size: 16px;font-weight:200;text-align: center;">
+                                {!$Label[reptlist.s_Report_Name]}
+                            </span>
+                        </td>
+                        <td style="width:100px;height:26px;padding:15px 0 0 10px;vertical-align:top\0/;">
+                            <span class="frm_cntr_large filterList">
+                                
+                                    <!-- <select id="{!reptno}" class="myselect_camp" style="z-index: 10; opacity: 0;" onchange="if(!isIE||(lock==false)) RefreshFunction(this.value,this.id);if(lock==false) lock=true;else if(lock==true) lock=false;"> -->
+                                    <select id="{!reptno}" class="myselect_camp" style="z-index: 10; opacity: 0;" onchange="RefreshFunction(this.value,this.id);">
+                                       <apex:repeat value="{!reptlist.lst_Campaign}" var="campaign">
+                                    		<option value="{!campaign}">{!campaign}</option>
+                                    	</apex:repeat>
+                                    </select> 
+                                
+                            </span>
+                        </td>
+                        
+                        <td style="width:140px; vertical-align:middle\0/;" align="right">
+                            <apex:outputPanel id="maindivRerenderer2">
+                                <apex:outputPanel id="maindiv2" rendered="{!LEN(reptlist.s_Active_Link)>0}">
+                                    <span valign="top" style="vertical-align:middlevertical-align:middle\0/;font-size:12px;padding-left:20px;">
+                                    	<!-- callOmniture_RepCenter is used by Raktim on 9th Apr, 2013  -->
+                                    	{<a href="{!IF(LEN(reptlist.s_Active_Link)>0,'/servlet/servlet.FileDownload?file='+reptlist.s_Active_Link,'javascript:void(0)')}" target="{!reptlist.s_Report_Target}" onClick="callOmniture_RepCenter('{!$Label[reptlist.s_Report_Name]}');">{!$Label.Download}</a>}
+                                    </span>
+                                </apex:outputPanel> 
+                                <apex:outputPanel id="maindivNoLink2" rendered="{!LEN(reptlist.s_Active_Link)==0}">
+                                  <span valign="top" style="vertical-align:middlevertical-align:middle\0/;font-size:12px;padding-left:20px;">
+                                    { {!$Label.Not_Available_for_Download} }
+                                  </span>
+                                </apex:outputPanel>
+                            </apex:outputPanel>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <apex:variable value="{!reptno+1}" var="reptno"/>  
+             <br/>
+             <div class="dotted_divider"> </div>            
+         </apex:repeat>
+         
+         
+         
+        </div>        
+      </div>      
+    </body>
+    <apex:actionFunction action="{!Refreshcampaign}" name="RefreshFunction" status="ReportCenterStatus" reRender="maindiv1,maindiv2,maindivNoLink,maindivNoLink2,mainDivReRender,maindivRerenderer2">       
+        <apex:param id="rptpar1" name="rptpar1"  value="" />
+        <apex:param id="rptpar2" name="rptpar2"  value="" />
+    </apex:actionFunction>
+    <apex:actionStatus id="ReportCenterStatus"  onstart="showProcessingMsg();" onstop="showProcessingMsg();"/> 
+    
+    <!-- View RepDetail Integrations Starts -->
+    <apex:actionFunction name="viewRepDetail" action="{!callRepDetails}" rerender="repDetail" oncomplete="javascript:displayit();" status="ReportCenterStatus">
+          <apex:param name="repDetailAcctNbr" assignTo="{!repDetailAcctNbr}" value="{!repDetailAcctNbr}"/>
+      </apex:actionFunction>
+      <div id="email_sel_mask2" class="white_trans_closed">
+      <apex:outputPanel id="repDetail" layout="none">
+         <c:CoachingRecord repacctnbr="{!repDetailAcctNbr}" rendered="{!repDetailAcctNbr!=null}"/>
+        </apex:outputPanel>
+    </div>
+    <!-- View RepDetail Integrations Ends -->
+      
+    <!-- Omniture Integration Start -->
+      
+    <c:OmnitureWebTrack mktName="{!market.Omniture_Suite_Name__c}" 
+                        mktAcctKey="{!currUsr.MRKT_ID_ACCT_NR_KEY__c}"
+                        userType="{!currUsr.Profile.Name}"
+                        userTitle="{!currUsr.LDRSHP_TITL_LVL_NBR__c}"        
+                        rendered="{!globalConfig.Omniture_Tracking_Enabled__c}"/>
+    <!-- Omniture Integration End -->
+</apex:define>
+</apex:composition>
+</apex:form>
+</apex:page>

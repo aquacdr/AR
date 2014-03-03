@@ -1,0 +1,3 @@
+<apex:page controller="DownloadAll_PrepData" action="{!updateUserGenIndex}">
+ 
+</apex:page>

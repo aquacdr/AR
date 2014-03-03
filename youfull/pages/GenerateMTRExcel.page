@@ -1,0 +1,63 @@
+<apex:page controller="GenerateMTRExcelController" showheader="false" sidebar="false" cache="true" standardStylesheets="false">
+
+<apex:includeScript value="{!URLFOR($Resource.ALMPlus_Asset,'js/jquery-1.5.1.min.js')}"/>
+<apex:includeScript value="{!URLFOR($Resource.MTRUtility)}"/>
+
+        
+
+    <apex:form id="frmDownload">
+    
+        <apex:inputHidden id="txtDownloadInfo" value="{!DownloadInfo}" />
+        <apex:inputHidden id="txtDownloadStatus" value="{!DownloadStatus}" />
+        <apex:commandButton action="{!DownloadWYSIWYGExcel}" value="Save" id="btnDownloadWYSIWYGExcel" />
+        <!-- <apex:commandButton action="{!DownloadAllExcel}" value="Save" id="btnDownloadAllExcel" /> -->
+        <apex:commandButton action="{!CompleteExcelDownload}" value="Complete" id="btnCompleteExcelDownload" />
+        
+    </apex:form>
+    
+<script language="JavaScript">
+  
+  function downloadExcel(downloadInfo, type) {
+    
+    //alert(type);
+    
+    $(getElement('{!$Component.frmDownload.txtDownloadInfo}')).val(JSON.stringify(downloadInfo));
+    
+    if(type == 'WYSIWYG') {
+        $(getElement('{!$Component.frmDownload.btnDownloadWYSIWYGExcel}')).click();
+    }
+    /*else if(type == 'All') {
+        $(getElement('{!$Component.frmDownload.btnDownloadAllExcel}')).click();
+    }*/
+    else {
+        throw new Error('An invalid type was provided.');
+    }
+  }
+
+  function completeExcelDownload() {
+    //alert('complete in GenerateMTR');
+    $(getElement('{!$Component.frmDownload.btnCompleteExcelDownload}')).click();
+  }
+
+
+  function resetDownloadStatus() {
+    
+     $(getElement('{!$Component.frmDownload.txtDownloadStatus}')).val('');
+  }
+    
+  $(window).load(function() {
+
+    var downloadStatus = $(getElement('{!$Component.frmDownload.txtDownloadStatus}')).val();
+    //alert(downloadStatus);
+    if(isEmpty(downloadStatus)) {
+        parent.StartDownload();
+    }
+    else if(downloadStatus == 'Ready'){
+        resetDownloadStatus();
+        parent.CompleteDownload();
+    }
+    
+  });
+  
+</script>
+</apex:page>

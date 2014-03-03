@@ -1,0 +1,220 @@
+<apex:component id="comp">
+<apex:attribute name="sectionTitle" type="String" required="true" description=""/>
+<apex:attribute name="sectionColor" type="String" required="true" description=""/>
+<apex:attribute name="loadPageName" type="String" required="true" description=""/>
+<apex:attribute name="sectionDir" type="String" required="true" description="Left or Right Section"/>
+<apex:attribute name="reportSection" type="Boolean" description="For report Section"/>
+<apex:attribute name="reportUrl" type="String" description="For report URL"/>
+<apex:attribute name="componentConfig" type="String" description="" />
+<apex:attribute name="summaryDisplayIcon" type="Boolean" description="" />
+
+<!--  Blocked by Raktim on 4th Oct 2013 - Dashboard Header Change START 
+<apex:variable var="idExt" value="{!SUBSTITUTE(SUBSTITUTE(sectionTitle,' ',''), '/','')}"/>
+Blocked by Raktim on 4th Oct 2013 - Dashboard Header Change START
+-->
+<!-- Following lines added by Raktim on 4th Oct 2013 -->
+<apex:variable var="idExt" value="{!SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(sectionTitle,' ',''), '/',''), '(', ''), ')', ''), '.', ''), '{', ''), '}', '')}"/>
+
+<style> 
+
+.cmpComponentSection {
+    border: 0px solid #ccc;
+    /*height: 534px;*/
+    height: 464px;
+    width: 357px;
+    /* change by amartya*/
+    /*border: 1px solid #cdcdc;*/
+    //height: 428px;
+    //width: 360px;
+    margin-left: 6px;
+    margin-right: 6px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    position: relative;
+    /*Line modified by Morgan on 10/09 to incorporate HTML recommendations*/
+    background-color: transparent;
+}
+
+
+/**
+* IE changes suggested by Liza.
+*/
+.SectionContent.borderCls{ 
+        height: auto; 
+} 
+
+.cmpComponentSection .G122ndBox {
+    border-top: solid 1px #CCC;
+    top: -13px;
+    width: 318px;
+    left: -1px;
+    position: relative;
+    overflow:hidden;
+    left: -5px;padding-left: 13px\9;
+}
+
+.cmpComponentSection .compSectionTitle {
+    height: 53px;
+    //height: 44px;
+    width: 370px;
+    position: relative;
+    left: -11px;
+    //left: -10px;
+    top: 7px;
+    //top: 6px;
+    font: normal 20px Helvetica, serif;
+    color: #eee;
+    padding-left: 17px;	//changed by Supriyo 12 Mar 2013; original 35px
+    padding-top: 18px;
+}
+
+.cmpComponentSection .SectionContent {
+    padding:0px;
+    top: -13px;
+    /*top: -6px;*/
+    position: relative;
+    /*height: 481px;*/
+    height: 391px;
+    left: 0px;
+    width: 100% !important;
+    overflow:hidden;
+}
+
+.borderCls {
+    border: 1px solid #ccc;
+}
+.sectionLoadingMessage {
+    background-image: url("{!URLFOR($Resource.ALM_Assetsv2,'images/processing.gif')}");
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 250px;
+    left: 70px;
+    height:100px;
+    width:230px;
+}
+.icon_lnks{
+    position:relative;
+    left:-17px;	//changed by Supriyo 12 March 2013; original 35 px
+    
+}
+
+.cmComponentSection { 
+        border: none; 
+         margin: 60px 6px;
+} 
+
+/*.test{
+    height:300px;
+}*/
+</style>
+
+    <div id="ComponentSection_{!idExt}" class="cmpComponentSection" style="padding-top: 0px; padding-right: 0px; padding-bottom: 0px;  padding-left: 10px; margin-top: 0px; margin-right: 8px\9; margin-bottom: 0px; margin-left: 3px\9; border-top-color: currentColor; border-right-color: currentColor; border-bottom-color: currentColor; border-left-color: currentColor; border-top-width: medium; border-right-width: medium; border-bottom-width: medium; border-left-width: medium; border-top-style: none; border-right-style: none; border-bottom-style: none; border-left-style: none; float: left;">
+    
+        <div class="compSectionTitle">
+            <span>{!sectionTitle}</span>
+            
+            <!--Added by Samudra -->     
+             <div class="icon_lnks"  style="position: relative;top: -6px;left: -30px\9;" alt="{!$Label.Key_Data_Summary}" title="{!$Label.Key_Data_Summary}">    
+          <!--<div class="icon_lnks"  style="position: relative;top: -6px;left: -17px;" alt="{!$Label.Key_Data_Summary}" title="{!$Label.Key_Data_Summary}">-->  
+              
+                <apex:outputPanel rendered="{!summaryDisplayIcon}" >
+                    <a href="javascript:void(0)" onclick="hideSOverlayPage();" class="pnk_srch" style="no-repeat scroll 0 0 transparent;
+    																								   display: block; float: left; height: 22px; 
+    																								   width: 22px;"></a>
+                </apex:outputPanel>
+           </div>    
+        <!--Added by Samudra --> 
+                <div id="SectionTitleDN_{!idExt}" style="float:Left; height:12px; width:12px; margin-top:7px; margin-Left:-16px;" valign="top"/>
+                <div id="SectionTitleRT_{!idExt}" style="float:Left; height:12px; width:12px; margin-top:7px; margin-Left:-16px;" valign="top"/>
+        </div>
+        <div class="SectionContent borderCls" id="SectionContent_{!idExt}"  style="overflow:visible;height: 400px\9;"/>
+        
+         <!--apex:outputPanel rendered="{! contains(reportUrl,'Title_Achievement')}"  layout="block">
+            <div id="NRT_{!idExt}" align="center">
+                <c:NRT_Overlay_Summary rendered="{! contains(reportUrl,'Title_Achievement')}" p_ShowLink="false"/>
+            </div>
+        </apex:outputPanel>
+        
+        <!-- <apex:outputPanel rendered="{!reportSection}" layout="block">-->
+        <apex:outputPanel rendered="{!if(reportURL != null,true,false)}"  layout="block">
+            <div id="SectionReport_{!idExt}" class="cmpbtm_bx_gry G122ndBox borderCls" align="center">
+                <a class="cmppnk_cta cmpcentering_cn" href="#">{!$label.View_Full_Report}</a>
+            </div>
+        </apex:outputPanel>
+        
+        <apex:outputPanel rendered="{!if(reportURL != null,false,true)}"  layout="block">
+            <div id="SectionReport_{!idExt}" class="cmpbtm_bx_gry G122ndBox borderCls" align="center" style="height:26px;">
+            </div>
+        </apex:outputPanel>
+        
+        <div id="sectionLoadingMessage_{!idExt}" class="sectionLoadingMessage" />
+
+</div>
+
+<script>
+jQuery(document).ready(function() {
+    jQuery("#SectionContent_{!idExt}").load("{!loadPageName}", function(response, status, xhr) {
+        jQuery("#sectionLoadingMessage_{!idExt}").hide();
+    });
+
+    jQuery("#SectionReport_{!idExt}").hide();
+    jQuery("#SectionTitleRT_{!idExt}").hide();
+    
+   /* jQuery("#SectionTitleDN_{!idExt}").hover(function() {
+    jQuery(this).css('cursor','pointer');
+    }, function() {
+    jQuery(this).css('cursor','auto');
+    });
+
+    jQuery("#SectionTitleRT_{!idExt}").hover(function() {
+    jQuery(this).css('cursor','pointer');
+    }, function() {
+    jQuery(this).css('cursor','auto');
+    });
+
+    jQuery("#SectionTitleDN_{!idExt}").click(function(){
+        jQuery("#SectionTitleDN_{!idExt}").hide();
+        jQuery("#SectionTitleRT_{!idExt}").show();
+        jQuery("#SectionContent_{!idExt}").slideToggle(1000);
+        jQuery("#SectionReport_{!idExt}").slideToggle(1500);
+
+        if("{!sectionColor}" == "Grey" || "{!sectionColor}" == "grey" ) { 
+            jQuery("#ComponentSection_{!idExt} > .compSectionTitle").removeClass("cmpgreystrapdn")
+            jQuery("#ComponentSection_{!idExt} > .compSectionTitle").addClass("cmpgreystraprt");
+        }
+        else
+        {
+            jQuery("#ComponentSection_{!idExt} > .compSectionTitle").removeClass("cmppinkstrapdn")
+            jQuery("#ComponentSection_{!idExt} > .compSectionTitle").addClass("cmppinkstraprt");
+        }
+    });
+
+    jQuery("#SectionTitleRT_{!idExt}").click(function(){
+        jQuery("#SectionTitleRT_{!idExt}").hide();
+        jQuery("#SectionTitleDN_{!idExt}").show();
+        jQuery("#SectionContent_{!idExt}").slideToggle(1000);
+        jQuery("#SectionReport_{!idExt}").slideToggle(10);
+
+        if("{!sectionColor}" == "Grey" || "{!sectionColor}" == "grey" ) { 
+            jQuery("#ComponentSection_{!idExt} > .compSectionTitle").removeClass("cmpgreystraprt")
+            jQuery("#ComponentSection_{!idExt} > .compSectionTitle").addClass("cmpgreystrapdn");
+        }
+        else
+        {
+            jQuery("#ComponentSection_{!idExt} > .compSectionTitle").removeClass("cmppinkstraprt")
+            jQuery("#ComponentSection_{!idExt} > .compSectionTitle").addClass("cmppinkstrapdn");
+        }
+    });*/
+
+});
+
+    if("{!sectionColor}" == "Grey" || "{!sectionColor}" == "grey" ) { 
+        jQuery("#ComponentSection_{!idExt} > .compSectionTitle").addClass("cmpgreystrapdn");
+    }
+    else
+    {
+        jQuery("#ComponentSection_{!idExt} > .compSectionTitle").addClass("cmppinkstrapdn");
+    }
+</script>
+
+</apex:component>

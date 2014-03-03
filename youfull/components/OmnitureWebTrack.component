@@ -1,0 +1,62 @@
+<apex:component controller="OmnitureWebTrackController">
+    <apex:attribute type="String" name="mktName" assignTo="{!mktNameInput}" description="Market Name" required="true"/>
+    <apex:attribute type="String" name="mktAcctKey" assignTo="{!mktAcctKeyInput}" description="Market Account Key" required="true"/>
+    <!-- userType: SL, ZM, DM -->
+    <apex:attribute type="String" name="userType" assignTo="{!userTypeInput}" description="User Type" required="false"/>
+    <!-- userTitle: title of a SL, for ZM and DM value is ZM or DM respectively -->
+    <apex:attribute type="String" name="userTitle" assignTo="{!userTitleInput}" description="User Title" required="false"/>
+    
+<!-- SiteCatalyst code version: H.19.4.
+Copyright 1997-2009 Omniture, Inc. More info available at
+http://www.omniture.com -->
+<!-- 
+Apr-13-2010: Anand - Added s.account declaration before hte JS file is included.
+Feb-07-2011: Anand - Added Page name to the parameters being passed
+11/22/2011: SA - added userTitle and userType parameters
+ -->
+<script language="JavaScript" type="text/javascript">
+//alert("{!JSENCODE(mktName)}");
+var s_account="{!JSENCODE(mktName)}";
+//alert('mktAcctKey: ' + '{!mktAcctKey}');
+//alert('userType: ' + '{!userType}');
+//alert('userTitle: ' + '{!userTitle}');
+</script>
+<script type="text/javascript" src="{!URLFOR($Resource.Omniture_JS)}"></script>
+<script language="JavaScript" type="text/javascript">
+//alert('Q');
+//alert(s_account);
+//alert('{!JSENCODE(mktAcctKey)}');
+s.visitorID="{!JSENCODE(mktAcctKey)}"
+s.pageName=ALM_PAGE_NAME;
+s.server="";
+s.channel="";
+s.pageType="";
+s.prop1="";
+s.prop2="";
+s.prop3="";
+s.prop4="";
+s.prop5="";
+s.prop15="{!JSENCODE(mktName)}";
+s.prop11="{!JSENCODE(mktAcctKey)}";
+s.prop24 = "{!JSENCODE(userTypeOutput)}";
+s.prop25 = "{!JSENCODE(userTitleOutput)}";
+/* Conversion Variables */
+s.campaign="";
+s.state="";
+s.zip="";
+s.events="";
+s.products="";
+s.purchaseID="";
+s.eVar1="";
+s.eVar2="";
+s.eVar3="";
+s.eVar4="";
+s.eVar5="";
+
+/************* DO NOT ALTER ANYTHING BELOW THIS LINE ! **************/
+var s_code=s.t();if(s_code)document.write(s_code)
+//if(navigator.appVersion.indexOf('MSIE')>=0)document.write(unescape('%3C')+'\!-'+'-')
+</script>
+<!-- End SiteCatalyst code version: H.19.4. -->
+
+</apex:component>

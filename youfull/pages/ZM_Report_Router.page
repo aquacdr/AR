@@ -1,0 +1,14 @@
+<apex:page controller="ZM_Report_RouterCtl" action="{!routReport}">
+<apex:PageMessages />
+
+<!-- Omniture method invoked -->
+<script>
+	ALM_PAGE_NAME="{!OmniturePageName}"; 	
+</script>
+<!-- Omniture method invoked end -->
+
+<!-- Omniture Integration Starts -->
+<apex:include pageName="ZMDMOmnitureTrack"/>
+<!-- Omniture Integration Ends -->
+
+</apex:page>

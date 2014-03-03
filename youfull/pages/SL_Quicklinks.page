@@ -1,0 +1,13 @@
+<apex:page showHeader="false" sideBar="false" standardStylesheets="true" controller="Controller_ZMHomepageQuicklinks">
+<style>
+  body{background-color:#ffffff;}
+  ul{margin-left:-40px; font-size:8pt;}
+</style>
+    <ul>
+      <apex:repeat value="{!ReportLinks}" var="r">
+         <li style="margin-bottom:6px;"><a target="_parent"
+            title="{!r.QuickLinkHoverText__c}" 
+            href="{!r.Report_URL__c}">{!r.Report_Label__c}</a></li>
+      </apex:repeat>
+    </ul>
+</apex:page>

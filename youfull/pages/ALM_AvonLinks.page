@@ -1,0 +1,10 @@
+<apex:page showHeader="false" sideBar="flase" standardStylesheets="true" controller="Controller_ZMHomepageQuicklinks">
+<style>
+  body{background:none;}
+  ul{margin-left:-40px; font-size:8pt;}
+</style>
+    <ul>
+    	<li style="margin-bottom:6px;"><a href="{!market.Security_and_Privacy_URL__c}" target="_blank">{!$Label.Security_and_Privacy}</a></li>
+		<li style="margin-bottom:6px;"><a href="{!market.Conditions_Of_Use_URL__c}" target="_blank">{!$Label.Conditions_of_Use}</a></li>
+    </ul>
+</apex:page>

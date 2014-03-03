@@ -1,0 +1,20 @@
+<apex:component >
+
+<apex:attribute name="displayPrintButton" type="Boolean" description="Defines whether to display Print button or not" required="false"/>
+<apex:attribute name="displayEmailButton" type="Boolean" description="Defines whether to display Email button or not" required="false"/> 
+<apex:attribute name="displayExportButton" type="Boolean" description="Defines whether to display Print button or not" required="false"/>
+
+<apex:outputPanel rendered="{!displayPrintButton}" >
+    <input class="btn" type="button" onClick="printFunc();" value="Print" />
+</apex:outputPanel>
+<apex:outputPanel rendered="{!displayEmailButton}" >
+    <input class="btn" type="button" onClick="emailFunc('All');" value="Email All" />
+</apex:outputPanel>
+<apex:outputPanel rendered="{!displayEmailButton}" >
+    <input class="btn" type="button" onClick="emailFunc('Selected');" value="Email Selected" />
+</apex:outputPanel>
+<apex:outputPanel rendered="{!displayExportButton}" >
+    <input class="btn" type="button" onClick="exportFunc();" value="Export" />
+</apex:outputPanel>
+
+</apex:component>

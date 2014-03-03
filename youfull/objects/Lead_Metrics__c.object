@@ -1,0 +1,1707 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableEnhancedLookup>false</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <fields>
+        <fullName>ACCT_NR__c</fullName>
+        <description>Refers to User__r.ACCT_NR__c</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Refers to User__r.ACCT_NR__c</inlineHelpText>
+        <label>ACCT_NR</label>
+        <length>50</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_1st_Time_Contacted__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>COUNT * where  Lead Type= AGL AND  Contact Type IN(Cust, Rep) AND First_Contacted_CMPGN_NR__c = Current Campaign</inlineHelpText>
+        <label>AGL - 1st Time Contacted</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Appointed__c</fullName>
+        <externalId>false</externalId>
+        <formula>AGL_Rep_Cl_App__c + AGL_Cust_Closed_App__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>AGL - Appointed</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Closed__c</fullName>
+        <externalId>false</externalId>
+        <formula>AGL_Rep_Closed__c + AGL_Customer_Closed__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>AGL - Closed</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Converted__c</fullName>
+        <externalId>false</externalId>
+        <formula>AGL_Rep_Cl_Conv__c + AGL_Cust_Closed_Conv__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>AGL - Converted</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Cus_IP_Rep_Act_Rec__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= AGL AND Contact Type=Cust AND Status=In Progress AND SubStatus=Rep Account Received</inlineHelpText>
+        <label>AGL - Cust -InProgress Rep Acct Received</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Cus_Rej_Con_No_Int__c</fullName>
+        <description>Lead Type= AGL AND Contact Type=Cust AND Status=Rejected AND Sub_Sub_Status_Change_CMPGN_NR__c = Current Campaign  AND Substatus=Contacted - No Longer Interested</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= AGL AND Contact Type=Cust AND Status=Rejected AND Sub_Sub_Status_Change_CMPGN_NR__c = Current Campaign  AND Substatus=Contacted - No Longer Interested</inlineHelpText>
+        <label>AGL -Cust Rejected Contacted No Interest</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Cus_Rej_Ex_as_Rep__c</fullName>
+        <description>Lead Type= AGL AND Contact Type=Cust AND Status=Rejected AND Sub_Sub_Status_Change_CMPGN_NR__c = Current Campaign  AND Substatus=Exists as Representative</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= AGL AND Contact Type=Cust AND Status=Rejected AND Sub_Sub_Status_Change_CMPGN_NR__c = Current Campaign  AND Substatus=Exists as Representative</inlineHelpText>
+        <label>AGL - Customer -Rejected - Exists as Rep</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Cust_1st_Time_Con__c</fullName>
+        <description># of AGL Customer leads contacted for the first time</description>
+        <externalId>false</externalId>
+        <inlineHelpText># of AGL Customer leads contacted for the first time</inlineHelpText>
+        <label>AGL - Cust 1st Time Con</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Cust_Closed_App__c</fullName>
+        <externalId>false</externalId>
+        <label>AGL - Cust - Closed - App</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Cust_Closed_Conv__c</fullName>
+        <externalId>false</externalId>
+        <label>AGL - Customer - Closed - Converted</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Cust_Closed_Oth__c</fullName>
+        <description>Lead Type= AGL AND Contact Type=Cust AND Status=Closed AND Status_Change_CMPGN_NR__c = Current Campaign  AND Substatus not in (Converted to Customer, Appointed)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= AGL AND Contact Type=Cust AND Status=Closed AND Status_Change_CMPGN_NR__c = Current Campaign  AND Substatus not in (Converted to Customer, Appointed)</inlineHelpText>
+        <label>AGL - Customer - Closed - Others</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Cust_IP_Cont_Sig__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= AGL AND Contact Type=Cust AND Status=In Progress AND SubStatus=Contract Signed</inlineHelpText>
+        <label>AGL - Cust - In Progress Contract Signed</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Cust_IP_Fol_Up_Pen__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= AGL AND Contact Type=Cust AND Status=In Progress AND SubStatus=Follow Up / Pending</inlineHelpText>
+        <label>AGL - Cust - In Progress Follow Up Pend</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Cust_In_Pr_Cont__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= AGL AND Contact Type=Cust AND Status=In Progress AND SubStatus=Contacted</inlineHelpText>
+        <label>AGL - Customer - In Progress - Contacted</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Cust_In_Pr_Deleg__c</fullName>
+        <description>Lead Type= AGL AND Contact Type=Cust AND Status=In Progress AND SubStatus= Delegated</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= AGL AND Contact Type=Cust AND Status=In Progress AND SubStatus= Delegated</inlineHelpText>
+        <label>AGL - Customer - In Progress - Delegated</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Cust_In_Pr_Oth__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= AGL AND Contact Type=Cust AND Status=In Progress AND SubStatus not in ( Rolled Up, Rep Account Received, Follow Up / Pending, Contract Signed, Scheduled, Contacted, Delegated, Lead Reassigned)</inlineHelpText>
+        <label>AGL - Customer - In Progress - Others</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Cust_In_Pr_Reas__c</fullName>
+        <description>Lead Type= AGL AND Contact Type=Cust AND Status=In Progress AND SubStatus=Lead Reassigned</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= AGL AND Contact Type=Cust AND Status=In Progress AND SubStatus=Lead Reassigned</inlineHelpText>
+        <label>AGL - Customer - In Progress - Reassigne</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Cust_In_Pr_Rol_Up__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= AGL AND Contact Type=Cust AND Status=In Progress AND SubStatus=Rolled Up</inlineHelpText>
+        <label>AGL - Customer - In Progress - Rolled Up</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Cust_In_Pr__c</fullName>
+        <externalId>false</externalId>
+        <formula>AGL_Cust_In_Pr_Reas__c + AGL_Cust_In_Pr_Deleg__c + AGL_Cust_In_Pr_Cont__c + AGL_Cust_In_Pr_sch__c + AGL_Cust_IP_Cont_Sig__c + AGL_Cust_IP_Fol_Up_Pen__c + AGL_Cus_IP_Rep_Act_Rec__c + AGL_Cust_In_Pr_Rol_Up__c + AGL_Cust_In_Pr_Oth__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>AGL - Customer - In Progress</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Cust_In_Pr_sch__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= AGL AND Contact Type=Cust AND Status=In Progress AND SubStatus= scheduled</inlineHelpText>
+        <label>AGL - Customer - In Progress - scheduled</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Cust_N_L_Reas__c</fullName>
+        <description>Lead Type= AGL AND Contact Type=Cust AND Status=New AND Substatus=Lead Reassigned</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= AGL AND Contact Type=Cust AND Status=New AND Substatus=Lead Reassigned</inlineHelpText>
+        <label>AGL - Customer - New - Lead Reassigned</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Cust_N_N_L__c</fullName>
+        <externalId>false</externalId>
+        <label>AGL - Customer - New - New Lead</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Cust_N_Oth__c</fullName>
+        <description>Lead Type= AGL AND Contact Type=Cust AND Status=New AND Substatus not in (Rolled Up, Lead Reassigned, Delegated, Escalated, New Lead)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= AGL AND Contact Type=Cust AND Status=New AND Substatus not in (Rolled Up, Lead Reassigned, Delegated, Escalated, New Lead)</inlineHelpText>
+        <label>AGL - Customer - New  - Others</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Cust_N_Rol_Up__c</fullName>
+        <description>Lead Type= AGL AND Contact Type=Cust AND Status=New AND Substatus=RolledUp</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= AGL AND Contact Type=Cust AND Status=New AND Substatus=RolledUp</inlineHelpText>
+        <label>AGL - Customer - New - Rolled Up</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Cust_New_Delg__c</fullName>
+        <description>Lead Type= AGL AND Contact Type=Cust AND Status=New AND Substatus=Delegated</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= AGL AND Contact Type=Cust AND Status=New AND Substatus=Delegated</inlineHelpText>
+        <label>AGL - Customer - New - Delegated</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Cust_New_Esc__c</fullName>
+        <description>Lead Type= AGL AND Contact Type=Cust AND Status=New AND Substatus=Escalated</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= AGL AND Contact Type=Cust AND Status=New AND Substatus=Escalated</inlineHelpText>
+        <label>AGL - Customer - New - Escalated</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Cust_Rej_Con_Slow__c</fullName>
+        <description>Lead Type= AGL AND Contact Type=Cust AND Status=Rejected AND Sub_Sub_Status_Change_CMPGN_NR__c = Current Campaign  AND Substatus=Contacted - No response/Slow</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= AGL AND Contact Type=Cust AND Status=Rejected AND Sub_Sub_Status_Change_CMPGN_NR__c = Current Campaign  AND Substatus=Contacted - No response/Slow</inlineHelpText>
+        <label>AGL - Cust -Rejected - Contacted - Slow</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Cust_Rej_Dup__c</fullName>
+        <description>Lead Type= AGL AND Contact Type=Cust AND Status=Rejected AND Sub_Sub_Status_Change_CMPGN_NR__c = Current Campaign  AND Substatus=Duplicate Lead - Appointed by another</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= AGL AND Contact Type=Cust AND Status=Rejected AND Sub_Sub_Status_Change_CMPGN_NR__c = Current Campaign  AND Substatus=Duplicate Lead - Appointed by another</inlineHelpText>
+        <label>AGL - Customer -Rejected - Duplicated</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Cust_Rej_Oth__c</fullName>
+        <description>Lead Type= AGL AND Contact Type=Cust AND Status=Rejected AND Sub_Sub_Status_Change_CMPGN_NR__c = Current Campaign  AND Substatus not in (Wrong Data, Underage, Exists as a Representative, Duplicated Lead - Apppointed by another, Contacted - No longer Interested, Contacted - No response/Slow)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= AGL AND Contact Type=Cust AND Status=Rejected AND Sub_Sub_Status_Change_CMPGN_NR__c = Current Campaign  AND Substatus not in (Wrong Data, Underage, Exists as a Representative, Duplicated Lead - Apppointed by another, Contacted - No longer Inte</inlineHelpText>
+        <label>AGL - Customer -Rejected - Others</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Cust_Rej_Wr_Data__c</fullName>
+        <description>Lead Type= AGL AND Contact Type=Cust AND Status=Rejected AND Sub_Sub_Status_Change_CMPGN_NR__c = Current Campaign  AND Substatus=Wrong Data</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= AGL AND Contact Type=Cust AND Status=Rejected AND Sub_Sub_Status_Change_CMPGN_NR__c = Current Campaign  AND Substatus=Wrong Data</inlineHelpText>
+        <label>AGL - Customer -Rejected - Wrong Data</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Cust_Rej_und__c</fullName>
+        <description>Lead Type= AGL AND Contact Type=Cust AND Status=Rejected AND Sub_Sub_Status_Change_CMPGN_NR__c = Current Campaign  AND Substatus= underage</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= AGL AND Contact Type=Cust AND Status=Rejected AND Sub_Sub_Status_Change_CMPGN_NR__c = Current Campaign  AND Substatus= underage</inlineHelpText>
+        <label>AGL - Customer -Rejected - underage</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Cust_Time_To_Con__c</fullName>
+        <defaultValue>0</defaultValue>
+        <description>Time to Contact for AGL Customer leads</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Time to Contact for AGL Customer leads</inlineHelpText>
+        <label>AGL - Cust Time To Con</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Cust_Time_To_Conv__c</fullName>
+        <description>Time to conversion for AGL Customer leads</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Time to conversion for AGL Customer leads</inlineHelpText>
+        <label>AGL - Cust Time To Conv</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Customer_Closed__c</fullName>
+        <externalId>false</externalId>
+        <formula>AGL_Cust_Closed_App__c + AGL_Cust_Closed_Conv__c + AGL_Cust_Closed_Oth__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>AGL - Customer - Closed</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Customer_New__c</fullName>
+        <externalId>false</externalId>
+        <formula>AGL_Cust_N_N_L__c + AGL_Cust_New_Esc__c + AGL_Cust_New_Delg__c + AGL_Cust_N_L_Reas__c + AGL_Cust_N_Rol_Up__c + AGL_Cust_N_Oth__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>AGL - Customer - New</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Customer_Rejected__c</fullName>
+        <externalId>false</externalId>
+        <formula>AGL_Cus_Rej_Con_No_Int__c + AGL_Cust_Rej_Con_Slow__c + AGL_Cust_Rej_Dup__c + AGL_Cus_Rej_Ex_as_Rep__c + AGL_Cust_Rej_und__c + AGL_Cust_Rej_Wr_Data__c + AGL_Cust_Rej_Oth__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>AGL - Customer - Rejected</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Customer__c</fullName>
+        <externalId>false</externalId>
+        <formula>AGL_Customer_New__c + AGL_Customer_Closed__c + AGL_Customer_Rejected__c + AGL_Cust_In_Pr__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>AGL - Customer</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_In_Progress__c</fullName>
+        <externalId>false</externalId>
+        <formula>AGL_Rep_In_Progress__c + AGL_Cust_In_Pr__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>AGL - In Progress</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_New__c</fullName>
+        <externalId>false</externalId>
+        <formula>AGL_Rep_New__c + AGL_Customer_New__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>AGL - New</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Rejected__c</fullName>
+        <externalId>false</externalId>
+        <formula>AGL_Rep_Rejected__c + AGL_Customer_Rejected__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>AGL - Rejected</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Rep_1st_Time_Con__c</fullName>
+        <description># of AGL Rep leads contacted for the first time</description>
+        <externalId>false</externalId>
+        <inlineHelpText># of AGL Rep leads contacted for the first time</inlineHelpText>
+        <label>AGL - Rep 1st Time Con</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Rep_Cl_App__c</fullName>
+        <externalId>false</externalId>
+        <label>AGL - Rep - Closed - Appointed</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Rep_Cl_Conv__c</fullName>
+        <externalId>false</externalId>
+        <label>AGL - Rep - Closed - Converted</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Rep_Cl_Oth__c</fullName>
+        <description>Lead Type= AGL AND Contact Type=Rep ANDStatus=Closed AND Status_Change_CMPGN_NR__c = Current Campaign  AND Substatus not in (Converted to Customer, Appointed)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= AGL AND Contact Type=Rep ANDStatus=Closed AND Status_Change_CMPGN_NR__c = Current Campaign  AND Substatus not in (Converted to Customer, Appointed)</inlineHelpText>
+        <label>AGL - Rep - Closed - Others</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Rep_Closed__c</fullName>
+        <externalId>false</externalId>
+        <formula>AGL_Rep_Cl_App__c + AGL_Rep_Cl_Conv__c + AGL_Rep_Cl_Oth__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>AGL - Rep - Closed</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Rep_IP_Cont_Sig__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= AGL AND Contact Type=Rep ANDStatus=In Progress  AND Substatus= Contract Signed</inlineHelpText>
+        <label>AGL - Rep - In Progress Contract Signed</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Rep_IP_Cont__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= AGL AND Contact Type=Rep ANDStatus=In Progress  AND Substatus= Contacted</inlineHelpText>
+        <label>AGL - Rep - In Progress - Contacted</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Rep_IP_Del__c</fullName>
+        <description>Lead Type= AGL AND Contact Type=Rep ANDStatus=In Progress  AND Substatus=  Delegated</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= AGL AND Contact Type=Rep ANDStatus=In Progress  AND Substatus=  Delegated</inlineHelpText>
+        <label>AGL - Rep - In Progress - Delegated</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Rep_IP_F_Up_P__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= AGL AND Contact Type=Rep ANDStatus=In Progress  AND Substatus= Follow Up / Pending</inlineHelpText>
+        <label>AGL - Rep - In Progress- Follow Up /Pend</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Rep_IP_Oth__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= AGL AND Contact Type=Rep ANDStatus=In Progress  AND Substatus not in ( Rolled Up, Rep Account Received, Follow Up / Pending, Contract Signed, Scheduled, Contacted, Delegated, Lead Reassigned)</inlineHelpText>
+        <label>AGL - Rep - In Progress - Others</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Rep_IP_Reas__c</fullName>
+        <description>Lead Type= AGL AND Contact Type=Rep ANDStatus=In Progress  AND Substatus= Lead Reassigned</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= AGL AND Contact Type=Rep ANDStatus=In Progress  AND Substatus= Lead Reassigned</inlineHelpText>
+        <label>AGL - Rep - In Progress - Reassigned</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Rep_IP_Rep_Act_Rec__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= AGL AND Contact Type=Rep ANDStatus=In Progress  AND Substatus= Rep Account Received</inlineHelpText>
+        <label>AGL - Rep - InProgress Rep Acct Received</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Rep_IP_Rol_Up__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= AGL AND Contact Type=Rep ANDStatus=In Progress  AND Substatus= Rolled Up</inlineHelpText>
+        <label>AGL - Rep - In Progress - Rolled Up</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Rep_IP_sch__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= AGL AND Contact Type=Rep ANDStatus=In Progress  AND Substatus=  scheduled</inlineHelpText>
+        <label>AGL - Rep - In Progress - scheduled</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Rep_In_Progress__c</fullName>
+        <externalId>false</externalId>
+        <formula>AGL_Rep_IP_Reas__c + AGL_Rep_IP_Del__c + AGL_Rep_IP_Cont__c + AGL_Rep_IP_sch__c + AGL_Rep_IP_Cont_Sig__c + AGL_Rep_IP_F_Up_P__c + AGL_Rep_IP_Rep_Act_Rec__c + AGL_Rep_IP_Rol_Up__c + AGL_Rep_IP_Oth__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>AGL - Rep - In Progress</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Rep_N_Del__c</fullName>
+        <description>Lead Type= AGL AND Contact Type=Rep AND Status=New AND SubStatus=Delegated</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= AGL AND Contact Type=Rep AND Status=New AND SubStatus=Delegated</inlineHelpText>
+        <label>AGL - Rep - New - Delegated</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Rep_N_L_Reas__c</fullName>
+        <description>Lead Type= AGL AND Contact Type=Rep AND Status=New AND SubStatus=Lead Reassigned</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= AGL AND Contact Type=Rep AND Status=New AND SubStatus=Lead Reassigned</inlineHelpText>
+        <label>AGL - Rep - New - Lead Reassigned</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Rep_New_Escalated__c</fullName>
+        <description>Lead Type= AGL AND Contact Type=Rep AND Status=New AND SubStatus=Escalated</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= AGL AND Contact Type=Rep AND Status=New AND SubStatus=Escalated</inlineHelpText>
+        <label>AGL - Rep - New - Escalated</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Rep_New_New_Lead__c</fullName>
+        <externalId>false</externalId>
+        <label>AGL - Rep - New - New Lead</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Rep_New_Others__c</fullName>
+        <description>Lead Type= AGL AND Contact Type=Rep AND Status=New AND SubStatus not in (Rolled Up, Lead Reassigned, Delegated, Escalated, New Lead)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= AGL AND Contact Type=Rep AND Status=New AND SubStatus not in (Rolled Up, Lead Reassigned, Delegated, Escalated, New Lead)</inlineHelpText>
+        <label>AGL - Rep - New - Others</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Rep_New_Rolled_Up__c</fullName>
+        <description>Lead Type= AGL AND Contact Type=Rep AND Status=New AND SubStatus=Rolled Up</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= AGL AND Contact Type=Rep AND Status=New AND SubStatus=Rolled Up</inlineHelpText>
+        <label>AGL - Rep - New - Rolled Up</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Rep_New__c</fullName>
+        <externalId>false</externalId>
+        <formula>AGL_Rep_New_New_Lead__c + AGL_Rep_New_Escalated__c + AGL_Rep_N_Del__c + AGL_Rep_N_L_Reas__c + AGL_Rep_New_Rolled_Up__c + AGL_Rep_New_Others__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>AGL - Rep - New</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Rep_Rej_Con_No_Int__c</fullName>
+        <description>Lead Type= AGL AND Contact Type=Rep AND Status=Rejected AND Sub_Sub_Status_Change_CMPGN_NR__c = Current Campaign  AND Substatus=Contacted - No Longer Interested</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= AGL AND Contact Type=Rep AND Status=Rejected AND Sub_Sub_Status_Change_CMPGN_NR__c = Current Campaign  AND Substatus=Contacted - No Longer Interested</inlineHelpText>
+        <label>AGL - Rep Rejected Contacted No Interest</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Rep_Rej_Cont_Slow__c</fullName>
+        <description>Lead Type= AGL AND Contact Type=Rep AND Status=Rejected AND Sub_Sub_Status_Change_CMPGN_NR__c = Current Campaign  AND Substatus=Contacted - No response/Slow</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= AGL AND Contact Type=Rep AND Status=Rejected AND Sub_Sub_Status_Change_CMPGN_NR__c = Current Campaign  AND Substatus=Contacted - No response/Slow</inlineHelpText>
+        <label>AGL - Rep - Rejected - Contacted - Slow</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Rep_Rej_Dup_Lead__c</fullName>
+        <description>Lead Type= AGL AND Contact Type=Rep AND Status=Rejected AND Sub_Sub_Status_Change_CMPGN_NR__c = Current Campaign  AND Substatus=Duplicate Lead - Appointed by another</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= AGL AND Contact Type=Rep AND Status=Rejected AND Sub_Sub_Status_Change_CMPGN_NR__c = Current Campaign  AND Substatus=Duplicate Lead - Appointed by another</inlineHelpText>
+        <label>AGL - Rep - Rejected - Duplicated Lead</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Rep_Rej_Ex_as_Rep__c</fullName>
+        <description>Lead Type= AGL AND Contact Type=Rep AND Status=Rejected AND Sub_Sub_Status_Change_CMPGN_NR__c = Current Campaign  AND Substatus=Exists as Representative</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= AGL AND Contact Type=Rep AND Status=Rejected AND Sub_Sub_Status_Change_CMPGN_NR__c = Current Campaign  AND Substatus=Exists as Representative</inlineHelpText>
+        <label>AGL - Rep - Rejected - Exists as Rep</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Rep_Rej_Oth__c</fullName>
+        <description>Lead Type= AGL AND Contact Type=Rep AND Status=Rejected AND Sub_Sub_Status_Change_CMPGN_NR__c = Current Campaign  AND Substatus not in (Wrong Data, Underage, Exists as a Representative, Duplicated Lead - Apppointed by another, Contacted - No longer Interested, Contacted - No response/Slow)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= AGL AND Contact Type=Rep AND Status=Rejected AND Sub_Sub_Status_Change_CMPGN_NR__c = Current Campaign  AND Substatus not in (Wrong Data, Underage, Exists as a Representative, Duplicated Lead - Apppointed by another, Contacted - No longer Inter</inlineHelpText>
+        <label>AGL - Rep - Rejected - Others</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Rep_Rej_Wr_Data__c</fullName>
+        <description>Lead Type= AGL AND Contact Type=Rep AND Status=Rejected AND Sub_Sub_Status_Change_CMPGN_NR__c = Current Campaign  AND Substatus=Wrong Data</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= AGL AND Contact Type=Rep AND Status=Rejected AND Sub_Sub_Status_Change_CMPGN_NR__c = Current Campaign  AND Substatus=Wrong Data</inlineHelpText>
+        <label>AGL - Rep - Rejected - Wrong Data</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Rep_Rej_und__c</fullName>
+        <description>Lead Type= AGL AND Contact Type=Rep AND Status=Rejected AND Sub_Sub_Status_Change_CMPGN_NR__c = Current Campaign  AND Substatus= underage</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= AGL AND Contact Type=Rep AND Status=Rejected AND Sub_Sub_Status_Change_CMPGN_NR__c = Current Campaign  AND Substatus= underage</inlineHelpText>
+        <label>AGL - Rep - Rejected - underage</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Rep_Rejected__c</fullName>
+        <externalId>false</externalId>
+        <formula>AGL_Rep_Rej_Con_No_Int__c + AGL_Rep_Rej_Cont_Slow__c + AGL_Rep_Rej_Dup_Lead__c + AGL_Rep_Rej_Ex_as_Rep__c + AGL_Rep_Rej_und__c +AGL_Rep_Rej_Wr_Data__c  + AGL_Rep_Rej_Oth__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>AGL - Rep - Rejected</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Rep_Time_To_Con__c</fullName>
+        <description>Time to contact for AGL Rep leads</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Time to contact for AGL Rep leads</inlineHelpText>
+        <label>AGL - Rep Time To Con</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Rep_Time_To_Conv__c</fullName>
+        <description>Time to conversion for AGL Rep leads</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Time to conversion for AGL Rep leads</inlineHelpText>
+        <label>AGL - Rep Time To Conv</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Rep__c</fullName>
+        <description>Total count of AGL Rep leads</description>
+        <externalId>false</externalId>
+        <formula>AGL_Rep_New__c + AGL_Rep_Closed__c + AGL_Rep_Rejected__c + AGL_Rep_In_Progress__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <inlineHelpText>Total count of AGL Rep leads</inlineHelpText>
+        <label>AGL - Rep</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Time_to_Contact__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Sum (Time_to_Contact__c)  where Lead Type= AGL AND  Contact Type IN(Cust, Rep) AND First_Contacted_CMPGN_NR__c = Current Campaign</inlineHelpText>
+        <label>AGL - Time to Contact</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL_Time_to_Conversion__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Sum(Time_to_Conversion__c) where Lead Type= AGL AND  Contact Type IN(Cust, Rep) AND Status=Closed AND Sub_Sub_Status_Change_CMPGN_NR__c=Current Campaign</inlineHelpText>
+        <label>AGL - Time to Conversion</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AGL__c</fullName>
+        <externalId>false</externalId>
+        <formula>AGL_Rep__c + AGL_Customer__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>AGL</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CMPGN_NR__c</fullName>
+        <externalId>false</externalId>
+        <label>CMPGN NR</label>
+        <length>10</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FGL_Appointed__c</fullName>
+        <externalId>false</externalId>
+        <formula>FGL_Rep_Closed_App__c + FGL_Cus_Closed_App__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>FGL-  Appointed</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FGL_Closed__c</fullName>
+        <externalId>false</externalId>
+        <formula>FGL_Rep_Closed__c + FGL_Customer_Closed__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>FGL - Closed</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FGL_Contacted_1st_Time__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>COUNT * where  Lead Type= FGL AND  Contact Type IN(Cust, Rep) AND First_Contacted_CMPGN_NR__c = Current Campaign</inlineHelpText>
+        <label>FGL - Contacted 1st Time</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FGL_Converted__c</fullName>
+        <externalId>false</externalId>
+        <formula>FGL_Rep_Cl_Conv_Cus__c + FGL_Cus_Cl_Conv_Cus__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>FGL - Converted</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FGL_Cus_Cl_Conv_Cus__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= FGL AND Contact Type=Cust AND Status=Closed AND Sub_Sub_Status_Change_CMPGN_NR__c = Current Campaign    AND Substatus=Converted to Customer</inlineHelpText>
+        <label>FGL - Customer Closed Converted Customer</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FGL_Cus_Cl_Oth__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= FGL AND Contact Type=Cust AND Status=Closed AND Sub_Status_Change_CMPGN_NR__c = Current Campaign   AND Substatus not in (Converted to Customer, Appointed)</inlineHelpText>
+        <label>FGL - Customer - Closed - Others</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FGL_Cus_Closed_App__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= FGL AND Contact Type=Cust AND Status=Closed AND Sub_Status_Change_CMPGN_NR__c = Current Campaign   AND Substatus=Appointed</inlineHelpText>
+        <label>FGL - Customer - Closed - Appointed</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FGL_Cus_IP_Cont__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= FGL AND Contact Type=Cust AND Status=In Progress AND SubStatus=Contacted</inlineHelpText>
+        <label>FGL - Customer - In Progress - Contacted</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FGL_Cus_IP_Oth__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= FGL AND Contact Type=Cust AND Status=In Progress AND Creation_CMPGN_NR__c != Current Campaign   AND Substatus not in ( Rolled Up, Rep Account Received, Follow Up / Pending, Contract Signed, Scheduled, Contacted, Delegated, Lead Reassigned)</inlineHelpText>
+        <label>FGL - Customer - In Progress - Others</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FGL_Cus_IP_Rep_Act_Rec__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= FGL AND Contact Type=Cust AND Status=In Progress AND SubStatus=Rep Account Received</inlineHelpText>
+        <label>FGL - Cust - In Progress - Rep Acct Recv</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FGL_Cus_IP_Sch__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= FGL AND Contact Type=Cust AND Status=In Progress AND SubStatus= scheduled</inlineHelpText>
+        <label>FGL - Customer - In Progress - Scheduled</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FGL_Cus_In_Progress__c</fullName>
+        <externalId>false</externalId>
+        <formula>FGL_Cus_IP_Cont__c + FGL_Cus_IP_Sch__c + FGL_Cust_IP_Cont_Sign__c + FGL_Cust_IP_FolUp_Pend__c + FGL_Cus_IP_Rep_Act_Rec__c + FGL_Cus_IP_Oth__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>FGL - Customer - In Progress</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FGL_Cus_New_New_Lead__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= FGL AND Contact Type=Cust AND Status=New</inlineHelpText>
+        <label>FGL - Customer - New - New Lead</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FGL_Cus_Rej_Con_N_Int__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= FGL AND Contact Type=Cust AND Status=Rejected AND Sub_Status_Change_CMPGN_NR__c = Current Campaign  AND Substatus=Contacted - No Longer Interested</inlineHelpText>
+        <label>FGL - Cust Rejected Contacted No Int</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FGL_Cus_Rej_Con_N_R__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= FGL AND Contact Type=Cust AND Status=Rejected AND Sub_Status_Change_CMPGN_NR__c = Current Campaign  AND Substatus=Contacted - No response/Slow</inlineHelpText>
+        <label>FGL - Cust - Rejected Contacted No Resp</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FGL_Cus_Rej_Dup_App__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= FGL AND Contact Type=Cust AND Status=Rejected AND Sub_Status_Change_CMPGN_NR__c = Current Campaign  AND Substatus=Duplicate Lead - Appointed by another</inlineHelpText>
+        <label>FGL - Cust Rejected Duplicated Appointed</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FGL_Cus_Rej_Ex_as_Rep__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= FGL AND Contact Type=Cust AND Status=Rejected AND Sub_Status_Change_CMPGN_NR__c = Current Campaign  AND Substatus=Exists as Representative</inlineHelpText>
+        <label>FGL - Customer -Rejected - Exists as Rep</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FGL_Cus_Rej_Oth__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= FGL AND Contact Type=Cust AND Status=Rejected AND Sub_Status_Change_CMPGN_NR__c = Current Campaign  AND Substatus not in (Wrong Data, Underage, Exists as a Representative, Duplicated Lead - Apppointed by another, Contacted - No longer Interest</inlineHelpText>
+        <label>FGL - Customer - Rejected - Others</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FGL_Cus_Rej_Underage__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= FGL AND Contact Type=Cust AND Status=Rejected AND Sub_Status_Change_CMPGN_NR__c = Current Campaign  AND Substatus= underage</inlineHelpText>
+        <label>FGL - Customer - Rejected - Underage</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FGL_Cus_Rej_Wr_Data__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= FGL AND Contact Type=Cust AND Status=Rejected AND Sub_Status_Change_CMPGN_NR__c = Current Campaign  AND Substatus=Wrong Data</inlineHelpText>
+        <label>FGL - Customer - Rejected - Wrong Data</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FGL_Cust_1st_Time_Con__c</fullName>
+        <description># of FGL Customer leads contacted for the first time</description>
+        <externalId>false</externalId>
+        <inlineHelpText># of FGL Customer leads contacted for the first time</inlineHelpText>
+        <label>FGL - Cust 1st Time Con</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FGL_Cust_IP_Cont_Sign__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= FGL AND Contact Type=Cust AND Status=In Progress AND SubStatus=Contract Signed</inlineHelpText>
+        <label>FGL - Cust - In Progress Contract - Sign</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FGL_Cust_IP_FolUp_Pend__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= FGL AND Contact Type=Cust AND Status=In Progress AND SubStatus=Follow Up / Pending</inlineHelpText>
+        <label>FGL - Cust - In Progress Follow Up/Pend</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FGL_Cust_Time_To_Conv__c</fullName>
+        <externalId>false</externalId>
+        <label>FGL - Cust Time To Conv</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FGL_Cust_Time_To_con__c</fullName>
+        <description>Time to contact for FGL Customer leads</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Time to contact for FGL Customer leads</inlineHelpText>
+        <label>FGL - Cust Time To con</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FGL_Customer_Closed__c</fullName>
+        <externalId>false</externalId>
+        <formula>FGL_Cus_Cl_Conv_Cus__c + FGL_Cus_Closed_App__c + FGL_Cus_Cl_Oth__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>FGL - Customer  - Closed</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FGL_Customer_Rejected__c</fullName>
+        <externalId>false</externalId>
+        <formula>FGL_Cus_Rej_Con_N_Int__c + FGL_Cus_Rej_Con_N_R__c + FGL_Cus_Rej_Dup_App__c + FGL_Cus_Rej_Ex_as_Rep__c + FGL_Cus_Rej_Underage__c + FGL_Cus_Rej_Wr_Data__c + FGL_Cus_Rej_Oth__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>FGL - Customer - Rejected</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FGL_Customer__c</fullName>
+        <externalId>false</externalId>
+        <formula>FGL_Cus_New_New_Lead__c + FGL_Customer_Closed__c + FGL_Customer_Rejected__c + FGL_Cus_In_Progress__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>FGL - Customer</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FGL_In_Progress__c</fullName>
+        <externalId>false</externalId>
+        <formula>FGL_Rep_In_Progress__c + FGL_Cus_In_Progress__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>FGL - In Progress</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FGL_New__c</fullName>
+        <externalId>false</externalId>
+        <formula>FGL_Rep_New_New_Lead__c + FGL_Cus_New_New_Lead__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>FGL - New</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FGL_Rejected__c</fullName>
+        <externalId>false</externalId>
+        <formula>FGL_Rep_Rejected__c + FGL_Customer_Rejected__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>FGL - Rejected</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FGL_Rep_1st_Time_Con__c</fullName>
+        <description># of FGL Reps contacted for the first time</description>
+        <externalId>false</externalId>
+        <inlineHelpText># of FGL Reps contacted for the first time</inlineHelpText>
+        <label>FGL - Rep 1st Time Con</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FGL_Rep_Cl_Conv_Cus__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= FGL AND Contact Type=Rep ANDStatus=Closed AND Sub_Sub_Status_Change_CMPGN_NR__c = Current Campaign   AND Substatus=Converted to Customer</inlineHelpText>
+        <label>FGL - Rep - Closed - Converted Customer</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FGL_Rep_Closed_App__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= FGL AND Contact Type=Rep ANDStatus=Closed AND Sub_Status_Change_CMPGN_NR__c = Current Campaign  AND Substatus=Appointed</inlineHelpText>
+        <label>FGL - Rep - Closed - Appointed</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FGL_Rep_Closed_Others__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= FGL AND Contact Type=Rep ANDStatus=Closed AND Sub_Status_Change_CMPGN_NR__c = Current Campaign   AND Substatus not in (Converted to Customer, Appointed)</inlineHelpText>
+        <label>FGL - Rep - Closed - Others</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FGL_Rep_Closed__c</fullName>
+        <externalId>false</externalId>
+        <formula>FGL_Rep_Cl_Conv_Cus__c + FGL_Rep_Closed_App__c + FGL_Rep_Closed_Others__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>FGL - Rep  - Closed</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FGL_Rep_IP_Cont_Sign__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= FGL AND Contact Type=Rep ANDStatus=In Progress  AND Substatus= Contract Signed</inlineHelpText>
+        <label>FGL - Rep - In Progress - Contract Sign</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FGL_Rep_IP_Cont__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= FGL AND Contact Type=Rep ANDStatus=In Progress  AND Substatus= Contacted</inlineHelpText>
+        <label>FGL - Rep - In Progress - Contacted</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FGL_Rep_IP_F_Up_Pend__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= FGL AND Contact Type=Rep ANDStatus=In Progress  AND Substatus= Follow Up / Pending</inlineHelpText>
+        <label>FGL - Rep - In Progress- Follow Up/Pend</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FGL_Rep_IP_Others__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= FGL AND Contact Type=Rep ANDStatus=In Progress AND Creation_CMPGN_NR__c != Current Campaign   AND Substatus not in ( Rolled Up, Rep Account Received, Follow Up / Pending, Contract Signed, Scheduled, Contacted, Delegated, Lead Reassigned)</inlineHelpText>
+        <label>FGL - Rep - In Progress - Others</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FGL_Rep_IP_Rep_Act_Rec__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= FGL AND Contact Type=Rep ANDStatus=In Progress  AND Substatus= Rep Account Received</inlineHelpText>
+        <label>FGL - Rep - In Progress - Rep Acct Recv</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FGL_Rep_IP_Scheduled__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= FGL AND Contact Type=Rep ANDStatus=In Progress  AND Substatus=  scheduled</inlineHelpText>
+        <label>FGL - Rep - In Progress - Scheduled</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FGL_Rep_In_Progress__c</fullName>
+        <externalId>false</externalId>
+        <formula>FGL_Rep_IP_Cont__c + FGL_Rep_IP_Scheduled__c + FGL_Rep_IP_Cont_Sign__c + FGL_Rep_IP_F_Up_Pend__c + FGL_Rep_IP_Rep_Act_Rec__c + FGL_Rep_IP_Others__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>FGL - Rep - In Progress</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FGL_Rep_New_New_Lead__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= FGL AND Contact Type=Rep AND Status=New</inlineHelpText>
+        <label>FGL - Rep - New - New Lead</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FGL_Rep_Rej_Con_N_Res__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= FGL AND Contact Type=Rep AND Status=Rejected AND Sub_Status_Change_CMPGN_NR__c = Current Campaign  AND Substatus=Contacted - No response/Slow</inlineHelpText>
+        <label>FGL - Rep - Rejected - Contacted No Resp</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FGL_Rep_Rej_Con_No_Int__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= FGL AND Contact Type=Rep AND Status=Rejected AND Sub_Status_Change_CMPGN_NR__c = Current Campaign  AND Substatus=Contacted - No Longer Interested</inlineHelpText>
+        <label>FGL - Rep Rejected Contacted - No Int</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FGL_Rep_Rej_Dup_App__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= FGL AND Contact Type=Rep AND Status=Rejected AND Sub_Status_Change_CMPGN_NR__c = Current Campaign  AND Substatus=Duplicate Lead - Appointed by another</inlineHelpText>
+        <label>FGL - Rep Rejected Duplicated Appointed</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FGL_Rep_Rej_Ex_as_Rep__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= FGL AND Contact Type=Rep AND Status=Rejected AND Sub_Status_Change_CMPGN_NR__c = Current Campaign  AND Substatus=Exists as Representative</inlineHelpText>
+        <label>FGL - Rep Rejected Exists as Represented</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FGL_Rep_Rej_Oth__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= FGL AND Contact Type=Rep AND Status=Rejected AND Sub_Status_Change_CMPGN_NR__c = Current Campaign  AND Substatus not in (Wrong Data, Underage, Exists as a Representative, Duplicated Lead - Apppointed by another, Contacted - No longer Intereste</inlineHelpText>
+        <label>FGL - Rep - Rejected - Others</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FGL_Rep_Rej_Und__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= FGL AND Contact Type=Rep AND Status=Rejected AND Sub_Status_Change_CMPGN_NR__c = Current Campaign  AND Substatus= underage</inlineHelpText>
+        <label>FGL - Rep - Rejected - Underage</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FGL_Rep_Rej_Wr_Data__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Lead Type= FGL AND Contact Type=Rep AND Status=Rejected AND Sub_Status_Change_CMPGN_NR__c = Current Campaign  AND Substatus=Wrong Data</inlineHelpText>
+        <label>FGL - Rep - Rejected - Wrong Data</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FGL_Rep_Rejected__c</fullName>
+        <externalId>false</externalId>
+        <formula>FGL_Rep_Rej_Con_No_Int__c + FGL_Rep_Rej_Con_N_Res__c + FGL_Rep_Rej_Dup_App__c + FGL_Rep_Rej_Ex_as_Rep__c + FGL_Rep_Rej_Und__c + FGL_Rep_Rej_Wr_Data__c + FGL_Rep_Rej_Oth__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>FGL - Rep - Rejected</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FGL_Rep_Time_to_Con__c</fullName>
+        <description>Time to contact for FGL Reps</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Time to contact for FGL Reps</inlineHelpText>
+        <label>FGL - Rep Time to Con</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FGL_Rep_Time_to_Conv__c</fullName>
+        <description>Time to conversion for FGL Reps</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Time to conversion for FGL Reps</inlineHelpText>
+        <label>FGL - Rep Time to Conv</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FGL_Rep__c</fullName>
+        <externalId>false</externalId>
+        <formula>FGL_Rep_New_New_Lead__c + FGL_Rep_Closed__c + FGL_Rep_Rejected__c + FGL_Rep_In_Progress__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>FGL - Rep</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FGL_Time_to_Contact__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Sum (Time_to_Contact__c)  where Lead Type= FGL AND  Contact Type IN(Cust, Rep) AND First_Contacted_CMPGN_NR__c = Current Campaign</inlineHelpText>
+        <label>FGL - Time to Contact</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>FGL_Time_to_Conversion__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Sum(Time_to_Conversion__c) where Lead Type= FGL AND  Contact Type IN(Cust, Rep) AND Status=Closed AND Sub_Status_Change_CMPGN_NR__c=Current Campaign</inlineHelpText>
+        <label>FGL - Time to Conversion</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_ID_ACCT_NR_KEY__c</fullName>
+        <description>Refers to User__r.MRKT_ID_ACCT_NR_KEY__c</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Refers to User__r.MRKT_ID_ACCT_NR_KEY__c</inlineHelpText>
+        <label>MRKT ID ACCT NR KEY</label>
+        <length>50</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_ID_ACCT_NR_ZONE_CMPGN_KEY__c</fullName>
+        <caseSensitive>false</caseSensitive>
+        <description>Primary key: market code + account number + zone code + campaign number</description>
+        <externalId>true</externalId>
+        <inlineHelpText>Primary key: market code + account number + zone code + campaign number</inlineHelpText>
+        <label>MRKT_ID_ACCT_NR_ZONE_CMPGN_KEY</label>
+        <length>255</length>
+        <required>true</required>
+        <type>Text</type>
+        <unique>true</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_ID__c</fullName>
+        <description>Refers to User__r.MRKT_ID__c</description>
+        <externalId>true</externalId>
+        <inlineHelpText>Refers to User__r.MRKT_ID__c</inlineHelpText>
+        <label>MRKT ID</label>
+        <length>50</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Market__c</fullName>
+        <externalId>false</externalId>
+        <label>Market</label>
+        <referenceTo>Market__c</referenceTo>
+        <relationshipLabel>Leads Metrics</relationshipLabel>
+        <relationshipName>Leads_Metrics</relationshipName>
+        <required>false</required>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>QRTR__c</fullName>
+        <description>Market Current Quarter Nr. (Refers to Market__r.CURRENT_QRTR__c)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Market Current Quarter Nr. (Refers to Market__r.CURRENT_QRTR__c)</inlineHelpText>
+        <label>QRTR</label>
+        <length>20</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SLS_DIV_NM__c</fullName>
+        <description>Division code (Refers to Lead.SLS_DIV_NM__c)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Division code (Refers to Lead.SLS_DIV_NM__c)</inlineHelpText>
+        <label>SLS_DIV_NM</label>
+        <length>100</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SLS_ZONE_CD__c</fullName>
+        <description>Zone code (Refers to Lead.SLS_ZONE_CD__c)</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Zone code (Refers to Lead.SLS_ZONE_CD__c)</inlineHelpText>
+        <label>SLS_ZONE_CD</label>
+        <length>100</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Title__c</fullName>
+        <description>Refers to User__r.LDRSHP_TITL_LVL_NBR__c</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Refers to User__r.LDRSHP_TITL_LVL_NBR__c</inlineHelpText>
+        <label>Title</label>
+        <length>50</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>User__c</fullName>
+        <externalId>false</externalId>
+        <label>User</label>
+        <referenceTo>User</referenceTo>
+        <relationshipName>Leads_Metrics</relationshipName>
+        <required>false</required>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Year__c</fullName>
+        <externalId>false</externalId>
+        <label>Year</label>
+        <length>4</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Lead Metrics</label>
+    <nameField>
+        <displayFormat>LM-{0000}</displayFormat>
+        <label>Lead Metrics Id</label>
+        <type>AutoNumber</type>
+    </nameField>
+    <pluralLabel>Leads Metrics</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>Private</sharingModel>
+</CustomObject>

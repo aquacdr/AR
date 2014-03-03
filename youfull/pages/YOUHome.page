@@ -1,0 +1,498 @@
+<apex:page showHeader="false" sidebar="false"
+    standardStyleSheets="false" cache="false"
+    controller="LandingPageConfigController" action="{!isValidLandingPage}"> 
+    <!-- This Page to be deleted after Complete SF and Cognizant Integration -->
+
+    <apex:form >
+        <apex:composition template="YOUPageTemplate">
+            <apex:define name="content">
+                <apex:stylesheet value="{!URLFOR($Resource.EUL_Resources, 'cmp_style.css')}" />
+                <script type="text/javascript"> 
+        //Added by Raktim on 21Jun 2013
+        var isMailPlanMrkt = '{!isMailPln}';
+        var isImperson = '{!isImpersonation}';
+        var campno="{!campaignNumber}";
+        //alert(' isMailPlanMrkt :: '+isMailPlanMrkt);
+        //alert(' isImperson :: '+isImperson);
+        jQuery(document).ready(function() { 
+          //  alert(' isMailPlanMrkt 11 :: '+isMailPlanMrkt);
+            if(isMailPlanMrkt == 'true' && isImperson == 'true'){
+                
+                jQuery("#nonMailPlnImprs").hide();
+                jQuery("#MailPlnEnbldImprs").show();
+                jQuery("#MailPlnNxt").show();
+                
+            }else if(isMailPlanMrkt == 'true' && isImperson == 'false'){
+                
+                // jQuery("#MailPlnEnbld").show();
+                // jQuery("#nonMailPln").hide();
+                 jQuery("#MailPlnNxt").show();
+                 
+            }else if(isMailPlanMrkt == 'false' && isImperson == 'true'){
+                
+               // jQuery("#nonMailPln").show();
+               // jQuery("#nonMailPlnImprs").show();
+               // jQuery("#MailPlnNxt").hide();
+                 
+            }
+            else if(isMailPlanMrkt == 'false' && isImperson == 'false'){
+                
+               // jQuery("#MailPlnEnbld").hide();
+               // jQuery("#nonMailPln").show();
+              //  jQuery("#MailPlnNxt").hide();
+            }
+            
+            //Added By Swarnava for Mail Plan:View Full Report
+            if(isMailPlanMrkt == 'true'){
+            jQuery('.lft_nav,div.cmpbtm_bx_gry').find('a').each(function(){
+            //console.log(jQuery(this).attr());
+           // var campno="{!campaignNumber}";
+            //console.log("{!campaignNumber}");
+            if(jQuery(this).attr('href').indexOf('6202')>-1)
+              jQuery(this).attr('href',jQuery(this).attr('href')+'&CNO='+campno);
+            else if(jQuery(this).attr('href').indexOf('Genealogy')>-1)
+              jQuery(this).attr('href',jQuery(this).attr('href')+'&campaignId='+campno+'&campaign='+campno);
+            else if(jQuery(this).attr('href').indexOf('NewRepReport')>-1)
+              jQuery(this).attr('href',jQuery(this).attr('href')+'&CNO='+campno);   
+            else
+              jQuery(this).attr('href',jQuery(this).attr('href')+'&campaignId='+campno);
+            });
+            
+            }
+        });
+        // EoC
+        ALM_PAGE_NAME="{!OmniturePageName}";
+        var fixStyling = function (){ 
+                var persMsgDiv=jQuery("#personal_message"); 
+                var tempPersMsgDiv=jQuery("#send_personal_Msg"); 
+                jQuery(persMsgDiv).css('display','none'); 
+                jQuery(persMsgDiv).css('visibility','hidden'); 
+                jQuery(persMsgDiv).html(jQuery(tempPersMsgDiv).html()); 
+                jQuery(tempPersMsgDiv).html('');
+            }
+
+        function modifyCampaignParam(campaignVal) {
+            /*
+             * queryParameters -> handles the query string parameters
+             * queryString -> the query string without the fist '?' character
+             * re -> the regular expression
+             * m -> holds the string matching the regular expression
+             */
+            var queryParameters = {}, queryString = location.search.substring(1),
+                re = /([^&=]+)=([^&]*)/g, m;
+            
+            // Creates a map with the query string parameters
+            while (m = re.exec(queryString)) {
+                queryParameters[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
+            }
+             
+            // Add new parameters or update existing ones
+            queryParameters['campaign'] = campaignVal;
+            
+             
+            /*
+             * Replace the query portion of the URL.
+             * Query.param() -> create a serialized representation of an array or
+             *     object, suitable for use in a URL query string or Ajax request.
+             */
+            location.search = jQuery.param(queryParameters);
+        }
+
+
+					function displayit() {
+						var tp = jQuery(window).scrollTop()
+								+ jQuery(window).height() / 2 - 250;
+						jQuery(".popup_ccntr").css("top", tp);
+						jQuery("#email_sel_mask2").css('height',
+								jQuery("#email_sel_mask").css('height'));
+						if (jQuery("#email_sel_mask2").attr('class') == 'white_trans_closed') {
+							if (jQuery("#email_sel_mask2").attr('class') == 'white_trans') {
+								jQuery("#email_sel_mask2").attr('class',
+										'white_trans_closed');
+							}
+							jQuery("#email_sel_mask2").attr('class',
+									'white_trans');
+						} else {
+							jQuery("#email_sel_mask2").attr('class',
+									'white_trans_closed');
+						}
+						jQuery('#org.ajax4jsf.oncomplete').attr('style',
+								'display:hidden');
+					}
+
+					// MODIFIED BY Vijay Mittal FOR SEARCH COMPONENT POPUP WINODOW
+					// Added the below function to toggle the display of search component div
+					function toggleSearchBoxDisplay() {
+						if (jQuery("#search_dialog_box").attr('class') == 'white_trans') {
+							jQuery("#search_dialog_box").attr('class',
+									'white_trans_closed');
+						} else {
+							jQuery("#search_dialog_box").attr('class',
+									'white_trans');
+						}
+					}
+					//added by Samudra
+					function hideSOverlayPage() {
+						var tp = jQuery(window).scrollTop()
+								+ jQuery(window).height() / 2 - 250;
+						var c = jQuery("#global_footer").offset().top;
+						jQuery("#summwrapper").css("padding-top", tp);
+						jQuery("#summwrapper").css("height", c);
+						if (jQuery("#summary_overlay").attr('class') == 'white_trans_soverlay') {
+							jQuery("#summary_overlay").attr('class',
+									'white_trans_soverlay_closed');
+							jQuery("#summwrapper").css('height',
+									jQuery("#email_sel_mask").css('height'));
+						} else {
+							jQuery("#summary_overlay").attr('class',
+									'white_trans_soverlay');
+						}
+					}//function changed by swarnava
+
+					//added by Raktim on 17 May, 2013
+					function hideEmailOverlayPage() {
+						var tp = jQuery(window).scrollTop()
+								+ jQuery(window).height() / 2 - 250;
+						var c = jQuery("#global_footer").offset().top;
+
+						jQuery("#emailmsgwrapper").css("padding-top", tp);
+						jQuery("#emailmsgwrapper").css("height", c);
+
+						if (jQuery("#email_msg").attr('class') == 'white_trans_emailmsgoverlay') {
+							jQuery("#email_msg").attr('class',
+									'white_trans_emailmsgoverlay_closed');
+							jQuery("#emailmsgwrapper").css('height',
+									jQuery("#email_sel_mask").css('height'));
+						} else {
+							jQuery("#email_msg").attr('class',
+									'white_trans_emailmsgoverlay');
+						}
+
+					}//End of Method
+				</script>
+				<style>
+.cmplnk_arw_down {
+	background:
+		url("{!URLFOR($Resource.EUL_Resources, 'sml_pnk_arw_dwn.png')}")
+		no-repeat scroll 0 4px transparent;
+	margin-top: 2px;
+}
+
+.srch_bx_cntr input {
+	padding-top: 0px;
+}
+
+@
+-moz-document url-prefix  () { .srch_bx_cntr input {
+	padding-top: 2px;
+}
+
+}
+.cmpinnerBox { /*max-height:254px;*/
+	min-height: 180px;
+	/*Added by Samudra 
+    width:170px;
+    height:217px;
+    padding-left:20px;
+    padding-top:20px;
+    padding-right:20px;
+    padding-bottom:20px;
+    Added by Samudra*/
+}
+
+.cmpinnerBox .innerSep {
+	min-height: 180px !important;
+}
+
+.cmpleft {
+	width: 50%;
+}
+
+.cmpright {
+	width: 50%;
+}
+
+.cmpslide_tabular td {
+	padding-left: 15px;
+	padding-top: 3px;
+	padding-right: 5px;
+	font-size: 12px;
+	color: #666;
+	font-weight: 700;
+}
+
+.cmpblack {
+	color: 333333;
+	font-weight: 700;
+}
+
+.cmpabv_btm {
+	float: left;
+	padding: 5px 20px;
+	background-color: white;
+	bottom: 48px;
+	width: 318px;
+	position: absolute;
+	overflow: hidden;
+	left: 0px;
+}
+
+.cmpmagenta {
+	color: #Ed008c;
+}
+
+.cmpinnerBox .cmpheader {
+	font: normal bold 12px Helvetica, serif;
+	padding-bottom: 10px;
+}
+
+a.selected {
+	font-weight: bold;
+}
+
+.impers_tp_bg {
+	width: 770px;
+	background:
+		url("{!URLFOR($Resource.ALMYouAssets,'images/impers_bg.gif')}")
+		repeat-x scroll center top transparent;
+	background-size: 100% auto;
+}
+</style>
+				<!-- apex:form>
+<apex:actionFunction name="CurrentCampaign" action="{!CurrentCampaign}"/>
+<apex:actionFunction name="priorCampaign" action="{!priorCampaign}"/>
+</apex:form -->
+
+				<apex:outputPanel rendered="{!isImpersonation}">
+					<!--<c:ReportsList mktId="62" pfName="Avon Leader"/> -->
+					<!-- impersonation -->
+					<!--Column area starts-->
+					<div class="column_two">
+						<div class="breadcrumb_imper" style="width: 790px;">
+							<!--<h2 class="brd_hdr" style="width:375px;padding-left:20px;letter-spacing:-0.1em;">{!username}</h2> -->
+							<!-- changed by Supriyo 12 March 2013; added padding-left, letter-spacing; original width 975px -->
+                    	<!-- Changed by Prakash on October 9 2013 to incorporate Morgan's recommendations -->
+                   		<!--  <h2 class="brd_hdr"
+                        style="width: 362px; padding-left: 20px; letter-spacing: -0.1em; padding-bottom: 12px;">{!username}</h2>  -->
+							<h2 class="brd_hdr"
+								style="width: 65%; padding-left: 20px; letter-spacing: -0.1em; display: inline-block;">{!username}</h2>
+							<!-- changed by Raktim 19March 2013, as per HTML DEVELOPER w.r.t Style Guide -->
+							<!-- <div class="brds_wrp" style="width:390px;padding-top:2px;">-->
+							<!-- changed by Raktim 19March 2013, as per HTML DEVELOPER w.r.t Style Guide -->
+                    		<!-- Changed by Prakash on October 9 2013 to incorporate Morgan's recommendations -->
+                   			<!--  <div class="brds_wrp"
+                        	style="width: 403px; padding-top: 2px; align: right; float: right; padding-right: 24px;"> -->
+							<div class="brds_wrp"
+								style="width: 30%; line-height: 15px; text-align: right; float: right;">
+								<p class="left" style="color: #777777; font-size: 1.2em;">{!$Label.View_Current_Campaign}:</p>
+								<!-- Changed by Raktim on 21Jun 2013 - Mail Plan START -->
+								<!-- changed by swarnava for Mail Plan-->
+								<ul class="brd_lst">
+									<apex:outputpanel rendered="{!isMailPln}">
+										<li id="MailPlnEnbld"><a
+											href="javascript:modifyCampaignParam('prior');"
+											Class="{!IF($CurrentPage.parameters.campaign=='prior', 'selected', '')}">{!IF(!isMailPln,$Label.Prior_Campaign,currMarket.PREV_1_CMPGN_NR__c)}</a></li>
+									</apex:outputpanel>
+									<li><a href="javascript:modifyCampaignParam('current');"
+										Class="{!IF($CurrentPage.parameters.campaign=='prior' || $CurrentPage.parameters.campaign=='next', '', IF($CurrentPage.parameters.campaign=='current'||isCurrCampMyDefault||mailPlanCampaignNumbr==currMarket.CMPGN_NR__c,'selected',''))}">{!IF(!isMailPln,$Label.This_Campaign,currMarket.CMPGN_NR__c)}</a></li>
+									<apex:outputpanel rendered="{!!isMailPln}">
+										<li class="last" id="nonMailPln"><a
+											href="javascript:modifyCampaignParam('prior');"
+											Class="{!IF($CurrentPage.parameters.campaign=='prior', 'selected', '')}">{!$Label.Prior_Campaign}</a></li>
+									</apex:outputpanel>
+									<apex:outputpanel rendered="{!isMailPln}">
+										<li class="last" id="MailPlnNxt"><a
+											href="javascript:modifyCampaignParam('next');"
+											Class="{!IF($CurrentPage.parameters.campaign=='prior' || $CurrentPage.parameters.campaign=='current', '', IF($CurrentPage.parameters.campaign=='next'||(isSellingCampMyDefault && mailPlanCampaignNumbr==currMarket.NEXT_1_CMPGN_NR__c) ,'selected',''))}">{!currMarket.NEXT_1_CMPGN_NR__c}</a></li>
+									</apex:outputpanel>
+                        		<!-- Drop Down component moved as per Morgan's HTML recommendations on 10/09 -->
+                        		<!-- <li class="last"><c:DropDownComponent mktId="{!marketId}"
+                            		impersonate="{!isImpersonation}"
+                            		userTitleNbr="{!currUser.LDRSHP_TITL_LVL_NBR__c}"
+                            		pfID="{!currUser.Profile.Name}"  
+                             		/></li>  -->
+								</ul>
+								<!-- changed by swarnava for Mail Plan-->
+								<!-- Changed by Raktim on 21Jun 2013 - Mail Plan END -->
+								<!-- Line below commented to incorporate Morgan's HTML changes -->
+                   				<!--  <div style="text-align:right;color: #999999;">{!BatchTimeStamp}</div> -->
+								
+							</div>
+						</div>
+						<br />
+
+
+
+						<div class="cntr impers_tp_bg mar_tp_0" style="width: 760px\9; 760px;"> 
+							<div class="gry_grd" style="padding-bottom: 0px; width:760px\9; width:760px; padding-top: 0px; &nbsp;padding-left: 0px; &nbsp;padding-right: 0px;">
+                    		<!-- Lines below added to incorporate Morgan's HTML changes on 10/09: START -->
+								<c:DropDownComponent mktId="{!marketId}"
+									impersonate="{!isImpersonation}"
+									userTitleNbr="{!currUser.LDRSHP_TITL_LVL_NBR__c}"
+									pfID="{!currUser.Profile.Name}" />
+								<div style="width: 49%; text-align: right; color: #999999; display: inline-block; height: 24px; line-height: 24px; padding-right: 5px;">{!BatchTimeStamp}</div>
+                   				<!-- Lines below added to incorporate Morgan's HTML changes on 10/09: END -->
+								<apex:repeat value="{!listComponent}" var="lstCmp">
+							<!-- 
+                                <c:PageSection sectionTitle="{!lstCmp.Component_Title__c}" 
+                                loadPageName="/apex/{!lstCmp.VF_Page_Name__c}{!queryParam}" 
+                                sectionColor="{!lstCmp.Component_Header_Color__c}" 
+                                sectionDir="{!LOWER(lstCmp.Horizontal_Position__c)}"  
+                                reportSection="{!lstCmp.Is_Full_Report_Link_Available__c}"></c:PageSection>
+                 			-->
+
+							<apex:outputpanel >
+							  <c:PageSection sectionTitle="{!$Label[lstCmp.VF_Page_Name__c]}"
+								loadPageName="/apex/{!lstCmp.VF_Page_Name__c}{!queryParam}"
+								sectionColor="{!lstCmp.Component_Header_Color__c}"
+								sectionDir="{!LOWER(lstCmp.Horizontal_Position__c)}"
+								reportSection="{!lstCmp.Is_Full_Report_Link_Available__c}"
+								reportUrl="{!lstCmp.Full_Report_Link_URL__c}"
+								summaryDisplayIcon="{!lstCmp.Is_summary_overlay_display__c}"></c:PageSection>  
+							</apex:outputpanel>
+						
+							</apex:repeat>
+							</div>
+
+							<!--Banner area starts -->
+							<div class="marg_sprtr horz-sprtr">&nbsp;</div>
+							<!-- Changed by Snehashis for removing Banner on 18 Feb, 2013 -->
+							<!-- div class="cntr">
+          <div class="btm_bnr_plholder"><apex:image value="{!URLFOR($Resource.ALMYouAssets,'images/banner-img.jpg')}" alt=""/></div>
+          <div class="btm_bnr_plholder mar_lft_20"><apex:image value="{!URLFOR($Resource.ALMYouAssets,'images/banner-img1.jpg')}" alt=""/></div>
+        </div-->
+							<!--Banner area ends -->
+							<!-- c:PersonalMessage / -->
+						</div>
+
+					</div>
+					<!-- impersonation ends -->
+				</apex:outputPanel>
+
+				<apex:outputPanel rendered="{!(!isImpersonation)}">
+					<!-- c:PersonalMessage / -->
+					<div class="breadcrumb">
+						<div class="brds_wrp" style="width: 65%; padding-top: 2px;">
+							<p class="left">{!$Label.View_Current_Campaign}:</p>
+							<ul class="brd_lst">
+								<!-- changed by swarnava for Mail Plan Srart-->
+								<apex:outputpanel rendered="{!isMailPln}">
+									<li id="MailPlnEnbld"><a
+										href="javascript:modifyCampaignParam('prior');"
+										Class="{!IF($CurrentPage.parameters.campaign=='prior', 'selected', '')}">{!IF(!isMailPln,$Label.Prior_Campaign,currMarket.PREV_1_CMPGN_NR__c)}</a></li>
+								</apex:outputpanel>
+								<li><a href="javascript:modifyCampaignParam('current');"
+									Class="{!IF($CurrentPage.parameters.campaign=='prior' || $CurrentPage.parameters.campaign=='next', '', IF($CurrentPage.parameters.campaign=='current'||isCurrCampMyDefault||mailPlanCampaignNumbr==currMarket.CMPGN_NR__c,'selected',''))}">{!IF(!isMailPln,$Label.This_Campaign,currMarket.CMPGN_NR__c)}</a></li>
+								<apex:outputpanel rendered="{!!isMailPln}">
+									<li class="last" id="nonMailPln"><a
+										href="javascript:modifyCampaignParam('prior');"
+										Class="{!IF($CurrentPage.parameters.campaign=='prior', 'selected', '')}">{!$Label.Prior_Campaign}</a></li>
+								</apex:outputpanel>
+								<apex:outputpanel rendered="{!isMailPln}">
+									<li class="last" id="MailPlnNxt"><a
+										href="javascript:modifyCampaignParam('next');"
+										Class="{!IF($CurrentPage.parameters.campaign=='prior' || $CurrentPage.parameters.campaign=='current', '', IF($CurrentPage.parameters.campaign=='next'||(isSellingCampMyDefault && mailPlanCampaignNumbr==currMarket.NEXT_1_CMPGN_NR__c) ,'selected',''))}">{!currMarket.NEXT_1_CMPGN_NR__c}</a></li>
+									<!-- changed by swarnava for Mail Plan End-->
+								</apex:outputpanel>
+							</ul>
+						</div>
+						<div style="text-align: right; color: #999999;">{!BatchTimeStamp}</div>
+					</div>
+					<div class="cntr mar_tp_0" style="width: 775px;">
+
+						<apex:repeat value="{!listComponent}" var="lstCmp">
+                        
+                        <apex:outputpanel >
+							 <c:PageSection sectionTitle="{!$Label[lstCmp.VF_Page_Name__c]}"
+								loadPageName="/apex/{!lstCmp.VF_Page_Name__c}{!queryParam}"
+								sectionColor="{!lstCmp.Component_Header_Color__c}"
+								sectionDir="{!LOWER(lstCmp.Horizontal_Position__c)}"
+								reportSection="{!lstCmp.Is_Full_Report_Link_Available__c}"
+								reportUrl="{!lstCmp.Full_Report_Link_URL__c}"
+								summaryDisplayIcon="{!lstCmp.Is_summary_overlay_display__c}"></c:PageSection>  
+						</apex:outputpanel>
+
+						<!-- 
+            			<c:PageSection sectionTitle="{!lstCmp.Component_Title__c}" 
+                           loadPageName="/apex/{!lstCmp.VF_Page_Name__c}{!queryParam}" s
+                           ectionColor="{!lstCmp.Component_Header_Color__c}" 
+                           sectionDir="{!LOWER(lstCmp.Horizontal_Position__c)}"  
+                           reportSection="{!lstCmp.Is_Full_Report_Link_Available__c}"></c:PageSection>
+             			-->
+						</apex:repeat>
+						<!--Banner area starts -->
+						<!--        <div class="marg_sprtr horz-sprtr">&nbsp;</div>
+        <div class="cntr">
+          <div class="btm_bnr_plholder"><apex:image value="{!URLFOR($Resource.ALMYouAssets,'images/banner-img.jpg')}" alt=""/></div>
+          <div class="btm_bnr_plholder mar_lft_20"><apex:image value="{!URLFOR($Resource.ALMYouAssets,'images/banner-img1.jpg')}" alt=""/></div>
+        </div>  -->
+						<!--Banner area ends -->
+					</div>
+				</apex:outputPanel>
+
+				<c:PersonalMessage rendered="{!AND(NOT(isImpersonation),emailAllowed)}" />
+
+			 	<apex:actionFunction name="viewRepDetail" action="{!callRepDetails}"
+					rerender="repDetail" oncomplete="javascript:displayit();"
+					status="counterStatus">
+					<apex:param name="repDetailAcctNbr" assignTo="{!repDetailAcctNbr}"
+						value="{!repDetailAcctNbr}" />
+				</apex:actionFunction> 
+
+				<!-- MODIFIED BY Vijay Mittal FOR SEARCH COMPONENT POPUP WINODOW -->
+				<!-- action function is added so that to save the search keyword as page parameter (same as coaching record) -->
+				  <apex:actionFunction name="showSearchResults"
+					action="{!saveSearchText}" rerender="searchPanelBox"
+					oncomplete="javascript:toggleSearchBoxDisplay();"
+					status="counterStatus">
+					<apex:param name="searchText" assignTo="{!searchText}"
+						value="{!searchText}" />
+				</apex:actionFunction> 
+
+
+				 <apex:actionStatus id="counterStatus" onstart="showProcessingMsg();"
+					onstop="showProcessingMsg();" /> 
+
+				<div id="email_sel_mask2" class="white_trans_closed">
+					<apex:outputPanel id="repDetail" layout="block">
+						<c:CoachingRecord repacctnbr="{!repDetailAcctNbr}"
+							rendered="{!repDetailAcctNbr!=null}" />
+					</apex:outputPanel>
+				</div> 
+
+				<!-- MODIFIED BY Vijay Mittal FOR SEARCH COMPONENT POPUP WINODOW -->
+				<!-- Below is the div which is displayed to show the search results -->
+				
+				 <div id="search_dialog_box" class="white_trans_closed">
+					<apex:outputPanel id="searchPanelBox" layout="block">
+						<c:Search keywordParam="{!searchText}" />
+					</apex:outputPanel>
+				</div> 
+				
+				<!--Added by Samudra-->
+				 <div id="summary_overlay" class="white_trans_soverlay_closed">
+					<apex:outputPanel id="summaryoverlay" layout="none">
+						<c:SummaryOverlay camp_number="{!campaignNumber}"
+							SiteHeaderController="{!siteh}" />
+					</apex:outputPanel>
+				</div>  
+
+			</apex:define>
+
+			<apex:define name="contentHidden">
+				<!-- 
+    empty div that will be populated with dynamic content from RepDetail Page
+-->
+				<!-- 
+     empty div that will be populated with the form data sending Personal Messages
+ -->
+				<div id="personal_message354"></div>
+			</apex:define>
+		</apex:composition>
+	</apex:form>
+	<c:OmnitureWebTrack mktName="{!currMarket.Omniture_Suite_Name__c}"
+		mktAcctKey="{!loggedUser.MRKT_ID_ACCT_NR_KEY__c}"
+		userType="{!loggedUser.Profile.Name}"
+		userTitle="{!loggedUser.LDRSHP_TITL_LVL_NBR__c}"
+		rendered="{!globalConfig.Omniture_Tracking_Enabled__c}" />
+</apex:page>

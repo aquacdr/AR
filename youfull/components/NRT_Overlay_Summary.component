@@ -1,0 +1,273 @@
+<apex:component controller="NRT_Overlay_Summary_Ctl">
+	
+	<apex:attribute type="String" name="p_ZoneName" required="false"
+		assignTo="{!zoneName}" description="The zone in context" />
+	<apex:attribute type="String" name="p_MarketId" required="false"
+		assignTo="{!marketId}" description="The zone in context" />
+	<apex:attribute type="String" name="p_CampaignId" required="false"
+		assignTo="{!campaignId}" description="The zone in context" />
+	<apex:attribute type="String" name="p_NextCampaignId" required="false"
+		assignTo="{!nextCampaignId}" description="The zone in context" />
+	<apex:attribute type="Boolean" name="p_ShowLink" required="false" 
+		default="true" description="used to show or hide the link" /> 
+
+	<apex:stylesheet value="{!URLFOR($Resource.ALMYouAssets, 'css/BP.css')}" />
+	<apex:stylesheet value="{!URLFOR($Resource.DatePick, 'css/ui-lightness/jquery-ui-1.8.10.custom.css')}" />
+	<apex:includeScript value="{!URLFOR($Resource.DatePick, 'js/jquery-ui-1.8.10.custom.min.js')}" />
+	<apex:stylesheet value="{!URLFOR($Resource.ALMYouAssets, 'css/BP.css')}" />
+	<apex:stylesheet value="{!URLFOR($Resource.ALMYouAssets, 'css/scroll_divTable.css')}" />
+	<apex:includeScript value="{!URLFOR($Resource.ALMYouAssets,'css/scroll_divTable.js')}" />
+	<apex:stylesheet value="{!URLFOR($Resource.EUL_Resources, 'cmp_style.css')}" />
+
+	<apex:stylesheet value="{!URLFOR($Resource.ALMYouAssets,'css/YOU_style.css')}" />
+ 
+	<style type="text/css">
+		a {
+			text-decoration: none;
+			color: rgb(236, 0, 140);
+		}
+		
+		h1 {
+			size: 12pt;
+		}
+	</style>
+ 
+	<script type="text/javascript">
+    jQuery(document).ready(
+            function(){
+                jQuery("#NrtOverlay").css('display','none');
+        });
+        
+        //eoc subhamay 05072012
+        function hideNrtPage()
+	          {
+	             jQuery("#NrtOverlay").css('display','none');
+	             jQuery("#full_page_overlay").hide();
+	             jQuery("#search_dialog_box").attr('class','white_trans_closed');
+	          }
+        
+	          function showNrtPage()
+	          {
+	             //var x = jQuery("#NrtOverlay").dialog();
+	             //var tp=jQuery(window).scrollTop()+jQuery(window).height()/2-250;
+	             //var lt=jQuery(window).scrollTop()+jQuery(window).width()/2-250;
+	             //jQuery(".popup_ccntr").css("top",-100);
+	            // jQuery(".popup_ccntr").css("left",100);
+	             jQuery("#NrtOverlay").css('display','block');
+	             jQuery("#NrtOverlay").attr('class','white_trans');
+				 jQuery("#NrtOverlay").css('background', 'none')
+				 jQuery('#full_page_overlay').show();
+				 var marginTop = ( jQuery(window).height() - jQuery(".popup_ccntr.pop_width").height()) / 2;
+				 var marginLeft = ( jQuery(window).width() - jQuery(".popup_ccntr.pop_width").width()) / 2;
+
+				jQuery('.popup_ccntr.pop_width').css({
+					'position' : 'fixed',
+					'top' : marginTop,
+					'left' : marginLeft
+				 });
+
+	          }
+        
+        function showProcessingMsg(){
+             
+              if(jQuery("#ProcessingMsgDiv").attr('class')=='white_trans_closed'){
+                  jQuery("#ProcessingMsgDiv").attr('class','white_trans');
+                  jQuery("#ProcessingMsgDiv").css("height",function(){return (jQuery(document).height())});
+                  jQuery("#progressMsgDivInner").css("top",function(){return (jQuery(window).scrollTop()+jQuery(window).height()/2)});
+              }else{ 
+                  jQuery("#ProcessingMsgDiv").attr('class','white_trans_closed');
+              }
+              
+          } 
+          
+    </script>
+    
+
+
+           <!--begin new modal-->  
+            <style type="text/css">
+               .big_pnk_hdr_overlay {
+               background:url({!URLFOR($Resource.Pink_Background)}) no-repeat;
+               color: #FFFFFF;
+               float: left;
+               font-size: 2.4em;
+               height:63px;
+               /*Commented by Morgan to fix the HTML on 10/09*/
+               /*margin: -71px 0 0 -19px;*/
+                /*Commented by Morgan to fix the HTML on 10/09*/
+               /*width: 604px;*/
+               width:880px;
+               margin:-64px 0 0 -23px;
+               padding:16px 0 0 26px;
+               font-weight:100;
+                line-height:23px;
+               }
+               .no_pop_border{
+               border:none;
+               margin-left:2px;
+               }
+               .table_header_text {
+               display:table-cell;
+               font-weight: bold;
+               font-size: 1.1em;
+               line-height: 2em;
+               width:115px;
+               text-align:center;
+               padding:5px;
+               }
+               .no_uppercase {
+               text-transform: none;
+               margin: 0 10px 25px 5px;
+               width:560px;
+               font-weight:500;
+               }
+               .update_text {
+               font-size: .4em;
+               margin-right:330px;
+               }
+               .pop_width {
+               width: 585px;
+               }
+               .decimal-align {
+               display:table-cell;
+               text-align: right;
+               font-size: 1.1em;
+               line-height: 2em;
+               width:92px;
+               padding:5px 35px 5px 0;
+               color: #666666;
+               }
+               .left_column_width {
+               width: 20%;
+               text-align:right;
+               line-height: 2em;
+               padding-right: 10px;
+               }
+               .popup_table_border {
+               display:inline-block;
+               width:70%;
+               border: 1px solid #cccccc;
+               line-height: 2em;
+               }
+               .popup_hdrs {
+	font-size:1.4em;
+	line-height:1.4em;
+	padding:0 0 5px 0;
+	 
+	 
+}
+         .table-gray_bg {
+               background: #f3f3f3;
+               }
+            </style>
+          <apex:pageMessages />
+       
+       <apex:outputPanel Id="camp2Link" rendered="{! AND(p_ZoneName == null,NrtEnabled==true, $CurrentPage.parameters.campaign !='prior')}"> 
+        <apex:image value="{!URLFOR($Resource.NRT_Images,'images/pink_info_button.png')}" style="vertical-align:middle;"/>
+        <!-- Changes by Prakash on 10/22 to account for hide or show held nos: START -->
+       
+     <!--    <a target="_blank"  style="position:relative;top:2px;vertical-align:middle;margin:5px;text-decoration:underline;font-size:1.3em; cursor:pointer;" 
+             onclick="retrieveNrtData('{!u.ACCT_NR__c}','{!mkt.Market_Id__c}','{!cpgnNumber}','{!p_ZoneName}');" >{!$Label.NRT_View_Recent_Order_Totals}</a>    -->
+             
+          <a target="_blank"  style="position:relative;top:2px;vertical-align:middle;margin:5px;text-decoration:underline;font-size:1.3em; cursor:pointer;" 
+             onclick="retrieveNrtData('{!u.ACCT_NR__c}','{!mkt.Market_Id__c}','{!cpgnNumber}','{!p_ZoneName}','{!showHeld}','{!showSaved}');" >{!$Label.NRT_View_Recent_Order_Totals}</a>     
+             
+           <!-- Changes by Prakash on 10/22 to account for hide or show held nos: END -->   
+        </apex:outputPanel> 
+         
+         <apex:outputPanel Id="content" > 
+         <apex:pageMessages />                     
+            <div class="popup_wrpr" Id="NrtOverlay" style="display:none">
+               <div class="popup_ccntr pop_width" style="position: fixed; top: 160.5px; left: 374px; width: 585px;">        
+                  <a class="close_btn" href="javascript:hideNrtPage();"></a>
+                  <div class="pop_content pop_width no_pop_border" style="width:595px;border: none\9;">
+                     <span id="j_id0:j_id1:j_id2:j_id298:0:j_id299:comp:j_id305:j_id306:hdr" class="big_pnk_hdr_overlay">
+                        <h1 class="left mar_rht_10 popup_header_text">{!$Label.NRT_New_Orders_Update}</h1>
+                        <ul class="icon_lnks update_text">
+                           <li style="margin:-5px;">{!NrtTimestamp }</li>
+                        </ul>
+                     </span> 
+                     <div class="cntr">
+                        <div class="popup_hdrs no_uppercase left"><apex:outputText value="{!$Label.NRT_New_Order_Message_Overlay}" rendered="{! NOT(shoEmptyDialog)}"/>
+                    											 <apex:outputText value="{!$Label.NRT_New_Order_Message_Empty}" rendered="{!shoEmptyDialog}"/></div>
+                     </div>
+                     
+                    <!-- NRT Overlay -->
+                     <apex:outputPanel layout="block" Id="data" rendered="{! NOT(shoEmptyDialog)}" style="width:500px;margin:0 auto">
+                     
+                       <div style="width:25%;height:25px;float:left;">&nbsp;</div>    
+                       
+                       <div style="width:70%;display:inline-block;height:25px;">
+	                       <apex:panelGrid columns="{!numColumns}"  id="nrtTableHeader" columnClasses="table_header_text" style="display:table;">
+	                              <apex:outputText value="{!$Label.NRT_Invoiced}"/>
+						  		  <apex:outputText value="{!$Label.Submitted}"/>
+						  		  <apex:outputText value="{!$Label.NRT_Total_Potential}"/>
+						  		  <apex:outputText value="{!$Label.NRT_Held}" rendered="{!showHeld}"/>
+						  		  <apex:outputText value="{!$Label.NRT_Saved}" rendered="{!showSaved}"/>
+						  		  
+	                       </apex:panelGrid>
+                       </div>
+                       
+                          <apex:outputPanel layout="block" style="width:25%;float:left;" rendered="{! p_ZoneName == null}"> 
+                           <table border="0" cellpadding="0" cellspacing="0">
+                              <tr>
+                                 <td class="left_column_width table_header_text">{!$Label.NRT_Personal_Sales}</td>
+                              </tr>
+                              <tr>
+                                 <td class="left_column_width table_header_text">{!$Label.NRT_G1_Activities}</td>
+                              </tr>
+                              <tr>
+                                 <td class="left_column_width table_header_text">{!$Label.NRT_Group_Sales}</td>
+                              </tr>
+                           </table>
+                        </apex:outputPanel>
+                        
+                        <apex:outputPanel layout="block" style="width:25%;float:left;" rendered="{! p_ZoneName != null}"> 
+                           <table border="0" cellpadding="0" cellspacing="0">
+                              <tr>
+                                 <td class="left_column_width table_header_text">{!$Label.NRT_Actives}</td>
+                              </tr>
+                              <tr>
+                                 <td class="left_column_width table_header_text">{!$Label.NRT_Appointments}</td>
+                              </tr>
+                           </table>
+                        </apex:outputPanel>
+                        
+                        <div class="popup_table_border">
+	                        <table Id="nrtTab">
+	                          <tbody/>
+	                        </table>
+                        </div>
+                        
+                    </apex:outputPanel>
+                    
+                  </div>
+               </div>
+            </div>
+         </apex:outputPanel>                          
+	 	<script> 
+	 	   function retrieveNrtData(ACCT_NR, MRKT_ID, FLD_SLS_CMPGN_NR, CONTEXT, SHOWHELD, SHOWSAVED) {
+              
+                    
+                    //make the remote call to get the data
+                    jQuery("#nrtTab tbody").html('<tr align="center"><td width="500"><img src="/resource/1378275652000/ALM_Assetsv2/images/processing.gif" /></td></tr>');
+            
+                    Visualforce.remoting.Manager.invokeAction('{!$RemoteAction.NRT_Overlay_Summary_Ctl.refreshData}',
+                                   ACCT_NR, MRKT_ID, FLD_SLS_CMPGN_NR, CONTEXT,SHOWHELD,SHOWSAVED,
+                                   function(result, event){           
+                                        if (event.status && event.result) { 
+                                          
+                                          jQuery("#nrtTab tbody").html(result);
+                                           
+                                          
+                                                    
+                                        } else {
+                                           alert(event.message);
+                                           jQuery("#nrtTab tbody").html('');
+                                        }
+                                    }, {escape:false});
+                  
+                  showNrtPage();
+               }
+        </script>
+</apex:component>

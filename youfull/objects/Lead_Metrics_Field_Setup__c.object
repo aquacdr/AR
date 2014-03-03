@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <customSettingsVisibility>Public</customSettingsVisibility>
+    <description>Contains mapping between lead metrics fields (object: Lead_Metrics__c) and the corresponding condition which is used populate such fields. This setting is used by LeadMetricsBatch class.</description>
+    <enableEnhancedLookup>false</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Lead_Condition_Field_Name__c</fullName>
+        <description>Refers to Lead object. This should either be a straight text field or a formula text field.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Refers to Lead object. This should either be a straight text field or a formula text field.</inlineHelpText>
+        <label>Lead Condition Field Name</label>
+        <length>255</length>
+        <required>true</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Lead_Condition_Field_Value__c</fullName>
+        <description>Refers to Lead object. This is the expected value for the field referred by &apos;Lead Condition Field Name&apos; field. This field is populated ONLY for COUNT() functionality. This field should carry only text value.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Refers to Lead object. This is the expected value for the field referred by &apos;Lead Condition Field Name&apos; field. This field is populated ONLY for COUNT() functionality. This field should carry only text value.</inlineHelpText>
+        <label>Lead Condition Field Value</label>
+        <length>50</length>
+        <required>true</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Lead_Metrics_Field_Name__c</fullName>
+        <description>Refers to Lead_Metrics__c custom object</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Refers to Lead_Metrics__c custom object</inlineHelpText>
+        <label>Lead_Metrics_Field_Name</label>
+        <length>255</length>
+        <required>true</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Lead_Summary_Field_Name__c</fullName>
+        <description>If this field is populated, SUM() function will be applied to this field. Otherwise COUNT() will be applied. This field should carry Number (Integer) data type.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>If this field is populated, SUM() function will be applied to this field. Otherwise COUNT() will be applied. This field should carry Number (Integer) data type.</inlineHelpText>
+        <label>Lead Summary Field Name</label>
+        <length>255</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Lead Metrics Field Setup</label>
+</CustomObject>

@@ -1,0 +1,218 @@
+<apex:component Controller="ALM_Controller_JQGridComm">
+    <apex:stylesheet value="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/overcast/jquery-ui.css"/>  
+    <apex:stylesheet value="{!URLFOR($Resource.JQGridLatest, 'css/ui.jqgrid.css')}" />  
+    <apex:stylesheet value="{!URLFOR($Resource.JQGridLatest, 'plugins/ui.multiselect.css')}" />    
+     
+    <apex:includeScript value="{!URLFOR($Resource.JQGridLatest, 'js/jquery.min.js')}"/> 
+    <apex:includeScript value="{!URLFOR($Resource.JQGridLatest, 'js/jquery.jqGrid.min.js')}"/>
+         
+    <script type="text/javascript" src="{!URLFOR($Resource.JQGridLatest, 'js/jquery-ui-1.8.2.custom.min.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.JQGridLatest, 'src/grid.jqueryui.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.JQGridLatest, 'plugins/jquery.searchFilter.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.JQGridLatest, 'plugins/ui.multiselect.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.JQGridLatest, 'plugins/grid.setcolumns.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.JQGridLatest, 'src/i18n/grid.locale-en.js')}"></script>
+    <script type="text/javascript" src="{!URLFOR($Resource.JQGridLatest, 'js/jquery.jqGrid.min.js')}"></script>
+    
+    <apex:attribute name="reportId" assignTo="{!reportId}" description="Report Id" type="String" required="true" />
+    <apex:attribute name="filterLogic" assignTo="{!filterLogic}" description="Filter Logic" type="String" required="false" />  
+    <apex:attribute name="filters" assignTo="{!filters}" description="List of filters" type="Object[]" required="false" />  
+    <apex:attribute name="arguments" assignTo="{!arguments}" description="List of arguments" type="String[]" required="false" />   
+    <apex:attribute name="displayCheckboxes" type="Boolean" description="Defines whether to display checkboxes or not" required="false"/>
+    <apex:attribute name="noOfColumnsToFreeze" assignTo="{!columnsToFreeze}" type="Integer" description="Defines no of columns to Freeze" required="false"/>
+    <apex:attribute name="groupingColumn" type="String" description="Column name for grouping" required="false"/>
+    
+    <div id="containerDiv">
+       <table id="recordsGrid"></table>
+       <div id="locPagination"></div>
+    </div>
+    <br/>
+    
+    <style type="text/css"> 
+        
+        
+        .ui-jqgrid .ui-widget-header {
+            border: 1px solid #FA3FD5;
+            background: #FA3FD5 url($Resource.Pink_Background) 50% 50% repeat-x;
+            color: #f6f6f6;       
+                
+        }        
+        .ui-jqgrid-sortable{
+            color:#EB0396;
+            fontWeight:bold;
+            text-overflow: ellipsis;-o-text-overflow: ellipsis;            
+        }
+        .ui-jqgrid tr.jqgrow td { text-overflow: ellipsis;-o-text-overflow: ellipsis; }
+        .ui-jqgrid tr.jqgroup td {background-color:#fff;color:#000;}
+        .ui-jqgrid tr:nth-child(even).jqgrow td {background-color:#fff;color:#000;}
+        .ui-jqgrid tr:nth-child(odd).jqgrow td {background-color:pink;color:#000;}
+        
+    </style> 
+            
+    <script>
+        var colNames = [];
+        var colModels = [];    
+        var grid = $("#recordsGrid");
+        var columns;
+        var grpField = [];
+        
+        if('{!groupingColumn}' != ''){
+            grpField.push('{!groupingColumn}');
+        }
+        
+        $( document ).ready(function() {
+            handleSearchResults();
+        });
+        
+        //----------------------------------------------------------------------------------------------------------
+        // Remote Search result Handler
+        //----------------------------------------------------------------------------------------------------------
+        function handleSearchResults() {        
+            jsonString = '{!jsonData}';          
+            if(jsonString != ''){
+                var dataRecords = JSON.parse(jsonString);
+                if(dataRecords != ''){ 
+                	buildJQGrid(dataRecords);                   
+                }else{
+                    alert('{!$Label.EmptyRecords}');
+                }
+            }                      
+        }
+        
+        //----------------------------------------------------------------------------------------------------------
+        // Build JqGrid
+        //----------------------------------------------------------------------------------------------------------  
+        function buildJQGrid(jsonString) {
+            populateColumnArrays();
+            grid.jqGrid({
+            	pgbuttons: false,
+            	pgtext: null,
+                data: jsonString,
+                datatype: 'local',
+                colNames: colNames,
+                colModel: colModels,
+                rowNum: 2000,
+                scroll:1,
+                //rowNum: -1, // Shows all records in resultset.  Put there to demo on 2/13...Was 20
+                gridview:true,
+                rowList:[20,30,500],
+                multiselect: {!displayCheckboxes},
+                toppager: true,
+                viewrecords: false,
+                emptyrecords: '{!$Label.EmptyRecords}',
+                resizable: true,
+                shrinkToFit: false,
+                recordpos: 'right', 
+                height: '500',
+                caption: '{!reportName}',
+                pager: '#locPagination',
+                jsonReader: { repeatitems: false },
+                formatter : {
+                    integer : {thousandsSeparator: ",", defaultValue: '0'},
+                    number : {decimalSeparator:".", thousandsSeparator: ",", decimalPlaces: 2, defaultValue: '0.00'},
+                    currency : {decimalSeparator:".", thousandsSeparator: ",", decimalPlaces: 2, prefix: "$", suffix:"$", defaultValue: '0.00'}
+                },
+                grouping:false,
+                groupingView : {
+                    groupField : grpField,
+                    groupColumnShow : [false],
+                    groupOrder: ['asc'],
+                    groupCollapse : true,
+                    groupDataSorted : true
+                },
+                loadonce: true,
+                                               
+            });
+           
+     //       jQuery("#recordsGrid").jqGrid('navGrid','#locPagination',{add:false,edit:false,del:false,search:true,refresh:true}); 
+       /*     jQuery("#recordsGrid").jqGrid('navButtonAdd','#recordsGrid_toppager',{
+                caption: "Columns",
+                title: "Reorder Columns",
+                onClickButton : function (){
+                    jQuery("#recordsGrid").jqGrid('columnChooser');
+                }
+            });
+            
+         */ 
+         
+         	// hiding row header row (pagingation normally goes here)
+         	$("#recordsGrid_toppager").hide();
+         	$("#locPagination").hide();
+         	
+           var columnCount = 0;
+            if('{!displayCheckboxes}' == 'true'){
+                columnCount = 1;
+            }
+            for(var i=0 ; i < columns.length ; i++){             
+                setTooltipsOnColumnHeader(jQuery("#recordsGrid"), columnCount, columns[i].hoverText);
+                columnCount++;           
+            } 
+            
+            grid.jqGrid('setFrozenColumns');       
+            if($.isFunction(grid[0].p._complete)) {grid[0].p._complete.call(grid[0]);}
+            
+            $(window).bind('resize', function() {
+               $("#recordsGrid").setGridWidth(Math.floor(($(window).width())-50), false);
+            }).trigger('resize');
+            
+            grid.trigger("reloadGrid");       
+             
+        }   
+        
+        var setTooltipsOnColumnHeader = function (grid, iColumn, text) {
+            var thd = jQuery("thead:first", grid[0].grid.hDiv)[0];
+            jQuery("tr.ui-jqgrid-labels th:eq(" + iColumn + ")", thd).attr("title", text);
+        };
+    
+        //----------------------------------------------------------------------------------------------------------
+        // Populates Column Name and Column Model Arrays
+        //----------------------------------------------------------------------------------------------------------  
+        function populateColumnArrays() {  
+            columns = JSON.parse('{!colHeaders}'); 
+            var freezeVar = true;  
+            var freezeNo = {!columnsToFreeze};
+            
+            for(var i=0 ; i < columns.length ; i++){ 
+               if(i>=freezeNo){
+                freezeVar = false;
+               }
+               colNames.push(columns[i].columnLabel);  
+               colModels.push({    
+                name:columns[i].columnName, 
+                index:columns[i].columnName, 
+                width:columns[i].columnWidth,
+                align:columns[i].textAlign,  
+                frozen: freezeVar, 
+                title: false,
+                searchoptions:{sopt:['eq','ne','le','lt','gt','ge']},
+                });
+            }
+        }
+        
+        //----------------------------------------------------------------------------------------------------------
+        // Populates Column Name and Column Model Arrays
+        //----------------------------------------------------------------------------------------------------------  
+        function populateDataArrays() {  
+            var rows = [];
+            var cols = [];
+            var data = new Array();    
+            var jsonData = jQuery.parseJSON('{!jsonWrapperData}');
+            //console.log('========='+jsonData);
+            var jsonInputStr = JSON.stringify(jsonData)
+            //console.log('new JSONResults -->  '+jsonInputStr);
+            for(var i=0 ; i < jsonData.length ; i++){               
+               //rows.push(jsonData[i].colList); 
+               cols = new Array();
+               //data[i] = new Array(); 
+               for(var j=0 ; j < jsonData[i].colList.length ; j++){
+                 cols.push(jsonData[i].colList[j].columnStr); 
+               } 
+               data.push(cols);           
+            }
+            console.log('rows========='+rows);
+            console.log('data========='+JSON.stringify(data));
+            buildJQGrid(data);
+        }
+        
+    </script>
+</apex:component>

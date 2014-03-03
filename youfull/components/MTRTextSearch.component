@@ -1,0 +1,313 @@
+<apex:component controller="MTRTextSearchController">
+
+    <apex:attribute name="AccountNum" description="Description here." type="String" required="true" assignTo="{!AccountNum}"></apex:attribute>
+    <apex:attribute name="MarketId" description="Description here." type="String" required="true" assignTo="{!MarketId}"></apex:attribute>
+    <apex:attribute name="CampaignId" description="Description here." type="String" required="true" assignTo="{!InternalCampaignId}"></apex:attribute>  
+    <apex:attribute name="TextSearch" description="Description here." type="String" required="false" assignTo="{!TextSearch}"></apex:attribute>
+    <apex:attribute name="TSCriteria" description="Description here." type="String" required="false" assignTo="{!TSCriteria}"></apex:attribute>
+    <apex:attribute name="OnSubmit" description="Description here." type="String" required="false" assignTo="{!OnSubmit}"></apex:attribute>
+    <apex:attribute name="OnBeginRequest" description="Description here." type="String" required="false" assignTo="{!OnBeginRequest}"></apex:attribute>
+    <apex:attribute name="OnEndRequest" description="Description here." type="String" required="false" assignTo="{!OnEndRequest}"></apex:attribute>
+    <apex:attribute name="IsBranchEnable" description="Description here." type="boolean" required="false" default="true" assignTo="{!Is_branch}"></apex:attribute>
+        
+    
+<script language="JavaScript">
+
+  
+   
+   var isBrnch = '{!Is_branch}';
+   //alert(' isBrnch '+isBrnch);
+   
+   $(document).ready(function() {
+   	   if( isBrnch != 'true'){
+   	        //alert(' BRANCH ');
+        	$('[id*=lstCriteria] option[value="Branch"]').remove();
+       }
+       
+       
+       //alert($("#txtSearch").width());
+       
+              
+       
+    });
+
+  var m_TSCampaignId = '0';
+  
+  function getJSONTextSearchResults() {
+     
+    var txtJSONResults = getElement('{!$Component.txtJSONResults}');
+    var jsonData = jQuery.parseJSON($(txtJSONResults).val());
+    
+    $(txtJSONResults).val('');
+    
+    return jsonData;
+  }
+
+  function branchRefreshCallback(result) {
+        
+        try {
+        
+            var lstBranch = getElement('{!$Component.lstKeyword}');
+            
+            if(result == null || result.length == 0) {
+            
+                $(lstBranch).find('option').remove();
+            }
+            else {
+                populateTextSearchKeywordList(lstBranch, result);
+            }
+            
+            forceFancyDropdownRefresh('fdd_' + lstBranch.id + '_text', 20);
+        }
+        catch(err) {
+            alert(err.message);
+        }
+        
+        OnEndRequest();
+  }
+  
+  function getTS_SearchTypeText() {
+    
+        return $(getElement('{!$Component.lstCriteria}')).find('option:selected').text();
+  }
+    
+  function populateTextSearchKeywordList(lstKeyword, selectOptionList) {
+    
+        $(lstKeyword).find('option').remove();
+        
+        for(var n = 0; n <= selectOptionList.length - 1; n++) {
+    
+            lstKeyword.add(new Option(selectOptionList[n].Label, selectOptionList[n].Value));
+        }
+  }
+
+  function createTextSearchFancyDropdown(regularDropdownId, lengthLimit) {
+
+    var regularDropdown = getElement(regularDropdownId);
+    var fancyDropdownId = 'fdd_' + regularDropdownId + '_text';
+
+    $(regularDropdown).css({'z-index':10,'opacity':0,'-khtml-appearance':'none'});
+
+    forceFancyDropdownRefresh(fancyDropdownId, lengthLimit);
+    
+    $(regularDropdown).change(function() {
+    
+        forceFancyDropdownRefresh(fancyDropdownId, lengthLimit);
+        
+    });
+  }
+  
+  function updateTextSearchUI() {
+  
+      var lstCriteria = getElement('{!$Component.lstCriteria}');
+      
+      updateTextSearchUIByDropdown(lstCriteria);
+  }
+      
+  function updateTextSearchUIByDropdown(lstCriteria) {
+
+    var criteriaValue = $(lstCriteria).val();
+    var txtSearch = getElement('{!$Component.txtSearch}');
+    var fddLstKeyword = getElement('fdd_{!$Component.lstKeyword}');
+    
+    if(criteriaValue == '(none)' || criteriaValue == 'Name' || criteriaValue == 'AccountNumber') {
+        $(txtSearch).toggle(true);
+        $(fddLstKeyword).toggle(false);
+    }
+    else if(criteriaValue == 'Branch') {
+        $(fddLstKeyword).toggle(true);
+        $(txtSearch).toggle(false);
+        
+        var campaignObject = new Object();
+        
+        campaignObject.value = m_TSCampaignId;
+        
+        OnBeginRequest(campaignObject);
+        RefreshBranches(campaignObject.value);
+    }
+  
+  }
+  
+  function OnBeginRequest(campaignObject) {
+  
+    {!OnBeginRequest}
+  }
+  
+  function OnEndRequest() {
+  
+    {!OnEndRequest}
+  }
+  
+  function OnTextSearchSubmit(txtSearchObject) {
+    
+    {!OnSubmit}
+  }
+
+  var txtSearchClick = function() {
+        
+        var txtSearchObject = new Object();
+        var criteriaValue = $(getElement('{!$Component.lstCriteria}')).val();
+        var searchText = $(getElement('{!$Component.txtSearch}')).val();
+        var lstKeyword = getElement('{!$Component.lstKeyword}');
+        var message = '';
+        var isValid = true;
+        
+        if(isEmpty(criteriaValue) || criteriaValue == '(none)') {
+            message = '{!$Label.Err_Msg_Search_Type}';
+            isValid = false;
+        }
+        else if(criteriaValue == 'Branch' && ($(lstKeyword).find('option').length == 0 || trim($(lstKeyword).val()).length == 0)) {
+            message = '{!$Label.Err_Msg_Branch}';
+            isValid = false;
+        }
+        else if(criteriaValue == 'Name' || criteriaValue == 'AccountNumber') {
+        
+            if(trim(searchText).length == 0) {
+                message = '{!$Label.Err_Msg_Search_Keyword}';
+                isValid = false;
+            }
+            //else if(searchText == '{!$Label.Text_Search_My_Team}'|| searchText == '{!$Label.Search_Title_Adv}') {
+            else if(searchText == '{!$Label.Text_Search_My_Team}'|| searchText == '{!$Label.Search_Last_Name}') {
+                message = '{!$Label.Err_Msg_Search_Keyword}';
+                isValid = false;        
+            }
+            else if(criteriaValue == 'AccountNumber' && searchText.length < 3) {
+                message = '{!$Label.Err_Msg_Min_Acct_Num}';
+                isValid = false;
+            }
+            else if(criteriaValue == 'Name' && searchText.length <= 2) {
+                message = '{!$Label.Err_Msg_Min_Chars}';
+                isValid = false;                
+            }
+        }
+        
+        if(!isValid) {
+            alert(message);
+            return;
+        }
+        
+        txtSearchObject.CampaignId = m_TSCampaignId;
+        txtSearchObject.TSCriteria = criteriaValue;
+        
+        if(criteriaValue == 'Branch') {
+            txtSearchObject.TextSearch = $(lstKeyword).val();
+        }
+        else {
+            txtSearchObject.TextSearch = searchText;
+        }
+        
+        OnTextSearchSubmit(txtSearchObject);
+  }
+  
+  function mtrTextSearchOnEnter(field, e) {
+
+      if(e.keyCode == 13) {
+          
+          txtSearchClick();
+          return false;
+      }
+      
+      return true;
+  }
+  
+  function mtrTextSearchOnFocus(field, e) {
+  
+    //if(($(field).val() == '{!$Label.Text_Search_My_Team}') || ($(field).val() == '{!$Label.Search_Title_Adv}')) {
+    
+    var a='{!$Label.Text_Search_My_Team}';
+    var b='{!$Label.Search_Last_Name}';
+    var c='{!$Label.Search_Title_Adv}';
+    
+    
+    //alert('A:'+a+' B:'+b+' C:'+c+' Field val:'+$(field).val());
+    
+    if(($(field).val() == '{!$Label.Text_Search_My_Team}')|| ($(field).val() == '{!$Label.Search_Title_Adv}') || ($(field).val() == '{!$Label.Search_Last_Name}')) {
+        
+        $(field).val('');
+    }
+     
+    return true;
+  }
+
+  function mtrTextSearchOnBlur(field, e) {
+  
+    if($(field).val().length == 0) {
+        //$(field).val('{!$Label.Text_Search_My_Team}');
+        $(field).val('{!$Label.Search_Title_Adv}');
+    }
+    
+    return true;
+  }
+
+  function doTextSearch() {
+    
+     txtSearchClick();
+  }
+  
+</script>
+
+<style>
+
+
+</style>
+
+
+<apex:actionRegion >
+
+    <apex:outputPanel id="jsonResultsPanel">    
+        <apex:inputHidden id="txtJSONResults" value="{!JSONResults}" />
+        
+        <script language="JavaScript">
+            m_TSCampaignId = '{!InternalCampaignId}';
+        </script>
+    </apex:outputPanel>
+    
+        <apex:actionFunction name="RefreshBranches" action="{!RefreshBranches}" rerender="jsonResultsPanel" oncomplete="branchRefreshCallback(getJSONTextSearchResults());">
+            <apex:param name="BranchSearchCampaignId" assignTo="{!BranchSearchCampaignId}" value="" />
+        </apex:actionFunction>
+
+</apex:actionRegion>
+
+ <!-- Style added to span below based on recommendations from Morgan on 10/03 -->
+   <!--   <div class="txt_srch_wrap">  -->         
+ <div class="txt_srch_wrap" style="display:inline-block"> 
+        <div class="srch_type_drp">
+             <apex:selectList id="lstCriteria" value="{!TSCriteria}" size="1" onchange="updateTextSearchUIByDropdown(this);">
+                <apex:selectOption itemValue="(none)" itemLabel="{!$Label.Search_Type}"/>
+                <apex:selectOption itemValue="Name" itemLabel="{!$Label.Name}"/>
+                <apex:selectOption itemValue="AccountNumber" itemLabel="{!$Label.Account_Number}"/>
+                <!-- <apex:outputPanel rendered="{!Is_branch}"><apex:selectOption itemValue="Branch" itemLabel="{!$Label.Branch_Name}"/></apex:outputPanel>-->
+                <apex:selectOption itemValue="Branch" itemLabel="{!$Label.Branch_Name}"/>
+             </apex:selectList>
+             <div id="fdd_{!$Component.lstCriteria}" class="srch_type_drp_display">
+                <div id="fdd_{!$Component.lstCriteria}_text" style="float:left; width:63px; height:12px; overflow:hidden;"></div>
+                <div class="srch_type_dn"></div>
+             </div>
+         </div>
+         <div class="srch_keywrd" >
+            
+            <apex:inputText id="txtSearch" value="{!TextSearch}" onfocus="return mtrTextSearchOnFocus(this,event);" onblur="return mtrTextSearchOnBlur(this,event);" onkeypress="return mtrTextSearchOnEnter(this,event);"  />
+            
+            <apex:selectList id="lstKeyword" size="1" value="{!TextSearch}">
+             </apex:selectList>
+             <div id="fdd_{!$Component.lstKeyword}" class="srch_keywrd_display">
+                <div id="fdd_{!$Component.lstKeyword}_text" style="float: left; width:80px; height:12px; overflow:hidden;"></div>
+                <div class="srch_keywrd_dn"></div>
+             </div>
+             <a id="lnkTextSearch" class="sr_icon" href="javascript:void(0)" onclick="txtSearchClick(); return false;"></a>
+         </div>
+</div>
+
+<script language="JavaScript">
+
+  $(document).ready(function() {
+    
+      createTextSearchFancyDropdown('{!$Component.lstCriteria}', 20);
+      createTextSearchFancyDropdown('{!$Component.lstKeyword}', 20);
+      
+      updateTextSearchUI();
+  });
+
+</script>
+
+</apex:component>

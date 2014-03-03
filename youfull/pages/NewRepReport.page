@@ -1,0 +1,1961 @@
+<apex:page controller="NewRepController" showHeader="false" sidebar="false" standardStyleSheets="false" action="{!initialized}">
+    <apex:form id="NRR">
+    <apex:composition template="YOUPageTemplateNoActions">
+    <apex:define name="content">
+    <apex:stylesheet value="{!URLFOR($Resource.NRR,'css/jquery.jscrollpane_vert.css')}" />
+    <apex:stylesheet value="{!URLFOR($Resource.NRR,'css/style.css')}"/> 
+    <apex:includeScript value="{!$Resource.NumberFormatter}" />
+    <!-- PAGE CODE START -->
+  
+    <script language="JavaScript">
+   
+    
+    
+
+    ALM_PAGE_NAME = "{!OmniturePageName}"; 
+    
+    // Two variables added by Raktim on 6th Sept, 2013 for Comma-Decimal Separator
+    var decimalSeperator = '{!decimlSeprtr}';
+    var commaSeperator = '{!commaSeprtr}';
+    
+    
+    function showOverlay(args) {
+       if(arguments.length == 0) {
+            throw new Error('Expected at least one argument.');
+       }    
+       var type = arguments[0];
+       var px = 0;
+       var py = 0;
+       var winHei = 0;
+       var heiSum = 0;
+       if(type == 'download') {
+               px = jQuery("#global_footer").css('height');
+               qx = jQuery(".footer_lnks").css('height');
+               winHei = jQuery(".footer_area").position().top;
+               heiSum = parseInt(winHei)+parseInt(px)+parseInt(qx);
+               jQuery("#download_main").css('height',heiSum);
+               jQuery("#download_main").attr('class','white_trans');
+               jQuery("#download_main").css('display','block');
+        }else {
+           throw new Error('Invalid type provided.');
+       }
+    }
+
+    function hideOverlay(){
+      jQuery("#email_sel_mask").attr('class','white_trans_closed'); 
+      jQuery("#download_main").css('display', 'none');
+    }
+
+
+    function f_ImpersonateUser(acctkey){
+        var url = "/apex/YouHome?pgId=1&acctkey="+acctkey;    
+        window.location.href=url;
+    }
+    
+    function f_TriggerEvent(TitleLevelValue,acctkey)
+    {
+        if(TitleLevelValue=='true'){
+            f_ImpersonateUser(acctkey);
+        }
+        else{
+            viewRepDetail(acctkey);
+        }
+    }
+
+    function paginationFunc(pgtype) {  
+        paginateFunction(pgtype);  
+    } 
+
+    var printFunc = function() {
+        var inList = jQuery('#lstInvisible').html();
+        
+        // Added by Raktim on 8th Apr, 2013
+        var s=s_gi('{!omnture_suit}');
+        var repName = "{!$Label.New_Rep}" ;
+        s.prop8 = 'prt:'+repName;
+        s.pageName = 'Print Report';
+        s.tl(this,'o', 'Print Report');
+        //EoC
+        
+       // alert('Print inList :'+inList);
+        printFunction(inList);
+    }
+
+    var downloadAll_Click = function(){
+              
+        
+       //  alert ('{!$Label.StillInDevelopment}');
+        // mfisher commented lines below..when feature is being developed again uncomment that code
+        // Added by Raktim on 8th Apr, 2013
+        var s=s_gi('{!omnture_suit}');
+        var repName = "{!$Label.New_Rep}" ;
+        s.prop8 = 'DLR: '+repName;
+        s.pageName = 'Dowload Link Report';
+        s.tl(this,'o', 'Download Link Report');
+        //EoC
+        
+        provideAccountAccess();
+        return false;
+    }
+    
+   var downloadReport = function() {
+  
+     var iFrame = document.getElementById('downloadReportFrame');
+     m_DownloadType = 'All';
+     
+     var reportURL = '/{!NewRepReportURL}?pv0={!mrktId}&pv1={!campFselect}&pv2={!userAccNr}&pv3={!leaderTreeAccNo}&pv4={!LeaderLeftId}&pv5={!LeaderRightId}&export=1&enc=UTF-8&xf=xls';            
+     console.log(reportURL);
+     
+     // Here, call the remote action method to udpate the gen level, and on success change the ifram       
+     Visualforce.remoting.Manager.invokeAction(
+        '{!$RemoteAction.NewRepController.updateUserGenIndex}', '{!almRepIndicator}' , '{!campFselect}', '{!mrktId}', '{!userAccNr}',
+        function(result, event){
+        
+           iFrame.src = reportURL;          
+           hideOverlay();
+          
+        }
+     ); 
+    
+   }
+
+    var downloadPage_Click = function(){
+        var inList = jQuery('#lstInvisible').html();
+        
+        // Added by Raktim on 8th Apr, 2013
+        var s=s_gi('{!omnture_suit}');
+        var repName = "{!$Label.New_Rep}" ;
+        s.prop8 = 'DLR: '+repName;
+        s.pageName = 'Download Link Report';
+        s.tl(this,'o', 'Download Link Report');
+        //EoC
+        
+        var a = downloadFunc_Click2(inList);
+    }
+  
+    var multiEmail_Click = function() {
+        var contactIdList = '';
+        jQuery("#ChildCheckBox input").each(function() {
+            var status = this.checked;
+            if (status == true){
+                if(contactIdList.length == 0) {
+                    contactIdList = {!mrktId} + jQuery(this).val();
+                }else {
+                    contactIdList += ', ' + {!mrktId}+ jQuery(this).val();
+                }  
+            }
+        });
+        if(contactIdList.length == 0) {
+            /** Changed by Raktim on 17 May, 2013 START **/
+            //alert('{!$Label.Email_Select_One_Record}');
+            openEmailMessage();
+           /** Changed by Raktim on 17 May, 2013 END **/
+        }
+        else {
+            sendMyEmail(contactIdList);
+        }
+      }//End of multiEmail_Click
+      
+      /** New Method of EmailMessage
+        * overlay opening, on 17 May, 2013 by Raktim
+        *
+        **/
+        function openEmailMessage()
+        {                    
+          
+          var tp=jQuery(window).scrollTop()+jQuery(window).height()/2-160;
+          var c=jQuery("#global_footer").offset().top;
+          jQuery("#emailmsgwrapper").css("padding-top",tp);
+          jQuery("#emailmsgwrapper").css("height",c);
+           if(jQuery("#email_msg").attr('class')=='white_trans_emailmsgoverlay'){
+                   jQuery("#email_msg").attr('class','white_trans_emailmsgoverlay_closed');
+                   jQuery("#emailmsgwrapper").css('height',jQuery("#email_sel_mask").css('height'));
+               }else{
+                   jQuery("#email_msg").attr('class','white_trans_emailmsgoverlay');
+               }
+         
+       } // End of Method
+
+
+    //Processing Message Function
+      function displayProcessingMsg(){
+        jQuery("#processing_msgs").css("top",function(){return (jQuery(window).scrollTop()+jQuery(window).height()/2)});
+        var px=jQuery("#global_footer").css('height');
+        var qx=jQuery(".footer_lnks").css('height');
+        var winHei=jQuery(".footer_area").position().top;
+        var heiSum=parseInt(winHei)+parseInt(px)+parseInt(qx);
+        jQuery("#email_sel_mask").css('height',heiSum);
+        if(jQuery("#email_sel_mask").attr('class')=='white_trans_closed'){
+            jQuery("#email_sel_mask").attr('class','white_trans');
+        }else{ 
+            jQuery("#email_sel_mask").attr('class','white_trans_closed');
+        }
+      }
+    
+    //Added by Nalin for Filter message
+    //Processing Message Function
+          function showFilterProcessingMsg(){
+          //alert('showprocessing in youpg');
+          //jQuery("#processing_msgs_fltr").css("top",function(){return (jQuery(window).scrollTop()+jQuery(window).height()/2)});
+          //alert('processing_msg: ' + jQuery("#processing_msg_fltr"));
+           //var px=jQuery("#global_footer").css('height');
+           //var qx=jQuery(".footer_lnks").css('height');
+           //var winHei=jQuery(".footer_area").position().top;
+           //var heiSum=parseInt(winHei)+parseInt(px)+parseInt(qx);
+           //jQuery("#email_sel_mask_fltr").css('height',heiSum);
+                if(jQuery("#email_sel_mask_fltr").attr('class')=='white_trans_closed'){
+                    jQuery("#email_sel_mask_fltr").attr('class','white_trans');
+                }else{ 
+                    jQuery("#email_sel_mask_fltr").attr('class','white_trans_closed');
+                }
+          }
+
+    function showHidePersonalMessage(showHide){
+
+    if(showHide=='HIDE'){
+      jQuery("#personal_message").attr('class','white_trans_closed');
+      jQuery("#personal_message").css('visibility','hidden');
+    }
+
+    }
+
+  var fixStyling = function (){ 
+        var persMsgDiv=jQuery("#personal_message"); 
+        var tempPersMsgDiv=jQuery("#send_personal_Msg"); 
+        jQuery(persMsgDiv).css('display','none'); 
+        jQuery(persMsgDiv).css('visibility','hidden'); 
+        jQuery(persMsgDiv).html(jQuery(tempPersMsgDiv).html()); 
+        jQuery(tempPersMsgDiv).html('');  
+        jQuery("#maindiv").html(jQuery("#wholepan").html());
+        if(jQuery.browser.msie){
+            jQuery("#fltr").html("<br/>Filter:");
+        }
+        hideOverlay();   
+    }
+    
+    function ReportRedirect(page){
+        var isImpersonatedAccount ='{!$CurrentPage.Parameters.acctkey}';
+        if(page=='0');//do nothing, added by swarnava for other report fix
+        else if(isImpersonatedAccount!=null && isImpersonatedAccount!='' && page!='CR'){
+            window.parent.location.href=page+'&acctkey='+isImpersonatedAccount;
+        }
+        else if(isImpersonatedAccount!=null && isImpersonatedAccount!='' && page=='CR'){
+            viewRepDetail('{!$CurrentPage.Parameters.acctkey}');
+        }
+        else{
+            window.parent.location.href=page;
+        }
+    } 
+    
+    //Method added by Raktim on 8th Apr, 2013
+    function callOmniture_Filtr(){
+        
+        var s=s_gi('{!omnture_suit}');
+        var repName = "{!$Label.New_Rep}" ;
+        s.prop8 = 'filter:'+repName;
+        s.pageName = 'Filter Report';
+        s.tl(this,'o', 'Filter Report');
+        
+        return false;
+        
+    }//End of Method
+      
+    </script>
+
+    <script>
+    
+    
+    
+    /* Added by Raktim for Mail Plan 1Jul 2013  */
+    //changed by swarnava 2Jul 2013
+    function setselectliststyle(){ 
+        jQuery('.selectwrapper>.myselect').each(function(){
+                        var i=0;
+                        var title = jQuery(this).attr('title');
+                        var ids=jQuery(this).attr('id');
+                        var divids='';
+                        if(ids!=null && ids!=''){
+                            divids=ids+'_im';
+                        }
+                        else{
+                            divids=i+'_im';
+                            i=i+1;
+                        }
+                        if(jQuery('option:selected', this).val() != '') 
+                            title = jQuery('option:selected',this).text();
+                            //logically adding class
+                           // if(jQuery(this).attr('id')=='lstReportType'){
+                                jQuery(this).css({'z-index':10,'opacity':0,'-khtml-appearance':'none'})
+                                    .after('<div class="select_large blacktext" style="width:181px" id='+divids+' >' +title + '</div>')
+                                    .change(function(){
+                                        val = jQuery('option:selected',this).text();
+                                        jQuery(this).next().text(val);
+                                        })
+
+                    });
+    }
+    //End
+    var invisibleArray = [];
+    var a='{!$CurrentPage.parameters.invisibleStr}';
+    invisibleArray=a.split('~');
+    //alert(invisibleArray.join('~'));
+        jQuery(document).ready(function() { 
+        jQuery = jQuery.noConflict();
+        jQuery('.jspVerticalBar > .jspTrack > .jspDrag').css('margin-left','5px');
+        //start
+        if (!jQuery.browser.opera){
+        
+                    var i=0;
+                    
+                    var isImpersonated = {!s_IsImpersonated};
+                    var listReports = '{!lst_ReportLinks}';
+                    if(isImpersonated){
+                        var impersonationHeader =   '<div id="reportheader">'+
+                                                        '<div class="breadcrumb_imper">'+
+                                                            '<h2 class="brd_hdr">{!s_Impersonated_UserName}</h2>'+
+                                                                '<div style="float:right">'+ 
+                                                                    '<span class="frm_cntr">'+
+                                                                    '<select id="lstReportType_impersonation" name="lstReportType_impersonation" class="myselect" title="{!$Label.New_Rep}" size="1" style="width:181px;" onchange="ReportRedirect(this.value);return false;">'+
+                                                                        '<option value="0">{!$Label.Other_Reports}</option>'+
+                                                                        '<option value="/apex/YouHome?pgId=1">{!$Label.ALM_Home}</option>'+
+                                                                        '<option value="CR">{!$Label.Coaching_Record}</option>'+
+                                                                        '<apex:repeat value="{!lst_ReportLinks}" var="l">'+
+                                                                            '<option value="{!IF(AND(LEN(l.Report_URL__c)>0,NOT(ISBLANK(l.Report_URL__c)),NOT(ISNULL(l.Report_URL__c))),l.Report_URL__c,"/apex/YouHome?pgId=1")}" id="{!l.Report_Type__c}">{!$Label[l.Report_Type__c]}</option>'+    
+                                                                        '</apex:repeat>'+
+                                                                    '</select>'+
+                                                                    '</span>'+
+                                                                '</div>'+
+                                                        '</div>'+
+                                                        '</div>';
+                                                                                        
+                    var theValue='New_Rep';
+                    jQuery('#cnt_cntr').prepend((impersonationHeader));
+                    jQuery("#New_Rep").attr('selected',true);
+                    
+                    }
+        
+                    // select element styling
+                    jQuery(".myselect").each(function(){
+                        var title = jQuery(this).attr('title');
+                        var ids=jQuery(this).attr('id');
+                        var divids='';
+                        if(ids!=null && ids!=''){
+                            divids=ids+'_im';
+                        }
+                        else{
+                            divids=i+'_im';
+                            i=i+1;
+                        }
+                        if(jQuery('option:selected', this).val() != '') 
+                            title = jQuery('option:selected',this).text();
+                            //logically adding class
+                           // if(jQuery(this).attr('id')=='lstReportType'){
+                                jQuery(this).css({'z-index':10,'opacity':0,'-khtml-appearance':'none'})
+                                    .after('<div class="select_large blacktext" style="width:181px; display:block; text-overflow:ellipsis;" id='+divids+' >' +title + '</div>')
+                                    .change(function(){
+                                        val = jQuery('option:selected',this).text();
+                                        jQuery(this).next().text(val);
+                                        })
+
+                    });
+                    
+                    if({!s_IsImpersonated}){
+                            jQuery('#lstReportType_im').hide();
+                        }
+                    
+                };
+        
+        //end
+        
+        // Following Lines are blocked by Raktim on 6th Sept, 2013 for Comma-Decimal Separator
+        /*
+        var mapDecimalSeperator = new Object();
+        var mapCommaSeperator = new Object();
+        
+        mapDecimalSeperator['tr_TR'] = ',';
+        mapDecimalSeperator['en_US'] = '.';
+        mapDecimalSeperator['en_CA'] = '.';
+        mapDecimalSeperator['fr_CA'] = '.';
+        mapDecimalSeperator['es_MX'] = '.';
+        mapDecimalSeperator['es'] = '.';
+        
+        mapCommaSeperator['tr_TR'] = '.';
+        mapCommaSeperator['en_US'] = ',';
+        mapCommaSeperator['en_CA'] = ',';
+        mapCommaSeperator['fr_CA'] = ',';
+        mapCommaSeperator['es_MX'] = ',';
+        mapCommaSeperator['es'] = ',';
+        
+        function getDecimalSeperator(k) {
+           return mapDecimalSeperator[k];
+        }
+        function getCommaSeperator(k){
+            return mapCommaSeperator[k];
+        }
+        */        
+        
+        jQuery(".Number").each(function(){
+                          var text = jQuery(this).text();
+                          
+                          //if(text != ''){
+                          var num = new NumberFormat();
+                          //alert(' TEXT >>>>> '+text);
+                          num.setInputDecimal('.');
+                          num.setSeparators(true, ',', ',');    
+                          
+                           // Following Lines are blocked by Raktim on 6th Sept, 2013 for Comma-Decimal Separator
+                           //var decimalSeperator = getDecimalSeperator('{!currUserLocale}');
+                           //var commaSeperator = getCommaSeperator('{!currUserLocale}');
+                            
+                           if(decimalSeperator!='' && decimalSeperator!=null){
+                                num.setInputDecimal(decimalSeperator);
+                            }   
+                           if(commaSeperator!='' && commaSeperator!=null){
+                                num.setSeparators(true, commaSeperator, commaSeperator);
+                            }                               
+
+                            num.setNumber(text);
+                            
+                            //num.setPlaces('0', false);
+                            num.setPlaces('0', true); // Changed by Raktim - defect id : 2350
+                            
+                            num.setCurrencyValue('$');
+                            num.setCurrency(false);
+                            num.setCurrencyPosition(num.LEFT_OUTSIDE);
+                            num.setNegativeFormat(num.LEFT_DASH);
+                            num.setNegativeRed(false);
+                            jQuery(this).text(num.toFormatted());
+                            //}
+                             
+                             
+                           
+                 });   
+        jQuery(".Currency").each(function(){
+                        var text = jQuery(this).text();
+                        var num = new NumberFormat();
+                        
+                          num.setInputDecimal('.');
+                          num.setSeparators(true, ',', ',');    
+                          
+                           // Following Lines are blocked by Raktim on 6th Sept, 2013 for Comma-Decimal Separator
+                           //var decimalSeperator = getDecimalSeperator('{!currUserLocale}');
+                           //var commaSeperator = getCommaSeperator('{!currUserLocale}');
+                            
+                           if(decimalSeperator!='' && decimalSeperator!=null){
+                                num.setInputDecimal(decimalSeperator);
+                            }   
+                           if(commaSeperator!='' && commaSeperator!=null){
+                                num.setSeparators(true, commaSeperator, commaSeperator);
+                            }         
+                        num.setNumber(text); 
+                        num.setPlaces('2', true);
+                        num.setCurrencyValue('$');
+                        num.setCurrency(false);
+                        num.setCurrencyPosition(num.LEFT_OUTSIDE);
+                        num.setNegativeFormat(num.LEFT_DASH);
+                        num.setNegativeRed(false);
+                       
+                        jQuery(this).text(num.toFormatted());
+                        
+                        
+                });
+        
+        jQuery('#showhideform').mouseleave(function() {
+            jQuery(this).hide();
+        });
+        
+        jQuery('#showhide').click(function() {
+            jQuery('#showhideform').toggle();
+        });
+        
+        var data = '{!invisibleStr}';
+        jQuery('#lstInvisible').html(data);
+        //alert('data :'+data);
+        var invisiList = data.split('~');
+        for (var i = 0; i < invisiList.length; i++){ 
+            var Class = invisiList[i]; 
+            jQuery('#mainTable td, #tableHeader2 td').each(function() { 
+               if (jQuery(this).attr('id')==Class) {
+                    jQuery(this).fadeToggle();
+                } 
+            });
+            jQuery('#showhideform input').each(function() { 
+                if (jQuery(this).attr('name')==Class) {
+                    jQuery(this).attr('checked',false);
+                }
+            });
+        }
+
+        jQuery('#showhideform input').click(function() {
+            var Class = jQuery(this).attr('name');
+            if (jQuery(this).attr('checked') == false){
+                invisibleArray.push(jQuery(this).attr('name'));
+            }else {
+                invisibleArray.splice(invisibleArray.indexOf(jQuery(this).attr('name')),1);
+            }
+            jQuery('#lstInvisible').html(invisibleArray.join('~'));
+            jQuery('#mainTable td, #tableHeader2 td').each(function() { 
+                if (jQuery(this).attr('id')==Class) {
+                    jQuery(this).fadeToggle();
+                }
+            });
+            jQuery('th.' + jQuery(this).attr('name')).fadeToggle();
+        });
+        
+        jQuery(".headerLeftBorder input").click(function() {
+            var status = this.checked;     
+            jQuery("#ChildCheckBox input").each(function() {
+                jQuery(this).attr("checked",status);  
+            });
+        });
+
+        jQuery("#firstcoltable tbody tr:visible:odd",this).css('background-color','#E0E0E0'); 
+        jQuery("#mainTable tbody tr:visible:odd",this).css('background-color','#E0E0E0'); 
+
+        //Print Functionality data hiding End
+        var emailIndc = '{!emailForIndc}';
+        var matching_els = jQuery("td[id^='SH0']"), ids = [];   
+        var matching_ChkBx = jQuery("input[id^='inpChckBx']"), ids = []; 
+        var matching_EmailId = jQuery("td[id^='SH2']"), ids = [];   
+        if(emailIndc == 'G1'){
+            for(var i=0; i < matching_els.length; i++){
+                var valueGen =  matching_els[i].innerHTML;
+                if(valueGen == '1'){
+                    matching_ChkBx[i].style.visibility = "visible";
+                }else{ 
+                    matching_ChkBx[i].style.visibility = "hidden";
+                }
+            }
+        }else if(emailIndc == 'All'){
+                for(var i=0; i < matching_els.length; i++){
+                    matching_ChkBx[i].style.visibility = "visible";
+                }
+        }else{
+            for(var i=0; i < matching_els.length; i++){
+                    matching_ChkBx[i].style.visibility = "hidden";
+            }
+        }
+
+    
+    
+
+
+    });
+    </script>
+    <style>
+    
+    .mtr_err_message {
+        font-family: helvetica;
+        font-size: 12px;
+        font-weight: bold;
+        color: #e00b0b;
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+    
+    .single_clmn {
+        padding: 70px 0px 0px 0px; /* 70px 0px 8px 0px */
+    }
+    .big_pnk_hdr {
+        margin: -71px 0 0 -11px;
+        width: 897px;
+    }
+    
+    #firstcoltable thead, #firstcoltable .zone {
+        display: none;
+    }
+
+    #mainTable thead, #mainTable .name {
+        display: none;
+        width: 0px;
+    }
+
+
+    #tableHeader .name {
+        background-image: url("{!URLFOR($Resource.NRR,'images/arrow_up.png')}");
+        background-repeat: no-repeat;
+        background-position: center; 
+    }
+        #reportheader {
+        width: 946px;
+        height: 79px;
+        background: url("{!URLFOR($Resource.MTRImages,'header_background.png')}");
+        }
+    
+    #wrapperTable tr.subhead .name {
+        background-image: none;
+    }
+    .headerCheckboxSmall
+    {
+      /* Double-sized Checkboxes */
+      -ms-transform: scale(.8)!important; /* IE */
+      -moz-transform: scale(.8)!important; /* FF */
+      -webkit-transform: scale(.8)!important; /* Safari and Chrome */
+      -o-transform: scale(.8)!important; /* Opera */
+      padding: 0px;
+    }
+
+    #tableHeader2 tr.subhead .zone {
+        background-image: none;
+    }
+
+    #tableHeader2 .zone {
+        background-image: url("{!URLFOR($Resource.NRR,'images/arrow_up.png')}");
+        background-repeat: no-repeat;
+        background-position: center; 
+    }
+    </style>
+
+
+    <style>
+    #firstcol .jspVerticalBar, #staticTable .jspVerticalBar, #divHeader .jspVerticalBar {
+        display: none;
+    }
+
+    #firstcol .jspPane, #divHeader .jspPane {
+        margin-left: 0px !important;
+        //left : 0px !important;
+        width: 700px; 
+    }
+
+    #divHeader .jspHorizontalBar, #firstcol .jspHorizontalBar {
+        display: none;
+    }
+
+    #table_div .scroll-pane {
+        height: 375px !important;
+    }
+
+    
+    </style>
+    <!--[if IE]>
+    <link rel="stylesheet" href="css/styleie.css" type="text/css" media="screen" charset="utf-8">
+    <![endif]-->
+
+    <script>
+    jQuery (function() {
+    /* This is my solution. thank both*/
+
+    jQueryc1= jQuery("#table_div").jScrollPane({
+        horizontalDragMinWidth: 96,
+        horizontalDragMaxWidth: 96,
+        verticalDragMinHeight: 150,
+        verticalDragMaxHeight: 150,
+        maintainPosition: false,
+        showArrows: true
+    });
+
+    jQueryc2= jQuery("#firstcol").jScrollPane();
+    jQueryc3= jQuery("#divHeader").jScrollPane();
+    
+    var jsp1API = jQueryc1.data('jsp');
+    var jsp2API = jQueryc2.data('jsp');
+    var jsp3API = jQueryc3.data('jsp');
+    
+    jsp1API.reinitialise();
+    jsp2API.reinitialise();
+    jsp3API.reinitialise();
+
+    //Bind main table to first column
+    jQuery("#table_div").bind(
+        'jsp-scroll-y',
+        function(event, scrollPositionY, isAtTop, isAtBottom) {
+            if( (jQuery(this).find(".jspDrag").hasClass("jspActive")) ){
+                jQueryc2.data('jsp').scrollToY(scrollPositionY);
+                //console.log('Handle jsp-scroll-y', this,    'scrollPositionY=', scrollPositionY,    'isAtTop=', isAtTop,    'isAtBottom=', isAtBottom);
+
+            }
+
+            //IE scrollbar fix
+            if (! jQuery.browser.msie) {
+                var maxDrag = jQuery(this).find(".jspDrag").css('top');
+                maxDrag = parseFloat(maxDrag);
+                if (maxDrag > 100 ) {
+                    jQuery(this).find(".jspVerticalBar .jspDrag").css('top','100');
+                }
+            }
+        }
+    )
+
+     
+
+    //Bind header to main table
+    jQuery("#table_div").bind(
+            'jsp-scroll-x',
+            function(event, scrollPositionX, isAtLeft, isAtRight)
+            {
+
+                if( (jQuery(this).find(".jspDrag").hasClass("jspActive"))){
+                jQueryc3.data('jsp').scrollToX(scrollPositionX)
+                  //console.log('Handle jsp-scroll-y', this,  'scrollPositionX=', scrollPositionX,    'isAtLeft=', isAtLeft,    'isAtRight=', isAtRight);
+                
+                }
+            }
+    )
+    });
+
+    </script>
+
+    <!-- Top Header styles -->
+    <style>
+    <!-- Milon changes start -->
+    #firstTd {
+        //width: 319px !important;
+        width: {!ADWidth}px !important;
+        height: 53px !important; /* change by amartya old 81*/
+        vertical-align : top;
+        border-left:#999999 /* added by amartya */
+    }
+
+    #staticTable {
+        height: 53px; /* change by amartya old 81*/
+    }
+
+    #firstcol {
+        overflow: hidden;
+        //width: 319px !important;
+        width: {!ADWidth}px !important;
+        height: 349px;
+    }
+
+    #table_div {
+        overflow: scroll;
+        width:{!928-ADWidth}px !important;
+        height: 375px !important;
+        position:relative;
+    }
+
+    #divHeader {
+        overflow: hidden;
+        width: {!928-ADWidth}px !important;
+        height: 53px; /*change by amartya old 81*/
+    }   
+
+    .jspHorizontalBar
+    {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: {!928-ADWidth}px !important;
+        height: 24px;
+        border-top: 1px solid #c3c3c3;
+        border-bottom: 1px solid #c3c3c3;
+        background-color: #fff; 
+    }
+
+    /*body {
+        line-height: 0;
+    }*/
+
+    #secondTd table td {
+        color: #838282;
+        vertical-align: bottom;
+        padding: 2px 5px;
+        border-right:#cccccc 1px solid; /* added by amartya */
+    }
+
+    #firstTd tr.subhead td {
+        font-size: 3px !important;
+        height: 19px;
+        background-color:#E9E9E9;
+    }
+    #secondTd tr.subhead td {
+        height: 19px;
+        font-size: 3pt;
+        background-color:#E9E9E9;
+    }
+
+
+    #firstcoltable tr, #mainTable tr {
+        height: 29px;
+    }
+
+    .last {
+        width: 85px;
+    }
+
+    .disabled_nav_arrow {
+        display:inline-block;
+        cursor:default;
+        margin:4px 0 0 5px;
+        width:22px;
+        height:22px;
+    }
+
+    .enabled_nav_arrow {
+        display:inline-block;
+        cursor:pointer;
+        margin:4px 0 0 5px;
+        width:22px;
+        height:22px;
+    }
+
+    .first_gray {
+        background: url("{!URLFOR($Resource.MTRImages,'first_gray.gif')}") no-repeat;
+    }
+
+    .previous_gray {
+        background:url("{!URLFOR($Resource.MTRImages,'previous_gray.gif')}") no-repeat;
+    }
+
+    .next_gray {
+        background:url("{!URLFOR($Resource.MTRImages,'next_gray.gif')}") no-repeat;
+    }
+
+    .last_gray {
+        background:url("{!URLFOR($Resource.MTRImages,'last_gray.gif')}") no-repeat;
+    }
+
+    .first_pink {
+        background:url("{!URLFOR($Resource.MTRImages,'first_pink.gif')}") no-repeat;
+    }
+
+    .previous_pink {
+        background:url("{!URLFOR($Resource.MTRImages,'previous_pink.gif')}") no-repeat;
+    }
+
+    .next_pink {
+        background:url("{!URLFOR($Resource.MTRImages,'next_pink.gif')}") no-repeat;
+    }
+
+    .last_pink {
+        background:url("{!URLFOR($Resource.MTRImages,'last_pink.gif')}") no-repeat;
+    }
+
+    
+
+    #tableHeader td,#tableHeader2 td {
+        background-color: #F6F5F5;
+        border-bottom: 1px solid #999999; /* old #AAA8A8 change by Amartya */
+        border-right: 1px solid #ccc; /* old #AAA8A8 change by Amartya */
+        //border-top: 1px solid #AAA8A8; 
+        color: #999999; /* old #AAA8A8 change by Amartya */
+        cursor: pointer;
+        font-weight: normal;
+        height: 28px;
+        text-align: center;
+        vertical-align: bottom;
+        white-space: nowrap;
+        overflow:hidden !important;
+    }
+    
+
+    .NoSort {
+        background-image: url("{!URLFOR($Resource.Sorting,'images/arrow_up.png')}");
+        background-position: center top;
+        background-repeat: no-repeat;
+        font-size: 11px;
+    }
+
+    .ASort {
+        background-image: url("{!URLFOR($Resource.Sorting,'images/arrow_up_black.png')}");
+        background-position: center center;
+        background-repeat: no-repeat;
+        font-size: 11px;
+    }
+
+    .DSort {
+        background-image: url("{!URLFOR($Resource.Sorting,'images/arrow_down_black.png')}");
+        background-position: center center;
+        background-repeat: no-repeat;
+        font-size: 11px;
+    }
+
+    .gen_row_0 {
+        font-size: 12px;
+    }
+    
+    .gen_row_1 {
+        font-size: 12px;
+    }
+
+    #firstcoltable td, #mainTable td {
+        border-right: 1px solid #fff;
+        border-bottom: 1px solid #fff;
+        /*padding: 5px;*/
+        padding: 2px 5px;
+        height: 26px; /* change by amartya */
+        vertical-align: middle;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
+    .subHeader td {
+        background: none repeat scroll 0 0 #E9E9E9;
+        border-bottom: 1px solid #AAA8A8;
+        border-right: 1px solid #AAA8A8;
+        border-top: 1px solid #AAA8A8;
+        font-size: 8pt;
+        height: 30px;
+    }
+
+    .frm_cntr_large {
+        padding-bottom: 5px;
+        position: relative;
+        width: 181px;
+    }
+
+    div.row span.filterList {
+        float: left;
+        padding-right: 10px;
+        text-align: left;
+    }
+
+    div.spacer {
+        clear: both;
+        padding: 5px;
+    }
+
+    .myselect {
+        font-size: 11px;
+        height: 26px !important;
+        line-height: 26px;
+    }
+
+    .download_popup {
+        background: none repeat scroll 0 0 white;
+        border: 3px solid black;
+        margin: 255px auto;
+        padding: 7px 22px 15px;
+        position: relative;
+        width: 300px;
+        height: 20px;
+    }
+
+    .pagerInfo {
+        padding-left: 3px;
+        position: relative;
+        top: -6px;
+    }
+    
+    .pagerInfo {
+        padding-left: 3px;
+        position: relative;
+        top: -6px;
+        color: #ED008C;
+    }
+    
+    .pagerInfo_select {
+         padding-left: 3px;
+         position: relative;
+         top: -6px;
+         color: #000000;
+    }
+    
+    div.row {
+        clear: both;
+        padding-top: 0px;
+    }
+    
+    
+    div.row span.filterLabel {
+        float: left;
+        width: 50px;
+        text-align: left;
+    }
+    div.row span.filterList {
+        float: left;
+        text-align: left;
+        padding-right: 14px;
+    }
+    
+    .select_large {
+        position: absolute;
+        bottom:0;
+        float:left;
+        left:0;
+        top:0;
+        height:26px;
+        line-height:26px;
+        text-indent:10px;
+        background:url("{!URLFOR($Resource.MTRImages,'dropdown_large.gif')}") no-repeat top left;
+        cursor:default;
+        z-index:1;
+        font-size:11px;
+    }
+    .blacktext {
+        color:#000000;
+    }
+
+    Table.wrapperTable {
+        table-layout: fixed;
+        width: 928px;
+    }
+
+    #header {
+        background-attachment: scroll;
+        background-clip: border-box;
+        background-color: transparent;
+        background-image: url("{!URLFOR($Resource.MTRImages,'MTRImages/header_background.png')}"); 
+        background-origin: padding-box;
+        background-position: 0 0;
+        background-repeat: repeat;
+        background-size: auto auto;
+        height: 79px;
+        width: 946px;
+    }
+
+    //#showhide {
+    //  position: relative;
+    //}
+    <!-- Milon changes End -->
+
+    .gen_row_0 { background-color: #FFFFFF !important; }
+    .gen_row_1 { background-color: #E0E0E0; }
+
+    .gen_row_0 a:link {
+        COLOR: #000000;
+    }
+
+    .gen_row_1 a:link {
+        COLOR: #000000;
+    }
+
+    a{
+        text-decoration:none;
+        cursor:pointer;
+    }
+
+    body {
+        text-align: left;       
+        font-family: helvetica,arial,verdana,sans-serif;
+        font-size: 8pt;
+    }
+    #header {
+        width: 946px;
+        height: 79px;
+        background: url("{!URLFOR($Resource.MTRImages,'header_background.png')}"); 
+    }
+
+    #main {
+        width: 1000px;
+    }
+
+    #header li {
+        list-style: none;
+    }
+
+    #header ul {
+        list-style: none;
+    }
+
+    .breadcrumb_imper {
+        float: left;
+        width: 100%;
+    }
+
+    .brd_hdr {
+        color: #EC008C;
+        font-size: 1.8em;
+        padding: 4px 0 0 20px;
+        float: left;
+        width: 44%;
+    }
+
+    .brds_wrp {
+        float: left;
+        width: 238px;
+        padding: 5px 0 0 0;
+    }
+   // .left {
+   //     float: left;
+       // font-size: 10px;
+   //     font-weight: normal;
+   // }
+
+    #header .brd_lst li.last {
+        border: 0 !important;
+        width: auto;
+    }
+
+    .brd_lst li {
+        float: left;
+        padding: 0 5px;
+        border-right: solid 1px #777;
+    }
+
+    .brd_lst li a.selected {
+        text-decoration: none;
+        color: #EC008C;
+    }
+
+    .brd_lst li a {
+        color: #777;
+        font-size: 12px;
+    }
+
+    .pnk_srch {
+        background: url({!URLFOR($Resource.NRR,'images/pnk_srch.gif')}) no-repeat;
+        width: 144px;
+        height: 24px;
+        float: left;
+        margin: 10px 0 0 20px;
+    }
+
+    .pnk_srch input {
+        display: block;
+        float: left;
+        font-size: 1.1em;
+        padding: 4px 5px 3px 10px;
+        width: 90px;
+        background: none;
+        border: 0;
+    }
+
+    .subhead {
+        background-image: none;
+        background-color:#e9e9e9; /* added by amartya */
+    }
+    </style>
+
+
+<apex:actionFunction action="{!downloadAll}"   name="downloadAll_Click1" />
+
+<apex:actionFunction action="{!download_click}"   name="downloadFunc_Click"  reRender="" oncomplete="downloadAll_Click1()" >
+    <apex:param id="dallinvisibleStr" name="allinvisibleStr"  value="" />
+</apex:actionFunction>
+
+<apex:actionFunction action="{!downloadPage}"   name="downloadPage_Click2" />
+
+<apex:actionFunction action="{!download_click}"   name="downloadFunc_Click2"  reRender="" oncomplete="downloadPage_Click2()" >
+    <apex:param id="pallinvisibleStr" name="allinvisibleStr"  value="" />
+</apex:actionFunction>
+
+<apex:outputpanel id="jspanel"> 
+    <script>  
+    function refreshme1(){
+        //var x = '{!curOthRow}';
+        
+        var result = '{!emailAllUrl}';
+        if(result.indexOf("amp;") > -1){
+            result = result.replace("amp\;","");
+        }
+        
+        //alert('DATA :'+x);
+        var firstcol = '';
+        firstcol += '<table id="firstcoltable" style="width: {!ADWidth}px; table-layout:fixed;">';
+            //Below rows are commented by milon on 8/1/2013
+            //firstcol += '<tr class="gen_row_0">';
+            //firstcol += '<td style="width: 35px;">&nbsp;</td>';
+            //<apex:variable var="cnt" value="{!0}" />
+            //<apex:repeat value="{!topRow}" var="data">
+            //<apex:outputPanel layout="none"  rendered="{!dataD[cnt].type ='Always Displayed' && cnt == 1}">
+            //    firstcol += '<td title="{!IF(dataD[cnt].isHoverEnabled,data,'')}" class="{!dataD[cnt].vartype}" style="width: {!dataD[cnt].width }px; text-align: {!dataD[cnt].align};"><a onclick="javascript:viewRepDetail(\'{!userAccNr}\'); return false;">{!data}</a></td>';
+            //</apex:outputPanel>
+            //<apex:outputPanel layout="none"  rendered="{!dataD[cnt].type ='Always Displayed' && cnt != 1}">
+           //     firstcol += '<td title="{!IF(dataD[cnt].isHoverEnabled,data,'')}" class="{!dataD[cnt].vartype}" style="width: {!dataD[cnt].width }px; text-align: {!dataD[cnt].align};">{!data}</td>';
+            //</apex:outputPanel>
+           // <apex:outputPanel layout="none"  rendered="{!cnt < dataD.size - 1}">
+            //    <apex:variable var="cnt" value="{!cnt+1}"/>
+            //</apex:outputPanel>
+           // </apex:repeat>
+           // firstcol += '</tr>';
+            <apex:variable var="classfinder" value="{!1}" />
+            <apex:repeat value="{!curOthRow}" var="otRow">
+                <apex:outputPanel layout="none" rendered="{!mod(classfinder,2) == 1}">
+                firstcol += '<tr class="gen_row_1">';
+                firstcol += '<td id="ChildCheckBox" style="width: 35px;"><input id="inpChckBx" style="{!IF(s_IsImpersonated,"display:none","display:block")}" type="checkbox" value="{!acctNbrList[classfinder-1]}"></input></td>';
+                    <apex:variable var="cnt" value="{!0}" />
+                    <apex:repeat value="{!otRow}" var="data">
+                        <apex:outputPanel layout="none"  rendered="{!dataD[cnt].type ='Always Displayed' && cnt == 1}">
+                            firstcol += '<td title="{!IF(dataD[cnt].isHoverEnabled,data,'')}" class="{!dataD[cnt].vartype}" style="width: {!dataD[cnt].width }px; text-align: {!dataD[cnt].align};white-space: normal;">';
+                            firstcol += '<a onclick="javascript:f_TriggerEvent(\'{!lstTitleLevel[classfinder-1]}\',\'{!acctNbrList[classfinder-1]}\'); return false;"><apex:outputText value=" {!JSINHTMLENCODE(data)}" escape="false"/></a></td>';
+                        </apex:outputPanel> 
+                        <apex:outputPanel layout="none"  rendered="{!dataD[cnt].type ='Always Displayed' && cnt != 1}">
+                            firstcol += '<td title="{!IF(dataD[cnt].isHoverEnabled,data,'')}" class="{!dataD[cnt].vartype}" style="width: {!dataD[cnt].width }px; text-align: {!dataD[cnt].align};"><apex:outputText value=" {!JSINHTMLENCODE(data)}" escape="false"/></td>';
+                        </apex:outputPanel>
+                        <apex:outputPanel layout="none"  rendered="{!cnt < dataD.size - 1}">
+                            <apex:variable var="cnt" value="{!cnt+1}"/>
+                        </apex:outputPanel>
+                    </apex:repeat>
+                firstcol += '</tr>';
+                </apex:outputPanel>
+                <apex:outputPanel layout="none" rendered="{!mod(classfinder,2) == 0}">
+                firstcol += '<tr class="gen_row_0">';
+                firstcol += '<td id="ChildCheckBox"  style="width: 35px;"><input id="inpChckBx" style="{!IF(s_IsImpersonated,"display:none","display:block")}" type="checkbox" value="{!acctNbrList[classfinder-1]}"></input></td>';
+                    <apex:variable var="cnt" value="{!0}" />
+                    <apex:repeat value="{!otRow}" var="data">
+                        <apex:outputPanel layout="none"  rendered="{!dataD[cnt].type ='Always Displayed' && cnt == 1}">
+                           firstcol += '<td title="{!IF(dataD[cnt].isHoverEnabled,data,'')}" class="{!dataD[cnt].vartype}" style="width: {!dataD[cnt].width }px; text-align: {!dataD[cnt].align};white-space: normal;">';
+                           firstcol += '<a onclick="javascript:f_TriggerEvent(\'{!lstTitleLevel[classfinder-1]}\',\'{!acctNbrList[classfinder-1]}\'); return false;"><apex:outputText value=" {!JSINHTMLENCODE(data)}" escape="false"/></a></td>';
+                        </apex:outputPanel> 
+                        <apex:outputPanel layout="none" rendered="{!dataD[cnt].type = 'Always Displayed' && cnt != 1}">
+                            firstcol += '<td title="{!IF(dataD[cnt].isHoverEnabled,data,'')}"  class="{!dataD[cnt].vartype}" id="{!dataD[cnt].shID}" style="width: {!dataD[cnt].width }px; text-align: {!dataD[cnt].align};"><apex:outputText value=" {!JSINHTMLENCODE(data)}" escape="false"/></td>';
+                        </apex:outputPanel> 
+                        <apex:outputPanel layout="none" rendered="{!cnt < dataD.size - 1}">
+                            <apex:variable var="cnt" value="{!cnt+1}"/>
+                        </apex:outputPanel>
+                    </apex:repeat>
+                firstcol += '</tr>';
+                </apex:outputPanel>
+                <apex:outputPanel layout="none"  rendered="{!classfinder < curOthRow.size }">
+                     <apex:variable var="classfinder" value="{!classfinder+1}"/>
+                </apex:outputPanel>
+                
+                </apex:repeat>
+        firstcol += '</table>';
+
+        var table_div = '';
+        table_div += '<table width="500px" id="mainTable" style="table-layout:fixed;">';
+            //Commented by Milon on 8/1/2013
+            //table_div += '<tr class="gen_row_0">';
+             //   <apex:variable var="cnt" value="{!0}" />
+             //   <apex:repeat value="{!topRow}" var="data">
+            //        <apex:outputPanel layout="none"  rendered="{!dataD[cnt].type ='Default Shown'}">
+            //             table_div += '<td title="{!IF(dataD[cnt].isHoverEnabled,data,'')}" class="{!dataD[cnt].vartype}" id="{!dataD[cnt].shID}" style="width: {!dataD[cnt].width }px; text-align: {!dataD[cnt].align};"><apex:outputText value=" {!JSINHTMLENCODE(data)}" escape="false"/></td>';
+            //        </apex:outputPanel>
+            //        <apex:outputPanel layout="none" rendered="{!cnt < dataD.size - 1}">
+            //             <apex:variable var="cnt" value="{!cnt+1}"/>
+            //        </apex:outputPanel>
+            //    </apex:repeat>
+            // table_div += '</tr>';
+             <apex:variable var="classfinder" value="{!1}" />
+                <apex:repeat value="{!curOthRow}" var="otRow">
+                    <apex:outputPanel layout="none" rendered="{!mod(classfinder,2) == 1}">
+                    table_div += '<tr class="gen_row_1">';
+                        <apex:variable var="cnt" value="{!0}" />
+                        <apex:repeat value="{!otRow}" var="data">
+                            <apex:outputPanel layout="none"  rendered="{!dataD[cnt].type = 'Default Shown'}">
+                                table_div += '<td title="{!IF(dataD[cnt].isHoverEnabled,data,'')}"  class="{!dataD[cnt].vartype}" id="{!dataD[cnt].shID}" style="width: {!dataD[cnt].width }px; text-align: {!dataD[cnt].align};"><apex:outputText value=" {!JSINHTMLENCODE(data)}" escape="false"/></td>';
+                            </apex:outputPanel>
+                            <apex:outputPanel layout="none" rendered="{!cnt < dataD.size - 1}">
+                                <apex:variable var="cnt" value="{!cnt+1}"/>
+                            </apex:outputPanel>
+                        </apex:repeat>
+                    table_div += '</tr>';
+                    </apex:outputPanel>
+                    <apex:outputPanel layout="none" rendered="{!mod(classfinder,2) == 0}">
+                    table_div += '<tr class="gen_row_0">';
+                        <apex:variable var="cnt" value="{!0}" />
+                        <apex:repeat value="{!otRow}" var="data">
+                            <apex:outputPanel layout="none" rendered="{!dataD[cnt].type = 'Default Shown'}">
+                                table_div += '<td title="{!IF(dataD[cnt].isHoverEnabled,data,'')}" class="{!dataD[cnt].vartype}" id="{!dataD[cnt].shID}" style="width: {!dataD[cnt].width }px; text-align: {!dataD[cnt].align};" ><apex:outputText value=" {!JSINHTMLENCODE(data)}" escape="false"/></td>';
+                            </apex:outputPanel>
+                            <apex:outputPanel layout="none" rendered="{!cnt < dataD.size - 1}">
+                                <apex:variable var="cnt" value="{!cnt+1}"/>
+                            </apex:outputPanel>
+                        </apex:repeat>
+                    table_div += '</tr>';
+                    </apex:outputPanel>
+                    <apex:variable var="classfinder" value="{!classfinder+1}"/>
+                </apex:repeat>
+        table_div += '</table>';
+        var staticTable = '';
+        staticTable += '<table id="tableHeader" style="width: {!ADWidth}px; table-layout:fixed;">';
+            staticTable += '<tr style="height :25px;">';
+               // staticTable += '<td  style="width: 35px;white-space: normal;"><img id="pic" alt="Email All" src ="{!$Resource.EmailAll}" /></td>';
+                staticTable += '<td  style="width: 35px;white-space: normal;"><img id="pic" alt="Email All" src ="{!$Resource.EmailAllNewRep}" /></td>';
+                document.getElementById('pic').src=result;
+                <apex:repeat value="{!dataD}" var="hidcol">
+                <apex:outputPanel layout="none"  rendered="{!hidcol.type ='Always Displayed' && hidcol.sortOrder = -1}">
+                     staticTable += '<td style="width: {!hidcol.width }px;" title="{!hidcol.DataLong}" class="NoSort">';
+                     staticTable += '<div align="center">';
+                     staticTable += '<a onclick="javascript:sortFunction(\'{!hidcol.vartype}\',\'{!hidcol.Id}\');  return false;">{!hidcol.Data}</a>';
+                     staticTable += '</div>';
+                     staticTable += '</td>';
+                </apex:outputPanel>
+                <apex:outputPanel layout="none"  rendered="{!hidcol.type ='Always Displayed' && hidcol.sortOrder = 0}">
+                     staticTable += '<td style="width: {!hidcol.width }px;" title="{!hidcol.DataLong}" class="ASort">';
+                     staticTable += '<div align="center">';
+                     staticTable += '<a onclick="javascript:sortFunction(\'{!hidcol.vartype}\',\'{!hidcol.Id}\');  return false;">{!hidcol.Data}</a>';
+                     staticTable += '</div>';
+                     staticTable += '</td>';
+                </apex:outputPanel>
+                <apex:outputPanel layout="none"  rendered="{!hidcol.type ='Always Displayed' && hidcol.sortOrder = 1}">
+                     staticTable += '<td style="width: {!hidcol.width }px;" title="{!hidcol.DataLong}" class="DSort">';
+                     staticTable += '<div align="center">';
+                     staticTable += '<a onclick="javascript:sortFunction(\'{!hidcol.vartype}\',\'{!hidcol.Id}\');  return false;">{!hidcol.Data}</a>';
+                     staticTable += '</div>';
+                     staticTable += '</td>';
+                </apex:outputPanel>
+                </apex:repeat>
+            staticTable += '</tr>';
+            staticTable += '<tr class="subhead" style="height :19px;">';
+                staticTable += '<td class="headerLeftBorder" title="All" style="width: 35px; text-align:left;border-left:hidden;">';
+                    staticTable += '<input class="headerCheckboxSmall" style="{!IF(s_IsImpersonated,"display:none","display:block")}" type="checkbox" value="checkbox"/>';
+                staticTable += '</td>';
+                <apex:repeat value="{!dataD}" var="hidcol">
+                <apex:outputPanel layout="none"  rendered="{!hidcol.type ='Always Displayed'}">
+                    if({!hidcol.isflname}){
+                        staticTable += '<td style="font-size: 11px !important;white-space: normal;width: {!hidcol.width }px;">';
+                        staticTable += '{!$Label.Sort_None}:<a onclick="javascript:sortFunction(\'flname\',\'{!hidcol.Id}\');  return false;">{!hidcol.flLabel}</a>';
+                        staticTable += '</td>';
+                    }else{
+                        staticTable += '<td style="width: {!hidcol.width }px; ">&nbsp;</td>';
+                    }
+                </apex:outputPanel>
+                </apex:repeat>
+            staticTable += '</tr>';
+        staticTable += '</table>';
+
+        var divHeader = '';
+        divHeader += '<table id="tableHeader2" style="table-layout:fixed;">';
+        divHeader += '<tr style="height :24px;">';
+            <apex:repeat value="{!dataD}" var="hidcol">
+                <apex:outputPanel layout="none"  rendered="{!hidcol.type ='Default Shown' && hidcol.sortOrder = -1}">
+                    divHeader += '<td id="{!hidcol.shID}" title="{!hidcol.DataLong}" style="width: {!hidcol.width }px;" class="NoSort">';
+                    divHeader += '<div align="center">';
+                    divHeader += '<a style="display: none;"></a>';
+                    divHeader += '<span>';
+                    divHeader += '<a onclick="javascript:sortFunction(\'{!hidcol.vartype}\',\'{!hidcol.Id}\'); return false;">{!hidcol.Data}</a>';
+                    divHeader += '</span>';
+                    divHeader += '</div>';
+                    divHeader += '</td>';
+                </apex:outputPanel>
+                <apex:outputPanel layout="none"  rendered="{!hidcol.type ='Default Shown' && hidcol.sortOrder = 0}">
+                    divHeader += '<td id="{!hidcol.shID}" title="{!hidcol.DataLong}" style="width: {!hidcol.width }px;" class="ASort">';
+                    divHeader += '<div align="center">';
+                    divHeader += '<a style="display: none;"></a>';
+                    divHeader += '<span>';
+                    divHeader += '<a onclick="javascript:sortFunction(\'{!hidcol.vartype}\',\'{!hidcol.Id}\'); return false;">{!hidcol.Data}</a>';
+                    divHeader += '</span>';
+                    divHeader += '</div>';
+                    divHeader += '</td>';
+                </apex:outputPanel>
+                <apex:outputPanel layout="none"  rendered="{!hidcol.type ='Default Shown' && hidcol.sortOrder = 1}">
+                    divHeader += '<td id="{!hidcol.shID}" title="{!hidcol.DataLong}" style="width: {!hidcol.width }px;" class="DSort">';
+                    divHeader += '<div align="center">';
+                    divHeader += '<a style="display: none;"></a>';
+                    divHeader += '<span>';
+                    divHeader += '<a onclick="javascript:sortFunction(\'{!hidcol.vartype}\',\'{!hidcol.Id}\'); return false;">{!hidcol.Data}</a>';
+                    divHeader += '</span>';
+                    divHeader += '</div>';
+                    divHeader += '</td>';
+                </apex:outputPanel>
+             </apex:repeat>     
+        divHeader += '</tr>';
+        divHeader += '<tr class="subhead" style="height: 19px;">';
+            <apex:repeat value="{!dataD}" var="hidcol">
+            <apex:outputPanel layout="none"  rendered="{!hidcol.type ='Default Shown'}">
+                divHeader += '<td id="{!hidcol.shID}" style="width: {!hidcol.width }px;">&nbsp;</td>';
+            </apex:outputPanel>
+            </apex:repeat>
+        divHeader += '</tr>';
+        divHeader += '</table>';
+        divHeader += '<div id="rightHeader"></div>';
+        
+        //jQuery('#divHeader').empty();
+        //jQuery('#divHeader').html(divHeader);
+        
+		//jQuery('#table_div > .jspVerticalBar > .jspTrack > .jspDrag').css('top','0px');
+        jQuery(function()
+        {
+            q0= jQuery("#staticTable").jScrollPane().data("jsp");
+            q1= jQuery("#divHeader").jScrollPane().data("jsp");
+            q2= jQuery("#firstcol").jScrollPane().data("jsp"); 
+            q3= jQuery("#table_div").jScrollPane().data("jsp");
+            q4= jQuery("#wrapperTable").jScrollPane().data("jsp");
+            q0.getContentPane().html(""); 
+            q0.getContentPane().html(staticTable); 
+            q0.reinitialise();
+            q1.getContentPane().html(""); 
+            q1.getContentPane().html(divHeader); 
+            q1.reinitialise();
+            q2.getContentPane().html(""); 
+            q2.getContentPane().html(firstcol); 
+            q2.reinitialise();
+            q3.getContentPane().html(""); 
+            q3.getContentPane().html(table_div); 
+            q3.reinitialise();
+            q4.reinitialise();
+            
+            jQueryc1= jQuery("#table_div").jScrollPane({
+                    horizontalDragMinWidth: 96,
+                    horizontalDragMaxWidth: 96,
+                    verticalDragMinHeight: 150,
+                    verticalDragMaxHeight: 150,
+                    showArrows: true
+                });
+        });
+		
+		
+        var data = jQuery('#lstInvisible').html();
+        var invisiList = data.split('~');
+        for (var i = 0; i < invisiList.length; i++){ 
+            var Class = invisiList[i]; 
+            jQuery('#mainTable td, #tableHeader2 td').each(function() { 
+                if (jQuery(this).attr('id')==Class) {
+                    jQuery(this).fadeToggle();
+                }
+            });
+        }
+
+        //Raktim input box disable
+        var emailIndc = '{!emailForIndc}';
+        var matching_els = jQuery("td[id^='SH0']"), ids = [];   
+        var matching_ChkBx = jQuery("input[id^='inpChckBx']"), ids = []; 
+        var matching_EmailId = jQuery("td[id^='SH2']"), ids = [];   
+        if(emailIndc == 'G1'){
+            for(var i=0; i < matching_els.length; i++){
+                var valueGen =  matching_els[i].innerHTML;
+                if(valueGen == '1'){
+                    matching_ChkBx[i].style.visibility = "visible";
+                }else{ 
+                    matching_ChkBx[i].style.visibility = "hidden";
+                }
+            }
+        }else if(emailIndc == 'All'){
+                for(var i=0; i < matching_els.length; i++){
+                    matching_ChkBx[i].style.visibility = "visible";
+                }
+        }else{
+            for(var i=0; i < matching_els.length; i++){
+                    matching_ChkBx[i].style.visibility = "hidden";
+            }
+        }
+
+        jQuery(".headerLeftBorder input").click(function() {
+            var status = this.checked;     
+            jQuery("#ChildCheckBox input").each(function() {
+                jQuery(this).attr("checked",status);  
+            });
+       });
+      
+      // Following Lines are blocked by Raktim on 6th Sept, 2013 for Comma-Decimal Separator
+      /*
+      var mapDecimalSeperator = new Object();
+        var mapCommaSeperator = new Object();
+        
+        mapDecimalSeperator['tr_TR'] = ',';
+        mapDecimalSeperator['en_US'] = '.';
+        mapDecimalSeperator['en_CA'] = '.';
+        mapDecimalSeperator['fr_CA'] = '.';
+        
+        
+        mapCommaSeperator['tr_TR'] = '.';
+        //mapCommaSeperator['tr_TR'] = ',';
+        mapCommaSeperator['en_US'] = ',';
+        mapCommaSeperator['en_CA'] = ',';
+        mapCommaSeperator['fr_CA'] = ',';
+        
+        function getDecimalSeperator(k) {
+           return mapDecimalSeperator[k];
+        }
+        function getCommaSeperator(k){
+            return mapCommaSeperator[k];
+        }
+        */       
+        
+        jQuery(".Number").each(function(){
+                          var text = jQuery(this).text();
+                          var num = new NumberFormat();
+                          //alert(' TEXT -- '+text);
+                          
+                          num.setInputDecimal('.');
+                          num.setSeparators(true, ',', ',');    
+                          
+                           // Following Lines are added by Raktim on 6th Sept, 2013 for Comma-Decimal Separator
+                           var decimalSeperator = '{!decimlSeprtr}';
+                           var commaSeperator = '{!commaSeprtr}';
+                            
+                           if(decimalSeperator!='' && decimalSeperator!=null){
+                                num.setInputDecimal(decimalSeperator);
+                            }   
+                           if(commaSeperator!='' && commaSeperator!=null){
+                                num.setSeparators(true, commaSeperator, commaSeperator);
+                            }                               
+
+                            num.setNumber(text);
+                            
+                             //num.setPlaces('0', false);  
+                            num.setPlaces('0', true);  // Changed by Raktim - defect id : 2350
+                            num.setCurrencyValue('$');
+                            num.setCurrency(false);
+                            num.setCurrencyPosition(num.LEFT_OUTSIDE);
+                            num.setNegativeFormat(num.LEFT_DASH);
+                            num.setNegativeRed(false);
+                            jQuery(this).text(num.toFormatted());
+                 });   
+        jQuery(".Currency").each(function(){
+                        var text = jQuery(this).text();
+                        var num = new NumberFormat();
+                          
+                          num.setInputDecimal('.');
+                          num.setSeparators(true, ',', ',');    
+                          
+                           // Following Lines are blocked by Raktim on 6th Sept, 2013 for Comma-Decimal Separator
+                           var decimalSeperator = getDecimalSeperator('{!currUserLocale}');
+                           var commaSeperator = getCommaSeperator('{!currUserLocale}');
+                            
+                           if(decimalSeperator!='' && decimalSeperator!=null){
+                                num.setInputDecimal(decimalSeperator);
+                            }   
+                           if(commaSeperator!='' && commaSeperator!=null){
+                                num.setSeparators(true, commaSeperator, commaSeperator);
+                            }         
+                        num.setNumber(text); 
+                        num.setPlaces('2', true);
+                        num.setCurrencyValue('$');
+                        num.setCurrency(false);
+                        num.setCurrencyPosition(num.LEFT_OUTSIDE);
+                        num.setNegativeFormat(num.LEFT_DASH);
+                        num.setNegativeRed(false);
+                       
+                        jQuery(this).text(num.toFormatted());
+    
+                });
+        
+    }
+    </script>
+    </apex:outputpanel>
+<div id="maindiv" >
+    <div id="processing_msgs" style="position:absolute;left:40%;top:50%;">
+        <c:ProcessingMsg />
+    </div>
+</div>
+<div id="email_sel_mask_fltr" class="white_trans_closed"> 
+    <!-- <div id="processing_msg_fltr" style="position:absolute;top:12%;left:auto;margin:-150px 0 0 -150px;"> -->
+    <div id="processing_msg_fltr" style="width:600px;height:600px;position:absolute;top:50%;left:50%;margin-left:-300px;margin-top:-300px;">
+        <c:ProcessingFilterMsg />
+    </div>
+</div>    
+<div id="wholepan" style="display:none;">
+    <h1 class="big_pnk_hdr" style="padding-left:43px"><span id="spanHeader" style="display:inline-block;height:20px;margin:5px 10px 0 0;">{!$Label.New_Rep} &nbsp;</span>
+   <span class="frm_cntr">
+        <select id="lstReportType" name="lstReportType" class="myselect"  style="width:181px;height: 14px !important;" title="{!$Label.New_Rep}" size="1" onchange="ReportRedirect(this.value);return false;">
+                
+                // Added by Raktim - defect id : 2400
+                <option value="">{!$Label.Other_Reports}</option>
+                // End of Addition
+                
+                <apex:outputPanel rendered="{!IF(s_IsImpersonated,true,false)}">
+                        <option value='/apex/YouHome?pgId=1'>{!$Label.ALM_Home}</option>
+                        <option value="CR">{!$Label.Coaching_Record}</option>
+                </apex:outputPanel>
+                <apex:repeat value="{!lst_ReportLinks}" var="l">
+                    <apex:outputPanel rendered="{!IF(NOT(CONTAINS($Label[l.Report_Type__c],$Label.New_Rep)),true,false)}">
+                        <option value="{!IF(AND(LEN(l.Report_URL__c)>0,NOT(ISBLANK(l.Report_URL__c)),NOT(ISNULL(l.Report_URL__c))),l.Report_URL__c,'/apex/YouHome?pgId=1')}">{!$Label[l.Report_Type__c]}</option>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!IF(CONTAINS($Label[l.Report_Type__c],$Label.New_Rep),true,false)}" >
+                        <option selected="selected" value="{!IF(AND(LEN(l.Report_URL__c)>0,NOT(ISBLANK(l.Report_URL__c)),NOT(ISNULL(l.Report_URL__c))),l.Report_URL__c,'/apex/YouHome?pgId=1')}">{!$Label[l.Report_Type__c]}</option>
+                    </apex:outputPanel>
+            </apex:repeat>
+        </select>
+    </span>
+    
+    <apex:outputPanel style="font-size:9pt; text-align:right; padding-bottom: 10px;" >{!NrtTimeStamp}</apex:outputPanel>
+    
+        <ul class="icon_lnks" style="padding-right:0px;">
+              <li><a href="javascript:void(0)" onclick="multiEmail_Click(); return false;" style="{!IF(s_IsImpersonated,'display:none','display:block')}" class="pnk_mail"></a></li>
+              <li>
+              <apex:outputPanel layout="none" rendered="{!NOT (con.resultSize > DOWNLOAD_LIMIT)}">  
+              <div class="pnk_down">
+                <a id="downldAll" href="javascript:void(0)" target="_blank" onclick="downloadAll_Click(); return false;" class="pnk_down"></a> 
+               </div>
+              </apex:outputPanel>
+              <apex:outputPanel layout="none" rendered="{!(con.resultSize > DOWNLOAD_LIMIT)}">
+                <a href="javascript:void(0)" onclick="showOverlay('download'); return false;" class="pnk_down"></a>
+              </apex:outputPanel>
+              </li>
+              <li>
+              <a href="javascript:void(0)" target="_blank" onclick="printFunc(); return false;" class="pnk_print"></a>
+
+              </li>
+        </ul>
+    </h1>
+    <div style="height: 28px;">
+   <div>
+        <div class="row">
+             <table> 
+                <tr>
+                    <td style="padding-left:25px">
+                        <span class="filterLabel" style="font-size: 12px;text-align: center;padding-bottom:15px;">
+                            {!$Label.Filter}:
+                        </span>
+                    </td>
+                    <td>
+                        <span class="frm_cntr_large filterList" style="height:24px;padding-right:14px;"> 
+                            <!--  Modified by Raktim for Mail Plan 1Jul 2013 -->
+                            <apex:selectList size="1" multiselect="false" styleClass="myselect" style="vertical-align: top;position: relative;width:181px;"  value="{!campFselect}"  onchange="javascript:getCampaign(this.options[this.selectedIndex].text);">
+                            <!--  End -->
+                            <apex:selectOptions value="{!campFList}"/>
+                            </apex:selectList>
+                        </span>
+                    </td>
+                    <td>
+                        <span class="frm_cntr_large filterList" style="height:24px;padding-right:14px; display: block;">
+                            <apex:outputPanel id="whatFilterNewRep" styleClass="selectwrapper"> <!--  Added by Raktim for Mail Plan 1Jul 2013 --><!--  changed by swarnava 2nd Jul -->
+                            <apex:selectList size="1"  styleClass="myselect" style="vertical-align: top;position: relative;width:181px;"  value="{!loaFselect}"  onchange="javascript:getLoa(this.options[this.selectedIndex].value);">
+                            <apex:selectOptions value="{!loaFList}" />
+                            </apex:selectList>
+                            </apex:outputPanel> <!--  Added by Raktim for Mail Plan 1Jul 2013 -->
+                        </span>
+                    </td>
+                    <td>
+                        <!-- callOmniture_Filtr method used - Raktim on 8th Apr 2013 -->
+                        <apex:commandLink action="{!filterReport}" id="lnkFilter" onclick="callOmniture_Filtr(); showProcessingMsg();" styleClass="round_go" style="display:table-cell;height:28px;"/>
+                    </td>
+                    <!--td vAlign="top">
+                      <apex:outputPanel layout="block" style="width:400px; text-align:right; padding-bottom: 10px;" >{!NrtTimeStamp}</apex:outputPanel>
+                    </td-->
+                </tr>
+            </table>
+        </div>
+     </div>
+    </div>
+<div class="spacer"></div>   
+    <div id="main">
+    <div id="showhide" style="display: block;">{!$Label.Show_Hide_Columns}</div>
+    <div id="showhideform"  style="border: 1px solid #999999; display: none;white-space: nowrap; overflow: auto;">
+    <apex:variable var="groupCol" value="{!0}" />
+    <apex:repeat value="{!dataD}" var="hidcol">
+        <apex:outputPanel layout="none"  rendered="{!hidcol.type ='Default Shown'}">
+            <apex:outputPanel layout="none"  rendered="{!(groupCol == 0) && (hidcol.shID =='SHPI') }">
+                <input type="checkbox" name="{!hidcol.shID}"  checked="checked" /><label>{!$Label.PersonalInfo}</label><br />
+                <apex:variable var="groupCol" value="{!groupCol+1}"/>
+            </apex:outputPanel>
+            <apex:outputPanel layout="none"  rendered="{!hidcol.shID !='SHPI'}">
+                <input type="checkbox" name="{!hidcol.shID}"  checked="checked" /><label>{!hidcol.DataLong}</label><br />
+            </apex:outputPanel>
+        </apex:outputPanel>   
+    </apex:repeat>
+    </div>
+
+    <table id="wrapperTable">
+    <tr>
+    <td id="firstTd">
+    <div class="scroll-pane" id="staticTable">
+        <table id="tableHeader" style="width: {!ADWidth}px; table-layout:fixed;">
+            <tr style="height:25px;">
+                <script>
+                    var result = '{!emailAllUrl}';
+                    if(result.indexOf("amp;") > -1){
+                        result = result.replace("amp\;","");
+                    }
+                   // document.getElementById('pic').src=result;
+                </script>
+                <td class="headerLeftBorder" style="width: 35px;border-left:hidden;white-space: normal;">
+                <!-- <img id="pic" alt="Email All" src="{!emailAllUrl}" /> -->
+                {!$Label.YOU_NEWREP_ALL_CHKBX}
+                </td>
+                <!-- <td class="headerLeftBorder" style="width: 55px;border-left:hidden;">{!$Label.YOU_NEWREP_ALL_CHKBX}</td> -->
+                <apex:repeat value="{!dataD}" var="hidcol">
+                <apex:outputPanel layout="none"  rendered="{!hidcol.type ='Always Displayed'}">
+                     <td style="width: {!hidcol.width }px;" title="{!hidcol.DataLong}" class="NoSort">
+                     <div align="center">
+                     <a onclick="javascript:sortFunction('{!hidcol.vartype}','{!hidcol.Id}');  return false;">{!hidcol.Data}</a>
+                     </div>
+                    </td>
+                </apex:outputPanel>
+                </apex:repeat>
+            </tr>
+            <tr class="subhead" style="height :19px;">
+                <td class="headerLeftBorder" title="All" style="width: 35px;text-align:left;border-left:hidden;">
+                <!-- <td class="headerLeftBorder" title="All" style="width: 55px;text-align:left;border-left:hidden;"> -->
+                    <input class="headerCheckboxSmall" style="{!IF(s_IsImpersonated,'display:none','display:inline')}" type="checkbox" value="checkbox"/>
+                    <!--<img id="pic" alt="Email All" src="{!$Resource.EmailAll}" style="display:inline;"/> style="display:inline; -->
+                    <img id="pic" alt="Email All" src="{!$Resource.EmailAllNewRep}" style="{!IF(s_IsImpersonated,'display:none','display:inline')}" />
+                </td>
+                <apex:repeat value="{!dataD}" var="hidcol">
+                <apex:outputPanel layout="none"  rendered="{!hidcol.type ='Always Displayed'}">
+                     <apex:outputPanel layout="none" rendered="{!hidcol.isflname}">
+                        <td style="font-size: 11px !important;white-space: normal;width: {!hidcol.width }px;">
+                        {!$Label.Sort_None}:
+                            <a onclick="javascript:sortFunction('flname','{!hidcol.Id}');  return false;">{!hidcol.flLabel}</a>
+                        </td>
+                     </apex:outputPanel>
+                     <apex:outputPanel layout="none" rendered="{!NOT hidcol.isflname}">
+                        <td style="width: {!hidcol.width }px;">&nbsp;</td>
+                     </apex:outputPanel>
+                     
+                </apex:outputPanel>
+                </apex:repeat>
+            </tr>
+        </table>
+    </div>
+    </td>
+    <td id="secondTd">
+    <div id="divHeader" >
+    <table id="tableHeader2" style="table-layout:fixed;">
+    <tr style="height:25px;">
+        <apex:repeat value="{!dataD}" var="hidcol">
+            <apex:outputPanel layout="none"  rendered="{!hidcol.type ='Default Shown'}">
+                <td id="{!hidcol.shID}" title="{!hidcol.DataLong}" style="width: {!hidcol.width }px;" class="NoSort">
+                <div align="center">
+                <!--<a style="display: none;"></a>
+                <br/>-->
+                <!--<span>-->
+                <a onclick="javascript:sortFunction('{!hidcol.vartype}','{!hidcol.Id}'); return false;">{!hidcol.Data}
+                </a>
+                <!--</span>-->
+                </div>
+                </td>
+            </apex:outputPanel>
+         </apex:repeat>     
+    </tr>
+    <tr class="subhead" style="height: 19px;">
+        <apex:repeat value="{!dataD}" var="hidcol">
+        <apex:outputPanel layout="none"  rendered="{!hidcol.type ='Default Shown'}">
+            <td id="{!hidcol.shID}" style="width: {!hidcol.width }px;">&nbsp;</td>
+        </apex:outputPanel>
+        </apex:repeat>
+    </tr>
+    </table>
+    <div id="rightHeader"></div>
+    </div>
+    </td>
+    </tr>
+    <tr>
+    <td valign="top">
+    <div id="firstcol" class="scroll-pane">
+    <table id="firstcoltable" style="width: {!ADWidth}px; table-layout:fixed;">
+        <!-- Commented by Milon on 8/1/2013
+        <tr class="gen_row_0">
+        <td style="width: 35px;">&nbsp;</td>
+        <apex:variable var="cnt" value="{!0}" />
+        <apex:repeat value="{!topRow}" var="data">
+        <apex:outputPanel layout="none"  rendered="{!dataD[cnt].type ='Always Displayed' && cnt == 1}">
+            <td title="{!IF(dataD[cnt].isHoverEnabled,data,'')}" class="{!dataD[cnt].vartype}" style="width: {!dataD[cnt].width }px; text-align: {!dataD[cnt].align};"><a onclick="javascript:viewRepDetail('{!userAccNr}');  return false;">{!data}</a></td>
+        </apex:outputPanel> 
+        <apex:outputPanel layout="none"  rendered="{!dataD[cnt].type ='Always Displayed' && cnt != 1}">
+            <td title="{!IF(dataD[cnt].isHoverEnabled,data,'')}" class="{!dataD[cnt].vartype}" style="width: {!dataD[cnt].width }px; text-align: {!dataD[cnt].align};">{!data}</td>
+        </apex:outputPanel>
+        <apex:outputPanel layout="none"  rendered="{!cnt < dataD.size - 1}">
+            <apex:variable var="cnt" value="{!cnt+1}"/>
+        </apex:outputPanel>
+        </apex:repeat>
+        </tr>
+         -->
+         <!-- DATA -->
+        <apex:variable var="classfinder" value="{!1}" />
+        <apex:repeat value="{!curOthRow}" var="otRow">
+            <apex:outputPanel layout="none" rendered="{!mod(classfinder,2) == 1}">
+            <tr class="gen_row_0">
+            <td id="ChildCheckBox" style="width: 55px;">
+            <input id="inpChckBx" style="{!IF(s_IsImpersonated,'display:none','display:block')}" type="checkbox" value="{!acctNbrList[classfinder-1]}">
+            </input>
+            </td>
+                <apex:variable var="cnt" value="{!0}" />
+                <apex:repeat value="{!otRow}" var="data">
+                    <apex:outputPanel layout="none"  rendered="{!dataD[cnt].type ='Always Displayed' && cnt == 1}">
+                        <td title="{!IF(dataD[cnt].isHoverEnabled,data,'')}" class="{!dataD[cnt].vartype}" style="width: {!dataD[cnt].width }px; text-align: {!dataD[cnt].align};white-space: normal;">
+                        <a onclick="javascript:f_TriggerEvent('{!lstTitleLevel[classfinder-1]}','{!acctNbrList[classfinder-1]}'); return false;">{!data}</a></td>
+                    </apex:outputPanel> 
+                    <apex:outputPanel layout="none"  rendered="{!dataD[cnt].type ='Always Displayed' && cnt != 1}">
+                        <td title="{!IF(dataD[cnt].isHoverEnabled,data,'')}" class="{!dataD[cnt].vartype}" style="width: {!dataD[cnt].width }px; text-align: {!dataD[cnt].align};">{!data}</td>
+                    </apex:outputPanel> 
+                    <apex:outputPanel layout="none"  rendered="{!cnt < dataD.size - 1}">
+                        <apex:variable var="cnt" value="{!cnt+1}"/>
+                    </apex:outputPanel>
+                </apex:repeat>
+            </tr>
+            </apex:outputPanel>
+            <apex:outputPanel layout="none" rendered="{!mod(classfinder,2) == 0}">
+            <tr class="gen_row_1">
+            <td id="ChildCheckBox"  style="width: 55px;">
+            <input id="inpChckBx" style="{!IF(s_IsImpersonated,'display:none','display:block')}" type="checkbox" value="{!acctNbrList[classfinder-1]}">
+            </input>
+            </td>
+                <apex:variable var="cnt" value="{!0}" />
+                <apex:repeat value="{!otRow}" var="data">
+                    <apex:outputPanel layout="none"  rendered="{!dataD[cnt].type ='Always Displayed' && cnt == 1}">
+                        <td title="{!IF(dataD[cnt].isHoverEnabled,data,'')}"  class="{!dataD[cnt].vartype}" style="width: {!dataD[cnt].width }px; text-align: {!dataD[cnt].align};">
+                        <a onclick="javascript:f_TriggerEvent('{!lstTitleLevel[classfinder-1]}','{!acctNbrList[classfinder-1]}'); return false;">{!data}</a></td>
+                    </apex:outputPanel> 
+                    <apex:outputPanel layout="none"  rendered="{!dataD[cnt].type ='Always Displayed' && cnt != 1}">
+                        <td title="{!IF(dataD[cnt].isHoverEnabled,data,'')}"  class="{!dataD[cnt].vartype}" style="width: {!dataD[cnt].width }px; text-align: {!dataD[cnt].align};">{!data}</td>
+                    </apex:outputPanel>
+                    
+                    <apex:outputPanel layout="none" rendered="{!cnt < dataD.size - 1}">
+                        <apex:variable var="cnt" value="{!cnt+1}"/>
+                    </apex:outputPanel>
+                </apex:repeat>
+            </tr>
+            </apex:outputPanel>
+            <apex:variable var="classfinder" value="{!classfinder+1}"/>
+            </apex:repeat>
+            <!-- DATA END -->
+    </table>
+    </div>
+    <div id="leftFooter"></div>
+    </td>
+    <td valign="top">
+    <div class="scroll-pane" id="table_div">
+    <table width="500px" id="mainTable" style="table-layout:fixed;">
+        <!-- Commented by Milon on 8/1/2013
+        <tr class="gen_row_0">
+            <apex:variable var="cnt" value="{!0}" />
+            <apex:repeat value="{!topRow}" var="data">
+                <apex:outputPanel layout="none"  rendered="{!dataD[cnt].type ='Default Shown'}">
+                     <td title="{!IF(dataD[cnt].isHoverEnabled,data,'')}" class="{!dataD[cnt].vartype}" id="{!dataD[cnt].shID}" style="width: {!dataD[cnt].width }px; text-align: {!dataD[cnt].align};">{!data}</td>
+                </apex:outputPanel>
+                <apex:outputPanel layout="none" rendered="{!cnt < dataD.size - 1}">
+                     <apex:variable var="cnt" value="{!cnt+1}"/>
+                </apex:outputPanel>
+            </apex:repeat>
+         </tr>
+          -->
+         <apex:variable var="classfinder" value="{!1}" />
+            <apex:repeat value="{!curOthRow}" var="otRow">
+                <apex:outputPanel layout="none" rendered="{!mod(classfinder,2) == 1}">
+                <tr class="gen_row_0">
+                    <apex:variable var="cnt" value="{!0}" />
+                    <apex:repeat value="{!otRow}" var="data">
+                        <apex:outputPanel layout="none"  rendered="{!dataD[cnt].type = 'Default Shown'}">
+                            <td title="{!IF(dataD[cnt].isHoverEnabled,data,'')}" class="{!dataD[cnt].vartype}" id="{!dataD[cnt].shID}" style="width: {!dataD[cnt].width }px; text-align: {!dataD[cnt].align};">{!data}</td>
+                        </apex:outputPanel>
+                        
+                        <apex:outputPanel layout="none" rendered="{!cnt < dataD.size - 1}">
+                            <apex:variable var="cnt" value="{!cnt+1}"/>
+                        </apex:outputPanel>
+                    </apex:repeat>
+                </tr>
+                </apex:outputPanel>
+                <apex:outputPanel layout="none" rendered="{!mod(classfinder,2) == 0}">
+                <tr class="gen_row_1">
+                    <apex:variable var="cnt" value="{!0}" />
+                    <apex:repeat value="{!otRow}" var="data">
+                        <apex:outputPanel layout="none" rendered="{!dataD[cnt].type = 'Default Shown'}">
+                            <td title="{!IF(dataD[cnt].isHoverEnabled,data,'')}" class="{!dataD[cnt].vartype}" id="{!dataD[cnt].shID}" style="width: {!dataD[cnt].width }px; text-align: {!dataD[cnt].align};">{!data}</td>
+                        </apex:outputPanel>
+                        
+                        <apex:outputPanel layout="none" rendered="{!cnt < dataD.size - 1}">
+                            <apex:variable var="cnt" value="{!cnt+1}"/>
+                        </apex:outputPanel>
+                    </apex:repeat>
+                </tr>
+                </apex:outputPanel>
+                <apex:variable var="classfinder" value="{!classfinder+1}"/>
+            </apex:repeat>
+    </table>
+
+    </div>
+    </td>
+    </tr>
+    </table>
+    <!--<br></br><br></br>-->
+    </div>
+
+    <!--  Added by Raktim for Aler / Error Message Change on 17 May, 2013 START  -->
+    <div id="email_msg"  class="white_trans_emailmsgoverlay_closed">
+                <apex:outputPanel id="emailmsgoverlay" layout="none">
+                    <c:EmailMessage id="emlmsgoverlay" />
+                </apex:outputPanel>
+   </div> 
+   <!--  Added by Raktim for Aler / Error Message Change on 17 May, 2013 END  -->
+
+    <c:PersonalMessage />
+    <apex:outputPanel layout="none"  rendered="{!curOthRow.size < 1}">
+        <div id="filterErrorDiv" align="center" style="display:block" class="mtr_err_message">{!$Label.No_Matches_Found}</div>
+    </apex:outputPanel> 
+    
+    <div id="pagerDiv" align="center">
+        <apex:outputPanel id="paginateId">
+          <apex:outputPanel rendered="{!NOT hasPrevious}">
+            <a id="lnkFirst" class="disabled_nav_arrow first_gray"  onclick="paginationFunc('first'); return false;"></a>
+            <a id="lnkPrevious" class="disabled_nav_arrow previous_gray"  onclick="paginationFunc('previous'); return false;"></a>
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{!hasPrevious}">
+            <a id="lnkFirst" class="enabled_nav_arrow first_pink"  onclick="paginationFunc('first'); return false;"></a>
+            <a id="lnkPrevious" class="enabled_nav_arrow previous_pink"  onclick="paginationFunc('previous'); return false;"></a>
+        </apex:outputPanel>
+
+        <span id="pagerInfo" class="pagerInfo_select">
+            
+           <I> &nbsp;Page {!pageNumber} of {!numpages}</I>&nbsp;
+        </span>
+        
+        <apex:commandLink action="{!gotopage}" value="{!pagenumber-4}" status="coachCounterStatus"  oncomplete="refreshme1()" reRender="jspanel,paginateId" rendered="{!pagenumber-4>0}" styleClass="pagerInfo">
+         <apex:param value="{!pagenumber-4}" name="pagename"/> 
+         </apex:commandlink>&nbsp;&nbsp;
+        <apex:commandLink action="{!gotopage}" value="{!pagenumber-3}" status="coachCounterStatus"  oncomplete="refreshme1()" reRender="jspanel,paginateId" rendered="{!pagenumber-3>0}" styleClass="pagerInfo">
+         <apex:param value="{!pagenumber-3}" name="pagename"/> 
+         </apex:commandlink>&nbsp;&nbsp;
+        <apex:commandLink action="{!gotopage}" value="{!pagenumber-2}" status="coachCounterStatus"  oncomplete="refreshme1()" reRender="jspanel,paginateId" rendered="{!pagenumber-2>0}" styleClass="pagerInfo">
+         <apex:param value="{!pagenumber-2}" name="pagename"/> 
+         </apex:commandlink>&nbsp;&nbsp;
+         <apex:commandLink action="{!gotopage}" value="{!pagenumber-1}" status="coachCounterStatus"  oncomplete="refreshme1()" reRender="jspanel,paginateId" rendered="{!pagenumber-1>0}" styleClass="pagerInfo">
+         <apex:param value="{!pagenumber-1}" name="pagename"/> 
+         </apex:commandlink>&nbsp;&nbsp;
+         <apex:outputText value="{!pagenumber}"  styleClass="pagerInfo_select"  >
+         <apex:param value="{!pagenumber}" name="pagename"/> 
+         </apex:outputText>&nbsp;&nbsp;
+         <apex:commandLink action="{!gotopage}" value="{!pagenumber+1}" status="coachCounterStatus"  oncomplete="refreshme1()" reRender="jspanel,paginateId" rendered="{!pagenumber+1<=numpages}" styleClass="pagerInfo">
+         <apex:param value="{!pagenumber+1}" name="pagename"/> 
+         </apex:commandlink>&nbsp;&nbsp;
+         <apex:commandLink action="{!gotopage}" value="{!pagenumber+2}" status="coachCounterStatus"  oncomplete="refreshme1()" reRender="jspanel,paginateId" rendered="{!pagenumber+2<=numpages}" styleClass="pagerInfo">
+         <apex:param value="{!pagenumber+2}" name="pagename"/> 
+         </apex:commandlink>&nbsp;&nbsp;
+         <apex:commandLink action="{!gotopage}" value="{!pagenumber+3}" status="coachCounterStatus"  oncomplete="refreshme1()" reRender="jspanel,paginateId" rendered="{!pagenumber+3<=numpages}" styleClass="pagerInfo">
+         <apex:param value="{!pagenumber+3}" name="pagename"/> 
+         </apex:commandlink>&nbsp;&nbsp;
+         <apex:commandLink action="{!gotopage}" value="{!pagenumber+4}" status="coachCounterStatus"  oncomplete="refreshme1()" reRender="jspanel,paginateId" rendered="{!pagenumber+4<=numpages}" styleClass="pagerInfo">
+         <apex:param value="{!pagenumber+4}" name="pagename"/> 
+         </apex:commandlink>
+         
+        <apex:outputPanel rendered="{!NOT hasNext}">
+            <a id="lnkNext" class="disabled_nav_arrow next_gray"  onclick="paginationFunc('next'); return false;"></a>
+            <a id="lnkLast" class="disabled_nav_arrow last_gray"  onclick="paginationFunc('last'); return false;"></a>
+        </apex:outputPanel>
+        <apex:outputPanel rendered="{!hasNext}">
+            <a id="lnkNext" class="enabled_nav_arrow next_pink"  onclick="paginationFunc('next'); return false;"></a>
+            <a id="lnkLast" class="enabled_nav_arrow last_pink"  onclick="paginationFunc('last'); return false;"></a>
+        </apex:outputPanel>
+        </apex:outputPanel>
+    </div>
+
+    <apex:actionFunction action="{!setPrintVar}" name="printFunction" status="coachCounterStatus" reRender="" oncomplete="printme()">       
+        <apex:param id="prtinvisibleStr" name="prtinvisibleStr"  value="" />
+    </apex:actionFunction>
+
+    <apex:actionFunction action="{!printRedirect}"   name="printme" status="coachCounterStatus" />
+
+    <apex:actionFunction action="{!sortOther}" name="sortFunction" status="coachCounterStatus" oncomplete="refreshme1()" reRender="jspanel" >       
+        <apex:param id="ctype" name="stype" value="" />
+        <apex:param id="cid" name="sid" value="" />
+    </apex:actionFunction>
+
+    <apex:actionFunction action="{!pagination}" name="paginateFunction" status="coachCounterStatus"  oncomplete="refreshme1()" reRender="jspanel,paginateId">       
+        <apex:param id="pgtype" name="pgtype" value="" />
+    </apex:actionFunction>
+    
+    <!--  Added by Raktim for Mail Plan 1Jul 2013 -->
+    <apex:actionFunction action="{!setLOAFilters}" name="getCampaign" status="FilterCounterStatus" oncomplete="javascript:setselectliststyle();" reRender="whatFilterNewRep" >       
+        <apex:param id="selectedCmpgn" name="selectedCmpgn" value="" /> 
+    </apex:actionFunction>
+    
+    <apex:actionFunction action="{!setLOA}" name="getLoa" status="FilterCounterStatus"  oncomplete="javascript:setselectliststyle();" reRender="whatFilterNewRep"  >       
+        <apex:param id="selectedLoa" name="selectedLoa" value="" /> 
+    </apex:actionFunction>
+    
+    <div id="lstInvisible" style="display:none" >MILON</div>
+
+    <div style="overflow:hidden;width:0px;height:0px;">
+        <iframe id="downloadReportFrame" src=""></iframe>
+    </div>
+    <div id="download_main" style="display : none">
+        <div class="download_popup">
+            <div align="center">
+                <a href="javascript:void(0)" target="_blank" onclick="downloadPage_Click(); hideOverlay(); return false;">{!$Label.YOU_NEWREP_DWNLD_PAGE}</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="javascript:void(0)" target="_blank" onclick="downloadAll_Click(); hideOverlay(); return false;">{!$Label.YOU_NEWREP_DWNLD_ALL}</a>
+            </div>
+            <div align="right">
+                <a href="javascript:void(0)" onclick="hideOverlay(); return false;">{!$Label.Close_this_Page}</a>
+            </div>
+        </div>
+    </div>
+    <apex:actionFunction name="viewRepDetail" action="{!callRepDetails}" rerender="repDetail" oncomplete="javascript:displayit();" status="coachCounterStatus">
+        <apex:param name="repDetailAcctNbr" assignTo="{!repDetailAcctNbr}" value="{!repDetailAcctNbr}"/>
+    </apex:actionFunction>
+    
+    <apex:actionFunction name="provideAccountAccess" action="{!provideAccountAccess}" onComplete="downloadReport();"/>
+    
+    <apex:actionStatus id="coachCounterStatus"  onstart="showProcessingMsg();" onstop="showProcessingMsg();"/>
+    <apex:actionStatus id="FilterCounterStatus"  onstart="showFilterProcessingMsg();" onstop="showFilterProcessingMsg();"/>
+    <apex:actionStatus id="newRepCounterStatus"  onstart="Javascript:alert('Hi');" onstop="Javascript:alert('bye');"/>
+    
+    <div id="email_sel_mask2" class="white_trans_closed">
+        <apex:outputPanel id="repDetail" layout="block">
+            <c:CoachingRecord repacctnbr="{!repDetailAcctNbr}" rendered="{!repDetailAcctNbr!=null}"/>
+        </apex:outputPanel>
+    </div>
+</div>  
+</apex:define>
+</apex:composition>
+</apex:form>
+<c:OmnitureWebTrack mktName="{!omnture_suit}" 
+                        mktAcctKey="{!usermrktacct}"
+                        userType="{!userProflName}"
+                        userTitle="{!userTitleLvlNumbr}"        
+                        rendered="{!globalConfig.Omniture_Tracking_Enabled__c}"/>
+
+</apex:page>

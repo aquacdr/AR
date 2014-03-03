@@ -1,0 +1,192 @@
+<apex:component >
+    <apex:attribute name="hdrController" description="SiteHeaderController" type="SiteHeaderController" required="true" />
+    
+    <script type="text/javascript">
+        function toggleSearchText(focus,searchTxtEl){
+            //alert(focus+'--'+searchTxtEl);
+            var txtVal = searchTxtEl.value;
+            if(txtVal=='Search (Name or #)' && focus){
+                searchTxtEl.value='';
+                //TODO:
+                //jQuery("#{!$Component.theForm.searchTxt}").attr('class','srch_active');
+            }
+            if(txtVal=='' && !focus){
+                searchTxtEl.value='Search (Name or #)';
+                //TODO:
+                //jQuery("#{!$Component.theForm.searchTxt}").attr('class','srch_dflt');
+            }
+        }
+        
+   function textSearchOnEnter_hdr(field, e) {
+      if(e.keyCode == 13) {
+          homePagesearch();
+          return false;
+      }
+      
+      return true;
+  }
+  
+  function textSearchOnFocus_hdr(field, e) {
+    var v = document.getElementById("lnkTextSearch_hdr").value;
+    //alert(v);  
+   // alert('{!$Label.Search_My_Team}');
+    if(v == '{!$Label.Search_Title_Adv}') {
+        
+        document.getElementById("lnkTextSearch_hdr").value = '';
+    }
+    
+    return true;
+  }
+
+  function textSearchOnBlur_hdr(field, e) {
+  
+    if(jQuery(field).val().length == 0) {
+        jQuery(field).val('{!$Label.Search_Title_Adv}');
+    }
+    return true;
+  }
+  
+  function homePagesearch(){
+      var srch = document.getElementById("lnkTextSearch_hdr").value;
+     // console.log('search keyword from home--'+srch);
+      showSearchPage(srch);
+      
+  }
+
+// MODIFIED BY Vijay Mittal FOR SEARCH COMPONENT POPUP WINODOW
+// Calling showSearchResults() instead of opening search page in email_sel_mask div
+function showSearchPage(searchId){
+      if(searchId == '{!$Label.Search_Title_Adv}') {
+          searchId = '';
+      }
+      showSearchResults(escape(searchId));
+      /*
+      if(jQuery("#email_sel_mask").attr('class')=='white_trans_closed'){
+          // show the processing message
+          showProcessingMsg();
+          jQuery("#coach_main").load("{!URLFOR($Page.SearchPage)}?searchText="+escape(searchId)+"&origpage="+window.location, function(data) {
+              // hide the processing message
+              showProcessingMsg();
+              jQuery("#email_sel_mask").attr('class','white_trans');
+          });
+      }else{
+          jQuery("#email_sel_mask").attr('class','white_trans_closed');
+      }
+      */
+}
+
+// MODIFIED BY Vijay Mittal FOR SEARCH COMPONENT POPUP WINODOW
+// Calling toggleSearchBoxDisplay() to hide the search component div
+function hideSearchPage(){
+   toggleSearchBoxDisplay();
+    /*
+  if(jQuery("#email_sel_mask").attr('class')=='white_trans'){
+          jQuery("#email_sel_mask").attr('class','white_trans_closed');
+      }else{
+          jQuery("#email_sel_mask").attr('class','white_trans');
+      }
+      */
+ }
+ 
+ 
+           // MODIFIED BY Vijay Mittal FOR SEARCH COMPONENT POPUP WINODOW
+          // Added the below function to toggle the display of search component div
+          function toggleSearchBoxDisplay() {
+                if(jQuery("#search_dialog_box").attr('class')=='white_trans'){
+                    jQuery("#search_dialog_box").attr('class','white_trans_closed');
+                }
+                else {
+                    jQuery("#search_dialog_box").attr('class','white_trans');
+                }
+          }
+    </script>
+    <style>
+    tp_sml_lnks li .dotted_line_none{
+       background-image:none;
+       float: left;
+       padding: 0 8px 0 10px;
+       position: relative;
+       z-index: 10;
+    }
+    
+    .redsts{
+    color:#FC273B;
+    font-weight:bold;
+    }
+    .greensts{
+    color:#33AE02;
+    font-weight:bold;
+    }
+    .nocolorsts{    
+    font-weight:bold;
+    }
+    .nodisplay{
+        display:none;
+        visibile:hidden;
+    }
+    </style>
+    <!--Top navigation area -->
+    <div class="tp_nav_cntr">
+    <div class="cntr">
+    <a class="logo_plhlder" href="#">
+    <apex:image value="{!URLFOR($Resource.ALMYOUAssets_Clone,'images/avon-logo.jpg')}" alt="AVON" title="AVON" onclick="javascript:window.location.replace('/secur/logout.jsp' );"/></a>
+      <ul class="tp_sml_lnks">
+        <!-- Change for NRT start -->
+        <apex:outputPanel rendered="{!NOT(hdrController.isNRTEnabled)}">
+            <li style="height:23px;padding-top:10px;font-size:1.1em;">
+                <span class="pad_lft_10">****{!$Label.Last_Updated} :&nbsp;{!hdrController.strConvertedDate}</span>
+        	</li>
+        </apex:outputPanel>
+        <!--apex:outputPanel rendered="{!hdrController.isNRTEnabled}">
+            <li style="height:23px;padding-top:10px;font-size:1.1em;">
+                <span class="pad_lft_10">{!hdrController.strNrtdDate}</span>
+        </apex:outputPanel--->
+             <!-- Reverted back; Wrong change by Swarnava;Changed by swarnava for new mockup suggested -->
+        <!-- change for NRT end -->
+        <li class="act" id="actionItemHdr"> <!-- id attribute added here with value "actionItemHdr", by Raktim on 18th Jun 2013 - Mail Plan -->
+        <a href="#" class="action" title="Action Items">{!$Label.Leadership_Action_Items}</a>
+         <div class="tp_roll_menu act_ps" style="{!IF(hdrController.market.Mail_Plan_Enabled__c,'left:-170px','')}">
+                <div class="tp_act"><a href="#" class="action_hvr" title="Action Items">{!$Label.Leadership_Action_Items}</a></div>
+                <div class="{!IF(hdrController.market.Mail_Plan_Enabled__c,'tp_act_gr_big','tp_act_gr')}">
+                    <div id="topactionItems">
+                              <c:ProcessingMsg />
+                            </div>
+                </div>
+            </div>
+        </li>
+        <li class="camp"><a href="#" class="campgn" title="{!$Label.Campaign}">{!$Label.Campaign}&nbsp;{!IF(hdrController.market.Mail_Plan_Enabled__c,RIGHT(hdrController.cmpgnOverlay,2),hdrController.market.CURRENT_CAMPAIGN_NR__c)}</a>
+        <c:CampaignOverlay market="{!hdrController.market}" mailPlan="{!hdrController.mailPlan}" nxtMailPlanCl="{!hdrController.nxtMailPlnClose}" mailPlancamp="{!hdrController.cmpgnOverlay}" /> <!--   mailPlan="{!hdrController.mailPlan}" -->
+        </li>
+        <li class="myp"><a href="{!URLFOR($Page.UpdateUserPreferences)}?pgId=201" class="myprof" title="{!$Label.My_Profile}" style="background:none;">{!$Label.My_Profile}</a></li>
+        <li style="background-image:none !important;"><a href="#" class="help" id="page_help" title="{!$Label.Help}">{!$Label.Help}</a></li>
+      </ul>
+    </div>
+    <div class="cntr"> 
+    <a class="logo_plhlder" href="#">
+    <!--Start : Added Onclick function by Rajib on 6/21/2013 -->
+    <apex:image value="{!URLFOR($Resource.ALMYOUAssets_Clone,'images/avon-logobig.gif')}" alt="AVON" title="AVON" onclick="javascript:window.location.replace('/apex/YOUHome?pgId=1' );" /></a>
+     <!--End : Added Onclick function by Rajib on 6/21/2013 -->
+     <div class="top_nav_wrpr">
+        <div class="cntr"><!--changed by swarnava for User status display-->
+          <p class="name_cntr"><span class="sml_dtd_sprt" style="{!IF(hdrController.userstatus!=null,'','background:none')}">{!hdrController.currUsr.FirstName}&nbsp;{!hdrController.currUsr.LastName}<apex:outputText value=",&nbsp; {!hdrController.ldrTitle}" rendered="{!hdrController.userProfile='Avon Leader'}" escape="false"/></span>
+          <span id="stsusr" class="{!IF(hdrController.userstatus!=null,'pad_lft_10','nodisplay')}">{!$Label.Status}: <span class="{!IF(CONTAINS(hdrController.userstatus,$Label.ZM_Formula_At_Risk),'redsts',IF(CONTAINS(hdrController.userstatus,$Label.ZM_Formula_Rising_Star),'greensts','nocolorsts'))}">{!hdrController.userstatus}</span>
+          </span></p>
+          <p class="srch_bx_cntr" style="margin-top:-6px">
+          
+          <a id="lnk1" href="#" onclick="homePagesearch(); return false;"></a>
+           <!--<a href="/apex/searchPage?retUrl={!$CurrentPage.URL}"></a>-->
+            <!--<input id="lnkTextSearch_hdr" type="text" style="outline: none;" value="{!$Label.Search_My_Team}" onclick="return textSearchOnFocus_hdr(this,event);" onblur="return textSearchOnBlur_hdr(this,event);" onkeypress="return textSearchOnEnter_hdr(this,event);"  />-->
+            <input id="lnkTextSearch_hdr" type="text" style="outline: none;" value="{!$Label.Search_Title_Adv}" onclick="return textSearchOnFocus_hdr(this,event);" onblur="return textSearchOnBlur_hdr(this,event);" onkeypress="return textSearchOnEnter_hdr(this,event);"  />
+          </p>
+        </div>
+        <c:SiteMap_Clone />
+        
+      </div> 
+    </div>
+  </div>
+  
+  
+  
+    <!-- Removed ALM 2.0 Code from Here -->
+    
+</apex:component>

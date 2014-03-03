@@ -1,0 +1,13 @@
+<apex:component >
+	<table border="0" cellspacing="0" cellpadding="0">
+	      <tr>
+                   <td align="right"><img src="{!URLFOR($Resource.AvonSiteAssets,'images/button_left.gif')}"/></td>
+                   <td align="center" background="{!URLFOR($Resource.AvonSiteAssets,'images/button_middle.gif')}" class="detailText">
+					<a href="javascript:window.close()">
+                    	{!$Label.Close_this_page}
+                   	</a>
+                   </td>
+		        <td align="left"><img src="{!URLFOR($Resource.AvonSiteAssets,'images/button_right.gif')}"/></td>
+     		  </tr>
+    </table>
+</apex:component>

@@ -1,0 +1,32 @@
+<apex:page showHeader="false" sidebar="false" standardStyleSheets="false" 
+            cache="false">
+<apex:composition template="YOUPageTemplate">
+        <apex:define name="content">
+            <div class="breadcrumb">
+                <p class="left"><strong>Profile:</strong></p>
+                <ul class="brd_lst">
+                    <li><a href="#" class="selected">Avon Leader</a></li>
+                </ul>
+            </div>
+            <div class="cntr mar_tp_10">
+            <div class="stats_box">
+                <h2 class="pink_strap">Executive Unit Leader</h2>
+               
+            </div>
+            </div>
+            <br/><br/><br/>
+             <!--apex:image url="{!$Resource.AVON_IMAGE}" width="300" height="250" style="vertical-align:middle"/-->
+        </apex:define>
+       
+<apex:define name="contentHidden">
+<!--apex:image url="{!$Resource.AVON_IMAGE}" width="300" height="250" style="vertical-align:middle"/-->
+<div id="email_sel_mask" class="white_trans_closed"> 
+<div id="coach_main">
+  <c:ProcessingMsg />
+ </div>
+ 
+ </div>
+ 
+</apex:define>
+</apex:composition>
+</apex:page>

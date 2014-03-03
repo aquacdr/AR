@@ -1,0 +1,178 @@
+<apex:page id="pgcp" controller="TestJQGrid" >
+
+<apex:stylesheet value="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/themes/overcast/jquery-ui.css"/>  
+<apex:stylesheet value="{!URLFOR($Resource.JQGridLatest, 'css/ui.jqgrid.css')}" />  
+<apex:stylesheet value="{!URLFOR($Resource.JQGridLatest, 'plugins/ui.multiselect.css')}" />    
+ 
+<apex:includeScript value="{!URLFOR($Resource.JQGridLatest, 'js/jquery.min.js')}"/> 
+<apex:includeScript value="{!URLFOR($Resource.JQGridLatest, 'js/jquery.jqGrid.min.js')}"/>
+     
+<script type="text/javascript" src="{!URLFOR($Resource.JQGridLatest, 'js/jquery-ui-1.8.2.custom.min.js')}"></script>
+<script type="text/javascript" src="{!URLFOR($Resource.JQGridLatest, 'src/grid.jqueryui.js')}"></script>
+<script type="text/javascript" src="{!URLFOR($Resource.JQGridLatest, 'plugins/jquery.searchFilter.js')}"></script>
+<script type="text/javascript" src="{!URLFOR($Resource.JQGridLatest, 'plugins/ui.multiselect.js')}"></script>
+<script type="text/javascript" src="{!URLFOR($Resource.JQGridLatest, 'plugins/grid.setcolumns.js')}"></script>
+<script type="text/javascript" src="{!URLFOR($Resource.JQGridLatest, 'src/i18n/grid.locale-en.js')}"></script>
+<script type="text/javascript" src="{!URLFOR($Resource.JQGridLatest, 'js/jquery.jqGrid.min.js')}"></script>
+
+    <style type="text/css"> 
+        
+        .evenTableRow {
+            background-color:#fff;color:#000;
+        }
+        .oddTableRow  {
+            background-color:pink;color:#000;
+        }
+        .ui-jqgrid .ui-widget-header {
+            border: 1px solid #FA3FD5;
+            background: #FA3FD5 url($Resource.Pink_Background) 50% 50% repeat-x;
+            color: #f6f6f6;
+            
+        }
+        .ui-jqgrid-sortable{
+            color:#EB0396;
+            fontWeight:bold;
+            text-overflow: ellipsis;-o-text-overflow: ellipsis;
+        }
+        .ui-jqgrid tr.jqgrow td { text-overflow: ellipsis;-o-text-overflow: ellipsis;background-color:pink;color:#000;}
+        
+    </style> 
+
+<div id="containerDiv">
+   <table id="recordsGrid"></table>
+   <div id="locPagination"></div>
+</div>
+<br/>
+          
+<script>
+    var reportName = 'Testing jq grid to show dynamic data';
+    var colNames = [];
+    var colModels = [];    
+    var grid = $("#recordsGrid");
+    var jsonString;
+    var jsonColumnString;
+    var idsOfSelectedRows = [];    
+    
+    function handleColumnsJson(result, event) {
+        //alert(JSON.stringify(result));
+        if(event.type == 'exception'){
+            alert(event.message);   
+        } else {            
+            jsonColumnString = result;
+        }
+    }
+    
+    //----------------------------------------------------------------------------------------------------------
+    // Remote Search result Handler
+    //----------------------------------------------------------------------------------------------------------
+    function handleSearchResults(result, event) {        
+        if(event.type == 'exception'){
+            alert(event.message);   
+        } else {            
+            jsonString = unescapeJsInHtml(result);
+            //console.log(JSON.stringify(jsonString));
+            var b = JSON.parse(jsonString);
+            buildJQGrid(b);
+            if (jsonString.length == 0) { 
+                alert('No records found.');
+            }
+        }
+    }
+    
+    //----------------------------------------------------------------------------------------------------------
+    // Build JqGrid
+    //----------------------------------------------------------------------------------------------------------  
+    function buildJQGrid(jsonString) {
+        populateColumnArrays();
+        grid.jqGrid({
+            data: jsonString,
+            datatype: 'local',
+            colNames: colNames,
+            colModel: colModels,
+            rowNum: 20,
+            gridview:true,
+            rowList:[20,30,50],
+            multiselect: true,
+            toppager: true,
+            //sortname: "Name",
+            //sortorder: "asc",
+            viewrecords: true,
+            emptyrecords: "Nothing to display",
+            resizable: true,
+            width:800,
+            shrinkToFit: false,
+            recordpos: 'right', 
+            height: 'auto',
+            caption: reportName,
+            pager: '#locPagination',
+            jsonReader: { repeatitems: false },
+            formatter : {
+                integer : {thousandsSeparator: ",", defaultValue: '0'},
+                number : {decimalSeparator:".", thousandsSeparator: ",", decimalPlaces: 2, defaultValue: '0.00'},
+                currency : {decimalSeparator:".", thousandsSeparator: ",", decimalPlaces: 2, prefix: "$", suffix:"$", defaultValue: '0.00'}
+        },
+            loadonce: true,          
+            loadComplete: function() {
+                   $('#' + "recordsGrid" + ' tr').removeClass("ui-widget-content");
+                   $('#' + "recordsGrid" + ' tr:nth-child(even)').addClass("evenTableRow");
+                   $('#' + "recordsGrid" + ' tr:nth-child(odd)').addClass("oddTableRow"); 
+                   
+                },
+
+        });
+        
+        jQuery("#recordsGrid").jqGrid('navGrid','#locPagination',{add:false,edit:false,del:false,search:true,refresh:true}); 
+        jQuery("#recordsGrid").jqGrid('navButtonAdd','#locPagination',{
+            caption: "Columns",
+            title: "Reorder Columns",
+            onClickButton : function (){
+                jQuery("#recordsGrid").jqGrid('columnChooser');
+            }
+        });     
+        
+        var resources = jsonColumnString;        
+        for(var i=0 ; i < resources.length ; i++){             
+            setTooltipsOnColumnHeader(jQuery("#recordsGrid"), i, resources[i].ColumnLabel);           
+        }
+        
+        //grid.jqGrid('setColProp', 'cb', {frozen: true});        
+        //grid.jqGrid('setGridParam', {multiselect: false});
+        grid.jqGrid('setFrozenColumns');
+        //grid.jqGrid('setGridParam', {multiselect: true});
+        //if($.isFunction(grid[0].p._complete)) {grid[0].p._complete.call(grid[0]);}
+        //$("#recordsGrid").setGridWidth(Math.floor(($(window).width())/1), false);
+        grid.trigger("reloadGrid");
+    }
+
+    var setTooltipsOnColumnHeader = function (grid, iColumn, text) {
+        var thd = jQuery("thead:first", grid[0].grid.hDiv)[0];
+        jQuery("tr.ui-jqgrid-labels th:eq(" + iColumn + ")", thd).attr("title", text);
+    };
+    
+    //----------------------------------------------------------------------------------------------------------
+    // Populates Column Name and Column Model Arrays
+    //----------------------------------------------------------------------------------------------------------  
+    function populateColumnArrays() {   
+        var resources = jsonColumnString;  
+        var freezeVar = true;      
+        for(var i=0 ; i < resources.length ; i++){ 
+           if(i>=2){
+            freezeVar = false;
+           }
+           colNames.push(resources[i].ColumnLabel);  
+           colModels.push({    
+            name:resources[i].ColumnName, 
+            index: resources[i].ColumnName, 
+            //width: resources[i].ColumnWidth,            
+            align: "Left",  
+            frozen: freezeVar,                        
+            searchoptions:{sopt:['eq','ne','le','lt','gt','ge']},
+            });            
+        }
+    }
+    
+    //Call remote method for get report data
+    TestJQGrid.columnList(handleColumnsJson);
+    TestJQGrid.jsonData(handleSearchResults);
+</script>
+</apex:page>

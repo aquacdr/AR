@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableEnhancedLookup>false</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>false</enableReports>
+    <fields>
+        <fullName>Application_Context__c</fullName>
+        <externalId>false</externalId>
+        <label>Application Context</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Quick Links</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Report Center</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>My Team Orders</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>MultiselectPicklist</type>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Is_Mail_Plan_Specific__c</fullName>
+        <externalId>false</externalId>
+        <label>Is_Mail_Plan_Specific</label>
+        <length>1</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Language_Code__c</fullName>
+        <externalId>false</externalId>
+        <label>Language Code</label>
+        <picklist>
+            <picklistValues>
+                <fullName>en_PH</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>en_US</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>ro</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>es</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>es_MX</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>en_GB</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>MRKT_ID__c</fullName>
+        <description>To relate to the Market Object</description>
+        <externalId>false</externalId>
+        <label>Market</label>
+        <referenceTo>Market__c</referenceTo>
+        <relationshipLabel>ZM Report Market Translations</relationshipLabel>
+        <relationshipName>ZM_Report_Market_Translations</relationshipName>
+        <required>false</required>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>Market_Id__c</fullName>
+        <externalId>false</externalId>
+        <label>Market Id</label>
+        <picklist>
+            <picklistValues>
+                <fullName>62</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>66</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>100</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>999</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>55</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>23</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>MultiselectPicklist</type>
+        <visibleLines>4</visibleLines>
+    </fields>
+    <fields>
+        <fullName>Multi_zone__c</fullName>
+        <defaultValue>false</defaultValue>
+        <externalId>false</externalId>
+        <label>Multi-zone?</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>NumberOfColumnstoFreeze__c</fullName>
+        <description>Define the number of columns to freeze with the jqgrid.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Define the number of columns to freeze with the jqgrid.</inlineHelpText>
+        <label>Freeze Column Number</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>QuickLinkHoverText__c</fullName>
+        <description>This custom field stores the text that should be displayed when the user hovers over Quick Link represented by this ZM Market Translation record.</description>
+        <externalId>false</externalId>
+        <label>QuickLinkHoverText</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Report_Id__c</fullName>
+        <externalId>false</externalId>
+        <label>Report Id</label>
+        <length>18</length>
+        <required>true</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Report_Label__c</fullName>
+        <externalId>false</externalId>
+        <label>Report Label</label>
+        <length>255</length>
+        <required>true</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Report_Role__c</fullName>
+        <externalId>false</externalId>
+        <label>Report Role</label>
+        <picklist>
+            <picklistValues>
+                <fullName>Zone</fullName>
+                <default>true</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Division</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Admin</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Training</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Standard Leader</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>Sales</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>Report_URL__c</fullName>
+        <externalId>false</externalId>
+        <label>Report URL</label>
+        <required>false</required>
+        <type>TextArea</type>
+    </fields>
+    <fields>
+        <fullName>Sort_Order__c</fullName>
+        <externalId>false</externalId>
+        <label>Sort Order</label>
+        <precision>3</precision>
+        <required>true</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>showParameters__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>If showParameters=false, hide the complete set of filters otherwise show filters.</description>
+        <externalId>false</externalId>
+        <inlineHelpText>Check if report filters need to show.</inlineHelpText>
+        <label>Show Parameters</label>
+        <type>Checkbox</type>
+    </fields>
+    <label>ZM Report Market Translation</label>
+    <nameField>
+        <label>ZM Report Translation Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>ZM Report Market Translations</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>ReadWrite</sharingModel>
+    <validationRules>
+        <fullName>Freeze_Column_Number_between_0_to_5</fullName>
+        <active>true</active>
+        <description>Ensure the value in Freeze Column Number field is between 0 and 5</description>
+        <errorConditionFormula>OR(NumberOfColumnstoFreeze__c &lt; 0, NumberOfColumnstoFreeze__c &gt; 5)</errorConditionFormula>
+        <errorDisplayField>NumberOfColumnstoFreeze__c</errorDisplayField>
+        <errorMessage>Freeze Column Number should be between 0 to 5.</errorMessage>
+    </validationRules>
+</CustomObject>

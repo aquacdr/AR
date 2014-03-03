@@ -1,0 +1,14 @@
+<apex:component layout="none">
+	<div id="download_main">
+		<div class="download_popup">
+			<div align="center">
+				<a href="javascript:void(0)" onclick="downloadWYSIWYG_Click(); return false;">{!$Label.YOU_NEWREP_DWNLD_PAGE}</a>
+				&nbsp;&nbsp;|&nbsp;&nbsp;
+				<a id="downloadlink" href="javascript:void(0)" onclick="downloadAll_Click(); return false;">{!$Label.YOU_NEWREP_DWNLD_ALL}</a>
+				<a id="downloadattachmentlink" href="/servlet/servlet.FileDownload?file=00PZ0000000UGgI" >{!$Label.YOU_NEWREP_DWNLD_ALL}</a>				
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<a href="javascript:void(0)" onclick="hideOverlay(); return false;">{!$Label.Close_this_Page}</a>							
+			</div>
+		</div>
+	</div>
+</apex:component>

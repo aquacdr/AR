@@ -1,0 +1,24 @@
+<apex:component layout="none">
+    <apex:attribute name="selectOptions" type="SelectOption[]" description="Select Options" required="true"/>
+    <apex:attribute name="elementId" type="String" description="Select Element Id" required="true"/>
+    <apex:attribute name="elementName" type="String" description="Select Element Name" required="true"/>
+    <apex:attribute name="size" type="String" description="Size" required="true"/>
+    <apex:attribute name="className" type="String" description="CSS Class Name" required="false"/>
+    <apex:attribute name="style" type="String" description="Style" required="false"/>
+    <apex:attribute name="onChange" type="String" description="On Change JS code" required="false"/>
+
+    <select id="{!elementId}" name="{!elementName}" class="{!className}" size="{!size}" onchange="{!onChange}" style="{!style}">
+    
+        // Change for defect id : 2400 - Raktim Sarkar - START
+        <!--change by swarnava for other report fix:Start-->       
+        <option value="0">{!$Label.Other_Reports}</option>                
+        <!--change by swarnava for other report fix:End-->
+        // Change for defect id : 2400 - Raktim Sarkar - END
+        
+        
+        <apex:repeat value="{!selectOptions}" var="opt">
+            <option value="{!opt.Value}">{!$Label[opt.Label]}</option>
+        </apex:repeat>
+    </select>
+
+</apex:component>

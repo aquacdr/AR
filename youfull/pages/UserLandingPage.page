@@ -1,0 +1,2 @@
+<apex:page controller="HomePageController" action="{!init}">
+</apex:page>

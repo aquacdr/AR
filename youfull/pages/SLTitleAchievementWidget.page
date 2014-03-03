@@ -1,0 +1,5 @@
+<apex:page Controller="Controller_SLTitleAchievement" id="page" standardStylesheets="false" showheader="false" sidebar="false">
+
+    <c:SLTitleAchievement />
+  
+</apex:page>

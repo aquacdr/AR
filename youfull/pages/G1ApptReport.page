@@ -1,0 +1,160 @@
+<apex:page showHeader="false" sidebar="false" standardStyleSheets="false" language="{!$CurrentPage.parameters.langcd}" controller="MyTeamReportPageController">
+    <apex:form >
+        <apex:composition template="YOUPageTemplateNoActions"> 
+       <apex:define name="content"> 
+            <apex:includeScript value="{!URLFOR($Resource.MTRUtility)}"/>
+            <apex:includeScript value="{!URLFOR($Resource.MTRWriteItems)}"/>
+            <apex:includeScript value="{!URLFOR($Resource.MTRDataTable)}"/>
+            <apex:includeScript value="{!URLFOR($Resource.MTRHSGChildTable)}"/>
+            <apex:includeScript value="{!URLFOR($Resource.MTRMasterHSGTable)}"/>
+            <apex:includeScript value="{!URLFOR($Resource.MyTeamJS)}"/>
+            <apex:includeScript value="{!URLFOR($Resource.NRR, 'js/jquery.jscrollpane.min.js')}"/>
+            <apex:stylesheet value="{!URLFOR($Resource.NRR,'css/jquery.jscrollpane_vert.css')}" />
+            <apex:stylesheet value="{!URLFOR($Resource.MyTeam)}" />
+     
+            <script language="JavaScript">
+
+                var m_sgrcbAdjstAllColumnName = null;
+                var m_sgrcbAdjstGenColumnName = null;
+                                                
+                var simpleGenerationRowCallback = function(genTable, dRow, data, rowInfoObject) {
+                
+                    var columnInfoObject = rowInfoObject.ColumnInfoObject;
+                    var columnOrderArray = rowInfoObject.ColumnOrderArray;
+                    var columnInfo = null;
+                    var dateValue = null;
+                    var value = null;
+                    var value2 = null;
+                    var adjustedColumnOrder = '';
+                    var isMainAccount = (data.ACCT_NR__c == rowInfoObject.MainAccountNumber);
+                    var isCurrency = false;
+                    
+                    for(var n = 0; n <= columnOrderArray.length -1; n++) {
+                        
+                        if(propertyExists(columnInfoObject[columnOrderArray[n]])) {
+                        
+                            adjustedColumnOrder = columnOrderArray[n].toLowerCase();
+                            
+                            columnInfo = columnInfoObject[columnOrderArray[n]];
+                            
+                            if(columnInfo == null) {
+                            
+                                if(adjustedColumnOrder == m_sgrcbAdjstAllColumnName) {
+                                
+                                     if(isMainAccount || rowInfoObject.Gen1EmailConfigEnabled) {
+                 
+                                        dRow.PutColumn(columnOrderArray[n], new FastWriteDataCell('&nbsp;'));
+                                     }
+                                     else {
+                                     
+                                        dRow.PutColumn(columnOrderArray[n], new CheckboxDataCell(false, columnOrderArray[n]));
+                                     }
+                                }
+                                else if(adjustedColumnOrder == m_sgrcbAdjstGenColumnName) {
+                                    dRow.PutColumn(columnOrderArray[n], new FastWriteDataCell('' + data.UPLN_GEN_INDX__c));
+                                }
+                            }
+                            else {
+                                
+                                
+                                value = data[columnOrderArray[n]];
+                                
+                                if(value == null) {
+            
+                                    dRow.PutColumn(columnOrderArray[n], new FastWriteDataCell('&nbsp;'));   
+                                }
+                                else {
+                                
+                                    if(columnInfo.FullyQualifiedName.indexOf('Contact_Key__r.FirstName') > -1 || columnInfo.FullyQualifiedName.indexOf('Contact_Key__r.LastName') > -1) {
+                                        rowInfoObject.ImpersonationColumnName = columnOrderArray[n];
+                                        dRow.PutColumn(columnOrderArray[n], new FastWriteDataCell('&nbsp;'));
+                                    }
+                                    else if(columnInfo.FullyQualifiedName.indexOf('Contact_Key__r.Email') > -1) {
+                                        rowInfoObject.EmailColumnName = columnOrderArray[n];
+                                        dRow.PutColumn(columnOrderArray[n], new FastWriteDataCell('&nbsp;'));
+                                    }
+                                    else {
+                                    
+                                        isCurrency = (columnInfo.ColumnType == 'Currency');
+                                        
+                                         if(columnInfo.ColumnType == 'Number'){
+                            
+                        					//value = Math.round(value);
+                        
+                        					if(value.indexOf('.') > -1){
+                            					value = value.substring(0, value.indexOf('.'));
+                        					}
+                    					  }
+                        
+                                        if((columnInfo.ColumnType == 'Number' || isCurrency) && !isNaN(value) && !isEmpty(value)) {
+                                            dRow.PutColumn(columnOrderArray[n], new NumericDataCell(value, isCurrency));
+                                        }
+                                        else if(columnInfo.ColumnType == 'Date') {
+             
+                                            dateValue = new Date(value);
+                                            
+                                            if(isDate(dateValue)) {
+                                            
+                                                value2 = formatDate(dateValue, rowInfoObject.YOUDateFormat);
+                                            
+                                                dRow.PutColumn(columnOrderArray[n], new FastWriteDataCell(value2, value2));
+                                            }
+                                            else {
+                                                dRow.PutColumn(columnOrderArray[n], new FastWriteDataCell(value, value));
+                                            }
+                                        }
+                                        else {
+                                            dRow.PutColumn(columnOrderArray[n], new FastWriteDataCell(value, value));
+                                        }
+                                    }
+                                }
+                                
+                            }
+                            
+                        }
+                        
+                        
+                    }
+                
+                }
+            </script>
+            
+            <c:MyTeamReport ReportType="G1_Appointments" OnSimpleGenerationRowCallback="simpleGenerationRowCallback(genTable, dRow, data, rowInfoObject);" />
+            
+            <script language="JavaScript">
+                m_sgrcbAdjstAllColumnName = m_adjustedAllColumnName;
+                m_sgrcbAdjstGenColumnName = m_adjustedGenColumnName;
+            </script>
+            
+            <apex:actionFunction name="viewRepDetail" action="{!callRepDetails}" rerender="repDetail" oncomplete="javascript:displayit();" status="counterStatus">
+                <apex:param name="repDetailAcctNbr" assignTo="{!repDetailAcctNbr}" value="{!repDetailAcctNbr}"/>
+            </apex:actionFunction>
+            <apex:actionStatus id="counterStatus"  onstart="showProcessingMsg();" onstop="showProcessingMsg();"/>
+            
+            <div id="email_sel_mask2" class="white_trans_closed">
+                <apex:outputPanel id="repDetail" layout="none">
+                    <c:CoachingRecord repacctnbr="{!repDetailAcctNbr}" rendered="{!repDetailAcctNbr!=null}"/>
+                </apex:outputPanel>
+            </div>
+            
+        </apex:define>  
+       <apex:define name="additionalOverlays"> 
+            <c:DownloadOverlay />       
+        </apex:define>
+       </apex:composition> 
+
+
+<!-- ADDED BY Vijay Mittal FOR SEARCH COMPONENT POPUP WINODOW -->
+<apex:actionFunction name="showSearchResults" action="{!saveSearchText}" rerender="searchPanelBox" oncomplete="javascript:toggleSearchBoxDisplay();" status="counterStatus">
+        <apex:param name="searchText" assignTo="{!searchText}" value="{!searchText}"/>
+</apex:actionFunction>
+
+    <div id="search_dialog_box" class="white_trans_closed">
+        <apex:outputPanel id="searchPanelBox" layout="block">
+            <c:Search keywordParam="{!searchText}"/>
+        </apex:outputPanel>
+    </div>
+<!-- CHNAGES BY Vijay Mittal ENDS HERE     -->
+
+    </apex:form>
+</apex:page>

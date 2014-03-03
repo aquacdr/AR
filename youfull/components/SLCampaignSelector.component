@@ -1,0 +1,34 @@
+<apex:component controller="Controller_SLCampaignSelector">
+<style>
+a.selected {
+    text-decoration: none;
+    font-weight: bold;
+    color:#ec008c;
+}
+a.default {
+    text-decoration: none;
+    color:#777777;
+}
+a.selected:hover {
+    text-decoration: none;color:#ec008c;
+}
+a.default:hover {
+    text-decoration: none;  color:#777777;
+}
+</style>
+
+<apex:attribute name="selCampaign" description="current selected campaign" assignTo="{!selectedCampaign}" Type="String" required="false" />
+
+<div style="width: 25%; line-height: 15px; text-align: center; float: right;">
+<ul>
+    <font style="color: #777777;">{!$Label.View_Current_Campaign}:
+    <a href="javascript:setCampaignValue('{!market.PREV_1_CMPGN_NR__c}');"
+        Class="{! IF(selectedCampaign == market.PREV_1_CMPGN_NR__c, 'selected', 'default')}">{!market.PREV_1_CMPGN_NR__c}</a>&nbsp;|
+    <a href="javascript:setCampaignValue('{!market.CMPGN_NR__c}');"
+        Class="{! IF(selectedCampaign == market.CMPGN_NR__c, 'selected', 'default')}">{!market.CMPGN_NR__c}</a>&nbsp;|
+    <a href="javascript:setCampaignValue('{!market.NEXT_1_CMPGN_NR__c}');"
+        Class="{! IF(selectedCampaign == market.NEXT_1_CMPGN_NR__c, 'selected', 'default')}">{!market.NEXT_1_CMPGN_NR__c}</a>
+    </font>         
+</ul>
+</div>
+</apex:component>

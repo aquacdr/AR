@@ -1,0 +1,113 @@
+<apex:page controller="Controller_SLBusinessPlan" >
+    <apex:sectionHeader title="{!$Label.Business_Plan}" />
+    <apex:form >
+    <apex:pageBlock title="{!$Label.Plan_Detail}">
+        <apex:pageBlockButtons location="Top">
+            
+            
+            <apex:commandButton action="{!startNewPlan}" value="{!$Label.Start_new_plan}"/>
+             
+            <div align="right" style="display:inline;padding-left: 450px;">
+                <apex:outputText rendered="{!isInProgPlan}" value="{!$Label.Last_Updated}: {!BP.Last_Updated__c}" />
+            </div>
+            
+        </apex:pageBlockButtons>
+        <apex:pageBlockSection title="{!$Label.Dreams_and_Goals}" >
+            <apex:pageBlockSectionItem >
+                <apex:outputLabel for="shortTerm" value="{!$Label.Short_Term}" />
+                <apex:inputTextArea id="shortTerm" value="{!BP.Short_Term_Goals__c}" rows="2" cols="40"/>
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem >
+                <apex:outputLabel for="longTerm" value="{!$Label.Long_Term}" />
+                <apex:inputTextArea id="longTerm" value="{!BP.Long_Term_Dreams__c}" rows="2" cols="40" />
+            </apex:pageBlockSectionItem>
+        </apex:pageBlockSection>
+        
+        <apex:pageBlockSection title="{!$Label.Prior_Quarter_Achievements}" >
+            <apex:pageBlockSectionItem >
+                <apex:outputLabel for="prsnl" value="{!$Label.Personal}" />
+                <apex:inputTextArea id="prsnl" value="{!BP.Personal_Achievement__c}" rows="2" cols="40" />
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem >
+                <apex:outputLabel for="grp" value="{!$Label.Unit}" />
+                <apex:inputTextArea id="grp" value="{!BP.Unit_Achievement__c}" rows="2" cols="40" />
+            </apex:pageBlockSectionItem>
+        </apex:pageBlockSection>
+        
+        <apex:pageBlockSection title="{!$Label.Prior_Quarter_Key_Learnings}" columns="1">            
+            <apex:pageBlockSectionItem >
+                <apex:outputLabel for="keyLearning" value="{!$Label.Key_Learnings}" />
+                <apex:inputTextArea id="keyLearning" value="{!BP.Key_Learnings__c}" rows="3" cols="100"/>
+            </apex:pageBlockSectionItem>
+        </apex:pageBlockSection>
+    </apex:pageBlock>
+    
+    <apex:pageBlock title="{!$Label.Action_Plan}">        
+        <apex:pageBlockSection title="{!$Label.RECRUITING}" columns="1">
+            <apex:inputTextArea cols="200" rows="2" value="{!BP.RECR_ACTN1__c}" label="" html-placeholder="Action" />
+            <apex:inputTextArea cols="200" rows="2" value="{!BP.RECR_ACTN2__c}" label="" html-placeholder="Action" />
+            <apex:inputTextArea cols="200" rows="2" value="{!BP.RECR_ACTN3__c}" label="" html-placeholder="Action" />
+        </apex:pageBlockSection>
+        <apex:pageBlockSection title="{!$Label.BP_Activity}" columns="1">
+            <apex:inputTextArea cols="200" rows="2" value="{!BP.ACT_ACTN1__c}" label="" html-placeholder="Action" />
+            <apex:inputTextArea cols="200" rows="2" value="{!BP.ACT_ACTN2__c}" label="" html-placeholder="Action" />
+            <apex:inputTextArea cols="200" rows="2" value="{!BP.ACT_ACTN3__c}" label="" html-placeholder="Action" />
+        </apex:pageBlockSection>
+        <apex:pageBlockSection title="{!$Label.Top_Seller_BP_TITLE_ADVANCEMENT}" columns="1">
+            <apex:inputTextArea cols="200" rows="2" value="{!BP.TOP_SLR_ACTN1__c}" label="" html-placeholder="Action" />
+            <apex:inputTextArea cols="200" rows="2" value="{!BP.TOP_SLR_ACTN2__c}" label="" html-placeholder="Action" />
+            <apex:inputTextArea cols="200" rows="2" value="{!BP.TOP_SLR_ACTN3__c}" label="" html-placeholder="Action" />
+            <apex:inputTextArea cols="200" rows="3" value="{!BP.TOP_SLR_CND__c}" label="" html-placeholder="Candidates" />
+        </apex:pageBlockSection>
+        <apex:pageBlockSection title="{!$Label.BP_LEADERSHIP_BP_TITLE_ADVANCEMENT}" columns="1">
+            <apex:inputTextArea cols="200" rows="2" value="{!BP.LDRSHP_TITL_ACTN1__c}" label="" html-placeholder="Action" />
+            <apex:inputTextArea cols="200" rows="2" value="{!BP.LDRSHP_TITL_ACTN2__c}" label="" html-placeholder="Action" />
+            <apex:inputTextArea cols="200" rows="2" value="{!BP.LDRSHP_TITL_ACTN3__c}" label="" html-placeholder="Action" />
+            <apex:inputTextArea cols="200" rows="3" value="{!BP.LDRSHP_TITL_CND__c}" label="" html-placeholder="Candidates" />
+        </apex:pageBlockSection>
+        <apex:pageBlockSection title="{!$Label.BP_PERSONAL_BP_DEVELOPMENT_BP_PLAN}" >
+            <apex:inputTextArea cols="93" rows="2" value="{!BP.PRSNL_DEV_PLN_ACTN1__c}" label="" html-placeholder="Action" />
+            <apex:inputTextArea cols="93" rows="2" value="{!BP.PRSNL_DEV_PLN_PLN1__c}" label="" html-placeholder="Action" />
+            <apex:inputTextArea cols="93" rows="2" value="{!BP.PRSNL_DEV_PLN_ACTN2__c}" label="" html-placeholder="Action" />
+            <apex:inputTextArea cols="93" rows="2" value="{!BP.PRSNL_DEV_PLN_PLN2__c}" label="" html-placeholder="Action" />
+            <apex:inputTextArea cols="93" rows="2" value="{!BP.PRSNL_DEV_PLN_ACTN3__c}" label="" html-placeholder="Action" />
+            <apex:inputTextArea cols="93" rows="2" value="{!BP.PRSNL_DEV_PLN_PLN3__c}" label="" html-placeholder="Action" />
+        </apex:pageBlockSection>
+        <apex:pageBlockSection title="{!$Label.BP_RISING_STARS_BP_DEVELOPMENT}" columns="1">
+            <apex:inputTextArea cols="200" rows="2" value="{!BP.RSNG_STR_DEV_ACTN1__c}" label="" html-placeholder="Action" />
+            <apex:inputTextArea cols="200" rows="2" value="{!BP.RSNG_STR_DEV_ACTN2__c}" label="" html-placeholder="Action" />
+            <apex:inputTextArea cols="200" rows="2" value="{!BP.RSNG_STR_DEV_ACTN3__c}" label="" html-placeholder="Action" />
+            <apex:inputTextArea cols="200" rows="3" value="{!BP.RSNG_STR_DEV_CND__c}" label="" html-placeholder="Candidates" />
+        </apex:pageBlockSection>
+        
+        <apex:outputPanel rendered="{!!isInProgPlan}">
+            <p>{!$Label.BP_Disclaimer}</p>
+        </apex:outputPanel>             
+        <apex:pageBlockButtons location="Bottom" rendered="{!!isInProgPlan}">              
+            <apex:commandButton action="{!saveBP}" value="{!$Label.Save_Report_and_Share}"/>
+        </apex:pageBlockButtons>
+        
+    </apex:pageBlock>
+    
+    <apex:pageBlock title="{!$Label.Followup_Meeting}" rendered="{!isInProgPlan}">
+        <apex:pageBlockSection columns="3">
+            <apex:pageBlockSectionItem >
+                <apex:outputLabel for="day30" value="30 {!$Label.Day}" />
+                <apex:inputField Id="day30" value="{!BP.FLWUP_MTG_30__c}" />
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem >
+                <apex:outputLabel for="day60" value="60 {!$Label.Day}" />
+                <apex:inputField Id="day60" value="{!BP.FLWUP_MTG_60__c}" />
+            </apex:pageBlockSectionItem>
+            <apex:pageBlockSectionItem >
+                <apex:outputLabel for="day90" value="90 {!$Label.Day}" />
+                <apex:inputField Id="day90" value="{!BP.FLWUP_MTG_90__c}" />
+            </apex:pageBlockSectionItem>
+        </apex:pageBlockSection>
+        <p>{!$Label.BP_Disclaimer}</p>             
+        <apex:pageBlockButtons location="Bottom">              
+            <apex:commandButton action="{!saveBP}" value="{!$Label.Save_Report_and_Share}"/>
+        </apex:pageBlockButtons>
+    </apex:pageBlock>
+   </apex:form>     
+</apex:page>

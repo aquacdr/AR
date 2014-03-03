@@ -1,0 +1,103 @@
+<apex:component controller="SiteHeaderController">
+<apex:attribute name="mktId" type="String" description="Market Id" required="false"/> 
+<apex:attribute name="pfName" type="String" description="Profile Name" required="false"/>
+
+<apex:includeScript value="{!URLFOR($Resource.MTRUtility)}"/>
+<apex:stylesheet value="{!URLFOR($Resource.MyTeam)}" />
+
+
+<style>
+.frm_cntr_large { 
+    position: relative; 
+    width: 181px; 
+    padding-bottom: 5px;
+    
+    display: block;
+}
+.myselect {
+    font-size: 11px;
+    height: 26px !important;
+    line-height: 26px;
+    position: relative;
+    width: 100%;
+    z-index: 10;
+    opacity: 0;
+    -webkit-appearance: none;
+    width: 181px;
+}
+.select_large {
+    width: 181px;
+    position: absolute;
+    bottom: 0;
+    float: left;
+    left: 0;
+    top: 0;
+    height: 26px;
+    line-height: 26px;
+    text-indent: 10px;
+    background:url("{!URLFOR($Resource.MTRImages,'dropdown_large.gif')}") no-repeat top left;
+    cursor: default;
+    z-index: 1;
+    font-size: 11px;
+}
+</style>
+
+<script>
+    function forceFancyDropdownRefresh(fancyDropDownId, lengthLimit) {
+  
+    var fancyDropdown = getElement(fancyDropDownId); 
+    var regularDropdown = getElement(fancyDropDownId.replace('fdd_', '').replace('_text', ''));
+    var selectedText = $(regularDropdown).find('option:selected').text();
+    
+    if(selectedText.length > lengthLimit) {
+        selectedText = selectedText.substring(0, lengthLimit) + '...';
+    }
+    
+    $(fancyDropdown).text(selectedText);
+    $(fancyDropdown).attr('title', selectedText);
+  }
+
+  function createFancyDropdown(regularDropdownId, dropDownWidth, cssClass, lengthLimit) {
+
+    var regularDropdown = getElement(regularDropdownId);
+    var fancyDropdown = null;
+    var fancyDropdownId = 'fdd_' + regularDropdownId;
+    
+    $(regularDropdown).css({'z-index':10,'opacity':0,'-khtml-appearance':'none'});
+    
+    $(regularDropdown).width(dropDownWidth);
+    
+    $(regularDropdown).after('<div id="' + fancyDropdownId  + '"></div>');
+  
+    fancyDropdown = getElement(fancyDropdownId);
+    
+    $(fancyDropdown).addClass(cssClass);
+    
+    $(fancyDropdown).width(dropDownWidth);
+    
+    forceFancyDropdownRefresh(fancyDropdownId, lengthLimit);
+    
+    $(regularDropdown).change(function() {
+        forceFancyDropdownRefresh(fancyDropdownId, lengthLimit);
+    });
+  }
+</script>
+
+<apex:form >
+<div style="position:relative;">
+<span class="frm_cntr_large" style="display:block;margin-left:13px;">
+    <apex:selectList id="listImpDropDwn" size="1" multiselect="false" styleClass="myselect">
+        <apex:repeat value="{!ReportLinks}" var="rl" >
+            <apex:selectOption itemValue="{!rl.Report_URL__c}" itemLabel="{!rl.Name}"/>
+        </apex:repeat>
+    </apex:selectList> 
+</span>    
+</div>
+<script>
+createFancyDropdown("{!$Component.listImpDropDwn}", 181, "select_large", 20);
+</script>
+
+</apex:form>
+
+
+</apex:component>

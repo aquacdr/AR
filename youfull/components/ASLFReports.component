@@ -1,0 +1,38 @@
+<apex:component controller="ASLFReportsController">
+    <apex:attribute name="repAcctNbr" assignTo="{!repAcctNbr}" 
+                    description="Rep Account number" type="string" required="true" />
+                {!Initialize}
+                <script type="text/javascript" src="{!$Resource.MD5JS}"></script>
+                <script type="text/javascript">
+                function redirectToASLF(){
+                    var aslfFrame = document.getElementById('aslf_reports');
+                    var unEncLayer = document.getElementById('result');
+                    var aslfUrl = '{!market.Campaign_Report_Override_URL__c}';
+                    //ASLF not support "cs" ISO language code.
+                    //var langCd = '<apex:outputText value="{!IF(usrLangCd='cs','cz',IF(usrLangCd='es_MX', 'es_ES',usrLangCd))}"/>';
+                    var langCd = '{!usrLangCd}';
+                    if(aslfUrl=='' || aslfUrl.length==0){
+                        aslfUrl='{!market.ASLF_Report_Url__c}?account_nr={!JSENCODE(repAcctNbr)}&lang='+langCd+'&mrkt={!market.ASLF_Market_Id__c}&key={!JSENCODE(md5Key)}';
+                    }
+                    aslfFrame.src = aslfUrl;
+                }
+                
+                function checkSession(){
+                    var keepAlive = document.getElementById('keepalive');
+                    keepAlive.src = '/apex/ASLFKeepAlive';
+                }
+                </script>
+                <body>
+				<h1 class="big_pnk_hdr">ASLF Reports</h1>
+                <div id="result">
+                                
+                </div>
+                 <iframe id="aslf_reports" width="920" height="700" frameborder="0" scroller="no" onload="checkSession()" align="left">
+                 </iframe>
+                 <iframe id="keepalive" width="0" height="0" frameborder="0">
+                 </iframe>
+                </body>
+                <Script Language="Javascript">
+                    redirectToASLF();
+                </Script>
+</apex:component>

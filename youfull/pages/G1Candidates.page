@@ -1,0 +1,142 @@
+<apex:page sidebar="false" showHeader="false" standardStyleSheets="false" controller="G1CandidatesController" language="{!userLang}"> <!-- language property modified by Raktim on 7th Oct Impersonation Issue -->
+
+<style>
+.contentDiv table td {font-weight: normal;}
+</style>
+            <apex:outputPanel rendered="true">
+    <!--<div id="G1CandidatesScroll" style="height: 400px; overflow-x: hidden;overflow-y: auto;">-->
+    <div id="G1CandidatesScroll" style="height: 342px; overflow-x: hidden;overflow-y: auto;"> <!--  Changed by Raktim, drcrease style height for 'View Full Report' issue solving, 19Mar, 2013o -->
+    <!--  Scroll height change by Raktim on 25th Sept 2013 START -->
+    <!--<div class="cmpG11stBox" style="width:100%; height:{!listCandidate.size*168}px;">-->
+    <div class="cmpG11stBox" style="width:100%; height:{!listCandidate.size*g1CandidtEachRowHeight}px;"> 
+    <!--  Scroll height change by Raktim on 25th Sept 2013 END -->
+        
+        <apex:outputPanel rendered="{!IF(listCandidate.size > 0, FALSE, TRUE)}">
+           <div width="100%" align="center">
+               <h4 class="cmprep_hdr">{!$Label.No_Information_Available}</h4>
+           </div>
+        </apex:outputPanel>
+        
+        <apex:repeat value="{!listCandidate}" var="candidate">
+                <!-- Changes done by Raktim on 4thDec, 2012 Start -->
+                <!--<div class="{!IF(candidate.titleValue='At Risk','cmpred_box',IF(candidate.titleValue='Rising Star','cmpgreen_box','cmpnocolor_box'))} box">-->
+                <div class="cmpnocolor_box box">
+                <!-- Changes done by Raktim on 4thDec, 2012 End -->
+                    <div style="height:14px;" class="cmpttl_hdr cmphorz-sprtr">
+                    <div id="{!SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(candidate.Name,'*',''),' ',''), '/',''), '(',''), ')',''), '#',''), '&','')}_hdr" style="float:left;">&nbsp;</div>
+                    <a class="cmpblack" href="{!candidate.namelink}">{!candidate.Name}</a>
+                    <!--<a class="cmpblack" href="/apex/demopagenew?acctkey=TestAccount1">{!candidate.Name}</a>-->
+                      <p class="cmpright" style="width:20% !important;"> <a href="{!candidate.myTeamReportURL}" class="cmppeople"></a> <a href="javascript:viewRepDetail('{!candidate.accountNumber}');" class="cmpnote"></a> <a href="{!candidate.myTeamOrdersURL}" class="cmpgraph"></a> </p>
+                    </div>
+
+                    <div class="cmpsmall_tb_cnt contentDiv">
+                      <div class="cmpleft" style="width:49%;">
+                        <table border="0" cellspacing="0" cellpadding="0" class="cmpsml_tabular">
+                          <tbody>
+                          <tr>
+                            <td > <!-- {!candidate.badgeTitle} &nbsp;  -->
+                                <!-- Title Status Change by Raktim on 5th Sept, 2013 START -->
+                                <!--<span class="{!IF(candidate.titleValue='At Risk','cmpred','cmpgreen')}"> {!candidate.titleValue}</span>-->
+                                <span class="{!IF(CONTAINS(candidate.titleValue, $Label.ZM_Formula_At_Risk) || CONTAINS(candidate.titleValue, $Label.Formula_Base_At_Risk), 'cmpred', 'cmpgreen')}"> {!candidate.titleValue}</span>
+                                <!-- Title Status Change by Raktim on 5th Sept, 2013 END -->
+                            </td>
+                          </tr>
+                          <tr>
+                            <td style="color: #494848; font-weight: 500;">
+                            <!--<a href="mailto:{!candidate.preferredEmail}" class="cmpmagenta">{!candidate.preferredEmail}</a>-->
+                            <!-- <a href="#" class="magenta" onClick="showHidePersonalMessage('SHOW');">{!candidate.preferredEmail}</a> -->
+                            {!candidate.accountNumber} 
+                            </td>
+                          </tr>                          
+                          <tr>                      
+                            <td style="color: #494848; font-weight: 500;">{!candidate.zoneManager}</td>
+                          </tr>
+                          <tr>
+                            <td style="color: #494848; font-weight: 500;">{!candidate.preferredPhone}</td>
+                          </tr>
+                          <tr>
+                            <td width="50%" style="color: #494848; font-weight: 500; word-wrap"><!-- {!candidate.sponsor} --></td>
+                          </tr>
+                          
+                          <!-- Added by Raktim for Mail Plan Change - 7th Aug 2013 START -->
+                          <tr>                      
+                            <!-- <td style="color: #494848; font-weight: 500;">{!$Label.Mail_Plan}:  {!candidate.mailPlanCode}</td>-->
+                            <td style="color: #494848; font-weight: 500;">{!IF(isMailPln, $Label.Mail_Plan+': '+candidate.mailPlanCode , '')}</td>
+                          </tr>
+                          <!-- Added by Raktim for Mail Plan Change - 7th Aug 2013 END -->
+                        </tbody></table>
+                      </div>
+                      <div class="cmpright" style="width:49%;">
+                        <table border="0" cellspacing="0" cellpadding="0" class="cmpsml_tabular">
+                          <tbody><tr>
+                            <td>{!$Label.Personal_Volume}:</td>
+                            <td class="cmptxt_right"><apex:outputText value="{!candidate.salesVolume}" escape="false" /></td>
+                          </tr>
+                          <tr>
+                            <td>{!$Label.Team_Sales}:</td>
+                            <td class="cmptxt_right"><apex:outputText value="{!candidate.unitSales}" escape="false" /></td>
+                          </tr>
+                          <tr>
+                            <td>{!$Label.G1_Actives}:</td>
+                            <td class="cmptxt_right"><apex:outputText value="{!candidate.g1Actives}" escape="false" /></td>
+                          </tr>
+                          <apex:outputPanel layout="block" rendered="{!isDisplayQPA}"><!-- show/hide QPA, on 8th Oct 2013, subhamay -->
+                          <tr>
+                            <td>{!$Label.Personal_QPA}:</td>
+                            <td class="cmptxt_right"><apex:outputText value="{!candidate.qualifiedPersAppts}" escape="false" /></td>
+                          </tr>
+                          </apex:outputPanel><!-- show/hide QPA, on 8th Oct 2013, subhamay -->
+                          <tr>
+                            <td>{!$Label.Appt}:</td>
+                            <td class="cmptxt_right"><apex:outputText value="{!candidate.personalAppts}" escape="false" /></td>
+                          </tr>
+                                                      
+                         </tbody></table>
+                      </div>
+                    </div>
+                </div>
+        </apex:repeat>
+        <br/>
+        </div>
+        <br/>
+        </div>
+        
+        <!--  This section is blocked, CR : 2359 START-->
+        <!--         
+        <apex:outputPanel rendered="{!IF(messageText !=null, TRUE, FALSE)}">
+        <div class="cmpabv_btm">
+            <p class="cmppnk_star cmpleft">
+                <apex:outputPanel rendered="{!IF(messageUrl !=null, TRUE, FALSE)}">
+                    <a class="cmpgrey3" href="{!messageUrl}"><apex:outputText value="{!messageText}" escape="false" /></a>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(messageUrl !=null, FALSE, TRUE)}">
+                    <apex:outputText value="{!messageText}" escape="false" />
+                </apex:outputPanel>
+            </p>
+        </div>
+        </apex:outputPanel>
+        -->
+        <!--  This section is blocked, CR : 2359 END-->
+        
+        <div class="cmpbtm_bx_gry cmpG12ndBox" align="center">
+            <a class="cmppnk_cta cmpcentering_cn" href="{!viewFullReportURL}">{!$Label.View_Full_Report}</a>
+        </div>
+            </apex:outputPanel>
+
+<script>
+    fleXenv.fleXcrollMain("G1CandidatesScroll");
+    var tempG1CandidatesScroll = '{!listCandidate.size}';
+    //console.log('tempG1CandidatesScroll --> '+tempG1CandidatesScroll);
+    if(tempG1CandidatesScroll >= 3)
+    {
+        jQuery("#G1CandidatesScroll_vscrollerbase").css('visibility','visible');
+        jQuery("#G1CandidatesScroll_vscrollerbar").css('visibility','visible');
+    }
+    else
+    {
+        jQuery("#G1CandidatesScroll_vscrollerbase").hide();
+        jQuery("#G1CandidatesScroll_vscrollerbar").hide();
+    }
+</script>
+
+</apex:page>

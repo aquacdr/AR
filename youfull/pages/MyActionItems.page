@@ -1,0 +1,12 @@
+<apex:page showHeader="false" sidebar="false" controller="MyActionItemsController" 
+			action="{!init}" standardStyleSheets="false" language="{!$CurrentPage.parameters.langcd}">
+	<c:ActionItems repAcctNbr="{!repAcctNbr}"
+                   leadObject="{!leadRecs}"
+                   combObject="{!combobjRec}"
+                   actionitem="{!mkt_action_item}"
+                   market="{!currMrkt}"
+                   cmpTxt="{!actionItemCampaign}"
+                   itemsToDisplay="2"
+                   isSideBar="{!$CurrentPage.parameters.sidebar}"
+                   />
+</apex:page>

@@ -1,0 +1,144 @@
+<apex:page sidebar="false" showHeader="false" controller="IncentivesController" standardStyleSheets="false">
+
+<style>
+
+.InsouterBox2 {
+    height: 136px;
+    width: 100%;
+}
+
+.InsouterBox3 {
+    height: 35px;
+}
+
+.cmpmar_tp_25 {
+margin-top: 25px;
+}
+</style>
+<div >
+    <apex:outputPanel rendered="{!ldrshipInctvs_hasData}">
+     <div class="cmpbtm_bx_gry InsouterBox2" style="border-bottom: 1px solid #ccc;">
+        <div class="cmpcntr cmphorz-sprtr" style="height: 110px;"> 
+            <div class="cmpleft cmpwd_50">
+          <strong class="cmpsml_blk_hdr">{!$Label.Leadership_Incentives}</strong>
+                <apex:outputPanel rendered="{!ldrshipInctvs_hasData}">
+                            <c:BarIndicator id="InsBarInd3" compId="InsBarInd3" height="56" width="180" darkColorVal="{!ldrshipInctvs_battery.invoiced}" lightColorVal="0" linePoint="{!ldrshipInctvs_battery.goal}" maxVal="{!ldrshipInctvs_battery.rightBorder}" scaleInterPoint="{!ldrshipInctvs_battery.halfTarget}" themeColor="{!ldrshipInctvs_battery.color}"/>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!NOT(ldrshipInctvs_hasData)}">
+                    <div width="100%" align="center">
+                        <h4 class="cmprep_hdr">{!$Label.No_Information_Available}</h4>
+                    </div>
+                </apex:outputPanel>
+                          </div>
+                <apex:outputPanel rendered="{!ldrshipInctvs_hasData}">
+                          <div class="cmpright cmpwd_40 cmpmar_tp_25">
+                            <p class="cmpnor_txt">{!ldrshipInctvs_productName}</p>
+                            <apex:outputPanel rendered="{!NOT(ISNULL(ldrshipInctvs_goal))}">
+                                <p class="cmpgraph_sml_hdr">{!$Label.Goal}: <apex:outputText value="{!ldrshipInctvs_goal}" escape="false" /> </p>
+                            </apex:outputPanel>
+                            <apex:outputPanel rendered="{!NOT(ISNULL(ldrshipInctvs_goal))}">
+                                <p class="{!IF(ldrshipInctvs_battery.color='green','cmpgreen_dot','cmppnk_dot')} cmpgrey3 cmpsml_p_cnt">{!$Label.Sold}: <span><apex:outputText value="{!ldrshipInctvs_sold}" escape="false" /></span></p>
+                            </apex:outputPanel>
+                          </div>
+                </apex:outputPanel>
+                </div>
+                <apex:outputPanel rendered="{!ldrshipInctvs_hasData}">
+                        <div class="cmprate_cnt">
+                        <apex:outputPanel rendered="{!IF(ldrshipInctvs_CMneededToEarn<>'',True,False)}">
+                          <p class="cmppnk_star cmpleft cmpgrey3 cmpsml_p_cnt">
+                            <apex:outputPanel rendered="{!IF(ldrshipInctvs_CMneededToEarnUrl !=null, TRUE, FALSE)}">
+                                <a class="cmpgrey3" href="{!ldrshipInctvs_CMneededToEarnUrl}"><apex:outputText value="{!ldrshipInctvs_CMneededToEarn}" escape="false"/></a>
+                            </apex:outputPanel>
+                            <apex:outputPanel rendered="{!IF(ldrshipInctvs_CMneededToEarnUrl !=null, FALSE, TRUE)}">
+                                <apex:outputText value="{!ldrshipInctvs_CMneededToEarn}" escape="false" />
+                            </apex:outputPanel> 
+                          </p>
+                        </apex:outputPanel>
+                        </div>
+                </apex:outputPanel>
+         </div>
+    </apex:outputPanel>
+    
+    <apex:outputPanel rendered="{!OR(rprsntvInctvs_hasData,topSlr_hasData)}">
+    <div class="InsouterBox3" >
+        <h4 class="cmprep_hdr">{!$Label.Representative_Incentives}</h4>
+    </div>
+    </apex:outputPanel>
+
+    <div class="cmpouterBoxGen">
+    <apex:outputPanel rendered="{!rprsntvInctvs_hasData}">
+     <div class="cmpinnerBox" style="float:left;">
+        <div class="cmpcntr innerSep cmphorz-sprtr">
+            <p class="cmpnor_txt cmpmar_btm_10">{!rprsntvInctvs_productName}</p>
+    <apex:outputPanel rendered="{!rprsntvInctvs_hasData}">
+            <c:BarIndicator id="InsBarInd1" compId="InsBarInd1" height="56" width="135" darkColorVal="{!rprsntvInctvs_battery.invoiced}" lightColorVal="{!rprsntvInctvs_battery.submitted}" linePoint="{!rprsntvInctvs_battery.goal}" maxVal="{!rprsntvInctvs_battery.rightBorder}" scaleInterPoint="{!rprsntvInctvs_battery.halfTarget}" themeColor="{!rprsntvInctvs_battery.color}"/>
+            <apex:outputPanel rendered="{!NOT(ISNULL(rprsntvInctvs_goal))}">
+                <p class="cmpgraph_sml_hdr">{!$Label.Goal}: <apex:outputText value="{!rprsntvInctvs_goal}" escape="false" /></p>
+            </apex:outputPanel>
+            <apex:outputPanel rendered="{!NOT(ISNULL(rprsntvInctvs_sold))}">
+                <p class="{!IF(rprsntvInctvs_battery.color='green','cmpgreen_dot','cmppnk_dot')} cmpgrey3 cmpsml_p_cnt">{!$Label.Sold}: <span><apex:outputText value="{!rprsntvInctvs_sold}" escape="false" /></span></p>
+            </apex:outputPanel>
+            
+    </apex:outputPanel>
+     <apex:outputPanel rendered="{!NOT(rprsntvInctvs_hasData)}">
+        <div width="100%" align="center">
+            <h4 class="cmprep_hdr">{!$Label.No_Information_Available}</h4>
+        </div>
+    </apex:outputPanel>
+        </div>
+    <apex:outputPanel rendered="{!rprsntvInctvs_hasData}">
+        <div class="cmpcntrbottom">
+        <apex:outputPanel rendered="{!IF(rprsntvInctvs_CMearned<>'',True,False)}">
+            <p class="cmppnk_star cmpgrey3 cmpsml_p_cnt" style="float:left">
+                <apex:outputPanel rendered="{!IF(rprsntvInctvs_CMearnedUrl !=null, TRUE, FALSE)}">
+                    <a class="cmpgrey3" href="{!rprsntvInctvs_CMearnedUrl}"><apex:outputText value="{!rprsntvInctvs_CMearned}" escape="false"/></a>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(rprsntvInctvs_CMearnedUrl !=null, FALSE, TRUE)}">
+                    <apex:outputText value="{!rprsntvInctvs_CMearned}" escape="false" />
+                </apex:outputPanel> 
+            </p>
+        </apex:outputPanel>
+        </div>
+    </apex:outputPanel>
+    </div>
+    </apex:outputPanel>
+    
+    <apex:outputPanel rendered="{!topSlr_hasData}">
+        <div class="cmpinnerBox" ><!-- style="float:right;" -->
+            <div class="cmpcntr innerSep cmphorz-sprtr">
+            <p class="cmpnor_txt cmpmar_btm_10">{!$Label.Top_Seller}</p>
+                <apex:outputPanel rendered="{!topSlr_hasData}">
+                            <c:BarIndicator id="InsBarInd2" compId="InsBarInd2" height="56" width="135" darkColorVal="{!topSlr_battery.invoiced}" lightColorVal="0" linePoint="{!topSlr_battery.goal}" maxVal="{!topSlr_battery.rightBorder}" scaleInterPoint="{!topSlr_battery.halfTarget}" themeColor="{!topSlr_battery.color}"/>
+                            <apex:outputPanel rendered="{!NOT(ISNULL(topSlr_goal))}">
+                                <p class="cmpgraph_sml_hdr">{!$Label.Goal}: &nbsp;<apex:outputText value="{!topSlr_goal}" escape="false" /></p>
+                            </apex:outputPanel>
+                            <apex:outputPanel rendered="{!NOT(ISNULL(topSlr_actual))}">
+                                <p class="{!IF(topSlr_battery.color='green','cmpgreen_dot','cmppnk_dot')} cmpgrey3 cmpsml_p_cnt">{!$Label.Actual}: <span><apex:outputText value="{!topSlr_actual}" escape="false" /></span></p>
+                            </apex:outputPanel>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!NOT(topSlr_hasData)}">
+                    <div width="100%" align="center">
+                        <h4 class="cmprep_hdr">{!$Label.No_Information_Available}</h4>
+                    </div>
+                </apex:outputPanel>
+                        </div>
+                <apex:outputPanel rendered="{!topSlr_hasData}">
+                        <div class="cmpcntrbottom">
+                    <apex:outputPanel rendered="{!IF(topSlr_CMtoReach<>'',True,False)}">
+                            <p class="cmppnk_star  cmpgrey3 cmpsml_p_cnt" style="float:left">
+                                <apex:outputPanel rendered="{!IF(topSlr_CMtoReachUrl !=null, TRUE, FALSE)}">
+                                    <a class="cmpgrey3" href="{!topSlr_CMtoReachUrl}"><apex:outputText value="{!topSlr_CMtoReach}" escape="false"/></a>
+                                </apex:outputPanel>
+                                <apex:outputPanel rendered="{!IF(topSlr_CMtoReachUrl !=null, FALSE, TRUE)}">
+                                    <apex:outputText value="{!topSlr_CMtoReach}" escape="false" />
+                                </apex:outputPanel>
+                            </p>
+                    </apex:outputPanel>        
+                        </div>
+                </apex:outputPanel>
+        </div>
+        </apex:outputPanel>
+    </div>
+    
+</div>
+</apex:page>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customSettingsType>List</customSettingsType>
+    <customSettingsVisibility>Public</customSettingsVisibility>
+    <description>Mapping between Visualforce page name and Omniture page name</description>
+    <enableEnhancedLookup>false</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <fields>
+        <fullName>Omniture_Page_Name__c</fullName>
+        <description>When it is used in the code, a suffix will be appended based on login user profile name. For example, for Avon Leader profile, _SL will be added to the end before sending to Omniture.</description>
+        <externalId>false</externalId>
+        <label>Omniture Page Name</label>
+        <length>150</length>
+        <required>true</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Omniture Page Name Mapping</label>
+</CustomObject>

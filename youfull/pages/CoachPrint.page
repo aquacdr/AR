@@ -1,0 +1,10 @@
+<apex:page showheader="false" sidebar="false" standardStyleSheets="false">
+	<apex:form id="BPform">
+    <apex:composition template="YOUPageTemplateNoActions">
+    <apex:define name="content">
+    	<c:CoachRecordPrint />
+    </apex:define>
+    </apex:composition>
+    </apex:form>
+    
+</apex:page>

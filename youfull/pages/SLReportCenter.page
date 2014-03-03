@@ -1,0 +1,146 @@
+<apex:page controller="Controller_SLReportCenter" showHeader="true" sidebar="true">
+<apex:includeScript value="{!URLFOR($Resource.ALMPlus_Asset,'js/jquery-1.5.1.min.js')}"/>
+<apex:includeScript value="{!$Resource.NumberFormatter}" />
+<script>     
+    function ReportRedirect(page){
+        var isImpersonatedAccount ='{!$CurrentPage.Parameters.acctkey}';
+        if(page=='0');
+        else if(isImpersonatedAccount!=null && isImpersonatedAccount!='' && page!='CR'){
+            window.parent.location.href=page+'&acctkey='+isImpersonatedAccount;
+        }
+        else if(isImpersonatedAccount!=null && isImpersonatedAccount!='' && page=='CR'){
+            viewRepDetail('{!$CurrentPage.Parameters.acctkey}');
+        }
+        else{
+            window.parent.location.href=page;
+        }
+    } 
+</script>
+<apex:sectionHeader title="{!$Label.Report_Center}"/>
+
+<apex:pageMessages />
+<apex:form id="theForm">
+<apex:pageBlock > 
+<apex:pageBlockSection id="reportSection">
+     
+<!--  <apex:pageBlockSectionItem Id="reportList">-->
+<!--        <apex:outputLabel value="{!$Label.Report_Center}"/>      -->
+<!--        <apex:selectList value="{!selectedReport}" onchange="ReportRedirect(this.value);return false;" style="width:181px;" size="1"> -->
+<!--            <apex:selectOptions value="{!reportLinks}"/>-->
+<!--        </apex:selectList> -->
+<!--    </apex:pageBlockSectionItem>-->
+    </apex:pageBlockSection>
+    
+    <apex:variable value="{!0}" var="reptno"/>
+
+        <apex:repeat value="{!lst_AddReports}" rows="{!CEILING(lst_AddReports.size/2)}" var="reptlist">
+            <table class="rpc_dotted" style="width: 428px;"> 
+                <tbody>
+                    <tr>
+                        <td style="width:210px;padding:15px 0 0 10px;height:26px;line-height:26px;vertical-align:middle\0/;;">
+                            <span class="filterLabel" style="font-size: 16px;font-weight:200;text-align: center;">
+                                {!$Label[reptlist.s_Report_Name]}
+                            </span>
+                        </td>
+                        <td style="width:100px;height:26px;padding:15px 0 0 10px;vertical-align:top\0/;">
+                            <span class="frm_cntr_large filterList">
+                                
+                                    <!-- <select id="{!reptno}" class="myselect_camp" style="z-index: 10; opacity: 0;" onchange="if(!isIE||(lock==false)) RefreshFunction(this.value,this.id);if(lock==false) lock=true;else if(lock==true) lock=false;"> -->
+                                    <select id="{!reptno}" class="myselect_camp" onchange="RefreshFunction(this.value,this.id);">
+                                        <apex:repeat value="{!reptlist.lst_Campaign}" var="campaign">
+                                            <option value="{!campaign}">{!campaign}</option>
+                                        </apex:repeat>
+                                    </select> 
+                            </span>
+                        </td>
+                        
+                        <td style="width:140px; vertical-align:middle\0/;" align="right">
+                            <apex:outputPanel id="mainDivReRender">
+                                <apex:outputPanel id="maindiv1" rendered="{!LEN(reptlist.s_Active_Link)>0 && reptlist.s_Active_Link<>null}">
+                                    <span valign="top" style="vertical-align:middlevertical-align:middle\0/;font-size:12px;padding-left:20px;">
+                                        <!-- callOmniture_RepCenter is used by Raktim on 9th Apr, 2013  -->
+                                        {<a href="{!IF(LEN(reptlist.s_Active_Link)>0,'/servlet/servlet.FileDownload?file='+reptlist.s_Active_Link,'javascript:void(0)')}" target="{!reptlist.s_Report_Target}" onClick="callOmniture_RepCenter('{!$Label[reptlist.s_Report_Name]}');">{!$Label.Download}</a>}
+                                    </span>
+                                </apex:outputPanel> 
+                                <apex:outputPanel id="maindivNoLink" rendered="{!LEN(reptlist.s_Active_Link)==0 || reptlist.s_Active_Link ==null}">
+                                    <span valign="top" style="vertical-align:middlevertical-align:middle\0/;font-size:12px;padding-left:20px">
+                                        { {!$Label.Not_Available_for_Download} }
+                                    </span>
+                                </apex:outputPanel> 
+                            </apex:outputPanel>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <apex:variable value="{!reptno+1}" var="reptno"/>
+            <br/> 
+ 
+    </apex:repeat>
+
+  
+      <apex:repeat value="{!lst_AddReports}" first="{!CEILING(lst_AddReports.size/2)}" var="reptlist">
+            
+                <table class="rpc_dotted" style="width: 428px;"> 
+                <tbody>
+                    <tr>
+                        <td style="width:210px;padding:15px 0 0 10px;height:26px;line-height:26px;vertical-align:middle\0/;">
+                            <span class="filterLabel" style="font-size: 16px;font-weight:200;text-align: center;">
+                                {!$Label[reptlist.s_Report_Name]}
+                            </span>
+                        </td>
+                        <td style="width:100px;height:26px;padding:15px 0 0 10px;vertical-align:top\0/;">
+                            <span class="frm_cntr_large filterList">
+                                
+                                    <select id="{!reptno}" class="myselect_camp"  onchange="RefreshFunction(this.value,this.id);">
+                                       <apex:repeat value="{!reptlist.lst_Campaign}" var="campaign">
+                                            <option value="{!campaign}">{!campaign}</option>
+                                        </apex:repeat>
+                                    </select> 
+                                
+                            </span>
+                        </td>
+                        
+                        <td style="width:140px; vertical-align:middle\0/;" align="right">
+                            <apex:outputPanel id="maindivRerenderer2">
+                                <apex:outputPanel id="maindiv2" rendered="{!LEN(reptlist.s_Active_Link)>0}">
+                                    <span valign="top" style="vertical-align:middlevertical-align:middle\0/;font-size:12px;padding-left:20px;">
+                                        <!-- callOmniture_RepCenter is used by Raktim on 9th Apr, 2013  -->
+                                        {<a href="{!IF(LEN(reptlist.s_Active_Link)>0,'/servlet/servlet.FileDownload?file='+reptlist.s_Active_Link,'javascript:void(0)')}" target="{!reptlist.s_Report_Target}" onClick="callOmniture_RepCenter('{!$Label[reptlist.s_Report_Name]}');">{!$Label.Download}</a>}
+                                    </span>
+                                </apex:outputPanel> 
+                                <apex:outputPanel id="maindivNoLink2" rendered="{!LEN(reptlist.s_Active_Link)==0}">
+                                  <span valign="top" style="vertical-align:middlevertical-align:middle\0/;font-size:12px;padding-left:20px;">
+                                    { {!$Label.Not_Available_for_Download} }
+                                  </span>
+                                </apex:outputPanel>
+                            </apex:outputPanel>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <apex:variable value="{!reptno+1}" var="reptno"/>  
+             <br/>
+             <div class="dotted_divider"> </div>            
+         </apex:repeat>
+         
+         
+   
+    <apex:actionFunction action="{!Refreshcampaign}" name="RefreshFunction" status="ReportCenterStatus" reRender="maindiv1,maindiv2,maindivNoLink,maindivNoLink2,mainDivReRender,maindivRerenderer2">       
+        <apex:param id="rptpar1" name="rptpar1"  value="" />
+        <apex:param id="rptpar2" name="rptpar2"  value="" />
+    </apex:actionFunction>
+    <apex:actionStatus id="ReportCenterStatus"  onstart="showProcessingMsg();" onstop="showProcessingMsg();"/> 
+    
+    <!-- View RepDetail Integrations Starts -->
+    <apex:actionFunction name="viewRepDetail" action="{!callRepDetails}" rerender="repDetail" oncomplete="javascript:displayit();" status="ReportCenterStatus">
+          <apex:param name="repDetailAcctNbr" assignTo="{!repDetailAcctNbr}" value="{!repDetailAcctNbr}"/>
+      </apex:actionFunction>
+      <div id="email_sel_mask2" class="white_trans_closed">
+      <apex:outputPanel id="repDetail" layout="none">
+         <c:CoachingRecord repacctnbr="{!repDetailAcctNbr}" rendered="{!repDetailAcctNbr!=null}"/>
+        </apex:outputPanel>
+    </div>
+
+</apex:pageblock>
+</apex:form>
+</apex:page>

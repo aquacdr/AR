@@ -1,0 +1,193 @@
+<apex:page sidebar="false" showHeader="false" standardStyleSheets="false" controller="RisingStarsController">
+
+<style>
+div.cmpsmall_tb_cnt table td.lblCol {
+    width: 70%;
+}
+.contentDiv table td {font-weight: normal;}
+</style>
+
+<script>
+var risingStarNames = new Array();
+</script>
+            <apex:outputPanel >
+    <!-- <div id="ELRisingScroll" style="height: 400px; overflow-x: hidden;overflow-y: hidden;">-->
+        <div id="ELRisingScroll" style="height: 342px; overflow-x: hidden;overflow-y: auto;">
+         <!--<div class="cmpG11stBox" style="width:100%; height:{!listRisingStar.size*140}px;">-->
+         <div class="cmpG11stBox" style="width:100%; height:{!listRisingStar.size*150}px;">   
+        <apex:outputPanel rendered="{!IF(listRisingStar.size > 0, FALSE, TRUE)}">
+           <div width="100%" align="center">
+               <h4 class="cmprep_hdr">{!$Label.No_Information_Available}</h4>
+           </div>
+        </apex:outputPanel>
+        
+        <apex:repeat value="{!listRisingStar}" var="risingStr">
+            <script>
+            var risingStrName = "{!SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(risingStr.Name,'.',''),' ',''), '*', ''), '/',''), '(',''), ')',''), '#',''), '&','')}";
+            risingStarNames.push(risingStrName);
+            </script>
+        </apex:repeat>
+        
+        
+        <apex:repeat value="{!listRisingStar}" var="risingStar">
+                <!-- Changes done by Raktim on 4thDec, 2012 Start -->
+                <!--<div class="{!IF(risingStar.titleValue='At Risk','cmpred_box',IF(risingStar.titleValue='Rising Star','cmpgreen_box','cmpnocolor_box'))} box">-->
+                <div class="cmpnocolor_box box">
+                <!-- Changes done by Raktim on 4thDec, 2012 End -->
+                    <div style="height:13px;" class="cmpttl_hdr cmphorz-sprtr"> <div id="{!SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(risingStar.Name,'.',''),'*',''),' ',''), '/',''), '(',''), ')',''), '#',''), '&','')}_hdrRL" class="cmplnk_arw" style="float:left;">&nbsp;</div><a class="cmpblack" href="{!risingStar.NameLink}">{!risingStar.Name}</a>
+                      <p class="cmpright" style="width:20% !important;"> <a href="{!risingStar.myTeamReportURL}" class="cmppeople"></a> <a href="javascript:viewRepDetail('{!risingStar.accountNumber}');" class="cmpnote"></a> <a href="{!risingStar.myTeamOrdersURL}" class="cmpgraph"></a> </p>
+                    </div>
+
+                    <div class="contentDiv" id="{!SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(risingStar.Name,'.',''),'*',''),' ',''), '/',''), '(',''), ')',''), '#',''), '&','')}_RL" style="width:107.2%; background:#f1f1f1 url('{!URLFOR($Resource.EUL_Resources, 'bottom-grey-block_btm_shadow.gif')}') 
+                                                                                                                                                                                                                                        repeat-x scroll center bottom; float:left; padding-bottom:5px; position: relative;left: -16px; right: -14px;" >
+                        <table border="0" cellspacing="0" cellpadding="0" class="cmpslide_tabular" width="100%">
+                          <tbody>
+                          <tr>
+                            <td width="50%">{!risingStar.accountNumber}
+                            <!--<a href="mailto:{!risingStar.preferredEmail}" class="cmpmagenta">{!risingStar.preferredEmail}</a>-->
+                           <!-- <a href="#" class="magenta" onClick="showHidePersonalMessage('SHOW');">{!risingStar.preferredEmail}</a> -->
+                            </td>
+                            
+                            <!-- This section is changed for Mail Plan Change - by Raktim on 7th Aug 2013 START -->
+                            <!--<td width="50%" class="cmptxt_right">{!IF(isMailPln,$Label.ZoneBranch+' '+Mail_Plan_Zone_Code,risingStar.sponsor)}</td>--><!--changed by swarnava:Mail Plan-->
+                            
+                            <!--<td width="50%" class="cmptxt_right">{!IF(isMailPln,IF(isBranch, $Label.Branch_Name+' '+Mail_Plan_Zone_Code, $Label.Zone+' '+Mail_Plan_Zone_Code), risingStar.zoneManager)}</td>-->  <!--changed by raktim :Mail Plan Market show only Zone - Client Suggestion on 19Jul 2013 -->
+                            
+                            <td width="50%" class="cmptxt_right">{!risingStar.sponsor}</td>
+                            <!-- This section is changed for Mail Plan Change - by Raktim on 7th Aug 2013 END -->
+                            
+                          </tr>
+                          
+                          <!-- This section is added for Mail Plan Change - by Raktim on 7th Aug 2013 START -->
+                          <tr>
+                            <td width="50%"></td>
+                            <td width="50%" class="cmptxt_right">{!IF(isMailPln,IF(isBranch, $Label.Branch_Name+' '+Mail_Plan_Zone_Code, $Label.Zone+' '+Mail_Plan_Zone_Code), risingStar.zoneManager)}</td>
+                          </tr>
+                          <!-- This section is added for Mail Plan Change - by Raktim on 7th Aug 2013 END -->
+                          
+                          <tr>
+                            <td width="50%">{!risingStar.preferredPhone}</td>
+                            <td width="50%" class="cmptxt_right">{!IF(isMailPln,$Label.Mail_Plan_Code+' '+Mail_Plan_Code,risingStar.zoneManager)}</td><!--changed by swarnava:Mail Plan-->
+                          </tr>   
+                                               
+                        </tbody></table>
+                    </div>
+                    <script>
+                    
+                        jQuery("#{!SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(risingStar.Name,'.',''),'*',''),' ',''), '/',''), '(',''), ')',''), '#',''), '&','')}_RL").hide();
+                        
+                        jQuery("#{!SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(risingStar.Name,'.',''),'*',''),' ',''), '/',''), '(',''), ')',''), '#',''), '&','')}_hdrRL").hover(function() {
+                            jQuery(this).css('cursor','pointer');
+                        }, function() {
+                            jQuery(this).css('cursor','auto');
+                        });
+                        
+                        /*
+                        jQuery("#{!SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(risingStar.Name,'*',''),' ',''), '/',''), '(',''), ')',''), '#',''), '&','')}_hdrRL").click(function(){
+                            jQuery("#{!SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(risingStar.Name,'*',''),' ',''), '/',''), '(',''), ')',''), '#',''), '&','')}_RL").slideToggle(300);
+                        });
+                        */
+                        
+                        jQuery("#{!SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(risingStar.Name,'.',''),' ',''), '*', ''), '/',''), '(',''), ')',''), '#',''), '&','')}_hdrRL").click(function(){
+                            for (var i = 0; i < risingStarNames.length; i++) {
+                                if(risingStarNames[i] != "{!SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(risingStar.Name,'.',''),' ',''), '*', ''), '/',''), '(',''), ')',''), '#',''), '&','')}") {
+                                   jQuery("#" + risingStarNames[i]+"_RL").slideUp(300);
+                                   // jQuery("#" + risingStarNames[i]+"_hdrRL").toggleClass("cmplnk_arw_down");
+                                   jQuery("#" + risingStarNames[i]+"_hdrRL").removeClass("cmplnk_arw_down");//changed by swarnava for Campaign arrow bug
+                                }
+                            }
+                            
+                            jQuery("#{!SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(risingStar.Name,'.',''),' ',''), '*', ''), '/',''), '(',''), ')',''), '#',''), '&','')}_RL").slideToggle(300);
+                            jQuery("#{!SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(SUBSTITUTE(risingStar.Name,'.',''),' ',''), '*', ''), '/',''), '(',''), ')',''), '#',''), '&','')}_hdrRL").toggleClass("cmplnk_arw_down");
+                        });
+                    </script>
+
+                    <div class="cmpsmall_tb_cnt contentDiv">
+                      <div class="cmpleft" style="width:48% !important;">
+                        <table border="0" cellspacing="0" cellpadding="0" class="cmpsml_tabular" width="100%">
+                          <tbody>
+                          <tr>
+                          	<!-- Title Status Change by Raktim on 5th Sept, 2013 START -->
+                            <!--<td colspan="2">{!$Label.Title}: {!risingStar.badgeTitle} <span class="{!IF(risingStar.titleValue='2 - Title At Risk'||risingStar.titleValue='3 - Title At Risk!'||risingStar.titleValue='At Risk','cmpred','cmpgreen')}">{!risingStar.titleValue}</span></td>-->
+                            <td colspan="2">{!$Label.Title}: {!risingStar.badgeTitle} <span class="{!IF(CONTAINS(risingStar.titleValue, $Label.ZM_Formula_At_Risk) || CONTAINS(risingStar.titleValue, $Label.Formula_Base_At_Risk), 'cmpred', 'cmpgreen')}">{!risingStar.titleValue}</span></td>
+                            <!-- Title Status Change by Raktim on 5th Sept, 2013 END -->
+                          </tr>
+                          <tr>
+                            <td class="lblCol">{!$Label.Pers_Sales}:</td>
+                            <td class="cmptxt_right"><apex:outputText value="{!risingStar.salesVolume}" escape="false" /></td>
+                          </tr>
+                          <tr>
+                            <td class="lblCol">{!$Label.Team_Sales}:</td>
+                            <td class="cmptxt_right"><apex:outputText value="{!risingStar.unitSales}" escape="false" /></td>
+                          </tr>
+                          <tr>
+                            <td class="lblCol">{!$Label.Blkd_Team_Sales}:</td>
+                            <td class="cmptxt_right"><apex:outputText value="{!risingStar.blockedUnitSales}" escape="false" /></td>
+                          </tr>
+                        </tbody></table>
+                      </div>
+                      <div class="cmpright" style="width:48% !important;" >
+                        <table border="0" cellspacing="0" cellpadding="0" class="cmpsml_tabular" width="100%">
+                          <tbody><tr>
+                            <td class="lblCol">{!$Label.Executive_Gen}:</td>
+                            <td class="cmptxt_right"><apex:outputText value="{!risingStar.executiveGen}" escape="false" /></td>
+                          </tr>
+                          <tr>
+                            <td class="lblCol">{!$Label.G1_Actives}:</td>
+                            <td class="cmptxt_right"><apex:outputText value="{!risingStar.g1Actives}" escape="false" /></td>
+                          </tr>
+                          <tr>
+                            <td class="lblCol">{!$Label.G1_Leaders}:</td>
+                            <td class="cmptxt_right"><apex:outputText value="{!risingStar.g1Leaders}" escape="false" /></td>
+                          </tr>
+                          <tr>
+                            <td class="lblCol">{!$Label.Titled_Legs}:</td>
+                            <td class="cmptxt_right"><apex:outputText value="{!risingStar.titledLegs}" escape="false" /></td>
+                          </tr>
+                        </tbody></table>
+                      </div>
+                    </div>
+                </div>
+        </apex:repeat>
+        <br/>
+        </div>
+        <br/>
+        </div>
+        
+        <!--  This section is blocked, CR : 2359, START -->
+        <!--
+        <apex:outputPanel rendered="{!IF(messageText !=null, TRUE, FALSE)}">
+        <div class="cmpabv_btm">
+            <p class="cmppnk_star cmpleft">
+                <apex:outputPanel rendered="{!IF(messageUrl !=null, TRUE, FALSE)}">
+                    <a class="cmpgrey3" href="{!messageUrl}"><apex:outputText value="{!messageText}" escape="false" /></a>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!IF(messageUrl !=null, FALSE, TRUE)}">
+                    <apex:outputText value="{!messageText}" escape="false" />
+                </apex:outputPanel>
+            </p>
+        </div>
+        </apex:outputPanel>
+        -->
+        <!--  This section is blocked, CR : 2359, END -->
+        
+        <div class="cmpbtm_bx_gry cmpG12ndBox" align="center">
+            <a class="cmppnk_cta cmpcentering_cn" href="{!viewFullReportURL}">{!$Label.View_Full_Report}</a>
+        </div>
+            </apex:outputPanel>
+<script>
+    fleXenv.fleXcrollMain("ELRisingScroll");
+    var tempELRisingScroll = '{!listRisingStar.size}';
+    if(tempELRisingScroll > 2) //Changed from tempELRisingScroll > 3 to tempELRisingScroll > 2
+    {
+        jQuery("#ELRisingScroll_vscrollerbase").css('visibility','visible');
+        jQuery("#ELRisingScroll_vscrollerbar").css('visibility','visible');
+    }
+    else
+    {
+        jQuery("#ELRisingScroll_vscrollerbase").hide();
+        jQuery("#ELRisingScroll_vscrollerbar").hide();
+    }
+</script>
+
+</apex:page>

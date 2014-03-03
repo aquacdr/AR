@@ -1,0 +1,47 @@
+<apex:page showHeader="false" sidebar="false" controller="DisplayWidgetsController" action="{!init}" standardStyleSheets="false" cache="false" language="{!userLang}">
+    <apex:stylesheet value="{!URLFOR($Resource.ALM_Assetsv2,'css/alm_2.css')}" />
+    <apex:pageMessages />
+    <style type="text/css">
+    .aitem_odd,.aitem_even{
+    font-size: 11px;
+    }
+    .aitem_header{
+        font-size: 12px;
+    }
+    .aitem_tbl{
+        border:none;
+    }
+    .aitem_tbl_nobtmbdr{
+      border-bottom:none;
+
+    }
+    .aitem_header,.aitem_separator{
+        background-color:white;
+    }
+    </style>
+    <apex:form >
+    <apex:inputHidden id="mktcd" value="{!aslfMktId}"/>
+    <apex:inputHidden id="acctnbr" value="{!acctNbr}"/>
+    <apex:inputHidden id="key" value="{!userKey}"/>
+    <apex:inputHidden id="usrId" value="{!currUsr.Id}"/>
+    <apex:outputPanel id="widgetDetails" layout="none" rendered="{!NOT(isFailure)}">
+            <div id="aitem_container" style="width:200px;padding-left:1px;">
+            <div id="actionItems" style="width:200px;">
+            <c:ActionItems repAcctNbr="{!repAcctNbr}" actionitem="{!mkt_action_item}"
+                combObject="{!combobjRec}" itemsToDisplay="2" market="{!market}" cmpTxt="{!actionItemCampaign}"
+                currUser="{!currUsr}" IsWidget="true" leadObject="{!leadRecs}" isSideBar="3" width="204"/>
+            </div>
+            </div>
+    </apex:outputPanel>
+    
+  <apex:outputPanel id="msgDetail" layout="none" rendered="{!isFailure}">
+            <div id="msg_box_outer" class="msg_box" style="width:200px;">
+            <div id="msg_box_inner" class="info_msgs" style="width:199px;white-space:normal;padding-right:3px;">
+                <apex:outputText value="{!$Label.Widget_error}" escape="false"/>
+            </div>
+            </div>
+    
+  </apex:outputPanel>
+    </apex:form>
+    
+</apex:page>

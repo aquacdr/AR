@@ -1,0 +1,108 @@
+<!--
+** VF Page Name            				: ZM_ActivityForecastTrackerOutput
+** VF Standard Controller  				: N/A
+** VF Custom Controller    				: ?
+** VF Extension(s)            			:
+** 
+** Has JavaScript?            			: ?
+**
+** Purpose [short summary]    			: Forecast output for zone managers and division managers.
+**
+**
+** Change Log (Put the latest entry on top)	:
+**	3/8/2013	G Created
+**	3/9/2013	Modified
+**  4/22/2013   Modified - Omniture Integration
+** 
+-->
+<apex:page controller="ZM_ForecastATInputController" sidebar="false" showHeader="false"> 
+
+
+
+<!--  Omniture method invocation starts -->
+<script>
+		ALM_PAGE_NAME="{!OmniturePageName}"; 	
+</script>
+<!--  Omniture method invocation ends -->
+
+<style>
+		.chartHeader {
+			background-color: lightgrey;
+			color: black;
+			padding: 5px 0px 0px 0px;
+			text-align: center;
+			height: 30px;
+			border:1px solid lightgrey;
+		}
+		
+		.odd {
+			background-color: lightgray;
+		}
+		
+		.tableFooter {
+			border-top: 1px solid gray;
+			padding: 5px 0px 0px 0px;
+			text-align: center;
+			height: 20px;
+		}
+	</style>
+	<apex:form >
+		<apex:outputPanel >
+			<apex:selectList value="{!activeZone}" size="1" rendered="{!zoneOptions.size>1}">
+				<apex:actionSupport event="onchange" action="{!changeZone}" />
+				<apex:selectOptions value="{!zoneOptions}" />
+			</apex:selectList>
+			
+			<div class="chartHeader">
+				<h1>{!$Label.ZM_Activity_Tracker}  {!campaignNum}</h1>
+				<apex:outputPanel rendered="{!ZoneTotal = 0}" style="color:red"><br/>{!$Label.ZM_No_forecast_data_entered}</apex:outputPanel>
+			</div>
+			<apex:dataTable style="border:1px solid lightgrey;" cellPadding="3"
+				value="{!configFields}" var="key" id="activityForecastTable"
+				rowClasses="odd,even" width="100%" footerClass="tableFooter">
+
+				<apex:facet name="footer">{!$Label.ZM_Activity_Tracker}</apex:facet>
+
+				<apex:column >
+					<apex:facet name="header">{!$Label.ZM_KPI_Name}</apex:facet>
+					<apex:outputtext value="{!$Label[key]}" />
+				</apex:column>
+				
+				<apex:column style="text-align:right; ">
+					<apex:facet name="header">{!$Label.ZM_Goal}</apex:facet>
+					<apex:outputField value="{!inputRecord[mapFields[key].ForecastInput__c]}" />
+				</apex:column>
+				
+				<apex:column style="text-align:right; ">
+					<apex:facet name="header">{!$Label.ZM_Forecast}</apex:facet>
+					<apex:outputField value="{!inputRecord[mapFields[key].ForecastField__c]}" />
+				</apex:column>
+				
+				<apex:column style="text-align:right; ">
+					<apex:facet name="header">{!$Label.ZM_Pcnt_Goal}</apex:facet>
+					<apex:outputField value="{!inputRecord[mapFields[key].ForecastGoalField__c]}" />
+				</apex:column>
+				
+			</apex:dataTable>
+			<!--table border="1">
+				<tr>
+					<th>{!$Label.ZM_KPI_Name}</th>
+					<th>{!$Label.ZM_Goal}</th>
+					<th>{!$Label.ZM_Forecast}</th>
+				</tr>
+				<apex:repeat value="{!mapFields}" var="key">
+					<tr>
+						<td>{!key}: </td>
+						<td><apex:outputField value="{!inputRecord[mapFields[key].PlanField__c]}" /></td>
+						<td><apex:outputField value="{!inputRecord[mapFields[key].ForecastField__c]}" /></td>
+					</tr>
+				</apex:repeat>
+			</table-->
+		</apex:outputPanel>
+	</apex:form>
+	
+	<!-- Omniture Integration Starts -->
+	 <apex:include pageName="ZMDMOmnitureTrack"/>
+	<!-- Omniture Integration Ends -->
+	
+</apex:page>

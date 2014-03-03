@@ -1,0 +1,96 @@
+<apex:component >
+
+<apex:includeScript value="{!URLFOR($Resource.ALMPlus_Asset,'js/jquery-1.5.1.min.js')}"/>
+
+<!-- Blank Business plan sec -->
+   <!--  <script type="text/javascript">
+        
+                
+        
+        jQuery(document).ready(function() { 
+            jQuery("input[type='text']").keypress(function(e)
+                {
+                    var key = e.charCode || e.keyCode || 0;
+                    //alert(key+' '+e.charCode+' '+e.keyCode);
+                    //alert(e.charCode == 46);
+                    // allow backspace, tab, delete, arrows, numbers and keypad numbers ONLY
+                    return (
+                        key == 8 || 
+                        key == 9 ||
+                        key == 46 ||
+                        (key >= 37 && key <= 40 && e.charCode == 0) ||
+                        (key >= 48 && key <= 57) ||
+                        (key >= 96 && key <= 105));
+                });
+        });
+    </script>-->
+ <apex:attribute name="bpController" description="BusinessPlanControllerNew" type="BusinessPlanControllerNew" required="true" />
+          <apex:outputPanel styleclass="cntr_BP pad_btm_15_BP" rendered="true"> 
+            <div><h2 class="scnd_hdr_BP">{!bpController.tableHeader}</h2></div>
+            <div class="brdr_arnd_bp left_bp">
+                <table width="90%" border="0" cellspacing="0" cellpadding="0" class="tabular_bp">
+                    <tr>
+                      <th>&nbsp;</th>
+                     <th colspan="{!bpController.actCampCount}" class="magenta" style="{!IF(bpController.actCampCount>0,'display:yes','display:none')}"><apex:outputLabel value="{!$Label.Actual}"/></th>
+                      <th colspan="{!bpController.futCampCount}" class="magenta" style="{!IF(bpController.futCampCount>0,'display:yes','display:none')}"><apex:outputLabel value="{!$Label.Future}"/></th>
+                    </tr>
+                    <tr>
+                        <th>&nbsp;</th>
+                        <apex:repeat value="{!bpController.headers}" var="cn">
+                            <th class="brdr_tp_gry_bp" style="{!IF(cn.isPrevCamp,'background-color: #E5E4E4;','')};border-bottom: 1px solid white;border-right:1px solid white;">{!cn.campaignName}<br/>{!cn.campaignYear}</th>
+                        </apex:repeat>
+                    </tr>
+                    <apex:repeat value="{!bpController.bpsp}" var="bp">
+                   <!--  <tr>
+                        <td>
+                            Manas--{!bp.myField.CC_Cnt__c}
+                        </td>
+                    </tr> -->
+                        <tr class="{!IF(bp.isOdd,'tab_gry_bp','')} {!IF(bp.isHeaderKPI,'fnt_sml_bp brdr_blk_BP','')}" style="{!IF(bp.KPI_name ='Personal_Volume_dollar','font-weight: bold;','')}">
+                            <td class="fnt_sml_bp" style="text-align:left;width:180px;height:20px;border-right: 1px solid #B5B4B4;">{!$Label[bp.KPI_name]}</td>
+                            <apex:repeat value="{!bp.PC_Values}" var="pcv">
+                                <td class="{!IF(bp.isOdd,'brdr_top_lft_hl_BP drk_gry_BP','brdr_top_lft_hl_BP')}" width="45px" style="border-left: 1px solid white;">{!pcv}</td>
+                            </apex:repeat>
+                            <td style="{!IF(bp.isCC,'display:yes','display:none')};border-left: 1px solid white;">
+                                <apex:inputText id="txtCC" value="{!bp.cc}" styleClass="yellow_BP" rendered="{!bp.isFutureRW && NOT(bp.isCurrency)}" maxlength="{!bp.inputCount}" onchange="javascript:enableBtns();" disabled="{!bpController.isPageRO}"  onblur="this.value =this.value.replace(/[^0-9]/g,'')"/>
+                                <apex:inputText id="txtCurrencyCC" value="{!bp.cc}" styleClass="yellow_Currency_BP" rendered="{!bp.isFutureRW && bp.isCurrency}" maxlength="{!bp.inputCount}" onchange="javascript:enableBtns();" disabled="{!bpController.isPageRO}" onblur="this.value =this.value.replace(/[^0-9\.]/g,'')"/>
+                                <apex:outputText value="{!bp.cc}" rendered="{!NOT(bp.isFutureRW)}"/>
+                            </td>
+                            <td style="{!IF(bp.isCC_1,'display:yes','display:none')};border-left: 1px solid white;">
+                                <apex:inputText id="txtCC1" value="{!bp.cc_1}" styleClass="yellow_BP" rendered="{!bp.isFutureRW && NOT(bp.isCurrency)}" maxlength="{!bp.inputCount}" onchange="javascript:enableBtns();" disabled="{!bpController.isPageRO}" onblur="this.value =this.value.replace(/[^0-9]/g,'')"/>
+								<apex:inputText id="txtCurrencyCC1" value="{!bp.cc_1}" styleClass="yellow_Currency_BP" rendered="{!bp.isFutureRW && bp.isCurrency}" maxlength="{!bp.inputCount}" onchange="javascript:enableBtns();" disabled="{!bpController.isPageRO}" onblur="this.value =this.value.replace(/[^0-9\.]/g,'')"/>
+                                <apex:outputText value="{!bp.cc_1}" rendered="{!NOT(bp.isFutureRW)}"/>
+                            </td>
+                            <td style="{!IF(bp.isCC_2,'display:yes','display:none')};border-left: 1px solid white;">
+                                <apex:inputText id="txtCC2" value="{!bp.cc_2}" styleClass="yellow_BP" rendered="{!bp.isFutureRW && NOT(bp.isCurrency)}" maxlength="{!bp.inputCount}" onchange="javascript:enableBtns();" disabled="{!bpController.isPageRO}" onblur="this.value =this.value.replace(/[^0-9]/g,'')"/>
+								<apex:inputText id="txtCurrencyCC2" value="{!bp.cc_2}" styleClass="yellow_Currency_BP" rendered="{!bp.isFutureRW && bp.isCurrency}" maxlength="{!bp.inputCount}" onchange="javascript:enableBtns();" disabled="{!bpController.isPageRO}" onblur="this.value =this.value.replace(/[^0-9\.]/g,'')"/>
+                                <apex:outputText value="{!bp.cc_2}" rendered="{!NOT(bp.isFutureRW)}"/>
+                            </td>
+                            <td style="{!IF(bp.isCC_3,'display:yes','display:none')};border-left: 1px solid white;">
+                                <apex:inputText id="txtCC3" value="{!bp.cc_3}" styleClass="yellow_BP" rendered="{!bp.isFutureRW && NOT(bp.isCurrency)}" maxlength="{!bp.inputCount}" onchange="javascript:enableBtns();" disabled="{!bpController.isPageRO}" onblur="this.value =this.value.replace(/[^0-9]/g,'')"/>
+								<apex:inputText id="txtCurrencyCC3" value="{!bp.cc_3}" styleClass="yellow_Currency_BP" rendered="{!bp.isFutureRW && bp.isCurrency}" maxlength="{!bp.inputCount}" onchange="javascript:enableBtns();" disabled="{!bpController.isPageRO}" onblur="this.value =this.value.replace(/[^0-9\.]/g,'')"/>
+                                <apex:outputText value="{!bp.cc_3}" rendered="{!NOT(bp.isFutureRW)}"/>
+                            </td>
+                            <td style="{!IF(bp.isCC_4,'display:yes','display:none')};border-left: 1px solid white;">
+                                <apex:inputText id="txtCC4" value="{!bp.cc_4}" styleClass="yellow_BP" rendered="{!bp.isFutureRW && NOT(bp.isCurrency)}" maxlength="{!bp.inputCount}" onchange="javascript:enableBtns();" disabled="{!bpController.isPageRO}" onblur="this.value =this.value.replace(/[^0-9]/g,'')"/>
+								<apex:inputText id="txtCurrencyCC4" value="{!bp.cc_4}" styleClass="yellow_Currency_BP" rendered="{!bp.isFutureRW && bp.isCurrency}" maxlength="{!bp.inputCount}" onchange="javascript:enableBtns();" disabled="{!bpController.isPageRO}" onblur="this.value =this.value.replace(/[^0-9\.]/g,'')"/>
+                                <apex:outputText value="{!bp.cc_4}" rendered="{!NOT(bp.isFutureRW)}"/>
+                            </td>
+                            <td style="{!IF(bp.isCC_5,'display:yes','display:none')};border-left: 1px solid white;">
+                                <apex:inputText id="txtCC5" value="{!bp.cc_5}" styleClass="yellow_BP" rendered="{!bp.isFutureRW && NOT(bp.isCurrency)}" maxlength="{!bp.inputCount}" onchange="javascript:enableBtns();" disabled="{!bpController.isPageRO}" onblur="this.value =this.value.replace(/[^0-9]/g,'')"/>
+								<apex:inputText id="txtCurrencyCC5" value="{!bp.cc_5}" styleClass="yellow_Currency_BP" rendered="{!bp.isFutureRW && bp.isCurrency}" maxlength="{!bp.inputCount}" onchange="javascript:enableBtns();" disabled="{!bpController.isPageRO}" onblur="this.value =this.value.replace(/[^0-9\.]/g,'')"/>
+                                <apex:outputText value="{!bp.cc_5}" rendered="{!NOT(bp.isFutureRW)}"/>
+                            </td>
+                            <td style="{!IF(bp.isCC_6,'display:yes','display:none')};border-left: 1px solid white;">
+                                <apex:inputText id="txtCC6" value="{!bp.cc_6}" styleClass="yellow_BP" rendered="{!bp.isFutureRW && NOT(bp.isCurrency)}" maxlength="{!bp.inputCount}" onchange="javascript:enableBtns();" disabled="{!bpController.isPageRO}" onblur="this.value =this.value.replace(/[^0-9]/g,'')"/>
+								<apex:inputText id="txtCurrencyCC6" value="{!bp.cc_6}" styleClass="yellow_Currency_BP" rendered="{!bp.isFutureRW && bp.isCurrency}" maxlength="{!bp.inputCount}" onchange="javascript:enableBtns();" disabled="{!bpController.isPageRO}" onblur="this.value =this.value.replace(/[^0-9\.]/g,'')"/>
+                                <apex:outputText value="{!bp.cc_6}" rendered="{!NOT(bp.isFutureRW)}"/>
+                            </td>
+                            
+                        </tr>
+                    </apex:repeat>
+                </table>
+            </div>
+        </apex:outputPanel>
+          <!-- Blank Business plan sec -->
+</apex:component>

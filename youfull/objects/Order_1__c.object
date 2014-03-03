@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <description>Used to sum up the NRT orders from WebMethods. Order_1 to refer to ALM_Rep_Performance_1 custom object</description>
+    <enableActivities>false</enableActivities>
+    <enableEnhancedLookup>false</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>false</enableReports>
+    <fields>
+        <fullName>ACCT_NR__c</fullName>
+        <externalId>false</externalId>
+        <label>Acct. No.</label>
+        <length>35</length>
+        <required>true</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AWRD_SLS_AMT__c</fullName>
+        <externalId>false</externalId>
+        <label>Award Sales Amount</label>
+        <precision>17</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CDW_PROC__c</fullName>
+        <defaultValue>false</defaultValue>
+        <description>Has CDW Processed the Order</description>
+        <externalId>false</externalId>
+        <label>CDW Processed</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>FLD_SLS_CMPGN_NR__c</fullName>
+        <externalId>false</externalId>
+        <label>Field Sales Campaign</label>
+        <length>40</length>
+        <required>true</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Genealogy_Key_1__c</fullName>
+        <externalId>false</externalId>
+        <label>Rep Performance Key</label>
+        <referenceTo>ALM_Rep_Performance_1__c</referenceTo>
+        <relationshipName>Order</relationshipName>
+        <relationshipOrder>0</relationshipOrder>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>HOLD_REASON_CD__c</fullName>
+        <externalId>false</externalId>
+        <label>Hold Reason Code</label>
+        <length>10</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>INVC_NR__c</fullName>
+        <externalId>false</externalId>
+        <label>Invoice Number</label>
+        <length>20</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MLPLN_CD__c</fullName>
+        <externalId>false</externalId>
+        <label>Mail Plan</label>
+        <length>2</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>MRKT_ID__c</fullName>
+        <externalId>false</externalId>
+        <label>MRKT_ID</label>
+        <length>50</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>OPERTNL_CMPGN_NR__c</fullName>
+        <externalId>false</externalId>
+        <label>Operational Campaign</label>
+        <length>40</length>
+        <required>true</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>OPPTY_NR__c</fullName>
+        <externalId>false</externalId>
+        <label>Order Opportunity Number</label>
+        <length>2</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ORD_KEY__c</fullName>
+        <externalId>true</externalId>
+        <label>Order Key</label>
+        <length>255</length>
+        <required>true</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ORD_NR__c</fullName>
+        <externalId>false</externalId>
+        <label>Order Number</label>
+        <length>35</length>
+        <required>true</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>ORD_STUS_INVC__c</fullName>
+        <externalId>false</externalId>
+        <formula>(ISPICKVAL( STUS_CD__c , &apos;5&apos;)  ||  ISPICKVAL( STUS_CD__c , &apos;9&apos;) ||  ISPICKVAL( STUS_CD__c , &apos;10&apos;))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Order Status Invoiced</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ORD_STUS_SUBMTD__c</fullName>
+        <externalId>false</externalId>
+        <formula>(ISPICKVAL( STUS_CD__c , &apos;2&apos;)  ||  ISPICKVAL( STUS_CD__c , &apos;7&apos;) ||  ISPICKVAL( STUS_CD__c , &apos;8&apos;))</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Order Status Submitted</label>
+        <type>Checkbox</type>
+    </fields>
+    <fields>
+        <fullName>ORD_TYP__c</fullName>
+        <externalId>false</externalId>
+        <label>Order Type</label>
+        <picklist>
+            <picklistValues>
+                <fullName>-100</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>1</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>2</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>3</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>4</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>5</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>6</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>7</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>8</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>9</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>10</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>11</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>12</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>SLS_AMT__c</fullName>
+        <defaultValue>0</defaultValue>
+        <description>Sales Amount for Order</description>
+        <externalId>false</externalId>
+        <label>Order Amount</label>
+        <precision>17</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>SLS_ORG_SUMRY_KEY__c</fullName>
+        <externalId>false</externalId>
+        <label>Sales Org Summary Key</label>
+        <referenceTo>Sales_Org_Summary__c</referenceTo>
+        <relationshipName>Order</relationshipName>
+        <relationshipOrder>1</relationshipOrder>
+        <type>MasterDetail</type>
+        <writeRequiresMasterRead>false</writeRequiresMasterRead>
+    </fields>
+    <fields>
+        <fullName>SRC_SYS__c</fullName>
+        <externalId>false</externalId>
+        <label>Source System</label>
+        <length>10</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>STUS_CD__c</fullName>
+        <description>1 - Saved
+2 - Submitted
+3 - TBD
+4 - On Hold
+5 - Invoiced
+6 - Rejected
+7 - Pending Invoice
+8 - Released
+9 - At Carrier
+10 - Delivered</description>
+        <externalId>false</externalId>
+        <label>Order Status</label>
+        <picklist>
+            <picklistValues>
+                <fullName>1</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>2</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>3</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>4</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>5</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>6</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>7</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>8</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>9</fullName>
+                <default>false</default>
+            </picklistValues>
+            <picklistValues>
+                <fullName>10</fullName>
+                <default>false</default>
+            </picklistValues>
+            <sorted>false</sorted>
+        </picklist>
+        <type>Picklist</type>
+    </fields>
+    <fields>
+        <fullName>SUBMTD_DT__c</fullName>
+        <externalId>false</externalId>
+        <label>Order Submitted Date</label>
+        <required>true</required>
+        <type>Date</type>
+    </fields>
+    <fields>
+        <fullName>TRNSCTN_SRC__c</fullName>
+        <externalId>false</externalId>
+        <label>Transaction Source</label>
+        <length>30</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>TRNSCTN_TIME__c</fullName>
+        <externalId>false</externalId>
+        <label>Transaction Time</label>
+        <required>false</required>
+        <type>DateTime</type>
+    </fields>
+    <fields>
+        <fullName>Test__c</fullName>
+        <externalId>false</externalId>
+        <formula>ORD_KEY__c</formula>
+        <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+        <label>Test</label>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <label>Order</label>
+    <listViews>
+        <fullName>All</fullName>
+        <columns>OBJECT_ID</columns>
+        <columns>NAME</columns>
+        <columns>AWRD_SLS_AMT__c</columns>
+        <columns>SLS_AMT__c</columns>
+        <columns>STUS_CD__c</columns>
+        <columns>HOLD_REASON_CD__c</columns>
+        <columns>SLS_ORG_SUMRY_KEY__c</columns>
+        <columns>FLD_SLS_CMPGN_NR__c</columns>
+        <columns>TRNSCTN_SRC__c</columns>
+        <filterScope>Everything</filterScope>
+        <label>All</label>
+        <language>en_US</language>
+    </listViews>
+    <nameField>
+        <label>Order Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Orders</pluralLabel>
+    <searchLayouts>
+        <searchResultsAdditionalFields>SLS_AMT__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>STUS_CD__c</searchResultsAdditionalFields>
+    </searchLayouts>
+    <sharingModel>ControlledByParent</sharingModel>
+    <validationRules>
+        <fullName>Order_Status_Validation</fullName>
+        <active>true</active>
+        <description>The validation rules to validate order status values.</description>
+        <errorConditionFormula>NOT(
+  OR(
+    ISPICKVAL( STUS_CD__c , &apos;-100&apos;)
+   ,ISPICKVAL( STUS_CD__c , &apos;1&apos;)
+   ,ISPICKVAL( STUS_CD__c , &apos;2&apos;)
+   ,ISPICKVAL( STUS_CD__c , &apos;3&apos;)
+   ,ISPICKVAL( STUS_CD__c , &apos;4&apos;)
+   ,ISPICKVAL( STUS_CD__c , &apos;5&apos;)
+   ,ISPICKVAL( STUS_CD__c , &apos;6&apos;)
+   ,ISPICKVAL( STUS_CD__c , &apos;7&apos;)
+   ,ISPICKVAL( STUS_CD__c , &apos;8&apos;)
+ )
+)</errorConditionFormula>
+        <errorDisplayField>STUS_CD__c</errorDisplayField>
+        <errorMessage>Invalid Global Order Status Code</errorMessage>
+    </validationRules>
+    <validationRules>
+        <fullName>Order_Type_Validation</fullName>
+        <active>true</active>
+        <description>Validation rule to validate a global order type</description>
+        <errorConditionFormula>NOT(
+  OR(
+    ISPICKVAL( ORD_TYP__c , &apos;-100&apos;)
+   ,ISPICKVAL( ORD_TYP__c , &apos;1&apos;)
+   ,ISPICKVAL( ORD_TYP__c , &apos;2&apos;)
+   ,ISPICKVAL( ORD_TYP__c , &apos;3&apos;)
+   ,ISPICKVAL( ORD_TYP__c , &apos;4&apos;)
+   ,ISPICKVAL( ORD_TYP__c , &apos;5&apos;)
+   ,ISPICKVAL( ORD_TYP__c , &apos;6&apos;)
+   ,ISPICKVAL( ORD_TYP__c , &apos;7&apos;)
+   ,ISPICKVAL( ORD_TYP__c , &apos;8&apos;)
+   ,ISPICKVAL( ORD_TYP__c , &apos;9&apos;)
+   ,ISPICKVAL( ORD_TYP__c , &apos;10&apos;)
+   ,ISPICKVAL( ORD_TYP__c , &apos;11&apos;)
+   ,ISPICKVAL( ORD_TYP__c , &apos;12&apos;)
+ )
+)</errorConditionFormula>
+        <errorDisplayField>ORD_TYP__c</errorDisplayField>
+        <errorMessage>Please provide a valid global order type value.</errorMessage>
+    </validationRules>
+</CustomObject>

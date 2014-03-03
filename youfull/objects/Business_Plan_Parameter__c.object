@@ -1,0 +1,1221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObject xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionOverrides>
+        <actionName>Accept</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Clone</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Delete</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Edit</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>List</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>New</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>Tab</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <actionOverrides>
+        <actionName>View</actionName>
+        <type>Default</type>
+    </actionOverrides>
+    <deploymentStatus>Deployed</deploymentStatus>
+    <enableActivities>false</enableActivities>
+    <enableEnhancedLookup>false</enableEnhancedLookup>
+    <enableFeeds>false</enableFeeds>
+    <enableHistory>false</enableHistory>
+    <enableReports>true</enableReports>
+    <fields>
+        <fullName>AVG_ACTVTY_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Annual market average activity rate (%)</inlineHelpText>
+        <label>Average Activity Rate [%]</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_DISCNT_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Average campaign discount percentage (%) applied on the order. It is an annual market campaign average.</inlineHelpText>
+        <label>Average Discount Rate [%]</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_EXEC_COMMSN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average executive commission rate (%)</inlineHelpText>
+        <label>Exec Avg Comsn Rate [%]</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_EXEC_TUS__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average Executive Total Unit Sales (amount)</inlineHelpText>
+        <label>Exec Avg Total Unit Sales</label>
+        <precision>15</precision>
+        <required>false</required>
+        <scale>2</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_10_G1_DSTRBTN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average distribution sales for title level 10. G1 netsales contribution on 3 generations.</inlineHelpText>
+        <label>Avg Sales Dstbn G1 [%] - title lvl10</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_10_G1_UNIT_COMMSN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average commission rate (%) applied on G1 for title level 10.</inlineHelpText>
+        <label>Avg Unit Comsn Rts G1 [%]-title lvl10</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_10_G2_DSTRBTN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average distribution sales for title level 10. G2 netsales contribution on 3 generations.</inlineHelpText>
+        <label>Avg Sales Dstbn G2 [%] - title lvl10</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_10_G2_UNIT_COMMSN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average commission rate (%) applied on G2 for title level 10.</inlineHelpText>
+        <label>Avg Unit Comsn Rts G2 [%]-title lvl10</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_10_G3_DSTRBTN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average distribution sales for title level 10. G3 netsales contribution on 3 generations.</inlineHelpText>
+        <label>Avg Sales Dstbn G3 [%] - title lvl10</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_10_G3_UNIT_COMMSN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average commission rate (%) applied on G3 for title level 10.</inlineHelpText>
+        <label>Avg Unit Comsn Rts G3 [%]-title lvl10</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_11_G1_DSTRBTN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average distribution sales for title level 11. G1 netsales contribution on 3 generations.</inlineHelpText>
+        <label>Avg Sales Dstbn G1 [%] - title lvl11</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_11_G1_UNIT_COMMSN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average commission rate (%) applied on G1 for title level 11.</inlineHelpText>
+        <label>Avg Unit Comsn Rts G1 [%]-title lvl11</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_11_G2_DSTRBTN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average distribution sales for title level 11. G2 netsales contribution on 3 generations.</inlineHelpText>
+        <label>Avg Sales Dstbn G2 [%] - title lvl11</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_11_G2_UNIT_COMMSN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average commission rate (%) applied on G2 for title level 11.</inlineHelpText>
+        <label>Avg Unit Comsn Rts G2 [%]-title lvl11</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_11_G3_DSTRBTN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average distribution sales for title level 11. G3 netsales contribution on 3 generations.</inlineHelpText>
+        <label>Avg Sales Dstbn G3 [%] - title lvl11</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_11_G3_UNIT_COMMSN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average commission rate (%) applied on G3 for title level 11.</inlineHelpText>
+        <label>Avg Unit Comsn Rts G3 [%]-title lvl11</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_12_G1_DSTRBTN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average distribution sales for title level 12. G1 netsales contribution on 3 generations.</inlineHelpText>
+        <label>Avg Sales Dstbn G1 [%] - title lvl12</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_12_G1_UNIT_COMMSN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average commission rate (%) applied on G1 for title level 12.</inlineHelpText>
+        <label>Avg Unit Comsn Rts G1 [%]-title lvl12</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_12_G2_DSTRBTN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average distribution sales for title level 12. G2 netsales contribution on 3 generations.</inlineHelpText>
+        <label>Avg Sales Dstbn G2 [%] - title lvl12</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_12_G2_UNIT_COMMSN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average commission rate (%) applied on G2 for title level 12.</inlineHelpText>
+        <label>Avg Unit Comsn Rts G2 [%]-title lvl12</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_12_G3_DSTRBTN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average distribution sales for title level 12. G3 netsales contribution on 3 generations.</inlineHelpText>
+        <label>Avg Sales Dstbn G3 [%] - title lvl12</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_12_G3_UNIT_COMMSN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average commission rate (%) applied on G3 for title level 12.</inlineHelpText>
+        <label>Avg Unit Comsn Rts G3 [%]-title lvl12</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_13_G1_DSTRBTN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average distribution sales for title level 13. G1 netsales contribution on 3 generations.</inlineHelpText>
+        <label>Avg Sales Dstbn G1 [%] - title lvl13</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_13_G1_UNIT_COMMSN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average commission rate (%) applied on G1 for title level 13.</inlineHelpText>
+        <label>Avg Unit Comsn Rts G1 [%]-title lvl13</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_13_G2_DSTRBTN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average distribution sales for title level 13. G2 netsales contribution on 3 generations.</inlineHelpText>
+        <label>Avg Sales Dstbn G2 [%] - title lvl13</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_13_G2_UNIT_COMMSN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average commission rate (%) applied on G2 for title level 13.</inlineHelpText>
+        <label>Avg Unit Comsn Rts G2 [%]-title lvl13</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_13_G3_DSTRBTN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average distribution sales for title level 13. G3 netsales contribution on 3 generations.</inlineHelpText>
+        <label>Avg Sales Dstbn G3 [%] - title lvl13</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_13_G3_UNIT_COMMSN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average commission rate (%) applied on G3 for title level 13.</inlineHelpText>
+        <label>Avg Unit Comsn Rts G3 [%]-title lvl13</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_14_G1_DSTRBTN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average distribution sales for title level 14. G1 netsales contribution on 3 generations.</inlineHelpText>
+        <label>Avg Sales Dstbn G1 [%] - title lvl14</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_14_G1_UNIT_COMMSN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average commission rate (%) applied on G1 for title level 14.</inlineHelpText>
+        <label>Avg Unit Comsn Rts G1 [%]-title lvl14</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_14_G2_DSTRBTN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average distribution sales for title level 14. G2 netsales contribution on 3 generations.</inlineHelpText>
+        <label>Avg Sales Dstbn G2 [%] - title lvl14</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_14_G2_UNIT_COMMSN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average commission rate (%) applied on G2 for title level 14.</inlineHelpText>
+        <label>Avg Unit Comsn Rts G2 [%]-title lvl14</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_14_G3_DSTRBTN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average distribution sales for title level 14. G3 netsales contribution on 3 generations.</inlineHelpText>
+        <label>Avg Sales Dstbn G3 [%] - title lvl14</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_14_G3_UNIT_COMMSN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average commission rate (%) applied on G3 for title level 14.</inlineHelpText>
+        <label>Avg Unit Comsn Rts G3 [%]-title lvl14</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_15_G1_DSTRBTN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average distribution sales for title level 15. G1 netsales contribution on 3 generations.</inlineHelpText>
+        <label>Avg Sales Dstbn G1 [%] - title lvl15</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_15_G1_UNIT_COMMSN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average commission rate (%) applied on G1 for title level 15.</inlineHelpText>
+        <label>Avg Unit Comsn Rts G1 [%]-title lvl15</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_15_G2_DSTRBTN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average distribution sales for title level 15. G2 netsales contribution on 3 generations.</inlineHelpText>
+        <label>Avg Sales Dstbn G2 [%] - title lvl15</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_15_G2_UNIT_COMMSN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average commission rate (%) applied on G2 for title level 15.</inlineHelpText>
+        <label>Avg Unit Comsn Rts G2 [%]-title lvl15</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_15_G3_DSTRBTN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average distribution sales for title level 15. G3 netsales contribution on 3 generations.</inlineHelpText>
+        <label>Avg Sales Dstbn G3 [%] - title lvl15</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_15_G3_UNIT_COMMSN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average commission rate (%) applied on G3 for title level 15.</inlineHelpText>
+        <label>Avg Unit Comsn Rts G3 [%]-title lvl15</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_1_ADDTNL_SLS__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Average additional unit sales gained when Sales Leader gets promoted to title level 1 (UL).</inlineHelpText>
+        <label>Avg addl Unit Sales-title lvl1 (UL)</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_1_G1_DSTRBTN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average distribution sales for title level 1 (UL). G1 netsales contribution on 3 generations.</inlineHelpText>
+        <label>Avg Sales Dstbn G1 [%] - title lvl1 (UL)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_1_G1_UNIT_COMMSN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average commission rate (%) applied on G1 for title level 1 (UL).</inlineHelpText>
+        <label>Avg Unit Comsn Rts G1 [%]-title lvl1(UL)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_1_G2_DSTRBTN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average distribution sales for title level 1 (UL). G2 netsales contribution on 3 generations.</inlineHelpText>
+        <label>Avg Sales Dstbn G2 [%] - title lvl1 (UL)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_1_G2_UNIT_COMMSN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average commission rate (%) applied on G2 for title level 1 (UL).</inlineHelpText>
+        <label>Avg Unit Comsn Rts G2 [%]-title lvl1(UL)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_1_G3_DSTRBTN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average distribution sales for title level 1 (UL). G3 netsales contribution on 3 generations.</inlineHelpText>
+        <label>Avg Sales Dstbn G3 [%] - title lvl1 (UL)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_1_G3_UNIT_COMMSN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average commission rate (%) applied on G3 for title level 1 (UL).</inlineHelpText>
+        <label>Avg Unit Comsn Rts G3 [%]-title lvl1(UL)</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_2_ADDTNL_SLS__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Average additional unit sales gained when Sales Leader gets promoted to title level 2 (AUL).</inlineHelpText>
+        <label>Avg addl Unit Sales-title lvl2</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_2_G1_DSTRBTN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average distribution sales for title level 2. G1 netsales contribution on 3 generations.</inlineHelpText>
+        <label>Avg Sales Dstbn G1 [%] - title lvl2</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_2_G1_UNIT_COMMSN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average commission rate (%) applied on G1 for title level 2.</inlineHelpText>
+        <label>Avg Unit Comsn Rts G1 [%]-title lvl2</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_2_G2_DSTRBTN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average distribution sales for title level 2. G2 netsales contribution on 3 generations.</inlineHelpText>
+        <label>Avg Sales Dstbn G2 [%] - title lvl2</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_2_G2_UNIT_COMMSN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average commission rate (%) applied on G2 for title level 2.</inlineHelpText>
+        <label>Avg Unit Comsn Rts G2 [%]-title lvl2</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_2_G3_DSTRBTN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average distribution sales for title level 2. G3 netsales contribution on 3 generations.</inlineHelpText>
+        <label>Avg Sales Dstbn G3 [%] - title lvl2</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_2_G3_UNIT_COMMSN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average commission rate (%) applied on G3 for title level 2.</inlineHelpText>
+        <label>Avg Unit Comsn Rts G3 [%]-title lvl2</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_3_ADDTNL_SLS__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Average additional unit sales gained when Sales Leader gets promoted to title level 3 (EUL).</inlineHelpText>
+        <label>Avg addl Unit Sales-title lvl3</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_3_G1_DSTRBTN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average distribution sales for title level 3. G1 netsales contribution on 3 generations.</inlineHelpText>
+        <label>Avg Sales Dstbn G1 [%] - title lvl3</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_3_G1_UNIT_COMMSN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average commission rate (%) applied on G1 for title level 3.</inlineHelpText>
+        <label>Avg Unit Comsn Rts G1 [%]-title lvl3</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_3_G2_DSTRBTN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average distribution sales for title level 3. G2 netsales contribution on 3 generations.</inlineHelpText>
+        <label>Avg Sales Dstbn G2 [%] - title lvl3</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_3_G2_UNIT_COMMSN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average commission rate (%) applied on G2 for title level 3.</inlineHelpText>
+        <label>Avg Unit Comsn Rts G2 [%]-title lvl3</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_3_G3_DSTRBTN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average distribution sales for title level 3. G3 netsales contribution on 3 generations.</inlineHelpText>
+        <label>Avg Sales Dstbn G3 [%] - title lvl3</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_3_G3_UNIT_COMMSN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average commission rate (%) applied on G3 for title level 3.</inlineHelpText>
+        <label>Avg Unit Comsn Rts G3 [%]-title lvl3</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_4_G1_DSTRBTN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average distribution sales for title level 4. G1 netsales contribution on 3 generations.</inlineHelpText>
+        <label>Avg Sales Dstbn G1 [%] - title lvl4</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_4_G1_UNIT_COMMSN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average commission rate (%) applied on G1 for title level 4.</inlineHelpText>
+        <label>Avg Unit Comsn Rts G1 [%]-title lvl4</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_4_G2_DSTRBTN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average distribution sales for title level 4. G2 netsales contribution on 3 generations.</inlineHelpText>
+        <label>Avg Sales Dstbn G2 [%] - title lvl4</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_4_G2_UNIT_COMMSN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average commission rate (%) applied on G2 for title level 4.</inlineHelpText>
+        <label>Avg Unit Comsn Rts G2 [%]-title lvl4</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_4_G3_DSTRBTN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average distribution sales for title level 4. G3 netsales contribution on 3 generations.</inlineHelpText>
+        <label>Avg Sales Dstbn G3 [%] - title lvl4</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_4_G3_UNIT_COMMSN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average commission rate (%) applied on G3 for title level 4.</inlineHelpText>
+        <label>Avg Unit Comsn Rts G3 [%]-title lvl4</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_5_G1_DSTRBTN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average distribution sales for title level 5. G1 netsales contribution on 3 generations.</inlineHelpText>
+        <label>Avg Sales Dstbn G1 [%] - title lvl5</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_5_G1_UNIT_COMMSN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average commission rate (%) applied on G1 for title level 5.</inlineHelpText>
+        <label>Avg Unit Comsn Rts G1 [%]-title lvl5</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_5_G2_DSTRBTN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average distribution sales for title level 5. G2 netsales contribution on 3 generations.</inlineHelpText>
+        <label>Avg Sales Dstbn G2 [%] - title lvl5</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_5_G2_UNIT_COMMSN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average commission rate (%) applied on G2 for title level 5.</inlineHelpText>
+        <label>Avg Unit Comsn Rts G2 [%]-title lvl5</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_5_G3_DSTRBTN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average distribution sales for title level 5. G3 netsales contribution on 3 generations.</inlineHelpText>
+        <label>Avg Sales Dstbn G3 [%] - title lvl5</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_5_G3_UNIT_COMMSN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average commission rate (%) applied on G3 for title level 5.</inlineHelpText>
+        <label>Avg Unit Comsn Rts G3 [%]-title lvl5</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_6_G1_DSTRBTN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average distribution sales for title level 6. G1 netsales contribution on 3 generations.</inlineHelpText>
+        <label>Avg Sales Dstbn G1 [%] - title lvl6</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_6_G1_UNIT_COMMSN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average commission rate (%) applied on G1 for title level 6.</inlineHelpText>
+        <label>Avg Unit Comsn Rts G1 [%]-title lvl6</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_6_G2_DSTRBTN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average distribution sales for title level 6. G2 netsales contribution on 3 generations.</inlineHelpText>
+        <label>Avg Sales Dstbn G2 [%] - title lvl6</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_6_G2_UNIT_COMMSN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average commission rate (%) applied on G2 for title level 6.</inlineHelpText>
+        <label>Avg Unit Comsn Rts G2 [%]-title lvl6</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_6_G3_DSTRBTN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average distribution sales for title level 6. G3 netsales contribution on 3 generations.</inlineHelpText>
+        <label>Avg Sales Dstbn G3 [%] - title lvl6</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_6_G3_UNIT_COMMSN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average commission rate (%) applied on G3 for title level 6.</inlineHelpText>
+        <label>Avg Unit Comsn Rts G3 [%]-title lvl6</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_7_G1_DSTRBTN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average distribution sales for title level 7. G1 netsales contribution on 3 generations.</inlineHelpText>
+        <label>Avg Sales Dstbn G1 [%] - title lvl7</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_7_G1_UNIT_COMMSN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average commission rate (%) applied on G1 for title level 7.</inlineHelpText>
+        <label>Avg Unit Comsn Rts G1 [%]-title lvl7</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_7_G2_DSTRBTN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average distribution sales for title level 7. G2 netsales contribution on 3 generations.</inlineHelpText>
+        <label>Avg Sales Dstbn G2 [%] - title lvl7</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_7_G2_UNIT_COMMSN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average commission rate (%) applied on G2 for title level 7.</inlineHelpText>
+        <label>Avg Unit Comsn Rts G2 [%]-title lvl7</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_7_G3_DSTRBTN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average distribution sales for title level 7. G3 netsales contribution on 3 generations.</inlineHelpText>
+        <label>Avg Sales Dstbn G3 [%] - title lvl7</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_7_G3_UNIT_COMMSN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average commission rate (%) applied on G3 for title level 7.</inlineHelpText>
+        <label>Avg Unit Comsn Rts G3 [%]-title lvl7</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_8_G1_DSTRBTN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average distribution sales for title level 8. G1 netsales contribution on 3 generations.</inlineHelpText>
+        <label>Avg Sales Dstbn G1 [%] - title lvl8</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_8_G1_UNIT_COMMSN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average commission rate (%) applied on G1 for title level 8.</inlineHelpText>
+        <label>Avg Unit Comsn Rts G1 [%]-title lvl8</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_8_G2_DSTRBTN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average distribution sales for title level 8. G2 netsales contribution on 3 generations.</inlineHelpText>
+        <label>Avg Sales Dstbn G2 [%] - title lvl8</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_8_G2_UNIT_COMMSN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average commission rate (%) applied on G2 for title level 8.</inlineHelpText>
+        <label>Avg Unit Comsn Rts G2 [%]-title lvl8</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_8_G3_DSTRBTN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average distribution sales for title level 8. G3 netsales contribution on 3 generations.</inlineHelpText>
+        <label>Avg Sales Dstbn G3 [%] - title lvl8</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_8_G3_UNIT_COMMSN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average commission rate (%) applied on G3 for title level 8.</inlineHelpText>
+        <label>Avg Unit Comsn Rts G3 [%]-title lvl8</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_9_G1_DSTRBTN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average distribution sales for title level 9. G1 netsales contribution on 3 generations.</inlineHelpText>
+        <label>Avg Sales Dstbn G1 [%] - title lvl9</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_9_G1_UNIT_COMMSN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average commission rate (%) applied on G1 for title level 9.</inlineHelpText>
+        <label>Avg Unit Comsn Rts G1 [%]-title lvl9</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_9_G2_DSTRBTN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average distribution sales for title level 9. G2 netsales contribution on 3 generations.</inlineHelpText>
+        <label>Avg Sales Dstbn G2 [%] - title lvl9</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_9_G2_UNIT_COMMSN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average commission rate (%) applied on G2 for title level 9.</inlineHelpText>
+        <label>Avg Unit Comsn Rts G2 [%]-title lvl9</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_9_G3_DSTRBTN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average distribution sales for title level 9. G3 netsales contribution on 3 generations.</inlineHelpText>
+        <label>Avg Sales Dstbn G3 [%] - title lvl9</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_LVL_9_G3_UNIT_COMMSN_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Campaign average commission rate (%) applied on G3 for title level 9.</inlineHelpText>
+        <label>Avg Unit Comsn Rts G3 [%]-title lvl9</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_ORD_SIZE__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Annual market average Rep award sales.</inlineHelpText>
+        <label>Average Order Size</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_PRSNL_QLFR_APPT_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Annual market campaign average qualified appoitment rate (%). The percentage of appointments that qualified from total appointments.</inlineHelpText>
+        <label>Avg Qlified Prsnl Appntment Rate</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>AVG_RMVL_PCT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Annual market average removal rate (%).</inlineHelpText>
+        <label>Average Removal Rate [%]</label>
+        <precision>18</precision>
+        <required>false</required>
+        <scale>6</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>CMPGN_NR_90DBP_CNT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Number of campaigns covering 90 days</inlineHelpText>
+        <label>90 days # Campaigns</label>
+        <length>10</length>
+        <required>false</required>
+        <type>Text</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>LCL_LDRSHP_TITL_CD__c</fullName>
+        <externalId>false</externalId>
+        <label>Abbreviated title name</label>
+        <referenceTo>Leader_Title__c</referenceTo>
+        <relationshipLabel>Business Plan Parameters</relationshipLabel>
+        <relationshipName>Business_Plan_Parameters</relationshipName>
+        <required>false</required>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>LVL_1_PRMTN_BONUS_AMT__c</fullName>
+        <externalId>false</externalId>
+        <label>UL Promotion Bonus</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>LVL_2_PRMTN_BONUS_AMT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Amount paid for the promotion to the 2nd title level (AUL)</inlineHelpText>
+        <label>Promotion Bonus Title Level 2 (AUL)</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>LVL_3_PRMTN_BONUS_AMT__c</fullName>
+        <externalId>false</externalId>
+        <inlineHelpText>Amount paid for the promotion to the 3rd title level (EUL)</inlineHelpText>
+        <label>Promotion Bonus Title Level 3 (EUL)</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <fields>
+        <fullName>Market_Id__c</fullName>
+        <externalId>false</externalId>
+        <label>Market Id</label>
+        <referenceTo>Market__c</referenceTo>
+        <relationshipLabel>Business Plan Parameters</relationshipLabel>
+        <relationshipName>Business_Plan_Parameters</relationshipName>
+        <required>false</required>
+        <type>Lookup</type>
+    </fields>
+    <fields>
+        <fullName>QPA_BONUS_AMT__c</fullName>
+        <externalId>false</externalId>
+        <label>Qualified Personal Apontments Bonus</label>
+        <precision>13</precision>
+        <required>false</required>
+        <scale>0</scale>
+        <type>Number</type>
+        <unique>false</unique>
+    </fields>
+    <label>Business Plan Parameter</label>
+    <nameField>
+        <label>Business Plan Parameter  Name</label>
+        <type>Text</type>
+    </nameField>
+    <pluralLabel>Business Plan Parameters</pluralLabel>
+    <searchLayouts/>
+    <sharingModel>Private</sharingModel>
+</CustomObject>

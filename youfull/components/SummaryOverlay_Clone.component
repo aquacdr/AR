@@ -1,0 +1,194 @@
+<apex:component allowDML="true" controller="SummaryOverlayController">
+<apex:attribute name="camp_number" description="camp_number" type="string" assignTo="{!Cmpn_no}" required="true" />
+<apex:attribute name="SiteHeaderController" description="SiteHeaderController" type="SiteHeaderController" assignTo="{!shc}" required="true" />
+    
+    <apex:stylesheet value="{!URLFOR($Resource.ALMYOUAssets_Clone, 'css/YOU_style.css')}"/>
+    <style type="text/css">
+      .info_msgs_almp_err{        
+        background-repeat:no-repeat;
+        background-position:top left;
+        padding: 3px 0px 10px 30px;
+        font-family:arial;
+        font-size:12px;
+        font-weight:normal;
+        display:block;
+        white-space:normal;
+        text-align:center;
+    }
+    
+    .w110{
+    width:110px;
+    }
+    </style>
+    {!initializeSupportData}
+    <div class="white_trans" id="summwrapper">
+        <div class="popup_wrpr_overlay">
+            <div class="popup_ccntr_overlay">
+                <a href="javascript:hideSOverlayPage();" class="close_btn"></a>
+                <div class="key_pop_content">
+                    <apex:outputPanel rendered="{!NOT(isExceptionCaught)}" layout="none">
+                    <div class="cntr">
+                        <h2 class="key_popup_hdrs">{!$Label.Key_Data_Summary}</h2>
+                        <ul class="sml_tp_lnks">
+                            <li>{!$Label.Campaign}{!disp_camp}</li>
+                            <apex:outputPanel rendered="{!!is_PC}" layout="none">
+                            <li>|</li>
+                            <li><apex:outputText value="{!$Label.Updated+' '}" rendered="{!!is_PC}" escape="false"/><apex:outputField value="{!shc.market.LAST_UPDT_DT__c}"/></li>
+                            </apex:outputPanel>
+                        </ul>                   
+                    </div>                
+                    <div class="cntr mar_tp_20">
+                        <table border="0" width="100%" cellspacing="0" cellpadding="0" class="keppopup_tab_data tabs_border">
+                            <tr class="border_bottom">
+                                <th class="alt_wht w123 brd_wht">&nbsp;</th>
+                                <apex:outputPanel rendered="{!is_null_G0}" layout="none">
+                                <th class="popup_go ">{!$Label.G0}</th>
+                                </apex:outputPanel>
+                                <apex:outputPanel rendered="{!is_null_G1}" layout="none">
+                                <th class="popup_go ">{!$Label.G1}</th>
+                                </apex:outputPanel>
+                                <apex:outputPanel rendered="{!is_null_G2}" layout="none">
+                                <th class="popup_go ">{!$Label.G2}</th>
+                                </apex:outputPanel>
+                                <apex:outputPanel rendered="{!is_null_G3}" layout="none">
+                                <th class="popup_go ">{!$Label.G3}</th>
+                                </apex:outputPanel>
+                                <th class="popup_go brd_none">{!$Label.Total}</th> 
+                            </tr>
+                            <apex:variable var="call" value="{!1}" />  
+                            <apex:repeat value="{!info}" var="SummaryOverlayData">                  
+                                <tr>
+                                    <td class="{!if(mod(call,2) == 1,'alt_wht txt_left','txt_left')}">{!$Label[SummaryOverlayData.name_label]}</td>
+                                    <apex:outputPanel rendered="{!is_null_G0}" layout="none">
+                                    <td class="{!if(mod(call,2) == 1,'alt_wht big_smltbl','big_smltbl')}"><apex:outputText value="{!if(SummaryOverlayData.G0!= null,SummaryOverlayData.G0,'-')}" rendered="true" escape="false"/></td>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel rendered="{!is_null_G1}" layout="none">
+                                    <td class="{!if(mod(call,2) == 1,'alt_wht big_smltbl','big_smltbl')}"><apex:outputText value="{!if(SummaryOverlayData.G1!= null,SummaryOverlayData.G1,'-')}" rendered="true" escape="false"/></td>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel rendered="{!is_null_G2}" layout="none">
+                                    <td class="{!if(mod(call,2) == 1,'alt_wht big_smltbl','big_smltbl')}"><apex:outputText value="{!if(SummaryOverlayData.G2!= null,SummaryOverlayData.G2,'-')}" rendered="true" escape="false"/></td>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel rendered="{!is_null_G3}" layout="none">
+                                    <td class="{!if(mod(call,2) == 1,'alt_wht big_smltbl','big_smltbl')}"><apex:outputText value="{!if(SummaryOverlayData.G3!= null,SummaryOverlayData.G3,'-')}" rendered="true" escape="false"/></td>
+                                    </apex:outputPanel>
+                                    <td class="{!if(mod(call,2) == 1,'alt_wht big_smltbl lasttd','big_smltbl lasttd')}"><apex:outputText value="{!if(SummaryOverlayData.sum!= null,SummaryOverlayData.sum,'-')}" rendered="true" escape="false"/></td>  
+                                </tr>
+                            <apex:variable var="call" value="{!call+1}"/>
+                            </apex:repeat>                           
+                        </table>    
+                    </div>
+                    <div>     
+                        <div class="cntr mar_tp_20 keypopup_table2">
+                            <table border="0" width="100%" cellspacing="0" cellpadding="0" class="keppopup_tab_data tabs_border">
+                                <tr class="border_bottom">
+                                    <th class="alt_wht w130 brd_wht">&nbsp;</th>                    
+                                    <th class="popup_go w217 brd_none">{!$Label.G1_Leaders_by_Title+' '+IF(is_Mail_Plan,$Label.AsOf+' '+shc.market.PREV_1_CMPGN_NR__c,'')}</th>              
+                                </tr>
+                                <apex:variable var="calcl" value="{!1}" />
+                                <apex:repeat value="{!leadercount}" var="NonExecLeaderCount">
+                                <tr>
+                                    <td class="{!if(mod(calcl,2) == 1,'alt_wht txt_left','txt_left')}">{!NonExecLeaderCount.name_label}</td>   
+                                    <td class="{!if(mod(calcl,2) == 1,'alt_wht no_smltbl lasttd','no_smltbl lasttd')}"><apex:outputText value="{!if(NonExecLeaderCount.ttl_count!= null,NonExecLeaderCount.ttl_count,'0')}" rendered="true" escape="false"/></td>  
+                                </tr>
+                                <apex:variable var="calcl" value="{!calcl+1}"/>
+                                </apex:repeat> 
+                                <apex:outputPanel rendered="{!Exec_ldr_ttl_available}">
+                                <tr>
+                                    <td class="{!if(mod(calcl,2) == 1,'alt_wht txt_left','txt_left')}">{!$Label.EUL}</td> 
+                                    <td class="{!if(mod(calcl,2) == 1,'alt_wht no_smltbl lasttd','no_smltbl lasttd')}"><!--<apex:outputText value="{!if(EUL!= null,EUL,'0')}" rendered="true" escape="false"/>--><apex:outputText value="{!if(EXECTOTAL!= null,EXECTOTAL,'0')}" rendered="true" escape="false"/></td>
+                                </tr>  
+                                <apex:variable var="calcl" value="{!calcl+1}"/>  
+                                </apex:outputPanel>                                      
+                                <tr>
+                                    <td class="{!if(mod(calcl,2) == 1,'alt_wht txt_left','txt_left')}">{!$Label.Total}</td>
+                                    <td class="{!if(mod(calcl,2) == 1,'alt_wht no_smltbl lasttd','no_smltbl lasttd')}"><apex:outputText value="{!if(TOTAL!= null,TOTAL,'0')}" rendered="true" escape="false"/></td>
+                                </tr>                                         
+                            </table>
+                        </div>  
+                        <!-- isExec -->   
+                        <apex:outputPanel rendered="{!isExec}" layout="none">                        
+                        <div class="cntr mar_tp_20 left w382">
+                            <table border="0" width="100%" cellspacing="0" cellpadding="0" class="keppopup_tab_data tabs_border">
+                                <tr class="border_bottom">
+                                    <th class="alt_wht {!IF(!is_Mail_Plan,'w130','w110')} brd_wht">&nbsp;</th>   
+                                    <th class="popup_go w217 brd_none">{!$Label.G1_Exec_Leaders_by_Title+' '+IF(is_Mail_Plan,$Label.AsOf+' '+shc.market.PREV_1_CMPGN_NR__c,'')}</th>   
+                                </tr>
+                                <apex:repeat value="{!leadercountexec}" var="ExecLeaderCount">
+                                <tr>
+                                    <td class="{!if(mod(calcl,2) == 1,'alt_wht txt_left','txt_left')}">{!ExecLeaderCount.name_label}</td>   
+                                    <td class="{!if(mod(calcl,2) == 1,'alt_wht no_smltbl lasttd','no_smltbl lasttd')}"><apex:outputText value="{!if(ExecLeaderCount.ttl_count!= null,ExecLeaderCount.ttl_count,'0')}" rendered="true" escape="false"/></td>  
+                                </tr>
+                                <apex:variable var="calcl" value="{!calcl+1}"/>
+                                </apex:repeat>                                        
+                                <tr>
+                                    <td class="{!if(mod(calcl,2) == 1,'alt_wht txt_left','txt_left')}">{!$Label.Total}</td>   
+                                    <td class="{!if(mod(calcl,2) == 1,'alt_wht no_smltbl lasttd','no_smltbl lasttd')}"><apex:outputText value="{!if(EXECTOTAL!= null,EXECTOTAL,'0')}" rendered="true" escape="false"/></td>
+                                </tr>                                         
+                            </table>
+                        </div>
+                        </apex:outputPanel>
+                        <apex:outputpanel rendered="{!is_Mail_Plan}" style="float:left">
+                          <b style="font-size:1.15em">{!$Label.DatafrmPriorcamp}</b> 
+                        </apex:outputpanel>                
+                    </div>
+                    <apex:outputPanel rendered="{!isExec}">
+                    <div class="cntr mar_tp_20">
+                        <table border="0" width="100%" cellspacing="0" cellpadding="0" class="keppopup_tab_data tabs_border">
+                            <tr class="border_bottom">                                           
+                                <th class="alt_wht w130 brd_wht">&nbsp;</th>
+                                <apex:outputPanel rendered="{!is_null_EG0}" layout="none">
+                                <th class="popup_last_table ">{!$Label.EG0}</th>
+                                </apex:outputPanel>
+                                <apex:outputPanel rendered="{!is_null_EG1}" layout="none">
+                                <th class="popup_last_table">{!$Label.EG1}</th>
+                                </apex:outputPanel>
+                                <apex:outputPanel rendered="{!is_null_EG2}" layout="none">
+                                <th class="popup_last_table">{!$Label.EG2}</th>
+                                </apex:outputPanel>
+                                <apex:outputPanel rendered="{!is_null_EG3}" layout="none">
+                                <th class="popup_last_table">{!$Label.EG3}</th>
+                                </apex:outputPanel>
+                                <apex:outputPanel rendered="{!is_null_EG4PLUS}" layout="none">
+                                <th class="popup_last_table">{!$Label.EG4}</th>
+                                </apex:outputPanel>
+                                <th class="popup_last_table brd_none">{!$Label.Exec_Volume}</th> 
+                            </tr>
+                            <apex:variable var="call1" value="{!1}" />  
+                            <apex:repeat value="{!infoexec}" var="SummaryOverlayData2">                  
+                                <tr>
+                                    <td class="{!if(mod(call1,2) == 1,'alt_wht border_left txt_left','txt_left border_left')}">{!$Label[SummaryOverlayData2.name_label]}</td>
+                                    <apex:outputPanel rendered="{!is_null_EG0}" layout="none">
+                                    <td class="{!if(mod(call1,2) == 1,'alt_wht last_tbl','last_tbl')}"><apex:outputText value="{!if(SummaryOverlayData2.EG0!= null,SummaryOverlayData2.EG0,'-')}" rendered="true" escape="false"/></td>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel rendered="{!is_null_EG1}" layout="none">
+                                    <td class="{!if(mod(call1,2) == 1,'alt_wht last_tbl','last_tbl')}"><apex:outputText value="{!if(SummaryOverlayData2.EG1!= null,SummaryOverlayData2.EG1,'-')}" rendered="true" escape="false"/></td>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel rendered="{!is_null_EG2}" layout="none">
+                                    <td class="{!if(mod(call1,2) == 1,'alt_wht last_tbl','last_tbl')}"><apex:outputText value="{!if(SummaryOverlayData2.EG2!= null,SummaryOverlayData2.EG2,'-')}" rendered="true" escape="false"/></td>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel rendered="{!is_null_EG3}" layout="none">
+                                    <td class="{!if(mod(call1,2) == 1,'alt_wht last_tbl','last_tbl')}"><apex:outputText value="{!if(SummaryOverlayData2.EG3!= null,SummaryOverlayData2.EG3,'-')}" rendered="true" escape="false"/></td>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel rendered="{!is_null_EG4PLUS}" layout="none">
+                                    <td class="{!if(mod(call1,2) == 1,'alt_wht last_tbl','last_tbl')}"><apex:outputText value="{!if(SummaryOverlayData2.EG4PLUS!= null,SummaryOverlayData2.EG4PLUS,'-')}" rendered="true" escape="false"/></td>
+                                    </apex:outputPanel>
+                                    <td class="{!if(mod(call1,2) == 1,'alt_wht last_tbl lasttd','last_tbl lasttd')}"><apex:outputText value="{!if(SummaryOverlayData2.sumexec!= null,SummaryOverlayData2.sumexec,'-')}" rendered="true" escape="false"/></td>  
+                                </tr>
+                            <apex:variable var="call1" value="{!call1+1}"/>
+                            </apex:repeat>                          
+                        </table>
+                    </div>
+                    </apex:outputPanel>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!isExceptionCaught}" layout="none">
+                        <div align="center" class="info_msgs_almp_err" style="text-align: center;width:100%;color:red;font-weight:bold;">
+                        <apex:image value="{!URLFOR($Resource.ALMPlus_Asset,'images/error_img.png')}"/>&nbsp;
+                          <b>{!$Label.SOverlay_err_msg}</b>
+                        </div>
+                    </apex:outputPanel>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</apex:component>

@@ -1,0 +1,130 @@
+<apex:page sidebar="false" StandardController="Sales_Org_Summary__c" extensions="ZM_SalesOrgSummaryController" renderAs="pdf">
+    
+    <apex:stylesheet value="{!$Resource.ZM_CompassCSS}"/>
+    
+    <style type="text/css">
+        hr{
+            border-top: 1px solid black;
+        }
+        progress{
+            width:80%;
+        }
+        bgcol{ 
+            vertical-align:top; 
+            background-color:#F3F3F3; 
+        }
+        h1{
+            font-size:20px;
+        }
+        #rResultsOuterg96{
+            padding:2px; 
+            border: 1px solid #dbdbdb;
+        }
+        #rResultsOuterl90{
+            padding:1px; 
+            border: 1px solid #dbdbdb;
+        }
+        
+    </style>
+    <!--  Omniture method invocation starts -->
+	<script>
+		ALM_PAGE_NAME="{!OmniturePageName}"; 	
+	</script>
+    <!--  Omniture method invocation ends -->
+    <html>
+        <head>
+            <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+            <title>Compass Business Plan - {!priorCampaignNmbr} {!$Label.ZM_Compass_Owner}</title>
+            <link rel="stylesheet" type="text/css" href="css/stylesheet.css"/>
+        </head>
+        <body >
+            <div class="wrapper">
+                <h1>{!$Label.ZM_Compass_Business_Plan_For_Campaign} {!currentCampaignNmbr} 
+                <br/> <!-- {!$Label.ZM_Compass_Owner} -->{!$User.FirstName} {!$User.LastName}
+                <br/> Zone {!$CurrentPage.parameters.SLSORGDESCTXT}</h1>
+                <br/>
+                <apex:pageBlock id="pageBlock1">
+            
+                        <br/>
+                        <div style="width:100%">
+                            <div class="row">
+                               <table width="100%" border="0" cellspacing="0" cellpadding="0" 
+                                      class="maintable" style="-fs-table-paginate: paginate;border:1px solid #000000;">
+                                    <thead>
+                                        <tr class="mainrow">
+                                            <th>&nbsp;</th>
+                                            <th class="txtAlgCenter">{!$Label.ZM_KPI_Performance_KPI}</th>
+                                            <th class="txtAlgCenter">{!$Label.ZM_KPI_Performance_Plan}</th>
+                                            <th class="txtAlgCenter">{!$Label.ZM_KPI_Performance_Actual}</th>
+                                            <th class="txtAlgCenter">{!$Label.ZM_KPI_Performance_Variance}</th>
+                                            <th class="txtAlgCenter">{!$Label.ZM_Division_Rank}</th>
+                                            <th class="txtAlgCenter">{!$Label.ZM_Results}</th>
+                                            <th class="txtAlgCenter">&nbsp;</th>
+                                            <th class="txtAlgCenter" nowrap="nowrap">{!$Label.ZM_Next_Campaign_Plan}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <apex:repeat value="{!lstWrapperZoneKPIConfig}" var="salesOrg">
+                                            <tr class="secondrow">
+                                                <td>&nbsp;</td>
+                                                <td>{!UPPER($Label[salesOrg.strCustomLabel])}</td>
+                                                <td class="numCol">{!(salesOrg.dbPlanField)}</td>
+                                                <td class="numCol">{!(salesOrg.dbActualField)}</td>
+                                                <td class="numCol">{!(salesOrg.dbVarianceField)}</td>
+                                                <td class="numCol">{!(salesOrg.dbRankField)}</td>
+                                                <td style="width:170px;">
+                                                    <apex:variable value="{!salesOrg.dbResultsField }" var="StepCount" />
+                                                    <apex:outputPanel rendered="{!VALUE(salesOrg.dbResultsField) >= 96}" >
+                                                            <div class="meter green"><span style="width:{!(if(VALUE(StepCount)>100,100,VALUE(StepCount)))}%"></span></div>
+                                                            <div id="rResultsOuterg96">
+                                                                <div  style="background:#30D81E;text-align:center;width:{!(if(VALUE(StepCount)>100,100,VALUE(StepCount)))}%;" >
+                                                                    <span>&nbsp;</span>
+                                                                </div>
+                                                            </div>
+                                                    </apex:outputPanel>
+                                                    <apex:outputPanel rendered="{!AND(VALUE(salesOrg.dbResultsField) < 96 ,VALUE(salesOrg.dbResultsField) >= 90)}" >
+                                                        <div id="rResultsOuterg96">
+                                                            <div style="width:{!(StepCount)}%;background:#F5F82B;text-align:center;">
+                                                                <span>&nbsp;</span>
+                                                            </div>
+                                                        </div>
+                                                    </apex:outputPanel>
+                                                    <apex:outputPanel rendered="{!VALUE(salesOrg.dbResultsField) < 90}">
+                                                        <div id="rResultsOuterl90">
+                                                            <div  style="background:#F70404;text-align:center;width:{!(StepCount)}%;">
+                                                                <span>&nbsp;</span>
+                                                            </div>
+                                                        </div>  
+                                                    </apex:outputPanel>
+                                                </td>
+                                                <td style="padding-left:5px;">{!(salesOrg.dbResultsField )}%</td>
+                                                <td  class="numCol">{!(salesOrg.dbCurrentCampaignPlan)}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>&nbsp;</td>
+                                                <td colspan="8" class="subtable">
+                                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                        <tr>
+                                                            <td width="33%" valign="top"><h3>{!$Label.ZM_Suggested_Activities}</h3><p>{!salesOrg.strSuggestedActivities}</p></td>
+                                                            <td width="33%" valign="top"><h3>{!$Label.ZM_Last_campaign_analysis}</h3><p>{!salesOrg.strLastCampaignAnalysis}</p></td>
+                                                            <td width="33%" valign="top"><h3>{!$Label.ZM_My_Actions}</h3><p>{!salesOrg.strMyAction}</p></td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                        </apex:repeat>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+            
+                </apex:pageBlock>
+            </div>
+            
+            <!-- Omniture Integration Starts --
+        	<apex:include pageName="ZMDMOmnitureTrack"/>
+	    	<-- Omniture Integration Ends -->
+        </body>
+    </html> 
+
+</apex:page>

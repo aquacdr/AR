@@ -1,0 +1,9 @@
+<apex:page showheader="false" sidebar="false" controller="Controller_SLActionItems" id="thePage">
+
+    <apex:outputpanel id="imgPanel"> 
+        <div id="imgContainer" >
+            <apex:image id="theImage" value="data:image/jpg;base64,{!image}"/>
+        </div>
+    </apex:outputpanel>
+
+</apex:page>

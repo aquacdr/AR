@@ -1,0 +1,197 @@
+<apex:page standardController="ECard_History__c" extensions="MyMessageDetailController" showHeader="false" sidebar="false" standardStyleSheets="false">
+<div class="white_trans">
+    <div class="popup_wrpr_msg">
+            <div class="pop_content_form">
+            <a href="#" class="close_btn"  style="height: 29px;position:relative;left: 825px;top: -95px;width: 29px;" onClick="hideDetail();"></a>
+                <div class="big_pnk_hdr_form">
+                    <h1 class="left mar_rht_10">{!$Label.Message_Detail}</h1>                        
+                </div>
+                   <div class="wht_nfo_bx">
+                       <TABLE width="800">
+                            
+                            <TR>
+                                <TD width="300" style="font-family:Helvatica,Arial;color: black;display: block;float: left;font-size: 1.7em;font-weight:700;color:#ED008C;" >{!$Label.Subject}:</TD>
+                                <TD width="500" style="font-family:Helvatica,Arial;color: black;display: block;float: left;font-size: 1.7em;font-weight:500;color:#ED008C;" ><apex:outputField value="{!ECard_History__c.Name}"/></TD>
+                            </TR>
+                            <TR>
+                              <TD height="20" />
+                              <TD />
+                            </TR>
+                             <TR>
+                                <TD>
+                                    <div class="horz-sprtr" style="height:2px;" />
+                                </TD>
+                            </TR>
+                            <TR>
+                              <TD height="20" />
+                              <TD />
+                            </TR>
+                            <TR>
+                                
+                              <TD width="300" style="font-family:Helvatica,Arial;color: black;display: block;float: left;font-size: 1.3em;font-weight:700;" >{!$Label.ActivityDate}</TD>
+                              <TD width="500" style="font-family:Helvatica,Arial;color: black;display: block;float: left;font-size: 1.1em;font-weight:500;" ><apex:outputField value="{!ECard_History__c.CreatedDate}"/></TD>
+
+                            </TR>
+                            
+                            <apex:outputPanel rendered="{!ECard_History__c.Personal_Ecard_Message__c!=null}">
+                                <TR>
+                              <TD height="20" />
+                              <TD />
+                            </TR>
+                                <TR>
+                                  <TD width="300" style="font-family:Helvatica,Arial;color: black;display: block;float: left;font-size: 1.3em;font-weight:700;" >{!$Label.Message}</TD>
+                                  <TD width="500" style="font-family:Helvatica,Arial;color: black;display: block;float: left;font-size: 1.1em;font-weight:500;">
+                                  <apex:outputField value="{!ECard_History__c.Personal_Ecard_Message__c}" />
+                                  </TD>
+                                </TR>
+                            
+                            </apex:outputPanel>
+                            <TR>
+                              <TD height="20" />
+                              <TD />
+                            </TR>
+                             <TR>
+                                <TD>
+                                    <div class="horz-sprtr" style="height:2px;" />
+                                </TD>
+                            </TR>
+                            <TR>
+                              <TD height="20" />
+                              <TD />
+                            </TR>
+                            <TR>
+                              <TD width="200" style="font-family:Helvatica,Arial;color: black;display: block;float: left;font-size: 1.3em;font-weight:700;" >&nbsp;</TD>
+                              <TD width="600" style="font-family:Helvatica,Arial;color: black;display: block;float: left;font-size: 1.1em;font-weight:700;">
+                              <div style="height:70px;overflow-y:auto;overflow-x:hidden;">
+                                    <table width="100%" id="tableHeader">
+                                        <tr width="100%">
+                                            <td width="25%" style="align:center;vertical-align: middle;font-size: 10pt;padding: 5px;height: 14px;" align="center">
+                                                {!$Label.Name}
+                                            </td>
+                                            <td width="20%" style="align:center;vertical-align: middle;font-size: 10pt;padding: 5px;height: 14px;" align="center">
+                                                {!$Label.Phone}
+                                            </td>
+                                            <td width="40%" style="align:center;vertical-align: middle;font-size: 10pt;padding: 5px;height: 14px;" align="center">
+                                                {!$Label.Email2}
+                                            </td>
+                                            <td width="15%" style="align:center;vertical-align: middle;font-size: 10pt;padding: 5px;height: 14px;" align="center">
+                                                {!$Label.Opted_Out}
+                                            </td>
+                                        </tr>
+                                        </table>
+                                 </div>
+                              </TD>
+                            </TR>
+                            <TR>
+                              <TD width="200" style="font-family:Helvatica,Arial;color: black;display: block;float: left;font-size: 1.3em;font-weight:700;" >{!$Label.Email_Sent_Success}</TD>
+                              <TD width="600" style="font-family:Helvatica,Arial;color: black;display: block;float: left;font-size: 1.1em;font-weight:700;">
+                              <div style="height:70px;overflow-y:auto;overflow-x:hidden;{!IF(NOT(ISBLANK(l_get_SuccessResults[0])),'border-width: 2px;  border-spacing: 1px;    border-style: outset;   border-color: gray; border-collapse: collapse;  background-color: white;','')}">
+                                        <table width="100%" >
+                                        <div>
+                                         <apex:variable var="cnt" value="{!0}" />
+                                        <apex:repeat value="{!l_get_SuccessResults}" var="r">
+                                            <tr width="100%">
+                                            <td width="25%" style="word-wrap: break-word;color: #000000;align:left;vertical-align: middle;font-size: 7pt;border-right: 1px solid #AAA8A8;padding: 5px;height: 14px;{!IF(MOD(cnt,2)=0,'background-color:white;','background-color:rgb(224,224,224);')};" align="center">
+                                                {!SUBSTITUTE(r.s_Name,'*','')}
+                                            </td>
+                                            <td width="20%" style="word-wrap: break-word;color: #000000;align:center;vertical-align: middle;font-size: 7pt;border-right: 1px solid #AAA8A8;padding: 5px;height: 14px;{!IF(MOD(cnt,2)=0,'background-color:white;','background-color:rgb(224,224,224);')};" align="center">
+                                                {!r.s_Phone}
+                                            </td>
+                                            <td width="40%" style="word-wrap: break-word;color: #000000;align:left;vertical-align: middle;font-size: 7pt;border-right: 1px solid #AAA8A8;padding: 5px;height: 14px;{!IF(MOD(cnt,2)=0,'background-color:white;','background-color:rgb(224,224,224);')};" align="center">
+                                                {!r.s_Email}
+                                            </td>
+                                            <td width="15%" style="word-wrap: break-word;color: #000000;align:center;vertical-align: middle;font-size: 7pt;border-right: 1px solid #AAA8A8;padding: 5px;height: 14px;{!IF(MOD(cnt,2)=0,'background-color:white;','background-color:rgb(224,224,224);')};" align="center">
+                                                {!r.s_OptOut}
+                                            </td>
+                                        </tr>
+                                        <apex:variable var="cnt" value="{!cnt+1}"/>
+                                        </apex:repeat>
+                                        </div>
+                                    </table>
+                                 </div>
+                              </TD>
+                            </TR>
+                             <TR>
+                              <TD height="20" />
+                              <TD />
+                            </TR>
+                             <TR>
+                              <TD width="200" style="font-family:Helvatica,Arial;color: black;display: block;float: left;font-size: 1.3em;font-weight:700;" >{!$Label.Email_Sent_Failed}</TD>
+                              <TD width="600" style="font-family:Helvatica,Arial;color: black;display: block;float: left;font-size: 1.1em;font-weight:700;">
+                              <div style="height:70px;overflow-y:auto;overflow-x:hidden;{!IF(NOT(ISBLANK(l_get_FailureResults[0])),'border-width: 2px;  border-spacing: 1px;    border-style: outset;   border-color: gray; border-collapse: collapse;  background-color: white;','')}">
+                                        <table width="100%">
+                                        <div>
+                                        <apex:variable var="cntF" value="{!0}" />
+                                        <apex:repeat value="{!l_get_FailureResults}" var="r">
+                                            <tr width="100%">
+                                            <td width="25%" style="font-family:Helvatica,Arial;word-wrap: break-word;color: #000000;align:left;vertical-align: middle;font-size: 7pt;padding: 5px;height: 14px;{!IF(MOD(cntF,2)=0,'background-color:white;','background-color:rgb(224,224,224);')};" align="center">
+                                                {!SUBSTITUTE(r.s_Name,'*','')}
+                                            </td>
+                                            <td width="20%" style="font-family:Helvatica,Arialword-wrap: break-word;color: #000000;align:center;vertical-align: middle;font-size: 7pt;padding: 5px;height: 14px;{!IF(MOD(cntF,2)=0,'background-color:white;','background-color:rgb(224,224,224);')};" align="center">
+                                                {!r.s_Phone}
+                                            </td>
+                                            <td width="40%" style="font-family:Helvatica,Arialword-wrap: break-word;color: #000000;align:left;vertical-align: middle;font-size: 7pt;padding: 5px;height: 14px;{!IF(MOD(cntF,2)=0,'background-color:white;','background-color:rgb(224,224,224);')};" align="center">
+                                                {!r.s_Email}
+                                            </td>
+                                            <td width="15%" style="font-family:Helvatica,Arialword-wrap: break-word;color: #000000;align:center;vertical-align: middle;font-size: 7pt;padding: 5px;height: 14px;{!IF(MOD(cntF,2)=0,'background-color:white;','background-color:rgb(224,224,224);')};" align="center">
+                                                {!r.s_OptOut}
+                                            </td>
+                                        </tr>
+                                        </apex:repeat>
+                                        <apex:variable var="cntF" value="{!cntF+1}"/>
+                                        </div>
+                                    </table>
+                                 </div>
+                              </TD>
+                            </TR>
+                             
+                             <TR>
+                              <TD height="20" />
+                              <TD />
+                            </TR>
+                            
+                            <TR>
+                              <TD width="200" style="font-family:Helvatica,Arial;color: black;display: block;float: left;font-size: 1.3em;font-weight:700;" >{!$Label.No_Email}</TD>
+                              <TD width="600" style="font-family:Helvatica,Arial;color: black;display: block;float: left;font-size: 1.1em;font-weight:700;">
+                              <div style="height:70px;overflow-y:auto;overflow-x:hidden;{!IF(NOT(ISBLANK(l_get_NoEmailResults[0])),'border-width: 2px;  border-spacing: 1px;    border-style: outset;   border-color: gray; border-collapse: collapse;  background-color: white;','')}">
+                                        <table width="100%" >
+                                        <div>
+                                        <apex:variable var="cntNR" value="{!0}" />
+                                        <apex:repeat value="{!l_get_NoEmailResults}" var="r">
+                                            <tr width="100%">
+                                            <td width="25%" style="font-family:Helvatica,Arial;word-wrap: break-word;color: #000000;align:left;vertical-align: left;font-size: 7pt;padding: 5px;height: 14px;{!IF(MOD(cntNR,2)=0,'background-color:white;','background-color:rgb(224,224,224);')};" align="center">
+                                                {!SUBSTITUTE(r.s_Name,'*','')}
+                                            </td>
+                                            <td width="20%" style="font-family:Helvatica,Arial;word-wrap: break-word;color: #000000;align:center;vertical-align: middle;font-size: 7pt;padding: 5px;height: 14px;{!IF(MOD(cntNR,2)=0,'background-color:white;','background-color:rgb(224,224,224);')};" align="center">
+                                                {!r.s_Phone}
+                                            </td>
+                                            <td width="40%" style="font-family:Helvatica,Arial;word-wrap: break-word;color: #000000;align:left;vertical-align: middle;font-size: 7pt;padding: 5px;height: 14px;{!IF(MOD(cntNR,2)=0,'background-color:white;','background-color:rgb(224,224,224);')};" align="center">
+                                                {!r.s_Email}
+                                            </td>
+                                            <td width="15%" style="font-family:Helvatica,Arial;word-wrap: break-word;color: #000000;align:center;vertical-align: middle;font-size: 7pt;padding: 5px;height: 14px;{!IF(MOD(cntNR,2)=0,'background-color:white;','background-color:rgb(224,224,224);')};" align="center">
+                                                {!r.s_OptOut}
+                                            </td>
+                                        </tr>
+                                        <apex:variable var="cntNR" value="{!cntNR+1}"/>
+                                        </apex:repeat>
+                                        </div>
+                                    </table>
+                                 </div>
+                              </TD>
+                            </TR>
+                             
+                        </TABLE>
+    
+                </div>
+        </div>
+</div>
+</div>
+<script type="text/javascript">
+ALM_PAGE_NAME="{!OmniturePageName}";   
+</script>
+<c:OmnitureWebTrack mktName="{!market.Omniture_Suite_Name__c}" 
+                        mktAcctKey="{!currUsr.MRKT_ID_ACCT_NR_KEY__c}"
+                        userType="{!currUsr.Profile.Name}"
+                        userTitle="{!currUsr.LDRSHP_TITL_LVL_NBR__c}"        
+                        rendered="{!globalConfig.Omniture_Tracking_Enabled__c}"/>
+</apex:page>

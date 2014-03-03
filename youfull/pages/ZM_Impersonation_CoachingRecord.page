@@ -1,0 +1,25 @@
+<apex:page showHeader="false" sidebar="false" standardStyleSheets="false" language="{!$CurrentPage.parameters.langcd}" 
+		controller="ZM_Controller_ImpersonationCoachingRec" action="{!autoRun}">
+		
+    <apex:form > 
+        <apex:composition template="ZM_Impersonate_YOUPageTemplate">
+        <apex:define name="content">
+            <apex:includeScript value="{!URLFOR($Resource.MTRUtility)}"/>
+            <apex:includeScript value="{!URLFOR($Resource.MTRWriteItems)}"/>
+            <apex:includeScript value="{!URLFOR($Resource.MTRDataTable)}"/>
+            <apex:includeScript value="{!URLFOR($Resource.MTRHSGChildTable)}"/>
+            <apex:includeScript value="{!URLFOR($Resource.MTRMasterHSGTable)}"/>
+            <apex:includeScript value="{!URLFOR($Resource.MyTeamJS)}"/>
+            <apex:includeScript value="{!URLFOR($Resource.NRR, 'js/jquery.jscrollpane.min.js')}"/>
+            <apex:stylesheet value="{!URLFOR($Resource.NRR,'css/jquery.jscrollpane_vert.css')}" />
+            <apex:stylesheet value="{!URLFOR($Resource.MyTeam)}" />
+            
+            <div id="email_sel_mask2">
+                <apex:outputPanel id="repDetail" layout="none">
+                    <c:CoachingRecord repacctnbr="{!repDetailAcctNbr}" rendered="true"/>
+                </apex:outputPanel>
+            </div>
+        </apex:define>
+        </apex:composition>
+    </apex:form>
+</apex:page>

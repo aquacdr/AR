@@ -1,0 +1,272 @@
+<apex:component controller="SiteMapController">
+  <ul class="top_links">
+        <apex:outputPanel layout="none" rendered="{!NOT(ISNULL(col1))}">
+           <!-- Morgan HTML changes on 10/03 -->
+           <li class="first"> 
+                <apex:outputPanel layout="none" rendered="{!col1.displayType == 'Open In Same Window' && col1.isSelected == false}">                
+                    <a href="{!col1.Link}" title="{!col1.Name}" class="frst">{!col1.Name}</a>
+                </apex:outputPanel>
+                <apex:outputPanel layout="none" rendered="{!col1.displayType == 'Open In New Window' && col1.isSelected == false}">
+                    <a href="{!col1.Link}" title="{!col1.Name}" class="frst" target="_blank">{!col1.Name}</a>
+                </apex:outputPanel>
+                <apex:outputPanel layout="none" rendered="{!col1.displayType == 'Open as Overlay' && col1.Link == 'MyCoachingRecord' && col1.isSelected == false }">
+                    <a href="javascript:viewRepDetail('{!currentUserId}');" class="frst">{!col1.Name}</a>
+                </apex:outputPanel>
+                <apex:outputPanel layout="none" rendered="{!col1.displayType == 'Open In Same Window' && col1.isSelected == true}">                
+                    <a href="{!col1.Link}" style="color : #ED008C;" title="{!col1.Name}" class="frst">{!col1.Name}</a>
+                </apex:outputPanel>
+                <apex:outputPanel layout="none" rendered="{!col1.displayType == 'Open In New Window'  && col1.isSelected == true}">
+                    <a href="{!col1.Link}" style="color : #ED008C;" title="{!col1.Name}" class="frst" target="_blank">{!col1.Name}</a>
+                </apex:outputPanel>
+                <apex:outputPanel layout="none" rendered="{!col1.displayType == 'Open as Overlay' && col1.Link == 'MyCoachingRecord'  && col1.isSelected == true }">
+                    <a href="javascript:viewRepDetail('{!currentUserId}');" style="color : #ED008C;" class="frst">{!col1.Name}</a>
+                </apex:outputPanel>
+
+                <!--  Code to Create Upto 2 level Sub Menu -->
+                <apex:outputPanel layout="none" rendered="{!NOT(ISNULL(col1Sub))}">
+                <div class="border_adj">
+                <ul class="submenu">
+                    <apex:repeat value="{!col1Sub}" var="row">
+                    <li>
+                        <apex:outputPanel layout="none" rendered="{!row.displayType == 'Open In Same Window'}">
+                       {!row.Name} <a href="{!row.Link}">{!row.Name}</a>
+                        </apex:outputPanel>
+                        <apex:outputPanel layout="none" rendered="{!row.displayType == 'Open In New Window'}">
+                        <a href="{!row.Link}" target="_blank">{!row.Name}</a>
+                        </apex:outputPanel>
+                        <apex:outputPanel layout="none" rendered="{!row.displayType == 'Open as Overlay' && row.Link == 'MyCoachingRecord' }">
+                        <a href="javascript:viewRepDetail('{!currentUserId}');">{!row.Name}</a>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!NOT(ISNULL(row.children))}">
+                            <ul>
+                            <apex:repeat value="{!row.children}" var="subrow">
+                                <li>
+                                    <apex:outputPanel layout="none" rendered="{!subrow.displayType == 'Open In Same Window'}">
+                                        <a href="{!subrow.Link}">{!subrow.Name}</a>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel layout="none" rendered="{!subrow.displayType == 'Open In New Window'}">
+                                        <a href="{!subrow.Link}" target="_blank">{!subrow.Name}</a>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel layout="none" rendered="{!subrow.displayType == 'Open as Overlay' && subrow.Link == 'MyCoachingRecord' }">
+                                        <a href="javascript:viewRepDetail('{!currentUserId}');">{!subrow.Name}</a>
+                                    </apex:outputPanel>
+                                </li>
+                            </apex:repeat>
+                            </ul>
+                        </apex:outputPanel>
+                    </li>
+                     </apex:repeat>
+                 </ul>
+                 </div>
+                </apex:outputPanel>
+                <!--  Commenting it as we don't need Nth Level Sub Menu                        
+                <apex:outputPanel layout="none" rendered="{!NOT(ISNULL(col1Sub))}">
+                    <apex:dynamicComponent componentValue="{!col1SubString}"/>
+                </apex:outputPanel>
+                -->
+            </li>
+        </apex:outputPanel> 
+
+        
+        <apex:outputPanel layout="none" rendered="{!NOT(ISNULL(col2))}">
+            <!-- Morgan HTML changes on 10/03 -->
+            <li class="second">  
+                <apex:outputPanel layout="none" rendered="{!col2.displayType == 'Open In Same Window' && col2.isSelected == false}">
+                    <a href="{!col2.Link}" title="{!col2.Name}" class="dr_arw">{!col2.Name}</a>
+                </apex:outputPanel>
+                <apex:outputPanel layout="none" rendered="{!col2.displayType == 'Open In New Window' && col2.isSelected == false}">
+                    <a href="{!col2.Link}" title="{!col2.Name}" class="dr_arw" target="_blank">{!col2.Name}</a>
+                </apex:outputPanel>
+                <apex:outputPanel layout="none" rendered="{!col2.displayType == 'Open as Overlay' && col2.Link == 'MyCoachingRecord' && col2.isSelected == false }">
+                    <a href="javascript:viewRepDetail('{!currentUserId}');" class="dr_arw">{!col2.Name}</a>
+                </apex:outputPanel>
+                <apex:outputPanel layout="none" rendered="{!col2.displayType == 'Open In Same Window' && col2.isSelected == true}">
+                    <a href="{!col2.Link}"  style="color : #ED008C;" title="{!col2.Name}" class="dr_arw">{!col2.Name}</a>
+                </apex:outputPanel>
+                <apex:outputPanel layout="none" rendered="{!col2.displayType == 'Open In New Window' && col2.isSelected == true}">
+                    <a href="{!col2.Link}" style="color : #ED008C;" title="{!col2.Name}" class="dr_arw" target="_blank">{!col2.Name}</a>
+                </apex:outputPanel>
+                <apex:outputPanel layout="none" rendered="{!col2.displayType == 'Open as Overlay' && col2.Link == 'MyCoachingRecord' && col2.isSelected == true }">
+                    <a href="javascript:viewRepDetail('{!currentUserId}');" style="color : #ED008C;" class="dr_arw">{!col2.Name}</a>
+                </apex:outputPanel>
+
+                <!--  Code to Create Upto 2 level Sub Menu -->
+                <apex:outputPanel layout="none" rendered="{!NOT(ISNULL(col2Sub))}">
+                <div class="border_adj">
+                <ul class="submenu">
+                    <apex:repeat value="{!col2Sub}" var="row">
+                    <li>
+                        <apex:outputPanel layout="none" rendered="{!row.displayType == 'Open In Same Window'}">
+                        <a href="{!row.Link}">{!row.Name}</a>
+                        </apex:outputPanel>
+                        <apex:outputPanel layout="none" rendered="{!row.displayType == 'Open In New Window'}">
+                        <a href="{!row.Link}" target="_blank">{!row.Name}</a>
+                        </apex:outputPanel>
+                        <apex:outputPanel layout="none" rendered="{!row.displayType == 'Open as Overlay' && row.Link == 'MyCoachingRecord' }">
+                        <a href="javascript:viewRepDetail('{!currentUserId}');">{!row.Name}</a>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!NOT(ISNULL(row.children))}">
+                            <ul>
+                            <apex:repeat value="{!row.children}" var="subrow">
+                                <li>
+                                    <apex:outputPanel layout="none" rendered="{!subrow.displayType == 'Open In Same Window'}">
+                                        <a href="{!subrow.Link}">{!subrow.Name}</a>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel layout="none" rendered="{!subrow.displayType == 'Open In New Window'}">
+                                        <a href="{!subrow.Link}" target="_blank">{!subrow.Name}</a>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel layout="none" rendered="{!subrow.displayType == 'Open as Overlay' && subrow.Link == 'MyCoachingRecord' }">
+                                        <a href="javascript:viewRepDetail('{!currentUserId}');">{!subrow.Name}</a>
+                                    </apex:outputPanel>
+                                </li>
+                            </apex:repeat>
+                            </ul>
+                        </apex:outputPanel>
+                    </li>
+                     </apex:repeat>
+                 </ul>
+                 </div>
+                </apex:outputPanel>
+                <!--  Commenting it as we don't need Nth Level Sub Menu
+                <apex:outputPanel layout="none" rendered="{!NOT(ISNULL(col2Sub))}">
+                    <apex:dynamicComponent componentValue="{!col2SubString}"/>
+                </apex:outputPanel>
+                -->
+            </li>
+        </apex:outputPanel> 
+
+
+        <apex:outputPanel layout="none" rendered="{!NOT(ISNULL(col3))}">
+          <!-- Morgan HTML changes on 10/03 -->
+             <li class="third">  
+                <apex:outputPanel layout="none" rendered="{!col3.displayType == 'Open In Same Window' && col3.isSelected == false}">
+                    <a href="{!col3.Link}" title="{!col3.Name}" class="dr_arw">{!col3.Name}</a>
+                </apex:outputPanel>
+                <apex:outputPanel layout="none" rendered="{!col3.displayType == 'Open In New Window' && col3.isSelected == false}">
+                    <a href="{!col3.Link}" title="{!col3.Name}" class="dr_arw" target="_blank">{!col3.Name}</a>
+                </apex:outputPanel>
+                <apex:outputPanel layout="none" rendered="{!col3.displayType == 'Open as Overlay' && col3.Link == 'MyCoachingRecord' && col3.isSelected == false }">
+                    <a href="javascript:viewRepDetail('{!currentUserId}');" class="dr_arw">{!col3.Name}</a>
+                </apex:outputPanel>
+                <apex:outputPanel layout="none" rendered="{!col3.displayType == 'Open In Same Window' && col3.isSelected == true}">
+                    <a href="{!col3.Link}" style="color : #ED008C;" title="{!col3.Name}" class="dr_arw">{!col3.Name}</a>
+                </apex:outputPanel>
+                <apex:outputPanel layout="none" rendered="{!col3.displayType == 'Open In New Window' && col3.isSelected == true}">
+                    <a href="{!col3.Link}" style="color : #ED008C;" title="{!col3.Name}" class="dr_arw" target="_blank">{!col3.Name}</a>
+                </apex:outputPanel>
+                <apex:outputPanel layout="none" rendered="{!col3.displayType == 'Open as Overlay' && col3.Link == 'MyCoachingRecord' && col3.isSelected == true }">
+                    <a href="javascript:viewRepDetail('{!currentUserId}');" style="color : #ED008C;" class="dr_arw">{!col3.Name}</a>
+                </apex:outputPanel>
+
+                <!--  Code to Create Upto 2 level Sub Menu -->
+                <apex:outputPanel layout="none" rendered="{!NOT(ISNULL(col3Sub))}">
+                <div class="border_adj">
+                <ul class="submenu">
+                    <apex:repeat value="{!col3Sub}" var="row">
+                    <li>
+                        <apex:outputPanel layout="none" rendered="{!row.displayType == 'Open In Same Window'}">
+                        <a href="{!row.Link}">{!row.Name}</a>
+                        </apex:outputPanel>
+                        <apex:outputPanel layout="none" rendered="{!row.displayType == 'Open In New Window'}">
+                        <a href="{!row.Link}" target="_blank">{!row.Name}</a>
+                        </apex:outputPanel>
+                        <apex:outputPanel layout="none" rendered="{!row.displayType == 'Open as Overlay' && row.Link == 'MyCoachingRecord' }">
+                        <a href="javascript:viewRepDetail('{!currentUserId}');">{!row.Name}</a>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!NOT(ISNULL(row.children))}">
+                            <ul>
+                            <apex:repeat value="{!row.children}" var="subrow">
+                                <li>
+                                    <apex:outputPanel layout="none" rendered="{!subrow.displayType == 'Open In Same Window'}">
+                                        <a href="{!subrow.Link}">{!subrow.Name}</a>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel layout="none" rendered="{!subrow.displayType == 'Open In New Window'}">
+                                        <a href="{!subrow.Link}" target="_blank">{!subrow.Name}</a>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel layout="none" rendered="{!subrow.displayType == 'Open as Overlay' && subrow.Link == 'MyCoachingRecord' }">
+                                        <a href="javascript:viewRepDetail('{!currentUserId}');">{!subrow.Name}</a>
+                                    </apex:outputPanel>
+                                </li>
+                            </apex:repeat>
+                            </ul>
+                        </apex:outputPanel>
+                    </li>
+                     </apex:repeat>
+                 </ul>
+                 </div>
+                </apex:outputPanel>
+                <!-- Commenting it as we don't need Nth Level Sub Menu
+                <apex:outputPanel layout="none" rendered="{!NOT(ISNULL(col3Sub))}">
+                    <apex:dynamicComponent componentValue="{!col3SubString}"/>
+                </apex:outputPanel>
+                 -->
+            </li>
+        </apex:outputPanel> 
+
+        <apex:outputPanel layout="none" rendered="{!NOT(ISNULL(col4))}">
+            <li class="last">
+                <apex:outputPanel layout="none" rendered="{!col4.displayType == 'Open In Same Window' && col4.isSelected == false}">
+                    <a href="{!col4.Link}" title="{!col4.Name}" class="dr_arw">{!col4.Name}</a>
+                </apex:outputPanel>
+                <apex:outputPanel layout="none" rendered="{!col4.displayType == 'Open In New Window' && col4.isSelected == false}">
+                    <a href="{!col4.Link}" title="{!col4.Name}" class="dr_arw" target="_blank">{!col4.Name}</a>
+                </apex:outputPanel>
+                <apex:outputPanel layout="none" rendered="{!col4.displayType == 'Open as Overlay' && col4.Link == 'MyCoachingRecord' && col4.isSelected == false }">
+                    <a href="javascript:viewRepDetail('{!currentUserId}');" class="dr_arw">{!col4.Name}</a>
+                </apex:outputPanel>
+                <apex:outputPanel layout="none" rendered="{!col4.displayType == 'Open In Same Window' && col4.isSelected == true}">
+                    <a href="{!col4.Link}" style="color : #ED008C;" title="{!col4.Name}" class="dr_arw">{!col4.Name}</a>
+                </apex:outputPanel>
+                <apex:outputPanel layout="none" rendered="{!col4.displayType == 'Open In New Window' && col4.isSelected == true}">
+                    <a href="{!col4.Link}" style="color : #ED008C;" title="{!col4.Name}" class="dr_arw" target="_blank">{!col4.Name}</a>
+                </apex:outputPanel>
+                <apex:outputPanel layout="none" rendered="{!col4.displayType == 'Open as Overlay' && col4.Link == 'MyCoachingRecord' && col4.isSelected == true }">
+                    <a href="javascript:viewRepDetail('{!currentUserId}');" style="color : #ED008C;" class="dr_arw">{!col4.Name}</a>
+                </apex:outputPanel>
+
+                <!--  Code to Create Upto 2 level Sub Menu -->
+                <apex:outputPanel layout="none" rendered="{!NOT(ISNULL(col4Sub))}">
+                <div class="border_adj">
+                <ul class="submenu">
+                    <apex:repeat value="{!col4Sub}" var="row">
+                    <li>
+                        <apex:outputPanel layout="none" rendered="{!row.displayType == 'Open In Same Window'}">
+                        <a href="{!row.Link}">{!row.Name}</a>
+                        </apex:outputPanel>
+                        <apex:outputPanel layout="none" rendered="{!row.displayType == 'Open In New Window'}">
+                        <a href="{!row.Link}" target="_blank">{!row.Name}</a>
+                        </apex:outputPanel>
+                        <apex:outputPanel layout="none" rendered="{!row.displayType == 'Open as Overlay' && row.Link == 'MyCoachingRecord' }">
+                        <a href="javascript:viewRepDetail('{!currentUserId}');">{!row.Name}</a>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!NOT(ISNULL(row.children))}">
+                            <ul>
+                            <apex:repeat value="{!row.children}" var="subrow">
+                                <li>
+                                    <apex:outputPanel layout="none" rendered="{!subrow.displayType == 'Open In Same Window'}">
+                                        <a href="{!subrow.Link}">{!subrow.Name}</a>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel layout="none" rendered="{!subrow.displayType == 'Open In New Window'}">
+                                        <a href="{!subrow.Link}" target="_blank">{!subrow.Name}</a>
+                                    </apex:outputPanel>
+                                    <apex:outputPanel layout="none" rendered="{!subrow.displayType == 'Open as Overlay' && subrow.Link == 'MyCoachingRecord' }">
+                                        <a href="javascript:viewRepDetail('{!currentUserId}');">{!subrow.Name}</a>
+                                    </apex:outputPanel>
+                                </li>
+                            </apex:repeat>
+                            </ul>
+                        </apex:outputPanel>
+                    </li>
+                     </apex:repeat>
+                 </ul>
+                 </div>
+                </apex:outputPanel>
+                <!-- Commenting it as we don't need Nth Level Sub Menu
+                <apex:outputPanel layout="none" rendered="{!NOT(ISNULL(col4Sub))}">
+                   <apex:dynamicComponent componentValue="{!col4SubString}"/>
+                </apex:outputPanel>
+                -->
+            </li>
+        </apex:outputPanel>
+    </ul>
+</apex:component>
